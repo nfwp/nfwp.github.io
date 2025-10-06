@@ -37,42 +37,215 @@
     a:hover {
       text-decoration: underline;
     }
+    details {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      margin-top: 1.5em;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      outline: none;
+    }
+    summary:hover {
+      color: #0070f3;
+    }
+    .manual-section {
+      margin-top: 1em;
+      padding-left: 1em;
+    }
   </style>
 </head>
 <body>
 
   <h1>試作ホットケーキ第一号</h1>
 
-  <h2>怪しいグラフ(Ja ver)</h2>
-  <ul>
-    <li><a href="combined_interactive_charts/ReimuA_combined_report_ja.html">Reimu-A </a></li>
-    <li><a href="combined_interactive_charts/ReimuB_combined_report_ja.html">Reimu-B </a></li>
-    <li><a href="combined_interactive_charts/MarisaA_combined_report_ja.html">Marisa-A </a></li>
-    <li><a href="combined_interactive_charts/MarisaB_combined_report_ja.html">Marisa-B </a></li>
-    <li><a href="combined_interactive_charts/SakuyaA_combined_report_ja.html">Sakuya-A </a></li>
-    <li><a href="combined_interactive_charts/SakuyaB_combined_report_ja.html">Sakuya-B </a></li>
-    <li><a href="combined_interactive_charts/CirnoA_combined_report_ja.html">Cirno-A </a></li>
-    <li><a href="combined_interactive_charts/CirnoB_combined_report_ja.html">Cirno-B </a></li>
-    <li><a href="combined_interactive_charts/KoishiA_combined_report_ja.html">Koishi-A </a></li>
-    <li><a href="combined_interactive_charts/KoishiB_combined_report_ja.html">Koishi-B </a></li>
-  </ul>
+<style>
+  /* 見やすくするための簡単なスタイル（任意） */
+  .styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  .styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+  }
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+  }
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+</style>
 
-  <h2>potato graph(En ver)</h2>
-  <ul>
-    <li><a href="combined_interactive_charts/ReimuA_combined_report_en.html">Reimu-A </a></li>
-    <li><a href="combined_interactive_charts/ReimuB_combined_report_en.html">Reimu-B </a></li>
-    <li><a href="combined_interactive_charts/MarisaA_combined_report_en.html">Marisa-A </a></li>
-    <li><a href="combined_interactive_charts/MarisaB_combined_report_en.html">Marisa-B </a></li>
-    <li><a href="combined_interactive_charts/SakuyaA_combined_report_en.html">Sakuya-A </a></li>
-    <li><a href="combined_interactive_charts/SakuyaB_combined_report_en.html">Sakuya-B </a></li>
-    <li><a href="combined_interactive_charts/CirnoA_combined_report_en.html">Cirno-A </a></li>
-    <li><a href="combined_interactive_charts/CirnoB_combined_report_en.html">Cirno-B </a></li>
-    <li><a href="combined_interactive_charts/KoishiA_combined_report_en.html">Koishi-A </a></li>
-    <li><a href="combined_interactive_charts/KoishiB_combined_report_en.html">Koishi-B </a></li>
-  </ul>
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>怪しいグラフ (Ja ver)</th>
+      <th>potato graph (En ver)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Reimu-A</td>
+      <td><a href="combined_interactive_charts/ReimuA_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/ReimuA_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Reimu-B</td>
+      <td><a href="combined_interactive_charts/ReimuB_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/ReimuB_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Marisa-A</td>
+      <td><a href="combined_interactive_charts/MarisaA_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/MarisaA_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Marisa-B</td>
+      <td><a href="combined_interactive_charts/MarisaB_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/MarisaB_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Sakuya-A</td>
+      <td><a href="combined_interactive_charts/SakuyaA_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/SakuyaA_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Sakuya-B</td>
+      <td><a href="combined_interactive_charts/SakuyaB_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/SakuyaB_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Cirno-A</td>
+      <td><a href="combined_interactive_charts/CirnoA_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/CirnoA_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Cirno-B</td>
+      <td><a href="combined_interactive_charts/CirnoB_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/CirnoB_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Koishi-A</td>
+      <td><a href="combined_interactive_charts/KoishiA_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/KoishiA_combined_report_en.html">Link</a></td>
+    </tr>
+    <tr>
+      <td>Koishi-B</td>
+      <td><a href="combined_interactive_charts/KoishiB_combined_report_ja.html">リンク</a></td>
+      <td><a href="combined_interactive_charts/KoishiB_combined_report_en.html">Link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+  <h2>📖 マニュアル / Manual</h2>
+
+  <!-- 日本語マニュアル -->
+  <details>
+    <summary>📘 日本語マニュアルを開く</summary>
+    <div class="manual-section">
+      <h3>カード性能分析レポートの使い方マニュアル</h3>
+      <p>このレポートは、各キャラクターが使ったカードの「戦闘への貢献度」を様々な角度から分析し、可視化したものです。カードの強さや特性をより深く理解するための手助けとなります。</p>
+      大まかな性能は攻撃性能、防御性能が示す通りですが、より重要なのは<strong>攻撃傾向、防御傾向、信頼性</strong>かと思います。
+
+      <h4>1. 2つの表示モード</h4>
+      <p>このレポートには、目的の異なる2つの表示モードがあります。画面左上のボタンで切り替えられます。</p>
+      <ul>
+        <li><strong>集計ビュー (Aggregated View)</strong>：カードの総合的な強さや特性を把握する基本画面。</li>
+        <li><strong>状況別ビュー (Situational View)</strong>：特定の状況でどのカードが輝くかを分析する画面。</li>
+      </ul>
+
+      <h4>2. グラフ上の指標の意味</h4>
+      <p>グラフの縦軸と横軸、そしてホバー情報は以下の意味を持ちます。</p>
+      <ul>
+        <li><strong>攻撃性能</strong>（縦軸）：「戦闘を早く終わらせる貢献度」</li>
+        <li><strong>防御性能</strong>（横軸）：「被ダメージを抑える貢献度」</li>
+        <li><strong>信頼性</strong>：「パフォーマンスの安定度」 90を下回るカードは不安定なことが多いです。</li>
+        <li><strong>攻撃傾向</strong>：「爆発的な火力を出す上振れ度」 0を超えているカードは比較的活躍します。マイナスでも悪いことはないです。-0.8以下のカードは制約のあるカードかもしれません。</li>
+        <li><strong>防御傾向</strong>：「鉄壁の守りを発揮する上振れ度」 0を超えているカードは比較的活躍します。マイナスでも悪いことはないです。-1以下のカードは手札事故の可能性を秘めています。 </li>
+      </ul>
+
+      <h4>3. 注目カード分析セクション</h4>
+      <ul>
+        <li><strong>スター型</strong>：攻撃や防御の傾向が極めて高く尖ったカード。</li>
+        <li><strong>優等生</strong>：攻防両面で安定したカード。</li>
+        <li><strong>上振れ型 / 堅実型</strong>：攻撃または防御に特化したカード。</li>
+        <li><strong>カウンター型</strong>：特定の局面で決定的な働きをする切り札的カード。</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- 英語マニュアル -->
+  <details>
+    <summary>📗 English Manual (Click to open)</summary>
+    <div class="manual-section">
+		<h3>How to Use the Card Performance Report</h3>
+		<p>
+		This report analyzes and visualizes how each card contributes to combat performance from multiple perspectives.  
+		While <strong>Attack Performance</strong> and <strong>Defense Performance</strong> describe the general power of a card,  
+		the most important factors to consider are <strong>Attack Tendency</strong>, <strong>Defense Tendency</strong>, and <strong>Reliability</strong>.
+		</p>
+
+		<h4>1. Two Display Modes</h4>
+		<p>
+		There are two display modes, each designed for different analytical purposes.  
+		You can switch between them using the buttons at the top-left corner of the screen.
+		</p>
+		<ul>
+		  <li><strong>Aggregated View</strong>: The main view for understanding a card’s overall strength and long-term tendencies.</li>
+		  <li><strong>Situational View</strong>: Highlights which cards perform best under specific conditions or in particular fights.</li>
+		</ul>
+
+		<h4>2. Graph Metrics</h4>
+		<p>
+		The vertical and horizontal axes of the graph, as well as the hover tooltips, represent the following metrics:
+		</p>
+		<ul>
+		  <li><strong>Attack Performance</strong> (Vertical): Indicates how much the card contributes to shortening battles — in other words, its offensive impact.</li>
+		  <li><strong>Defense Performance</strong> (Horizontal): Indicates how much the card contributes to reducing incoming damage — its defensive capability.</li>
+		  <li><strong>Reliability</strong>: Represents performance consistency.  
+		  Cards scoring below <strong>90</strong> tend to be unstable, while those above it are generally dependable performers.</li>
+		  <li><strong>Attack Tendency</strong>: Shows the degree of “explosive offensive potential.”  
+		  Cards with values above <strong>0</strong> often perform well, while negative values are not necessarily bad — they may simply reflect cards with special conditions.  
+		  Values below <strong>-0.8</strong> could indicate cards that require setup or have limitations.</li>
+		  <li><strong>Defense Tendency</strong>: Indicates the degree of “exceptional defensive potential.”  
+		  Cards above <strong>0</strong> tend to perform well defensively, and negative values are not inherently bad either.  
+		  Cards below <strong>-1</strong> may sometimes lead to “hand jam” or risky draws depending on circumstances.</li>
+		</ul>
+
+
+      <h4>3. Spotlight Card Analysis</h4>
+      <ul>
+        <li><strong>Star Players</strong>: Highly impactful cards.</li>
+        <li><strong>Honor Students</strong>: Consistent performers in all cases.</li>
+        <li><strong>High-Potential Attackers / Solid Defenders</strong>: Cards with focused strengths.</li>
+        <li><strong>Counter Cards</strong>: Situational trump cards for key battles.</li>
+      </ul>
+    </div>
+  </details>
 
   <p style="text-align:center; margin-top:3em; font-size:0.9em; color:#666;">
     © 2025 nfwp.github.io
   </p>
+
 </body>
 </html>
