@@ -176,7 +176,7 @@ function createFilterBarHtml() {
 
 function drawPlotlyGraph(char, lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    const aggData = ALL_DATA.agg_data;
+    const aggData = ALL_DATA.agg_data_for_graph; 
     const sitData = ALL_DATA.sit_data;
     const orderedSituations = ALL_DATA.metadata.ordered_situations;
 
@@ -438,22 +438,22 @@ function createHoverText(d, lang) {
 
     const cardName = d[cardNameCol];
 
-    // ★★★ 修正: Wikiリンクのテキストを"(wiki)"に修正 ★★★
+
     const encodedName = encodeURIComponent(cardName.replace(/ /g, '_'));
     const wikiUrl = lang === 'ja'
         ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(cardName)}`
         : `https://lbol.miraheze.org/wiki/${encodedName}`;
     const wikiLinkHtml = `<a href="${wikiUrl}" target="_blank" style="font-size:10px;">(wiki)</a>`;
-    // ★★★ 修正ここまで ★★★
+
 
     const currentViewButtonIndex = GRAPH_DIV.layout.updatemenus[0].active;
     const isAggView = (currentViewButtonIndex === 0);
 
     let sourceData = d;
     if (!isAggView) {
-        const aggCardData = ALL_DATA.agg_data.find(agg_d => agg_d[cardNameCol] === cardName);
+        const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
         if (aggCardData) {
-            sourceData = { ...aggCardData, ...d };
+            sourceData = { ...aggCardData, ...d }; 
         }
     }
 
@@ -586,10 +586,15 @@ function createWikiLink(itemName, itemType, lang) {
     return `<a href="${baseUrl}" target="_blank">${itemName}</a>`;
 }
 
+// script.js の createAnalysisReportsHtml 関数を置き換え
+
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    const aggData = ALL_DATA.agg_data;
+    // ★★★ 修正: ルックアップ用の全データを参照する ★★★
+    const aggData = ALL_DATA.agg_data_full;
     const sitData = ALL_DATA.sit_data;
+
+    if (!aggData || !sitData) return ""; // データがない場合は空文字を返す
 
     const top20Adopted = aggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
     const spotlightHtml = createSpotlightHtml(aggData, cardNameCol, top20Adopted);
@@ -638,6 +643,9 @@ function createAnalysisReportsHtml(lang) {
 
     return `<div id='analysis-reports'>${spotlightHtml}${act1AdoptionHtml}${act1PerfHtml}${act4AdoptionHtml}${act4PerfHtml}</div>${criteriaHtml}`;
 }
+
+
+
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const isLateGameSpecialist = (highlightsStr) => {
