@@ -35,15 +35,20 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     await setupUiText(LANG);
-    
+
     renderGlobalHeader();
-    renderAllTabs(CURRENT_CHAR, LANG);
+
+    // ★★★ 新しいナビゲーション設定関数を呼び出し ★★★
+    setupNavigation();
+
+    // ★★★ 各タブのコンテンツを個別に描画 ★★★
+    renderCardPerformanceTab(CURRENT_CHAR, LANG);
+    renderExhibitAnalysisTab(LANG);
+    renderRouteEventTab(LANG);
+    renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
-
-    // 最初のタブを自動的に開く
-    document.querySelector('.tab-button')?.click();
 });
 
 // =================================================================
@@ -54,8 +59,8 @@ function renderGlobalHeader() {
     const container = document.getElementById('global-header');
     if (!container) return;
     const allChars = ALL_DATA.all_available_characters || [];
-    
-    const options = allChars.map(char => 
+
+    const options = allChars.map(char =>
         `<option value="${char}" ${char === CURRENT_CHAR ? 'selected' : ''}>${char}</option>`
     ).join('');
 
@@ -101,23 +106,98 @@ async function setupUiText(lang) {
     }
 }
 
-function renderAllTabs(char, lang) {
-    renderTabButtons();
-    renderCardPerformanceTab(char, lang);
-    renderExhibitAnalysisTab(lang);
-    renderRouteEventTab(lang);
-    renderEnemyAnalysisTab(char, lang);
-}
+// ★★★ 新しいナビゲーション設定関数 ★★★
+function setupNavigation() {
+    const tabsConfig = [
+        { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
+        { id: 'exhibit-analysis-tab', label: UI_TEXT.exhibit_tab_title },
+        { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
+        { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title }
+    ];
 
-function renderTabButtons() {
-    const container = document.getElementById('tab-buttons');
-    if (!container) return;
-    container.innerHTML = `
-        <button class="tab-button" onclick="openTab(event, 'card-performance-tab')">${UI_TEXT.card_perf_tab_title}</button>
-        <button class="tab-button" onclick="openTab(event, 'exhibit-analysis-tab')">${UI_TEXT.exhibit_tab_title}</button>
-        <button class="tab-button" onclick="openTab(event, 'route-event-tab')">${UI_TEXT.route_tab_title}</button>
-        <button class="tab-button" onclick="openTab(event, 'enemy-analysis-tab')">${UI_TEXT.enemy_analysis_title}</button>
-    `;
+    const tabButtonsContainer = document.getElementById('tab-buttons');
+    const mobileTabSelector = document.getElementById('mobile-tab-selector');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // タブ切り替えを行うコア関数
+    const switchTab = (tabId) => {
+        // すべてのコンテンツを非表示にし、すべてのボタンを非アクティブにする
+        tabContents.forEach(content => {
+            content.style.display = 'none';
+        });
+        if (tabButtonsContainer) {
+            tabButtonsContainer.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+        }
+
+        // 選択されたコンテンツとボタンをアクティブにする
+        const contentToShow = document.getElementById(tabId);
+        if (contentToShow) {
+            contentToShow.style.display = 'block';
+            // タブ内のグラフをリサイズする
+            const graphInTab = contentToShow.querySelector('.plotly-graph-div');
+            if (graphInTab) {
+                // try-catchでエラーをハンドル（グラフがまだ描画されていない場合など）
+                try {
+                    Plotly.Plots.resize(graphInTab);
+                } catch (e) {
+                    // console.warn("Plotly resize failed, maybe graph not ready.", e);
+                }
+            }
+        }
+
+        if (tabButtonsContainer) {
+            const buttonToActivate = tabButtonsContainer.querySelector(`[data-tab-id="${tabId}"]`);
+            if (buttonToActivate) {
+                buttonToActivate.classList.add('active');
+            }
+        }
+
+        // ドロップダウンの値を同期する
+        if (mobileTabSelector) {
+            mobileTabSelector.value = tabId;
+        }
+    };
+
+    // コンテナをクリア
+    if (tabButtonsContainer) tabButtonsContainer.innerHTML = '';
+    if (mobileTabSelector) mobileTabSelector.innerHTML = '';
+
+    // PC用ボタンとモバイル用オプションを生成
+    tabsConfig.forEach(tabConfig => {
+        if (!tabConfig.label) return; // UI_TEXTがロードされる前に呼ばれるのを防ぐ
+
+        // PC用ボタン
+        if (tabButtonsContainer) {
+            const button = document.createElement('button');
+            button.className = 'tab-button';
+            button.textContent = tabConfig.label;
+            button.dataset.tabId = tabConfig.id;
+            button.addEventListener('click', () => switchTab(tabConfig.id));
+            tabButtonsContainer.appendChild(button);
+        }
+
+        // モバイル用オプション
+        if (mobileTabSelector) {
+            const option = document.createElement('option');
+            option.value = tabConfig.id;
+            option.textContent = tabConfig.label;
+            mobileTabSelector.appendChild(option);
+        }
+    });
+
+    // モバイル用ドロップダウンにイベントリスナーを追加
+    if (mobileTabSelector) {
+        mobileTabSelector.addEventListener('change', (e) => {
+            switchTab(e.target.value);
+        });
+    }
+
+    // 初期タブを設定
+    if (tabsConfig.length > 0 && tabsConfig[0].label) {
+        switchTab(tabsConfig[0].id);
+    }
 }
 
 function renderCardPerformanceTab(char, lang) {
@@ -134,60 +214,65 @@ function renderCardPerformanceTab(char, lang) {
     setupGraphFilters(lang);
 }
 
+
 function createFilterBarHtml() {
+    // 開閉ボタンと、フィルター全体を囲むコンテナを追加
     return `
     <div id="custom-filters">
-        <div class="filter-group" id="filter-group-rarity">
-            <label>${UI_TEXT.rarity}:</label>
-            <select id="rarity-filter">
-                <option value="All">${UI_TEXT.filter_all}</option>
-                <option value="Common">Common</option>
-                <option value="Uncommon">Uncommon</option>
-                <option value="Rare">Rare</option>
-            </select>
-        </div>
-        <div class="slider-filter-group" id="filter-group-atk">
-            <label>${UI_TEXT.atk_tendency_filter_label}</label>
-            <div class="slider-container">
-                <input type="checkbox" id="atk-tendency-all" checked>
-                <label for="atk-tendency-all" class="checkbox-label">${UI_TEXT.filter_all}</label>
-                <input type="number" id="atk-tendency-min" class="slider-input" step="0.05">
-                <div id="attack-tendency-slider" class="slider"></div>
-                <input type="number" id="atk-tendency-max" class="slider-input" step="0.05">
+        <div id="filter-toggle-button" class="filter-toggle-button">${UI_TEXT.open_filters || 'フィルターを開く ▼'}</div>
+        <div id="filter-content" class="filter-content collapsed">
+            <div class="filter-group" id="filter-group-rarity">
+                <label>${UI_TEXT.rarity}:</label>
+                <select id="rarity-filter">
+                    <option value="All">${UI_TEXT.filter_all}</option>
+                    <option value="Common">Common</option>
+                    <option value="Uncommon">Uncommon</option>
+                    <option value="Rare">Rare</option>
+                </select>
             </div>
-        </div>
-        <div class="filter-group" id="filter-group-logic">
-            <input type="radio" id="tendency-logic-and" name="tendency-logic" value="and" checked>
-            <label for="tendency-logic-and" class="checkbox-label">${UI_TEXT.tendency_condition_and}</label>
-            <input type="radio" id="tendency-logic-or" name="tendency-logic" value="or">
-            <label for="tendency-logic-or" class="checkbox-label">${UI_TEXT.tendency_condition_or}</label>
-        </div>
-        <div class="slider-filter-group" id="filter-group-def">
-            <label>${UI_TEXT.def_tendency_filter_label}</label>
-            <div class="slider-container">
-                <input type="checkbox" id="def-tendency-all" checked>
-                <label for="def-tendency-all" class="checkbox-label">${UI_TEXT.filter_all}</label>
-                <input type="number" id="def-tendency-min" class="slider-input" step="0.05">
-                <div id="defense-tendency-slider" class="slider"></div>
-                <input type="number" id="def-tendency-max" class="slider-input" step="0.05">
+            <div class="slider-filter-group" id="filter-group-atk">
+                <label>${UI_TEXT.atk_tendency_filter_label}</label>
+                <div class="slider-container">
+                    <input type="checkbox" id="atk-tendency-all" checked>
+                    <label for="atk-tendency-all" class="checkbox-label">${UI_TEXT.filter_all}</label>
+                    <input type="number" id="atk-tendency-min" class="slider-input" step="0.05">
+                    <div id="attack-tendency-slider" class="slider"></div>
+                    <input type="number" id="atk-tendency-max" class="slider-input" step="0.05">
+                </div>
             </div>
-        </div>
-        <div class="filter-group" id="filter-group-medal">
-            <label>${UI_TEXT.medal_filter_label}</label>
-            <select id="medal-filter">
-                <option value="All">${UI_TEXT.medal_filter_all}</option>
-                <option value="Gold">${UI_TEXT.medal_filter_gold}</option>
-                <option value="SilverOrBetter">${UI_TEXT.medal_filter_silver}</option>
-                <option value="BronzeOrBetter">${UI_TEXT.medal_filter_bronze}</option>
-                <option value="None">${UI_TEXT.medal_filter_none}</option>
-            </select>
+            <div class="filter-group" id="filter-group-logic">
+                <input type="radio" id="tendency-logic-and" name="tendency-logic" value="and" checked>
+                <label for="tendency-logic-and" class="checkbox-label">${UI_TEXT.tendency_condition_and}</label>
+                <input type="radio" id="tendency-logic-or" name="tendency-logic" value="or">
+                <label for="tendency-logic-or" class="checkbox-label">${UI_TEXT.tendency_condition_or}</label>
+            </div>
+            <div class="slider-filter-group" id="filter-group-def">
+                <label>${UI_TEXT.def_tendency_filter_label}</label>
+                <div class="slider-container">
+                    <input type="checkbox" id="def-tendency-all" checked>
+                    <label for="def-tendency-all" class="checkbox-label">${UI_TEXT.filter_all}</label>
+                    <input type="number" id="def-tendency-min" class="slider-input" step="0.05">
+                    <div id="defense-tendency-slider" class="slider"></div>
+                    <input type="number" id="def-tendency-max" class="slider-input" step="0.05">
+                </div>
+            </div>
+            <div class="filter-group" id="filter-group-medal">
+                <label>${UI_TEXT.medal_filter_label}</label>
+                <select id="medal-filter">
+                    <option value="All">${UI_TEXT.medal_filter_all}</option>
+                    <option value="Gold">${UI_TEXT.medal_filter_gold}</option>
+                    <option value="SilverOrBetter">${UI_TEXT.medal_filter_silver}</option>
+                    <option value="BronzeOrBetter">${UI_TEXT.medal_filter_bronze}</option>
+                    <option value="None">${UI_TEXT.medal_filter_none}</option>
+                </select>
+            </div>
         </div>
     </div>`;
 }
 
+
 function drawPlotlyGraph(char, lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    // ★★★ 修正: グラフ描画用の 'agg_data_for_graph' を使用します ★★★
     const aggData = ALL_DATA.agg_data_for_graph;
     const sitData = ALL_DATA.sit_data;
     const orderedSituations = ALL_DATA.metadata.ordered_situations;
@@ -256,30 +341,50 @@ function drawPlotlyGraph(char, lang) {
     });
 
     const layout = {
-        height: 800, title: { text: UI_TEXT.agg_title, x: 0.5 },
+        height: 800,
+        title: {
+            text: UI_TEXT.agg_title,
+            x: 0.05,
+            y: 0.98,
+            xanchor: 'left',
+            yanchor: 'top'
+        },
         xaxis: { range: X_RANGE, title: UI_TEXT.xaxis },
         yaxis: { range: Y_RANGE, title: UI_TEXT.yaxis, scaleanchor: "x", scaleratio: 1 },
         hovermode: 'closest',
-        legend: { orientation: "h", yanchor: "bottom", y: 1.02, xanchor: "center", x: 0.5 },
+        legend: {
+            orientation: "h",
+            xanchor: "center",
+            yanchor: "top",
+            x: 0.5,
+            y: -0.15,
+        },
         dragmode: 'pan',
+        modebar: {
+            orientation: 'v',
+        },
         updatemenus: [
             { type: "buttons", direction: "right", active: 0, x: 0, y: 1.08, xanchor: "left", yanchor: "top", buttons: [
                 { label: UI_TEXT.agg_view, method: "update", args: [{ visible: aggVisibility }, { "title.text": UI_TEXT.agg_title, "updatemenus[1].visible": false }] },
                 { label: UI_TEXT.sit_view, method: "update", args: [{ visible: sitVisibilityInitial }, { "title.text": `${UI_TEXT.sit_title}: ${orderedSituations[0] || ''}`, "updatemenus[1].visible": true }] }
             ]},
-            { type: "dropdown", direction: "down", active: 0, x: 0, y: 1.0, xanchor: "left", yanchor: "top", buttons: situationButtons, visible: false, showactive: true },
-            { type: "buttons", direction: "left", x: 1, y: 1.08, xanchor: "right", yanchor: "top", buttons: [
-                { label: UI_TEXT.show_labels, method: "restyle", args: [{ "mode": "markers+text" }] },
-                { label: UI_TEXT.hide_labels, method: "restyle", args: [{ "mode": "markers" }] }
-            ]}
+            { type: "dropdown", direction: "down", active: 0, x: 0, y: 1.0, xanchor: "left", yanchor: "top", buttons: situationButtons, visible: false, showactive: true }
         ],
+        margin: {
+            l: 60,
+            r: 20,
+            t: 80,
+            b: 120
+        },
         shapes: [
             ...[5, 10, 15].map(r => ({ type: "circle", xref: "x", yref: "y", x0: 50 - r, y0: 50 - r, x1: 50 + r, y1: 50 + r, line: { color: "LightGrey", width: 1, dash: "dot" }, layer: "below" })),
             { type: "line", xref: "x", yref: "y", x0: 50, y0: Y_RANGE[0], x1: 50, y1: Y_RANGE[1], line: { color: "grey", width: 1, dash: "dash" }, layer: "below" },
             { type: "line", xref: "x", yref: "y", x0: X_RANGE[0], y0: 50, x1: X_RANGE[1], y1: 50, line: { color: "grey", width: 1, dash: "dash" }, layer: "below" }
         ]
     };
+
     const config = { responsive: true, scrollZoom: true, displaylogo: false, modeBarButtonsToRemove: ['select2d', 'lasso2d'] };
+
     Plotly.newPlot(GRAPH_DIV, traces, layout, config);
 }
 
@@ -287,29 +392,23 @@ function drawPlotlyGraph(char, lang) {
 // ヘルパー関数群
 // =================================================================
 
-function openTab(evt, tabName) {
-    let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tab-button");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    const tabToShow = document.getElementById(tabName);
-    if (tabToShow) {
-        tabToShow.style.display = "block";
-        evt.currentTarget.className += " active";
-
-        const graphInTab = tabToShow.querySelector('.plotly-graph-div');
-        if (graphInTab) {
-            Plotly.Plots.resize(graphInTab);
-        }
-    }
-}
-
 function setupGraphFilters(lang) {
+    const filterToggleButton = document.getElementById('filter-toggle-button');
+    const filterContent = document.getElementById('filter-content');
+
+    if (filterToggleButton && filterContent) {
+        filterToggleButton.addEventListener('click', () => {
+            const isCollapsed = filterContent.classList.contains('collapsed');
+            if (isCollapsed) {
+                filterContent.classList.remove('collapsed');
+                filterToggleButton.textContent = UI_TEXT.close_filters || 'フィルターを閉じる ▲';
+            } else {
+                filterContent.classList.add('collapsed');
+                filterToggleButton.textContent = UI_TEXT.open_filters || 'フィルターを開く ▼';
+            }
+        });
+    }
+
     const rarityFilter = document.getElementById('rarity-filter');
     const medalFilter = document.getElementById('medal-filter');
     const infoBox = document.getElementById('info-box');
@@ -376,6 +475,7 @@ function setupGraphFilters(lang) {
             if (pinnedPoint) { infoBox.classList.remove('visible'); pinnedPoint = null; updateVisuals(null, []); }
         });
     } else {
+
         GRAPH_DIV.on('plotly_hover', e => {
             if (!e.points || e.points.length === 0) return;
             clearTimeout(hideBoxTimeout);
@@ -383,22 +483,31 @@ function setupGraphFilters(lang) {
             infoBox.innerHTML = createHoverText(point.customdata, lang);
             infoBox.style.opacity = 1;
             infoBox.style.transform = 'translateX(0)';
-            infoBox.style.pointerEvents = 'auto';
+            // ★ BUGFIX: pointerEventsはここでは 'auto' にしない
             updateVisuals(point.customdata[(lang === 'ja' ? 'Card_Name' : 'Card_Name_EN')], point.customdata[(lang === 'ja' ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN')] || []);
         });
+
         GRAPH_DIV.on('plotly_unhover', () => {
+            // マウスがinfoBox上になければ、少し遅れて非表示にする
             hideBoxTimeout = setTimeout(() => {
                 infoBox.style.opacity = 0;
                 infoBox.style.transform = 'translateX(20px)';
-                infoBox.style.pointerEvents = 'none';
+                infoBox.style.pointerEvents = 'none'; // 念のため
                 updateVisuals(null, []);
-            }, 900);
+            }, 300);
         });
-        infoBox.addEventListener('mouseenter', () => clearTimeout(hideBoxTimeout));
+
+        // マウスがinfoBoxに乗った時だけ操作可能にする
+        infoBox.addEventListener('mouseenter', () => {
+            clearTimeout(hideBoxTimeout);
+            infoBox.style.pointerEvents = 'auto'; // ここで操作可能にする
+        });
+
+        // マウスがinfoBoxから離れたら、即座に非表示＆操作不能にする
         infoBox.addEventListener('mouseleave', () => {
             infoBox.style.opacity = 0;
             infoBox.style.transform = 'translateX(20px)';
-            infoBox.style.pointerEvents = 'none';
+            infoBox.style.pointerEvents = 'none'; // マウスイベントを透過させる状態に戻す
             updateVisuals(null, []);
         });
     }
@@ -442,7 +551,7 @@ function setupGraphFilters(lang) {
                     infoBox.style.transform = 'translateX(0)';
                     infoBox.style.pointerEvents = 'auto';
                 }
-                
+
                 const partnersCol = (LANG === 'ja') ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN';
                 updateVisuals(pointData[(LANG === 'ja' ? 'Card_Name' : 'Card_Name_EN')], pointData[partnersCol] || []);
                 GRAPH_DIV.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -450,6 +559,7 @@ function setupGraphFilters(lang) {
         });
     }
 }
+
 
 function createHoverText(d, lang) {
     if (!d) return "";
@@ -468,7 +578,7 @@ function createHoverText(d, lang) {
 
     let sourceData = d;
     if (!isAggView) {
-        // ★★★ 修正: 全データを含む 'agg_data_full' から情報を検索します ★★★
+
         const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
         if (aggCardData) {
             sourceData = { ...aggCardData, ...d };
@@ -605,7 +715,7 @@ function createWikiLink(itemName, itemType, lang) {
 
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    // ★★★ 修正: 全データを含む 'agg_data_full' をレポート作成に使用します ★★★
+
     const aggData = ALL_DATA.agg_data_full;
     const sitData = ALL_DATA.sit_data;
 
@@ -905,7 +1015,7 @@ function renderRouteEventTab(lang) {
                             has_content = true;
                             const title_key = `${node_type.toLowerCase()}_${action_type.toLowerCase()}_${item_type.toLowerCase()}`;
                             const title = UI_TEXT[title_key] || UI_TEXT[`${item_type.toLowerCase()}_${action_type.toLowerCase()}`] || `${action_type} ${item_type}`;
-                            
+
                             const lookup_table = (item_type === 'Card') ? ALL_DATA.lookup_tables.cards : ALL_DATA.lookup_tables.exhibits;
                             const name_key = (lang === 'ja') ? 'JA' : 'EN';
 
@@ -923,7 +1033,7 @@ function renderRouteEventTab(lang) {
                         }
                     });
                 });
-                
+
                 if (top_section_html) details_content += `<div class="details-section">${top_section_html}</div>`;
                 if (card_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.card_section_title}</h5><div class="details-grid">${card_grid_content}</div></div>`;
                 if (exhibit_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.exhibit_section_title}</h5><div class="details-grid">${exhibit_grid_content}</div></div>`;
@@ -999,17 +1109,17 @@ function createInlineBoxplotHtml(boxplot_data, scale_min, scale_max, is_negative
         return (clipped_val - calc_scale_min) / data_range * 100;
     };
 
-    const [p_min, q1_pos, median_pos, q3_pos, p_max, mean_pos] = 
+    const [p_min, q1_pos, median_pos, q3_pos, p_max, mean_pos] =
         [calc_b_min, calc_q1, calc_median, calc_q3, calc_b_max, calc_mean].map(to_percent);
-    
+
     const box_left = q1_pos, box_width = q3_pos - q1_pos;
     const w1_left = p_min, w1_width = q1_pos - p_min;
     const w2_left = q3_pos, w2_width = p_max - q3_pos;
 
-    const tooltip = is_negative 
+    const tooltip = is_negative
         ? `最小: ${(-b_max).toFixed(1)}, 25%: ${(-q3).toFixed(1)}, 中央: ${(-median).toFixed(1)}, 75%: ${(-q1).toFixed(1)}, 最大: ${(-b_min).toFixed(1)}, 平均: ${(-mean).toFixed(1)}`
         : `最小: ${b_min.toFixed(1)}, 25%: ${q1.toFixed(1)}, 中央: ${median.toFixed(1)}, 75%: ${q3.toFixed(1)}, 最大: ${b_max.toFixed(1)}, 平均: ${mean.toFixed(1)}`;
-    
+
     const label_start = is_negative ? (-scale_max).toFixed(0) : scale_min.toFixed(0);
     const label_end = is_negative ? (-scale_min).toFixed(0) : scale_max.toFixed(0);
 
@@ -1088,7 +1198,7 @@ function renderEnemyAnalysisTab(char, lang) {
         const rows = sortedData.map(row => {
             const nameCol = (lang === 'ja') ? 'EnemyName_JA' : 'EnemyName_EN';
             const trClass = row.Type === 'EliteEnemy' ? 'elite-enemy' : row.Type === 'Boss' ? 'boss-enemy' : '';
-            
+
             const scales = actScales[row.Act] || {};
             const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, scales.turns_min, scales.turns_max);
             const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, scales.hp_loss_min, scales.hp_loss_max, true);
