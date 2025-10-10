@@ -731,22 +731,99 @@ def get_processed_card_data():
     }
 
 
+# data_processor2.py の一番下の if __name__ == '__main__': ブロックをこれで置き換えてください
+
 if __name__ == '__main__':
-    print("Running data processor as a standalone script for testing...")
+    import json
+    from pathlib import Path
+
+    print("Running data processor to generate dashboard files for web...")
     start = time.perf_counter()
-    dashboard_data = get_processed_card_data()
+
+    # 1. 全キャラクターのデータを一度に生成
+    combined_data = get_processed_card_data()
+
+    if not combined_data:
+        print("No data was generated. Exiting.")
+        exit()
+
+    # 出力先ディレクトリをプロジェクトルートからの相対パスで指定
+    output_dir = Path("card_effectiveness_reports/data")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Output directory: {output_dir.resolve()}")
+
+    # 2. 全てのキャラクターのリストを取得
+    all_chars = sorted(list(combined_data["aggregated_df"]["Character"].unique()))
+    print(f"Found characters: {', '.join(all_chars)}")
+
+    # 3. キャラクターごとにデータを分割してJSONファイルとして保存
+    for char in all_chars:
+        print(f"  Processing data for {char}...")
+
+        # JavaScriptが期待するデータ構造を構築
+        char_dashboard_data = {}
+
+        # --- DataFrameをフィルタリングし、キーの名前を変更して格納 ---
+        # agg_data_for_graph と agg_data_full は同じデータでOK
+        agg_df_char = combined_data["aggregated_df"][combined_data["aggregated_df"]['Character'] == char]
+        char_dashboard_data["agg_data_for_graph"] = agg_df_char.to_dict('records')
+        char_dashboard_data["agg_data_full"] = agg_df_char.to_dict('records')
+
+        # situational_df -> sit_data
+        sit_df_char = combined_data["situational_df"][combined_data["situational_df"]['Character'] == char]
+        char_dashboard_data["sit_data"] = sit_df_char.to_dict('records')
+
+        # exhibits_df -> exhibit_data
+        exhibit_df_char = combined_data["exhibits_df"][combined_data["exhibits_df"]['Character'] == char]
+        char_dashboard_data["exhibit_data"] = exhibit_df_char.to_dict('records')
+
+        # enemy_encounter_summary_df -> enemy_data
+        enemy_df_char = combined_data["enemy_encounter_summary_df"][combined_data["enemy_encounter_summary_df"]['Character'] == char]
+        char_dashboard_data["enemy_data"] = enemy_df_char.to_dict('records')
+
+        # --- route_event_data -> route_data ---
+        route_data_source = combined_data.get("route_event_data", {})
+        char_dashboard_data["route_data"] = {
+            'node_selection': route_data_source.get('node_selection', {}).get(char, {}),
+            'event_actions': route_data_source.get('event_actions', {}).get(char, {}),
+            'node_details': route_data_source.get('node_details', {}).get(char, {}),
+            'total_runs': route_data_source.get('total_runs', {}).get(char, 0)
+        }
+
+        # --- JavaScriptが必要とする追加情報を生成 ---
+        # metadata
+        char_dashboard_data["metadata"] = {
+            "character": char,
+            "version": "2.0", # バージョンはここでハードコードするか、動的に取得
+            "ordered_situations": sorted(list(sit_df_char.groupby(['Act', 'Combat_Type']).groups.keys()), key=lambda x: (x[0], x[1]))
+        }
+
+        # all_available_characters
+        char_dashboard_data["all_available_characters"] = all_chars
+
+        # lookup_tables (カード名や展示品名の参照用)
+        char_dashboard_data["lookup_tables"] = {
+            "cards": cfg.cards_dict,
+            "exhibits": cfg.exhibits_dict,
+            "exhibit_mana_map": {
+                "YinYangOrb": "YinYang", "Moneybag": "YinYang", "MagicBroom": "Magic",
+                "MikoCoin": "Faith", "HakureiAmulet": "Faith", "MoriyaAmulet": "Faith",
+                "RedShooter": "Magic", "BlueShooter": "Magic", "GreenShooter": "Magic",
+                "GrudgeCannon": "YinYang"
+            },
+            "mana_icon_map": {
+                "YinYang": "☯️", "Magic": "⭐", "Faith": "⛩️"
+            }
+        }
+
+        # --- ファイルに保存 ---
+        output_path = output_dir / f"{char}_data.json"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            # ファイルサイズ削減のため、インデントなしで保存
+            json.dump(char_dashboard_data, f, ensure_ascii=False, separators=(',', ':'))
+
+        print(f"    -> Saved to {output_path}")
+
     end = time.perf_counter()
+    print(f"\nTotal data processing and file generation time: {(end - start):.2f} seconds")
 
-    if dashboard_data:
-        print("\n--- Test Run Summary ---")
-        for name, df in dashboard_data.items():
-            if isinstance(df, pd.DataFrame):
-                print(f"Data '{name}' created with {len(df)} rows.")
-            else:
-                print(f"Data '{name}' created.")
-        print(dashboard_data['aggregated_df'].head())
-        print(dashboard_data['exhibits_df'].head())
-        if 'enemy_encounter_summary_df' in dashboard_data:
-            print(dashboard_data['enemy_encounter_summary_df'].head())
-
-    print(f"\nTotal data processing time: {(end - start):.2f} seconds")
