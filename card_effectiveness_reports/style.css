@@ -678,16 +678,31 @@ body {
 /* 箱ひげ図がセル内で正しく表示されるように調整 */
 .sortable-table td .inline-boxplot {
     margin-top: 5px;
+}
 
+/* style.css の末尾をこのコードで置き換え */
+
+/* ルートイベント分析タブのテーブルを常にスクロール可能にする (PC向けデフォルト) */
+#route-analysis-table-wrapper {
+    max-height: 480px; /* 高さを約10-12行分に制限 */
+    overflow-y: auto;  /* 縦方向にスクロールバーを表示 */
+    border: 1px solid #ddd; /* スクロール範囲を分かりやすくするための枠線 */
+    margin-bottom: 20px; /* 下のマス詳細情報との間に余白を設ける */
 }
 
 /* --- スマートフォン表示用のレイアウト調整 --- */
 @media screen and (max-width: 768px) {
-    /* ルートイベント分析タブのテーブルをスクロール可能にする */
+
+    /* スマートフォンでは高さをさらに低くする */
     #route-analysis-table-wrapper {
-        max-height: 320px; /* 高さを約5行分に制限 */
-        overflow-y: auto;  /* 縦方向にスクロールバーを表示 */
-        border: 1px solid #ddd; /* スクロール範囲を分かりやすくするための枠線 */
-        margin-bottom: 20px; /* 下のマス詳細情報との間に余白を設ける */
+        max-height: 320px; /* 高さを約5-6行分に制限 */
     }
+
+    /* メインタイトルを調整 */
+    #main-title {
+        font-size: 1.1em;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+}
 }
