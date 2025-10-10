@@ -680,13 +680,21 @@ body {
     margin-top: 5px;
 }
 
+
 /* ルートイベント分析タブのテーブルのレイアウト */
 #route-analysis-table-wrapper {
     max-height: 480px; /* PCでの高さ制限 */
-    overflow-y: auto;  /* 縦スクロールのみを担当 */
+    overflow-y: auto;  /* ★ 縦スクロールは、この外側の箱だけが担当する */
     border: 1px solid #ddd;
     margin-bottom: 20px;
 }
+
+/* ★★★ このルールを追加してください ★★★ */
+/* 内側の箱が、意図せずスクロールバーを持つことを防ぎます */
+.route-acts-container {
+    overflow: visible; /* はみ出した内容は親(wrapper)のスクロールに任せる、という設定 */
+}
+
 
 /* --- スマートフォン表示用のレイアウト調整 --- */
 @media screen and (max-width: 768px) {
@@ -703,4 +711,3 @@ body {
         word-break: break-word;
     }
 }
-
