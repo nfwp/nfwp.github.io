@@ -42,6 +42,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
 
+    // 最初のタブを自動的に開く
     document.querySelector('.tab-button')?.click();
 });
 
@@ -51,6 +52,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 function renderGlobalHeader() {
     const container = document.getElementById('global-header');
+    if (!container) return;
     const allChars = ALL_DATA.all_available_characters || [];
     
     const options = allChars.map(char => 
@@ -78,6 +80,13 @@ async function setupUiText(lang) {
         if (!response.ok) throw new Error(`Failed to load locale file for ${lang}`);
         let textData = await response.json();
 
+        // メインタイトルを動的に設定
+        const mainTitleEl = document.getElementById('main-title');
+        if (mainTitleEl) {
+            mainTitleEl.textContent = `${ALL_DATA.metadata.character} - ${textData.main_title} (Ver: ${ALL_DATA.metadata.version})`;
+        }
+
+        // グラフ用のタイトルも準備
         textData.agg_title = textData.agg_title
             .replace('{character}', ALL_DATA.metadata.character)
             .replace('{version}', ALL_DATA.metadata.version);
@@ -102,6 +111,7 @@ function renderAllTabs(char, lang) {
 
 function renderTabButtons() {
     const container = document.getElementById('tab-buttons');
+    if (!container) return;
     container.innerHTML = `
         <button class="tab-button" onclick="openTab(event, 'card-performance-tab')">${UI_TEXT.card_perf_tab_title}</button>
         <button class="tab-button" onclick="openTab(event, 'exhibit-analysis-tab')">${UI_TEXT.exhibit_tab_title}</button>
@@ -112,6 +122,7 @@ function renderTabButtons() {
 
 function renderCardPerformanceTab(char, lang) {
     const container = document.getElementById('card-performance-tab');
+    if (!container) return;
     const filterBarHtml = createFilterBarHtml();
     const graphDiv = '<div id="plotly-graph" class="plotly-graph-div" style="width:100%; height:800px;"></div>';
     const analysisReportsHtml = createAnalysisReportsHtml(lang);
@@ -176,9 +187,16 @@ function createFilterBarHtml() {
 
 function drawPlotlyGraph(char, lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    const aggData = ALL_DATA.agg_data;
+    // ★★★ 修正: グラフ描画用の 'agg_data_for_graph' を使用します ★★★
+    const aggData = ALL_DATA.agg_data_for_graph;
     const sitData = ALL_DATA.sit_data;
     const orderedSituations = ALL_DATA.metadata.ordered_situations;
+
+    if (!aggData) {
+        console.error("Graph data (agg_data_for_graph) is missing.");
+        GRAPH_DIV.innerHTML = "グラフデータを読み込めませんでした。";
+        return;
+    }
 
     const traces = [];
     const aggTypes = [...new Set(aggData.map(d => d.Type))].sort();
@@ -280,12 +298,14 @@ function openTab(evt, tabName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     const tabToShow = document.getElementById(tabName);
-    tabToShow.style.display = "block";
-    evt.currentTarget.className += " active";
+    if (tabToShow) {
+        tabToShow.style.display = "block";
+        evt.currentTarget.className += " active";
 
-    const graphInTab = tabToShow.querySelector('.plotly-graph-div');
-    if (graphInTab) {
-        Plotly.Plots.resize(graphInTab);
+        const graphInTab = tabToShow.querySelector('.plotly-graph-div');
+        if (graphInTab) {
+            Plotly.Plots.resize(graphInTab);
+        }
     }
 }
 
@@ -431,27 +451,25 @@ function setupGraphFilters(lang) {
     }
 }
 
-
 function createHoverText(d, lang) {
     if (!d) return "";
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
     const cardName = d[cardNameCol];
 
-    // ★★★ 修正: Wikiリンクのテキストを"(wiki)"に修正 ★★★
     const encodedName = encodeURIComponent(cardName.replace(/ /g, '_'));
     const wikiUrl = lang === 'ja'
         ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(cardName)}`
         : `https://lbol.miraheze.org/wiki/${encodedName}`;
     const wikiLinkHtml = `<a href="${wikiUrl}" target="_blank" style="font-size:10px;">(wiki)</a>`;
-    // ★★★ 修正ここまで ★★★
 
     const currentViewButtonIndex = GRAPH_DIV.layout.updatemenus[0].active;
     const isAggView = (currentViewButtonIndex === 0);
 
     let sourceData = d;
     if (!isAggView) {
-        const aggCardData = ALL_DATA.agg_data.find(agg_d => agg_d[cardNameCol] === cardName);
+        // ★★★ 修正: 全データを含む 'agg_data_full' から情報を検索します ★★★
+        const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
         if (aggCardData) {
             sourceData = { ...aggCardData, ...d };
         }
@@ -524,7 +542,6 @@ function createHoverText(d, lang) {
     return `<div class='info-column'><b>${cardName}</b> ${wikiLinkHtml}<br>${UI_TEXT.type}: ${sourceData.Type}<br>${UI_TEXT.rarity}: ${sourceData.Rarity}<hr style='margin:5px 0;'>${perfHtml}${adoptionHtml}${highlightsHtml}</div><div class='info-column'>${coOccurrenceHtml}</div>`;
 }
 
-
 function updateVisuals(hoveredCardName, synergyPartners) {
     const rarityValue = document.getElementById('rarity-filter').value;
     const medalValue = document.getElementById('medal-filter').value;
@@ -588,8 +605,12 @@ function createWikiLink(itemName, itemType, lang) {
 
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    const aggData = ALL_DATA.agg_data;
+    // ★★★ 修正: 全データを含む 'agg_data_full' をレポート作成に使用します ★★★
+    const aggData = ALL_DATA.agg_data_full;
     const sitData = ALL_DATA.sit_data;
+
+    // ★★★ 追加: データが存在しない場合のガード節 ★★★
+    if (!aggData || aggData.length === 0) return "";
 
     const top20Adopted = aggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
     const spotlightHtml = createSpotlightHtml(aggData, cardNameCol, top20Adopted);
@@ -725,8 +746,8 @@ function createRankedListHtml(reportId, title, description, cardsData, valueLabe
 
 function renderExhibitAnalysisTab(lang) {
     const container = document.getElementById('exhibit-analysis-tab');
-    if (!ALL_DATA.exhibit_data) {
-        container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.exhibit_title}</h3><p>${UI_TEXT.no_data}</p></div>`;
+    if (!container || !ALL_DATA.exhibit_data) {
+        if (container) container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.exhibit_title}</h3><p>${UI_TEXT.no_data}</p></div>`;
         return;
     }
 
@@ -789,6 +810,7 @@ function updateExhibitFilters(value) {
 
 function renderRouteEventTab(lang) {
     const container = document.getElementById('route-event-tab');
+    if (!container) return;
     const routeData = ALL_DATA.route_data;
     if (!routeData || Object.keys(routeData.node_selection).length === 0) {
         container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.route_tab_title}</h3><p>${UI_TEXT.no_data}</p></div>`;
@@ -820,7 +842,7 @@ function renderRouteEventTab(lang) {
         };
     }
 
-    let flowChartHtml = '<div class="route-acts-container">';
+    let flowChartHtml = '<div id="route-analysis-table-wrapper"><div class="route-acts-container">';
     let detailsPanelHtml = `<div class="route-details-panel" id="route-details-panel-content"><p>${UI_TEXT.route_placeholder || 'Select a node from the flowchart to see details.'}</p>`;
 
     for (let act = 1; act < 5; act++) {
@@ -916,7 +938,7 @@ function renderRouteEventTab(lang) {
         flowChartHtml += actHtmlSegment;
     }
 
-    flowChartHtml += '</div>';
+    flowChartHtml += '</div></div>'; // Close route-acts-container and wrapper
     detailsPanelHtml += '</div>';
 
     container.innerHTML = `<div class='analysis-section'>
@@ -1006,10 +1028,9 @@ function createInlineBoxplotHtml(boxplot_data, scale_min, scale_max, is_negative
     </div>`;
 }
 
-
-
 function renderEnemyAnalysisTab(char, lang) {
     const container = document.getElementById('enemy-analysis-tab');
+    if (!container) return;
     const enemyData = ALL_DATA.enemy_data;
     if (!enemyData || enemyData.length === 0) {
         container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.enemy_analysis_title}</h3><p>${UI_TEXT.no_data}</p></div>`;
@@ -1042,21 +1063,18 @@ function renderEnemyAnalysisTab(char, lang) {
         const typeOrderMap = { 'Enemy': 0, 'EliteEnemy': 1, 'Boss': 2 };
         const sortedData = enemyDfChar.sort((a, b) => a.Act - b.Act || (typeOrderMap[a.Type] - typeOrderMap[b.Type]) || a.MinLevel - b.MinLevel);
 
-        // ★★★ Actごとのスケール（箱ひげ図用と背景色用）を事前に計算 ★★★
         const actScales = {};
         const actStats = {};
         const acts = [...new Set(sortedData.map(d => d.Act))];
 
         acts.forEach(act => {
             const actData = sortedData.filter(d => d.Act === act);
-            // 背景色用のスケール
             actStats[act] = {
                 hp_loss_min: Math.min(...actData.map(d => d.Avg_HP_Loss)),
                 hp_loss_max: Math.max(...actData.map(d => d.Avg_HP_Loss)),
                 p_change_min: Math.min(...actData.map(d => d.Avg_P_Change)),
                 p_change_max: Math.max(...actData.map(d => d.Avg_P_Change)),
             };
-            // 箱ひげ図用のスケール
             actScales[act] = {
                 turns_min: Math.min(...actData.map(d => d.TurnsBoxplot?.min ?? Infinity)),
                 turns_max: Math.max(...actData.map(d => d.TurnsBoxplot?.max ?? -Infinity)),
@@ -1071,17 +1089,13 @@ function renderEnemyAnalysisTab(char, lang) {
             const nameCol = (lang === 'ja') ? 'EnemyName_JA' : 'EnemyName_EN';
             const trClass = row.Type === 'EliteEnemy' ? 'elite-enemy' : row.Type === 'Boss' ? 'boss-enemy' : '';
             
-            // 箱ひげ図のHTMLを生成
             const scales = actScales[row.Act] || {};
             const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, scales.turns_min, scales.turns_max);
             const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, scales.hp_loss_min, scales.hp_loss_max, true);
             const pChangeBoxplotHtml = createInlineBoxplotHtml(row.PChangeBoxplot, scales.p_change_min, scales.p_change_max);
 
-            // ★★★ 背景色を計算 ★★★
             const statsForAct = actStats[row.Act] || {};
-            // HPロス: 値が大きいほど悪い(赤) -> reverse_color: false
             const hpColor = getColorForValue(row.Avg_HP_Loss, statsForAct.hp_loss_min, statsForAct.hp_loss_max, false);
-            // P変動: 値が大きいほど良い(緑) -> reverse_color: true
             const pColor = getColorForValue(row.Avg_P_Change, statsForAct.p_change_min, statsForAct.p_change_max, true);
 
             return `
@@ -1108,7 +1122,6 @@ function renderEnemyAnalysisTab(char, lang) {
 
     container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.enemy_analysis_title}</h3>${dropdownHtml}${allTablesHtml}</div>`;
 }
-
 
 function switchEnemyAnalysisCharacter(selectedChar) {
     document.querySelectorAll('.enemy-analysis-char-table').forEach(table => table.style.display = 'none');
