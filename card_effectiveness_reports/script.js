@@ -174,167 +174,96 @@ function createFilterBarHtml() {
     </div>`;
 }
 
-
-
 function drawPlotlyGraph(char, lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    const aggData = ALL_DATA.agg_data_for_graph;
+    const aggData = ALL_DATA.agg_data;
     const sitData = ALL_DATA.sit_data;
     const orderedSituations = ALL_DATA.metadata.ordered_situations;
 
-    document.getElementById('main-title').textContent = `${char} - ${UI_TEXT.main_title} (Ver: ${ALL_DATA.metadata.version})`;
+    const traces = [];
+    const aggTypes = [...new Set(aggData.map(d => d.Type))].sort();
+    const sizerefVal = 2. * Math.max(...aggData.map(d => d.Total_Fights_With)) / (40. ** 2);
 
-    const traces_agg = [{
-        x: aggData.map(d => d.Weighted_Avg_Turn_Deviation),
-        y: aggData.map(d => d.Weighted_Avg_HP_Deviation),
-        text: aggData.map(d => createHoverText(d, lang)),
-        customdata: aggData,
-        mode: 'markers+text',
-        type: 'scatter',
-        marker: {
-            size: aggData.map(d => Math.sqrt(d.Total_Fights_With) / 2.5),
-            color: aggData.map(d => d.Stability_Score),
-            colorscale: 'Viridis',
-            colorbar: { title: UI_TEXT.stability, thickness: 15 },
-            showscale: true,
-            cmin: 75,
-            cmax: 100,
-        },
-        textfont: { size: 11, color: '#333' },
-        textposition: 'top center',
-        hoverinfo: 'text',
-        hoverlabel: { bgcolor: '#FFF', bordercolor: '#333' }
-    }];
-
-    const traces_sit = orderedSituations.map((sit, i) => {
-        const sit_filtered = sitData.filter(d => d.Situation === sit);
-        return {
-            x: sit_filtered.map(d => d.Turn_Deviation),
-            y: sit_filtered.map(d => d.HP_Deviation),
-            text: sit_filtered.map(d => createHoverText(d, lang)),
-            customdata: sit_filtered,
-            mode: 'markers',
-            type: 'scatter',
-            name: sit,
+    aggTypes.forEach(cardType => {
+        const dff = aggData.filter(d => d.Type === cardType);
+        traces.push({
+            x: dff.map(d => d.Weighted_Avg_HP_Deviation),
+            y: dff.map(d => d.Weighted_Avg_Turn_Deviation),
+            mode: 'markers+text', name: cardType, legendgroup: cardType,
+            text: dff.map(d => d[cardNameCol]),
+            textfont: { size: 9, color: "#555" }, textposition: 'middle right',
             marker: {
-                size: 8,
-                color: Plotly.d3.scale.category20().range()[i % 20]
+                color: TYPE_COLOR_MAP[cardType] || '#BDBDBD',
+                size: dff.map(d => d.Total_Fights_With),
+                sizemode: 'area', sizeref: sizerefVal, sizemin: 4, opacity: 0.7, line: { width: 0 }
             },
-            hoverinfo: 'text',
-            hoverlabel: { bgcolor: '#FFF', bordercolor: '#333' }
-        };
+            customdata: dff, hoverinfo: 'none', visible: true
+        });
     });
 
+    orderedSituations.forEach(situation => {
+        const sitDffBase = sitData.filter(d => d.Situation === situation);
+        const maxFightsInSituation = Math.max(...sitDffBase.map(d => d.Fights_With), 0);
+        aggTypes.forEach(cardType => {
+            const dff = sitDffBase.filter(d => d.Type === cardType);
+            if (dff.length === 0) {
+                traces.push({ x: [null], y: [null], mode: 'markers', visible: false, showlegend: false });
+                return;
+            }
+            const bubbleSizes = dff.map(d => (maxFightsInSituation > 0) ? (d.Fights_With / maxFightsInSituation * 40) : 4);
+            traces.push({
+                x: dff.map(d => d.HP_Deviation), y: dff.map(d => d.Turn_Deviation),
+                mode: 'markers+text', name: cardType, legendgroup: cardType,
+                text: dff.map(d => d[cardNameCol]),
+                textfont: { size: 10, color: "#444" }, textposition: 'middle right',
+                marker: {
+                    size: bubbleSizes, sizemin: 4, color: TYPE_COLOR_MAP[cardType] || '#BDBDBD',
+                    opacity: 0.7, line: { width: 0 }
+                },
+                customdata: dff, hoverinfo: 'none', visible: false
+            });
+        });
+    });
 
-    const isMobile = window.innerWidth <= 768;
+    const numAggTraces = aggTypes.length;
+    const numSitTracesPerSituation = aggTypes.length;
+    const totalSitTraces = orderedSituations.length * numSitTracesPerSituation;
+    const aggVisibility = [...Array(numAggTraces).fill(true), ...Array(totalSitTraces).fill(false)];
+    const sitVisibilityInitial = [...Array(numAggTraces).fill(false), ...Array(numSitTracesPerSituation).fill(true), ...Array(totalSitTraces - numSitTracesPerSituation).fill(false)];
+    const situationButtons = orderedSituations.map((situation, i) => {
+        const visibility = Array(numAggTraces + totalSitTraces).fill(false);
+        const startIndex = numAggTraces + (i * numSitTracesPerSituation);
+        for (let j = 0; j < numSitTracesPerSituation; j++) { visibility[startIndex + j] = true; }
+        return { label: situation, method: "update", args: [{ visible: visibility }, { "title.text": `${UI_TEXT.sit_title}: ${situation}` }] };
+    });
 
     const layout = {
-        xaxis: { title: UI_TEXT.attack_perf, range: [25, 75] },
-        yaxis: { title: UI_TEXT.defense_perf, range: [25, 75] },
-        title: false,
+        height: 800, title: { text: UI_TEXT.agg_title, x: 0.5 },
+        xaxis: { range: X_RANGE, title: UI_TEXT.xaxis },
+        yaxis: { range: Y_RANGE, title: UI_TEXT.yaxis, scaleanchor: "x", scaleratio: 1 },
         hovermode: 'closest',
-        showlegend: false,
+        legend: { orientation: "h", yanchor: "bottom", y: 1.02, xanchor: "center", x: 0.5 },
+        dragmode: 'pan',
         updatemenus: [
-            { // View switcher
-                buttons: [
-                    {
-                        method: 'update',
-                        args: [{
-                            'x': [traces_agg[0].x],
-                            'y': [traces_agg[0].y],
-                            'text': [traces_agg[0].text],
-                            'customdata': [traces_agg[0].customdata],
-                            'mode': ['markers+text'],
-                            'marker.colorbar.title.text': [UI_TEXT.stability],
-                            'showlegend': [false]
-                        }, { 'xaxis.title': UI_TEXT.attack_perf, 'yaxis.title': UI_TEXT.defense_perf }],
-                        label: UI_TEXT.agg_view
-                    },
-                    {
-                        method: 'update',
-                        args: [
-                            {
-                                'x': traces_sit.map(t => t.x),
-                                'y': traces_sit.map(t => t.y),
-                                'text': traces_sit.map(t => t.text),
-                                'customdata': traces_sit.map(t => t.customdata),
-                                'mode': 'markers',
-                                'showlegend': true
-                            },
-                            { 'xaxis.title': UI_TEXT.attack_perf_sit, 'yaxis.title': UI_TEXT.defense_perf_sit }
-                        ],
-                        label: UI_TEXT.sit_view
-                    }
-                ],
-                direction: 'down',
-                showactive: true,
-                type: 'buttons',
-                x: isMobile ? 0.5 : 0.5,
-                xanchor: 'center',
-                y: isMobile ? 1.22 : 1.15,
-                yanchor: 'top',
-                pad: { t: 0, r: 10, b: 10, l: 10 },
-                bgcolor: '#f0f0f0',
-                bordercolor: '#ccc',
-                borderwidth: 1
-            },
-            { // Label switcher
-                buttons: [
-                    {
-                        method: 'restyle',
-                        args: ['text', [aggData.map(d => d[cardNameCol])]],
-                        label: UI_TEXT.show_labels
-                    },
-                    {
-                        method: 'restyle',
-                        args: ['text', [aggData.map(d => '')]],
-                        label: UI_TEXT.hide_labels
-                    }
-                ],
-                direction: 'down',
-                showactive: true,
-                type: 'buttons',
-                x: isMobile ? 0.5 : 0.95,
-                xanchor: isMobile ? 'center' : 'right',
-                y: isMobile ? 1.10 : 1.15,
-                yanchor: 'top',
-                pad: { t: 0, r: 10, b: 10, l: 10 },
-                bgcolor: '#f0f0f0',
-                bordercolor: '#ccc',
-                borderwidth: 1
-            }
+            { type: "buttons", direction: "right", active: 0, x: 0, y: 1.08, xanchor: "left", yanchor: "top", buttons: [
+                { label: UI_TEXT.agg_view, method: "update", args: [{ visible: aggVisibility }, { "title.text": UI_TEXT.agg_title, "updatemenus[1].visible": false }] },
+                { label: UI_TEXT.sit_view, method: "update", args: [{ visible: sitVisibilityInitial }, { "title.text": `${UI_TEXT.sit_title}: ${orderedSituations[0] || ''}`, "updatemenus[1].visible": true }] }
+            ]},
+            { type: "dropdown", direction: "down", active: 0, x: 0, y: 1.0, xanchor: "left", yanchor: "top", buttons: situationButtons, visible: false, showactive: true },
+            { type: "buttons", direction: "left", x: 1, y: 1.08, xanchor: "right", yanchor: "top", buttons: [
+                { label: UI_TEXT.show_labels, method: "restyle", args: [{ "mode": "markers+text" }] },
+                { label: UI_TEXT.hide_labels, method: "restyle", args: [{ "mode": "markers" }] }
+            ]}
         ],
-        legend: {
-            orientation: 'h',
-            y: -0.2,
-            x: 0.5,
-            xanchor: 'center'
-        },
-        margin: {
-            t: isMobile ? 100 : 80,
-            l: 60,
-            r: 20,
-            b: 50
-        },
-        annotations: [{
-            xref: 'paper', yref: 'paper',
-            x: 0.5, y: 0.5,
-            text: '<b>50</b>',
-            showarrow: false,
-            font: { size: 100, color: 'rgba(0,0,0,0.05)' }
-        }]
+        shapes: [
+            ...[5, 10, 15].map(r => ({ type: "circle", xref: "x", yref: "y", x0: 50 - r, y0: 50 - r, x1: 50 + r, y1: 50 + r, line: { color: "LightGrey", width: 1, dash: "dot" }, layer: "below" })),
+            { type: "line", xref: "x", yref: "y", x0: 50, y0: Y_RANGE[0], x1: 50, y1: Y_RANGE[1], line: { color: "grey", width: 1, dash: "dash" }, layer: "below" },
+            { type: "line", xref: "x", yref: "y", x0: X_RANGE[0], y0: 50, x1: X_RANGE[1], y1: 50, line: { color: "grey", width: 1, dash: "dash" }, layer: "below" }
+        ]
     };
-
-
-    Plotly.newPlot(GRAPH_DIV, traces_agg, layout, { responsive: true, displaylogo: false });
-    GRAPH_DIV.on('plotly_click', (data) => {
-        const cardName = data.points[0].customdata[cardNameCol];
-        if (cardName) {
-            updateNetworkGraph(cardName, lang);
-        }
-    });
+    const config = { responsive: true, scrollZoom: true, displaylogo: false, modeBarButtonsToRemove: ['select2d', 'lasso2d'] };
+    Plotly.newPlot(GRAPH_DIV, traces, layout, config);
 }
-
 
 // =================================================================
 // ヘルパー関数群
@@ -509,22 +438,22 @@ function createHoverText(d, lang) {
 
     const cardName = d[cardNameCol];
 
-
+    // ★★★ 修正: Wikiリンクのテキストを"(wiki)"に修正 ★★★
     const encodedName = encodeURIComponent(cardName.replace(/ /g, '_'));
     const wikiUrl = lang === 'ja'
         ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(cardName)}`
         : `https://lbol.miraheze.org/wiki/${encodedName}`;
     const wikiLinkHtml = `<a href="${wikiUrl}" target="_blank" style="font-size:10px;">(wiki)</a>`;
-
+    // ★★★ 修正ここまで ★★★
 
     const currentViewButtonIndex = GRAPH_DIV.layout.updatemenus[0].active;
     const isAggView = (currentViewButtonIndex === 0);
 
     let sourceData = d;
     if (!isAggView) {
-        const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
+        const aggCardData = ALL_DATA.agg_data.find(agg_d => agg_d[cardNameCol] === cardName);
         if (aggCardData) {
-            sourceData = { ...aggCardData, ...d }; 
+            sourceData = { ...aggCardData, ...d };
         }
     }
 
@@ -657,15 +586,10 @@ function createWikiLink(itemName, itemType, lang) {
     return `<a href="${baseUrl}" target="_blank">${itemName}</a>`;
 }
 
-// script.js の createAnalysisReportsHtml 関数を置き換え
-
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-    // ★★★ 修正: ルックアップ用の全データを参照する ★★★
-    const aggData = ALL_DATA.agg_data_full;
+    const aggData = ALL_DATA.agg_data;
     const sitData = ALL_DATA.sit_data;
-
-    if (!aggData || !sitData) return ""; // データがない場合は空文字を返す
 
     const top20Adopted = aggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
     const spotlightHtml = createSpotlightHtml(aggData, cardNameCol, top20Adopted);
@@ -714,9 +638,6 @@ function createAnalysisReportsHtml(lang) {
 
     return `<div id='analysis-reports'>${spotlightHtml}${act1AdoptionHtml}${act1PerfHtml}${act4AdoptionHtml}${act4PerfHtml}</div>${criteriaHtml}`;
 }
-
-
-
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const isLateGameSpecialist = (highlightsStr) => {
