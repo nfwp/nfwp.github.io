@@ -680,14 +680,20 @@ body {
     margin-top: 5px;
 }
 
-/* style.css の末尾をこのコードで置き換え */
-
-/* ルートイベント分析タブのテーブルを常にスクロール可能にする (PC向けデフォルト) */
+/* ルートイベント分析タブのテーブルのレイアウト */
 #route-analysis-table-wrapper {
-    max-height: 480px; /* 高さを約10-12行分に制限 */
-    overflow-y: auto;  /* 縦方向にスクロールバーを表示 */
-    border: 1px solid #ddd; /* スクロール範囲を分かりやすくするための枠線 */
-    margin-bottom: 20px; /* 下のマス詳細情報との間に余白を設ける */
+    max-height: 480px; /* PCでの高さ制限 */
+    overflow-y: auto;  /* ★ 縦スクロールはここで担当 */
+    overflow-x: hidden; /* 横スクロールはさせない */
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.route-acts-container {
+    display: flex;       /* 子要素（Actカラム）を横に並べる */
+    overflow-x: auto;  /* ★ 横スクロールはここで担当 */
+    overflow-y: hidden; /* 縦スクロールは絶対にさせない */
+    padding-bottom: 15px; /* 横スクロールバーがコンテンツに重ならないように余白を確保 */
 }
 
 /* --- スマートフォン表示用のレイアウト調整 --- */
@@ -695,7 +701,7 @@ body {
 
     /* スマートフォンでは高さをさらに低くする */
     #route-analysis-table-wrapper {
-        max-height: 320px; /* 高さを約5-6行分に制限 */
+        max-height: 320px;
     }
 
     /* メインタイトルを調整 */
@@ -704,5 +710,4 @@ body {
         line-height: 1.4;
         word-break: break-word;
     }
-}
 }
