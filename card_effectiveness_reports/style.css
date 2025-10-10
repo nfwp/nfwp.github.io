@@ -683,17 +683,9 @@ body {
 /* ルートイベント分析タブのテーブルのレイアウト */
 #route-analysis-table-wrapper {
     max-height: 480px; /* PCでの高さ制限 */
-    overflow-y: auto;  /* ★ 縦スクロールはここで担当 */
-    overflow-x: hidden; /* 横スクロールはさせない */
+    overflow-y: auto;  /* 縦スクロールのみを担当 */
     border: 1px solid #ddd;
     margin-bottom: 20px;
-}
-
-.route-acts-container {
-    display: flex;       /* 子要素（Actカラム）を横に並べる */
-    overflow-x: auto;  /* ★ 横スクロールはここで担当 */
-    overflow-y: hidden; /* 縦スクロールは絶対にさせない */
-    padding-bottom: 15px; /* 横スクロールバーがコンテンツに重ならないように余白を確保 */
 }
 
 /* --- スマートフォン表示用のレイアウト調整 --- */
@@ -711,3 +703,4 @@ body {
         word-break: break-word;
     }
 }
+
