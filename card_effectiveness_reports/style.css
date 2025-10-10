@@ -678,4 +678,16 @@ body {
 /* 箱ひげ図がセル内で正しく表示されるように調整 */
 .sortable-table td .inline-boxplot {
     margin-top: 5px;
+
+}
+
+/* --- スマートフォン表示用のレイアウト調整 --- */
+@media screen and (max-width: 768px) {
+    /* ルートイベント分析タブのテーブルをスクロール可能にする */
+    #route-analysis-table-wrapper {
+        max-height: 320px; /* 高さを約5行分に制限 */
+        overflow-y: auto;  /* 縦方向にスクロールバーを表示 */
+        border: 1px solid #ddd; /* スクロール範囲を分かりやすくするための枠線 */
+        margin-bottom: 20px; /* 下のマス詳細情報との間に余白を設ける */
+    }
 }
