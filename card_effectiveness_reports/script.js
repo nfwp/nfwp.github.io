@@ -494,7 +494,7 @@ function setupGraphFilters(lang) {
                 infoBox.style.transform = 'translateX(20px)';
                 infoBox.style.pointerEvents = 'none'; // 念のため
                 updateVisuals(null, []);
-            }, 900);
+            }, 1200);
         });
 
         // マウスがinfoBoxに乗った時だけ操作可能にする
@@ -1263,3 +1263,4 @@ function sortTable(tableId, columnIndex, type) {
     rows.forEach(row => tbody.appendChild(row));
 
 }
+
