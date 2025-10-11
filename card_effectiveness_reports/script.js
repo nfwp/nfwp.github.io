@@ -785,33 +785,31 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
     return `<div id="attention-ranking-report" class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
 }
 
-
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
-    // 1. まず、ランキングに表示すべき「ランク付け可能」なカードだけをフィルタリングします。
-    //    (傾向スコアが null、つまり N/A ではないカード)
+    // ランク付け可能なカード（＝グラフに表示されるカード）のみを対象にフィルタリング
     const rankableAggData = ALL_DATA.agg_data_full.filter(d => d.Turn_Tendency !== null && d.HP_Tendency !== null);
 
     if (!rankableAggData || rankableAggData.length === 0) {
-        // 表示できるカードがない場合は、ここで処理を終了します。
         return `<div id='analysis-reports'><p>${UI_TEXT.no_data || '表示できるデータがありません。'}</p></div>`;
     }
 
-    // 2. ランク付け可能なカード名のリスト（Set）を作成し、後のフィルタリングで高速に使えるようにします。
     const rankableCardNames = new Set(rankableAggData.map(d => d[cardNameCol]));
-
-    // 3. フィルタリング後のデータを使って、各ランキングを生成します。
     const top20Adopted = rankableAggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
 
-    // ★★★ 「注目のカード」も、フィルタリング済みの rankableAggData から生成します ★★★
+    // 各レポートのHTMLを生成
     const spotlightHtml = createSpotlightHtml(rankableAggData, cardNameCol, top20Adopted);
+    const attentionRankingHtml = createAttentionRankingHtml(rankableAggData, cardNameCol, lang);
 
-    // Act1とAct4のデータも、ランク付け可能なカードのみに絞り込みます。
+    // ★★★ ここで新しいランキングのHTMLを生成します ★★★
+    const upgradeRankingHtml = createUpgradeRankingHtml(ALL_DATA.upgrade_ranking_data, cardNameCol, lang);
+    const removeRankingHtml = createRemoveRankingHtml(ALL_DATA.remove_ranking_data, cardNameCol, lang);
+
+    // Act1とAct4のデータも、ランク付け可能なカードのみに絞り込み
     const act1Data = ALL_DATA.sit_data.filter(d => d.Act === 1 && rankableCardNames.has(d[cardNameCol]));
     const act4Data = ALL_DATA.sit_data.filter(d => d.Act === 4 && rankableCardNames.has(d[cardNameCol]));
 
-    // このヘルパー関数は変更なし
     const createRankings = (data, nameCol) => {
         const perfMap = new Map();
         const adoptionMap = new Map();
@@ -832,18 +830,13 @@ function createAnalysisReportsHtml(lang) {
         return { topPerformers, topAdoption };
     };
 
-    // 絞り込んだデータでランキングを生成
     const act1Rankings = createRankings(act1Data, cardNameCol);
     const act4Rankings = createRankings(act4Data, cardNameCol);
 
-    // すべてのランキングを生成し直します
     const act1AdoptionHtml = createRankedListHtml("act1-adoption-report", UI_TEXT.act1_top_adoption_title, UI_TEXT.act1_top_adoption_desc, act1Rankings.topAdoption.slice(0, 20), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
     const act1PerfHtml = createRankedListHtml("act1-performers-report", UI_TEXT.act1_top_performers_title, UI_TEXT.act1_top_performers_desc, act1Rankings.topPerformers.slice(0, 20), "Score", ".1f");
     const act4AdoptionHtml = createRankedListHtml("act4-adoption-report", UI_TEXT.act4_top_adoption_title, UI_TEXT.act4_top_adoption_desc, act4Rankings.topAdoption.slice(0, 40), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
     const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.act4_top_performers_title, UI_TEXT.act4_top_performers_desc, act4Rankings.topPerformers.slice(0, 40), "Score", ".1f");
-
-    // 注目度ランキングも、フィルタリング後のデータから生成
-    const attentionRankingHtml = createAttentionRankingHtml(rankableAggData, cardNameCol, lang);
 
     const criteriaHtml = `
         <div id='criteria-explanation' class="analysis-section">
@@ -856,8 +849,19 @@ function createAnalysisReportsHtml(lang) {
             <h4>${UI_TEXT.spotlight_cat4_title}</h4><ul><li>${UI_TEXT.counter_cond1}</li></ul>
         </div>`;
 
-    // HTMLの結合順も、すべてのランキングが含まれるように修正
-    return `<div id='analysis-reports'>${spotlightHtml}${act1AdoptionHtml}${act1PerfHtml}${act4AdoptionHtml}${act4PerfHtml}${attentionRankingHtml}</div>${criteriaHtml}`;
+    // ★★★ 修正後の部分 ★★★
+    // 全てのHTML文字列を正しい順序で結合して返します。
+    return `<div id='analysis-reports'>
+                ${spotlightHtml}
+                ${attentionRankingHtml}
+                ${upgradeRankingHtml}
+                ${removeRankingHtml}
+                ${act1AdoptionHtml}
+                ${act1PerfHtml}
+                ${act4AdoptionHtml}
+                ${act4PerfHtml}
+            </div>
+            ${criteriaHtml}`;
 }
 
 
@@ -1352,4 +1356,88 @@ function sortTable(tableId, columnIndex, type) {
         return isAsc ? valA.localeCompare(valB, undefined, {numeric: true}) : valB.localeCompare(valA, undefined, {numeric: true});
     });
     rows.forEach(row => tbody.appendChild(row));
+}
+
+// script.js に以下の2つの関数を追加
+
+/**
+ * Gap/Shopでのカード強化ランキングのHTMLを生成します。
+ */
+function createUpgradeRankingHtml(rankingData, cardNameCol, lang) {
+    const topN = 20;
+    const sortedData = [...rankingData]
+        .sort((a, b) => b.Upgrade_Count - a.Upgrade_Count)
+        .slice(0, topN);
+
+    if (sortedData.length === 0) return '';
+
+    const isJa = lang === 'ja';
+    const title = isJa ? 'Gap/Shop カード強化ランキング' : 'Gap/Shop Card Upgrade Ranking';
+    const description = isJa ? 'GapまたはShopで強化された回数の多いカードです。' : 'Cards most frequently upgraded at Gaps or Shops.';
+    const countLabel = isJa ? '強化回数' : 'Upgrades';
+
+    // ★★★ ここからレイアウト修正 ★★★
+    const splitPoint = Math.ceil(sortedData.length / 2);
+    const col1Data = sortedData.slice(0, splitPoint);
+    const col2Data = sortedData.slice(splitPoint);
+
+    const createLi = (d) => {
+        const cardName = d[cardNameCol];
+        const stats = `${countLabel}: ${d.Upgrade_Count}`;
+        return `<li><strong class="spotlight-card" data-card-name="${d['Card_Name']}" style="cursor:pointer;">${cardName}</strong> (${stats})</li>`;
+    };
+
+    const listItems1 = col1Data.map(createLi).join('');
+    const listItems2 = col2Data.map(createLi).join('');
+
+    const listHtml = `
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+            <ol style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems1}</ol>
+            ${col2Data.length > 0 ? `<ol start="${splitPoint + 1}" style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems2}</ol>` : ''}
+        </div>
+    `;
+
+    return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
+    // ★★★ ここまで ★★★
+}
+
+/**
+ * Shopでのカード削除ランキングのHTMLを生成します。
+ */
+function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
+    const topN = 20;
+    const sortedData = [...rankingData]
+        .sort((a, b) => b.Remove_Count - a.Remove_Count)
+        .slice(0, topN);
+
+    if (sortedData.length === 0) return '';
+
+    const isJa = lang === 'ja';
+    const title = isJa ? 'Shop カード削除ランキング' : 'Shop Card Remove Ranking';
+    const description = isJa ? 'Shopで削除された回数の多いカードです。初期デッキのカードが多くランクインする傾向があります。' : 'Cards most frequently removed at Shops. Initial deck cards tend to rank high.';
+    const countLabel = isJa ? '削除回数' : 'Removes';
+
+    // ★★★ ここからレイアウト修正 ★★★
+    const splitPoint = Math.ceil(sortedData.length / 2);
+    const col1Data = sortedData.slice(0, splitPoint);
+    const col2Data = sortedData.slice(splitPoint);
+
+    const createLi = (d) => {
+        const cardName = d[cardNameCol];
+        const stats = `${countLabel}: ${d.Remove_Count}`;
+        return `<li><strong class="spotlight-card" data-card-name="${d['Card_Name']}" style="cursor:pointer;">${cardName}</strong> (${stats})</li>`;
+    };
+
+    const listItems1 = col1Data.map(createLi).join('');
+    const listItems2 = col2Data.map(createLi).join('');
+
+    const listHtml = `
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+            <ol style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems1}</ol>
+            ${col2Data.length > 0 ? `<ol start="${splitPoint + 1}" style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems2}</ol>` : ''}
+        </div>
+    `;
+
+    return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
+    // ★★★ ここまで ★★★
 }
