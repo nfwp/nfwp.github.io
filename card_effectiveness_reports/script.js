@@ -198,20 +198,34 @@ function renderCardPerformanceTab(char, lang) {
     setupGraphFilters(lang);
 }
 
-
 function createFilterBarHtml() {
     return `
     <div id="custom-filters">
         <div id="filter-toggle-button" class="filter-toggle-button">${UI_TEXT.open_filters || 'フィルターを開く ▼'}</div>
         <div id="filter-content" class="filter-content collapsed">
-            <div class="filter-group" id="filter-group-rarity">
-                <label>${UI_TEXT.rarity}:</label>
-                <select id="rarity-filter">
-                    <option value="All">${UI_TEXT.filter_all}</option>
-                    <option value="Common">Common</option>
-                    <option value="Uncommon">Uncommon</option>
-                    <option value="Rare">Rare</option>
-                </select>
+
+            <!-- ★★★ レアリティとメダルを横に並べるためのコンテナを追加 ★★★ -->
+            <div class="filter-row">
+                <div class="filter-group" id="filter-group-rarity">
+                    <label>${UI_TEXT.rarity}:</label>
+                    <select id="rarity-filter">
+                        <option value="All">${UI_TEXT.filter_all}</option>
+                        <option value="Common">Common</option>
+                        <option value="Uncommon">Uncommon</option>
+                        <option value="Rare">Rare</option>
+                    </select>
+                </div>
+
+                <div class="filter-group" id="filter-group-medal">
+                    <label>${UI_TEXT.medal_filter_label}</label>
+                    <select id="medal-filter">
+                        <option value="All">${UI_TEXT.medal_filter_all}</option>
+                        <option value="Gold">${UI_TEXT.medal_filter_gold}</option>
+                        <option value="SilverOrBetter">${UI_TEXT.medal_filter_silver}</option>
+                        <option value="BronzeOrBetter">${UI_TEXT.medal_filter_bronze}</option>
+                        <option value="None">${UI_TEXT.medal_filter_none}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="slider-filter-group" id="filter-group-attention">
@@ -248,20 +262,9 @@ function createFilterBarHtml() {
                     <input type="number" id="def-tendency-max" class="slider-input" step="0.05">
                 </div>
             </div>
-            <div class="filter-group" id="filter-group-medal">
-                <label>${UI_TEXT.medal_filter_label}</label>
-                <select id="medal-filter">
-                    <option value="All">${UI_TEXT.medal_filter_all}</option>
-                    <option value="Gold">${UI_TEXT.medal_filter_gold}</option>
-                    <option value="SilverOrBetter">${UI_TEXT.medal_filter_silver}</option>
-                    <option value="BronzeOrBetter">${UI_TEXT.medal_filter_bronze}</option>
-                    <option value="None">${UI_TEXT.medal_filter_none}</option>
-                </select>
-            </div>
         </div>
     </div>`;
 }
-
 
 function drawPlotlyGraph(char, lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';

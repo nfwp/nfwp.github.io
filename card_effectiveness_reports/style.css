@@ -907,3 +907,135 @@ body {
     }
 }
 
+/* 注目度フィルターのコンテナに上下の余白を追加して操作エリアを確保 */
+#filter-group-attention .slider-container-single {
+    /* 上下の余白を増やして、他の要素との間隔を確保 */
+    padding: 18px 5px;
+}
+
+/* 注目度スライダーのバー自体を太くする */
+#attention-score-slider.noUi-target {
+    height: 10px; /* バーの太さ */
+    border-radius: 5px; /* 角を丸くする */
+}
+
+/* 注目度スライダーのハンドル（つまみ）を大きくする */
+#attention-score-slider .noUi-handle {
+    width: 24px;  /* つまみの幅 */
+    height: 24px; /* つまみの高さ */
+
+
+    /* 位置調整（重要） */
+    right: -12px; /* 幅の半分だけ外側にずらす */
+    top: -7px;    /* (バーの高さ - つまみの高さ) / 2 */
+
+    cursor: pointer; /* カーソルを指マークにする */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3); /* 少し影をつけて立体感を出す */
+}
+
+/* (任意) ハンドルがフォーカスされた時の青い枠線を消す */
+#attention-score-slider .noUi-handle:focus {
+    outline: none;
+}
+
+/* 注目度フィルターのグループ全体を長くして、スライダーの長さを確保する */
+#filter-group-attention {
+    /* 他のフィルター項目よりも多くのスペースを占有させる */
+    flex-grow: 1;
+
+    /* 最低でもこの幅を確保する（お好みで調整してください） */
+    min-width: 350px;
+}
+/* =================================== */
+/* モバイル表示用のレイアウト調整 (768px以下) */
+/* =================================== */
+@media (max-width: 768px) {
+
+    /* フィルター全体のコンテナ(#custom-filters)を縦並びにする */
+    #custom-filters {
+        flex-direction: column;   /* 縦並びにする */
+        align-items: stretch;     /* 各項目を親の幅いっぱいに広げる */
+        gap: 0;                   /* 項目間の隙間は一旦リセット */
+    }
+
+    /* 各フィルターグループのスタイル */
+    .filter-group, .slider-filter-group {
+        flex-direction: column;     /* ラベルと入力欄を縦に並べる */
+        align-items: flex-start;    /* 左揃えにする */
+        width: 100%;                /* 幅を100%に */
+        padding-bottom: 20px;       /* 下に余白を追加 */
+        margin-bottom: 20px;        /* 下にマージンを追加 */
+        border-bottom: 1px solid #eee; /* 区切り線を追加 */
+    }
+
+    /* 最後の項目だけ区切り線を消す */
+    .filter-group:last-child, .slider-filter-group:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    /* スライダーのコンテナの幅を100%に */
+    .slider-container, .slider-container-single {
+        width: 100%;
+        padding-left: 10px;  /* 左右に少し余白を追加 */
+        padding-right: 10px;
+        box-sizing: border-box; /* paddingを含めて幅100%にする */
+    }
+
+    /* スライダー自体の幅も100%に */
+    .slider {
+        width: 100%;
+    }
+
+    /* PC用に設定した注目度フィルターの最低幅をリセット */
+    #filter-group-attention {
+        min-width: auto; /* 縦並びになるので最低幅は不要 */
+    }
+}
+
+/* =================================== */
+/* フィルターの横並び設定 */
+/* =================================== */
+
+/* レアリティとメダルを囲む新しいコンテナのスタイル */
+.filter-row {
+    display: flex;
+    gap: 20px; /* PC表示でのフィルター間の隙間 */
+    align-items: center;
+}
+
+/* PC表示では、中の要素がスペースを分け合うように */
+.filter-row .filter-group {
+    flex: 1;
+}
+
+
+/* --- モバイル表示用の調整 (768px以下) --- */
+@media (max-width: 768px) {
+    /* .filter-row 自体は、他のフィルターグループと同様に縦に並ぶ */
+    .filter-row {
+        /* 見た目を他のグループと合わせる */
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        gap: 15px; /* モバイルでの隙間を調整 */
+    }
+
+    /* ★★★ ここが重要 ★★★ */
+    /* .filter-row の中の .filter-group には、縦並びスタイルを適用せず、横並びを維持する */
+    .filter-row .filter-group {
+        flex-direction: row; /* 横並びを維持 */
+        flex: 1;             /* スペースを分け合う */
+        width: auto;         /* 幅は自動 */
+        border-bottom: none; /* 個別の区切り線は不要 */
+        padding-bottom: 0;   /* 個別のパディングも不要 */
+        margin-bottom: 0;
+        gap: 8px;            /* ラベルとセレクトの間の隙間 */
+    }
+
+    /* ラベルとセレクトボックスのレイアウトを微調整 */
+    .filter-row .filter-group select {
+        flex-grow: 1; /* 空きスペースを埋める */
+    }
+}
