@@ -412,7 +412,36 @@ function setupGraphFilters(lang) {
     const rarityFilter = document.getElementById('rarity-filter');
     const medalFilter = document.getElementById('medal-filter');
     const infoBox = document.getElementById('info-box');
+
+
+
     let hideBoxTimeout = null;
+    // ツールチップが消えるまでの時間（ミリ秒）。この数字を大きくすると、よりゆっくり消えます。
+    const HIDE_DELAY = 1200;
+
+    // ツールチップを隠すタイマーを開始する関数
+    const startHideTimer = () => {
+        clearTimeout(hideBoxTimeout); // 既にタイマーがあればキャンセル
+        hideBoxTimeout = setTimeout(() => {
+            if (infoBox) {
+                infoBox.style.opacity = 0;
+                infoBox.style.transform = 'translateX(20px)';
+                infoBox.style.pointerEvents = 'none'; // 非表示中はマウスイベントを無効化
+            }
+            updateVisuals(null, []);
+        }, HIDE_DELAY);
+    };
+
+    // ツールチップを隠すタイマーをキャンセルする関数
+    const cancelHideTimer = () => {
+        clearTimeout(hideBoxTimeout);
+    };
+
+
+
+
+    const attentionSliderEl = document.getElementById('attention-score-slider');
+    const attentionValueEl = document.getElementById('attention-score-value');
 
     const atkSliderEl = document.getElementById('attack-tendency-slider');
     const defSliderEl = document.getElementById('defense-tendency-slider');
@@ -423,6 +452,22 @@ function setupGraphFilters(lang) {
     const atkMaxInput = document.getElementById('atk-tendency-max');
     const defMinInput = document.getElementById('def-tendency-min');
     const defMaxInput = document.getElementById('def-tendency-max');
+
+    if (attentionSliderEl) {
+        attentionSlider = noUiSlider.create(attentionSliderEl, {
+            start: 30,
+            range: { 'min': 30, 'max': 70 },
+            step: 1,
+            format: { to: v => Math.round(v), from: v => Number(v) }
+        });
+        attentionSlider.on('update', (values, handle) => {
+            if (attentionValueEl) {
+                attentionValueEl.textContent = `≥ ${values[handle]}`;
+            }
+        });
+        attentionSlider.on('change', () => updateVisuals(null, []));
+    }
+
 
     function createSlider(element, minInput, maxInput) {
         if (!element) return null;
@@ -475,40 +520,35 @@ function setupGraphFilters(lang) {
             if (pinnedPoint) { infoBox.classList.remove('visible'); pinnedPoint = null; updateVisuals(null, []); }
         });
     } else {
-
+        // ★★★ デスクトップ用のホバーロジックを修正 ★★★
         GRAPH_DIV.on('plotly_hover', e => {
             if (!e.points || e.points.length === 0) return;
-            clearTimeout(hideBoxTimeout);
+
+            // 隠すタイマーをキャンセル
+            cancelHideTimer();
+
             const point = e.points[0];
             infoBox.innerHTML = createHoverText(point.customdata, lang);
             infoBox.style.opacity = 1;
             infoBox.style.transform = 'translateX(0)';
-            // ★ BUGFIX: pointerEventsはここでは 'auto' にしない
+            infoBox.style.pointerEvents = 'auto'; // マウスを乗せられるようにする
+
             updateVisuals(point.customdata[(lang === 'ja' ? 'Card_Name' : 'Card_Name_EN')], point.customdata[(lang === 'ja' ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN')] || []);
         });
 
+        // グラフの点からマウスが離れたら、隠すタイマーを開始
         GRAPH_DIV.on('plotly_unhover', () => {
-            // マウスがinfoBox上になければ、少し遅れて非表示にする
-            hideBoxTimeout = setTimeout(() => {
-                infoBox.style.opacity = 0;
-                infoBox.style.transform = 'translateX(20px)';
-                infoBox.style.pointerEvents = 'none'; // 念のため
-                updateVisuals(null, []);
-            }, 1200);
+            startHideTimer();
         });
 
-        // マウスがinfoBoxに乗った時だけ操作可能にする
+        // ツールチップにマウスが乗ったら、隠すタイマーをキャンセル
         infoBox.addEventListener('mouseenter', () => {
-            clearTimeout(hideBoxTimeout);
-            infoBox.style.pointerEvents = 'auto'; // ここで操作可能にする
+            cancelHideTimer();
         });
 
-        // マウスがinfoBoxから離れたら、即座に非表示＆操作不能にする
+        // ツールチップからマウスが離れたら、隠すタイマーを開始
         infoBox.addEventListener('mouseleave', () => {
-            infoBox.style.opacity = 0;
-            infoBox.style.transform = 'translateX(20px)';
-            infoBox.style.pointerEvents = 'none'; // マウスイベントを透過させる状態に戻す
-            updateVisuals(null, []);
+            startHideTimer();
         });
     }
 
@@ -518,7 +558,7 @@ function setupGraphFilters(lang) {
     const analysisReports = document.getElementById('analysis-reports');
     if (analysisReports) {
         analysisReports.addEventListener('click', function(e) {
-            const clickableCard = e.target.closest('.spotlight-card');
+            const clickableCard = e.target.closest('.spotlight-card, .card-name-cell');
             if (!clickableCard) return;
 
             const cardNameToHighlight = clickableCard.dataset.cardName;
@@ -545,7 +585,7 @@ function setupGraphFilters(lang) {
                     infoBox.innerHTML = createHoverText(pointData, lang);
                     infoBox.classList.add('visible');
                 } else {
-                    clearTimeout(hideBoxTimeout);
+                    cancelHideTimer(); // 新しいのを表示する前にタイマーを止める
                     infoBox.innerHTML = createHoverText(pointData, lang);
                     infoBox.style.opacity = 1;
                     infoBox.style.transform = 'translateX(0)';
@@ -559,7 +599,6 @@ function setupGraphFilters(lang) {
         });
     }
 }
-
 
 function createHoverText(d, lang) {
     if (!d) return "";
@@ -1261,6 +1300,4 @@ function sortTable(tableId, columnIndex, type) {
         return isAsc ? valA.localeCompare(valB, undefined, {numeric: true}) : valB.localeCompare(valA, undefined, {numeric: true});
     });
     rows.forEach(row => tbody.appendChild(row));
-
 }
-
