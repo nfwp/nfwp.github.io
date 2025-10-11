@@ -9,53 +9,70 @@
       font-family: "Segoe UI", sans-serif;
       background: #f4f6fa;
       color: #222;
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 20px;
       line-height: 1.8;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5em;
-    }
-    h2 {
-      margin-top: 2em;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 4px;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    li {
-      margin: 6px 0;
-    }
-    a {
-      text-decoration: none;
-      color: #0070f3;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    details {
+    h1 { text-align: center; margin-bottom: 1.5em; }
+    h2 { margin-top: 2em; border-bottom: 2px solid #ccc; padding-bottom: 4px; }
+    a { text-decoration: none; color: #0070f3; }
+    a:hover { text-decoration: underline; }
+    .section-box {
       background: #fff;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 1em;
-      margin-top: 1.5em;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      padding: 1.2em;
+      margin-top: 2em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      outline: none;
+
+    /* グラフテーブル */
+    .styled-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 1em;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-    summary:hover {
-      color: #0070f3;
+    .styled-table thead tr {
+      background-color: #009879;
+      color: #fff;
+      text-align: left;
     }
-    .manual-section {
+    .styled-table th, .styled-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+
+    /* 翻訳カード */
+    .translation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
       margin-top: 1em;
-      padding-left: 1em;
+    }
+    .translation-grid a {
+      display: block;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .translation-grid a:hover {
+      background: #e9f5ff;
+      border-color: #0070f3;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 3em;
+      font-size: 0.9em;
     }
   </style>
 </head>
@@ -63,162 +80,49 @@
 
   <h1>試作ホットケーキ第一号</h1>
 
-<style>
-  /* 見やすくするための簡単なスタイル（任意） */
-  .styled-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px 0;
-    font-size: 1em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
-  .styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-  }
-  .styled-table th,
-  .styled-table td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-  }
-  .styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-  }
-  .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-  }
-  .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-  }
-</style>
+  <!-- 🟦 グラフセクション -->
+  <div class="section-box">
+    <h2>📊 グラフ / Graph Links</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>怪しいグラフ (Ja ver)</th>
+          <th>potato graph (En ver)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lbol Bubble Charts</td>
+          <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
+          <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
+        </tr>
+      </tbody>
+    </table>
 
-<table class="styled-table">
-  <thead>
-    <tr>
-      <th>名前</th>
-      <th>怪しいグラフ (Ja ver)</th>
-      <th>potato graph (En ver)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>All Characters</td>
-      <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
-      <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
-    </tr>
-    <tr>
-  </tbody>
-</table>
-
-
-
-  <h2>📖 マニュアル / Manual</h2>
-
-  <!-- 日本語マニュアル -->
-  <details>
-    <summary>📘 日本語マニュアルを開く</summary>
-    <div class="manual-section">
-      <h3>カード性能分析レポートの使い方マニュアル</h3>
-      <p>このレポートは、各キャラクターが使ったカードの「戦闘への貢献度」を様々な角度から分析し、可視化したものです。カードの強さや特性をより深く理解するための手助けとなります。</p>
-      大まかな性能は攻撃性能、防御性能が示す通りですが、より重要なのは<strong>攻撃傾向、防御傾向、信頼性</strong>かと思います。
-
-      またおまけとして過去に作成したいくつかのデータ要素も統合してありますので、詳細データを全部求めない限りはこれ1つでおおよそ補完できてると思います。
-
-      <h4>1. 2つの表示モード</h4>
-      <p>このレポートには、目的の異なる2つの表示モードがあります。画面左上のボタンで切り替えられます。</p>
-      <ul>
-        <li><strong>集計ビュー (Aggregated View)</strong>：カードの総合的な強さや特性を把握する基本画面。</li>
-        <li><strong>状況別ビュー (Situational View)</strong>：特定の状況でどのカードが輝くかを分析する画面。</li>
-      </ul>
-
-      <h4>2. グラフ上の指標の意味</h4>
-      <p>グラフの縦軸と横軸、そしてホバー情報は以下の意味を持ちます。</p>
-      <ul>
-        <li><strong>攻撃性能</strong>（縦軸）：「戦闘を早く終わらせる貢献度」 カードの基礎体力のようなものです。箱のブレが狭いほど堅実な仕事をします。</li>
-        <li><strong>防御性能</strong>（横軸）：「被ダメージを抑える貢献度」 カードの基礎体力のようなものです。箱のブレが狭いほど堅実な仕事をします。</li>
-        <li><strong>信頼性</strong>：「パフォーマンスの安定度」 90を下回るカードは不安定なことが多いです。</li>
-        <li><strong>攻撃傾向</strong>：「攻撃面での上振れの起こりやすさ」-0.5~+0.25:普通 +0.25~-+0.75:良 +0.75~:優秀(0.75以上はバフに近い作用のことが多い)。-0.8以下のカードは制約のあるカードかもしれません。</li>
-        <li><strong>防御傾向</strong>：「戦闘を安全に進行させる機会が増える指数」-0.5~+0.25:普通 +0.25~-+0.75:良 +0.75~:優秀(0.75以上はバフに近い作用のことが多い)。-1以下のカードは手札事故の可能性を秘めています。 </li>
-        <li><strong>特筆すべき区間</strong>：「優秀な効果が認められた部分」各種数値が悪くてもここが充実している場合、一考の余地あり。
-      </ul>
-
-      <h4>3. 注目カード分析セクション</h4>
-      <ul>
-        <li><strong>スター型</strong>：攻撃または防御の傾向が極めて高く、尖った活躍が期待されるカード。特に、終盤の重要な局面で真価を発揮するカードもここに含まれます。</li>
-        <li><strong>優等生</strong>：攻防両面でスコアが高く、どんな状況でも安定した活躍が期待される、デッキの核となるカード。</li>
-        <li><strong>上振れ型 / 堅実型</strong>：上振れが期待されるカード / 堅実な仕事をするカード</li>
-        <li><strong>カウンター型</strong>：総合評価は低いものの、特定の局面で決定的な働きをする切り札的カード。</li>
-      </ul>
-      
-      <h4>4. その他</h4>
-      <ul>
-        <li><strong>ラン除外条件</strong>：プレイログが多すぎる人、破損データ、極端なファームのランは除外されています。</li>
-        <li><strong>カード除外条件</strong>：既定の戦闘回数に満たないもの</li>
-        <li><strong>Note簡易解説</strong>：<a href="https://note.com/neff_wp/n/n358fe94bcc69" target="_blank" rel="noopener noreferrer">リンク</a></li>
-
-      </ul>
+    <!-- 🔹 グラフ用Change Log -->
+    <div class="section-box" style="margin-top:1.5em; background:#fefefe;">
+      <h3>🕒 グラフ更新履歴 / Graph Change Log</h3>
+      <details open>
+        <summary>📘 日本語</summary>
+        <ul>
+          <li><strong>2025-10-11:</strong> 全体集計用のカード評価の重み付けを動的に算出するロジックを導入。</li>
+          <li><strong>2025-10-05:</strong> 初版リリース。</li>
+        </ul>
+      </details>
+      <details>
+        <summary>📗 English</summary>
+        <ul>
+          <li><strong>2025-10-11:</strong> Introduced a dynamic weighting logic for calculating overall card evaluation scores.</li>
+          <li><strong>2025-10-05:</strong> Initial release.</li>
+        </ul>
+      </details>
     </div>
-  </details>
-
-  <!-- 英語マニュアル -->
-  <details>
-    <summary>📗 English Manual (Click to open)</summary>
-    <div class="manual-section">
-		<h3>How to Use the Card Performance Report</h3>
-		<p>
-		This report analyzes and visualizes how each card contributes to combat performance from multiple perspectives.  
-		While <strong>Attack Performance</strong> and <strong>Defense Performance</strong> describe the general power of a card,  
-		the most important factors to consider are <strong>Attack Tendency</strong>, <strong>Defense Tendency</strong>, and <strong>Reliability</strong>.
-		</p>
-
-		<h4>1. Two Display Modes</h4>
-		<p>
-		There are two display modes, each designed for different analytical purposes.  
-		You can switch between them using the buttons at the top-left corner of the screen.
-		</p>
-		<ul>
-		  <li><strong>Aggregated View</strong>: The main view for understanding a card’s overall strength and long-term tendencies.</li>
-		  <li><strong>Situational View</strong>: Highlights which cards perform best under specific conditions or in particular fights.</li>
-		</ul>
-
-		<h4>2. Graph Metrics</h4>
-		<p>
-		The vertical and horizontal axes of the graph, as well as the hover tooltips, represent the following metrics:
-		</p>
-		<ul>
-		  <li><strong>Attack Performance</strong> (Vertical): Represents how much a card contributes to finishing battles quickly — its offensive capability. You can think of it as the card’s “base offensive stamina.” A narrower box spread indicates more consistent and reliable performance.</li>
-		  <li><strong>Defense Performance</strong> (Horizontal): Represents how much a card helps reduce incoming damage — its defensive capability. Likewise, it can be seen as the card’s “base defensive stamina.” A narrower box spread means the card performs more steadily and dependably.</li>
-		  <li><strong>Reliability</strong>: Represents performance consistency.Cards scoring below <strong>90</strong> tend to be unstable, while those above it are generally dependable performers.</li>
-		  <li><strong>Attack Tendency</strong>: Indicates how easily a card can “spike” in offensive performance. Values between <strong>-0.5</strong> and <strong>+0.25</strong> are considered normal, <strong>+0.25</strong> to <strong>+0.75</strong> are good, and <strong>+0.75</strong> or higher are excellent — often functioning similarly to buffs. Cards below <strong>-0.8</strong> may have restrictive conditions or specific drawbacks.</li>
-		  <li><strong>Defense Tendency</strong>: Represents how much a card contributes to maintaining safe and stable combat. Values between <strong>-0.5</strong> and <strong>+0.25</strong> are normal, <strong>+0.25</strong> to <strong>+0.75</strong> are good, and <strong>+0.75</strong> or higher are excellent — often offering effects close to buffs. Cards below <strong>-1</strong> may increase the risk of “hand jams” or unreliable situations.</li>
-		  <li><strong>Notable Sections</strong>: Highlights specific parts where the card showed outstanding effects.Even if other numerical scores are low, a strong performance here may warrant further consideration.</li>
-		</ul>
+  </div>
 
 
-      <h4>3. Spotlight Card Analysis</h4>
-      <ul>
-        <li><strong>Star Players</strong>:Extreme in offense or defense; shines in key late-game moments.</li>
-        <li><strong>Honor Students</strong>: Consistent performers in all cases.</li>
-        <li><strong>High-Potential Attackers / Solid Defenders</strong>: Cards with high potential for explosive outcomes / Cards that reliably perform solid work.</li>
-        <li><strong>Counter Cards</strong>: Cards with low overall ratings but capable of delivering decisive results in specific matchups or situations.</li>
-      </ul>
-      
-      <h4>4. Others</h4>
-      <ul>
-        <li><strong>Run Exclusion Criteria</strong>: Players with excessive play logs, corrupted data, or extremely farm-oriented runs are excluded.</li>
-        <li><strong>Card Exclusion Criteria</strong>: Cards that do not meet the required number of battles are excluded.</li>
-        <li><strong>Note(Japanese)</strong>：<a href="https://note.com/neff_wp/n/n358fe94bcc69" target="_blank" rel="noopener noreferrer">Link</a></li>
-      </ul>
-
-    </div>
-  </details>
-
-  <p style="text-align:center; margin-top:3em; font-size:0.9em; color:#666;">
+  <footer>
     © 2025 nfwp.github.io
-  </p>
-
+  </footer>
 </body>
 </html>
