@@ -494,7 +494,7 @@ function setupGraphFilters(lang) {
                 infoBox.style.transform = 'translateX(20px)';
                 infoBox.style.pointerEvents = 'none'; // 念のため
                 updateVisuals(null, []);
-            }, 300);
+            }, 900);
         });
 
         // マウスがinfoBoxに乗った時だけ操作可能にする
@@ -1261,4 +1261,5 @@ function sortTable(tableId, columnIndex, type) {
         return isAsc ? valA.localeCompare(valB, undefined, {numeric: true}) : valB.localeCompare(valA, undefined, {numeric: true});
     });
     rows.forEach(row => tbody.appendChild(row));
+
 }
