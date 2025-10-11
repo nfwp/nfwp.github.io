@@ -743,15 +743,22 @@ function createWikiLink(itemName, itemType, lang) {
 
 // エラーを回避するため、呼び出される createAnalysisReportsHtml より前にランキング生成関数を定義します。
 function createAttentionRankingHtml(aggData, cardNameCol, lang) {
+    const topN = 40; // ランキングの表示件数 (Top40)
     const sortedData = [...aggData]
         .filter(d => d.Attention_Score !== null)
         .sort((a, b) => b.Attention_Score - a.Attention_Score)
-        .slice(0, 20);
+        .slice(0, topN);
 
     if (sortedData.length === 0) return '';
 
-    const title = UI_TEXT.attention_ranking_title || '注目度ランキング Top20';
-    const description = UI_TEXT.attention_ranking_desc || '採用率、ハイライト、性能を総合的に評価したランキングです。';
+    // --- ★★★ 翻訳と英語フォールバックを追加 ★★★ ---
+    const isJa = lang === 'ja';
+    const title = UI_TEXT.attention_ranking_title || (isJa ? `注目度ランキング Top${topN}` : `Attention Ranking Top ${topN}`);
+    const description = UI_TEXT.attention_ranking_desc || (isJa ? '採用率、ハイライト、性能を総合的に評価したランキングです。' : 'A comprehensive ranking based on adoption rate, highlights, and performance.');
+    const attentionLabel = UI_TEXT.attention_score_label || (isJa ? '注目度' : 'Attention');
+    const adoptionLabel = UI_TEXT.adoption_rate_header || (isJa ? '採用率' : 'Adoption');
+    const performanceLabel = UI_TEXT.performance_header || (isJa ? '性能' : 'Perf.');
+    // --- ★★★ ここまで ★★★ ---
 
     const splitPoint = Math.ceil(sortedData.length / 2);
     const col1Data = sortedData.slice(0, splitPoint);
@@ -760,7 +767,8 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
     const createLi = (d) => {
         const cardName = d.Medal ? `${d.Medal} ${d[cardNameCol]}` : d[cardNameCol];
         const performance = (d.Weighted_Avg_Turn_Deviation + d.Weighted_Avg_HP_Deviation) / 2;
-        const stats = `${UI_TEXT.attention_score_label || '注目度'}: ${d.Attention_Score.toFixed(1)}, ${UI_TEXT.adoption_rate_header || '採用率'}: ${(d.Adoption_Rate * 100).toFixed(1)}%, ${UI_TEXT.performance_header || '性能'}: ${performance.toFixed(1)}`;
+        // 翻訳済みラベルを使用
+        const stats = `${attentionLabel}: ${d.Attention_Score.toFixed(1)}, ${adoptionLabel}: ${(d.Adoption_Rate * 100).toFixed(1)}%, ${performanceLabel}: ${performance.toFixed(1)}`;
         return `<li><strong class="spotlight-card" data-card-name="${d[cardNameCol]}" style="cursor:pointer; background:none; padding:0; display:inline;">${cardName}</strong> (${stats})</li>`;
     };
 
@@ -776,6 +784,7 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
 
     return `<div id="attention-ranking-report" class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
 }
+
 
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
