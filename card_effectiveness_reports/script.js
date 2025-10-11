@@ -15,6 +15,8 @@ let UI_TEXT = {};
 let LANG = 'ja';
 let CURRENT_CHAR = 'CirnoA';
 let GRAPH_DIV = null;
+let attentionSlider = null;
+
 
 // =================================================================
 // メイン処理
@@ -37,11 +39,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     await setupUiText(LANG);
 
     renderGlobalHeader();
-
-    // ★★★ 新しいナビゲーション設定関数を呼び出し ★★★
     setupNavigation();
 
-    // ★★★ 各タブのコンテンツを個別に描画 ★★★
     renderCardPerformanceTab(CURRENT_CHAR, LANG);
     renderExhibitAnalysisTab(LANG);
     renderRouteEventTab(LANG);
@@ -85,13 +84,11 @@ async function setupUiText(lang) {
         if (!response.ok) throw new Error(`Failed to load locale file for ${lang}`);
         let textData = await response.json();
 
-        // メインタイトルを動的に設定
         const mainTitleEl = document.getElementById('main-title');
         if (mainTitleEl) {
             mainTitleEl.textContent = `${ALL_DATA.metadata.character} - ${textData.main_title} (Ver: ${ALL_DATA.metadata.version})`;
         }
 
-        // グラフ用のタイトルも準備
         textData.agg_title = textData.agg_title
             .replace('{character}', ALL_DATA.metadata.character)
             .replace('{version}', ALL_DATA.metadata.version);
@@ -106,7 +103,6 @@ async function setupUiText(lang) {
     }
 }
 
-// ★★★ 新しいナビゲーション設定関数 ★★★
 function setupNavigation() {
     const tabsConfig = [
         { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
@@ -119,9 +115,7 @@ function setupNavigation() {
     const mobileTabSelector = document.getElementById('mobile-tab-selector');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    // タブ切り替えを行うコア関数
     const switchTab = (tabId) => {
-        // すべてのコンテンツを非表示にし、すべてのボタンを非アクティブにする
         tabContents.forEach(content => {
             content.style.display = 'none';
         });
@@ -131,14 +125,11 @@ function setupNavigation() {
             });
         }
 
-        // 選択されたコンテンツとボタンをアクティブにする
         const contentToShow = document.getElementById(tabId);
         if (contentToShow) {
             contentToShow.style.display = 'block';
-            // タブ内のグラフをリサイズする
             const graphInTab = contentToShow.querySelector('.plotly-graph-div');
             if (graphInTab) {
-                // try-catchでエラーをハンドル（グラフがまだ描画されていない場合など）
                 try {
                     Plotly.Plots.resize(graphInTab);
                 } catch (e) {
@@ -154,21 +145,17 @@ function setupNavigation() {
             }
         }
 
-        // ドロップダウンの値を同期する
         if (mobileTabSelector) {
             mobileTabSelector.value = tabId;
         }
     };
 
-    // コンテナをクリア
     if (tabButtonsContainer) tabButtonsContainer.innerHTML = '';
     if (mobileTabSelector) mobileTabSelector.innerHTML = '';
 
-    // PC用ボタンとモバイル用オプションを生成
     tabsConfig.forEach(tabConfig => {
-        if (!tabConfig.label) return; // UI_TEXTがロードされる前に呼ばれるのを防ぐ
+        if (!tabConfig.label) return;
 
-        // PC用ボタン
         if (tabButtonsContainer) {
             const button = document.createElement('button');
             button.className = 'tab-button';
@@ -178,7 +165,6 @@ function setupNavigation() {
             tabButtonsContainer.appendChild(button);
         }
 
-        // モバイル用オプション
         if (mobileTabSelector) {
             const option = document.createElement('option');
             option.value = tabConfig.id;
@@ -187,14 +173,12 @@ function setupNavigation() {
         }
     });
 
-    // モバイル用ドロップダウンにイベントリスナーを追加
     if (mobileTabSelector) {
         mobileTabSelector.addEventListener('change', (e) => {
             switchTab(e.target.value);
         });
     }
 
-    // 初期タブを設定
     if (tabsConfig.length > 0 && tabsConfig[0].label) {
         switchTab(tabsConfig[0].id);
     }
@@ -216,7 +200,6 @@ function renderCardPerformanceTab(char, lang) {
 
 
 function createFilterBarHtml() {
-    // 開閉ボタンと、フィルター全体を囲むコンテナを追加
     return `
     <div id="custom-filters">
         <div id="filter-toggle-button" class="filter-toggle-button">${UI_TEXT.open_filters || 'フィルターを開く ▼'}</div>
@@ -230,6 +213,15 @@ function createFilterBarHtml() {
                     <option value="Rare">Rare</option>
                 </select>
             </div>
+
+            <div class="slider-filter-group" id="filter-group-attention">
+                <label>${UI_TEXT.attention_score_label || '注目度スコア'}:</label>
+                <div class="slider-container-single">
+                    <div id="attention-score-slider" class="slider"></div>
+                    <span id="attention-score-value"></span>
+                </div>
+            </div>
+
             <div class="slider-filter-group" id="filter-group-atk">
                 <label>${UI_TEXT.atk_tendency_filter_label}</label>
                 <div class="slider-container">
@@ -413,32 +405,24 @@ function setupGraphFilters(lang) {
     const medalFilter = document.getElementById('medal-filter');
     const infoBox = document.getElementById('info-box');
 
-
-
     let hideBoxTimeout = null;
-    // ツールチップが消えるまでの時間（ミリ秒）。この数字を大きくすると、よりゆっくり消えます。
-    const HIDE_DELAY = 1200;
+    const HIDE_DELAY = 300;
 
-    // ツールチップを隠すタイマーを開始する関数
     const startHideTimer = () => {
-        clearTimeout(hideBoxTimeout); // 既にタイマーがあればキャンセル
+        clearTimeout(hideBoxTimeout);
         hideBoxTimeout = setTimeout(() => {
             if (infoBox) {
                 infoBox.style.opacity = 0;
                 infoBox.style.transform = 'translateX(20px)';
-                infoBox.style.pointerEvents = 'none'; // 非表示中はマウスイベントを無効化
+                infoBox.style.pointerEvents = 'none';
             }
             updateVisuals(null, []);
         }, HIDE_DELAY);
     };
 
-    // ツールチップを隠すタイマーをキャンセルする関数
     const cancelHideTimer = () => {
         clearTimeout(hideBoxTimeout);
     };
-
-
-
 
     const attentionSliderEl = document.getElementById('attention-score-slider');
     const attentionValueEl = document.getElementById('attention-score-value');
@@ -520,33 +504,25 @@ function setupGraphFilters(lang) {
             if (pinnedPoint) { infoBox.classList.remove('visible'); pinnedPoint = null; updateVisuals(null, []); }
         });
     } else {
-        // ★★★ デスクトップ用のホバーロジックを修正 ★★★
         GRAPH_DIV.on('plotly_hover', e => {
             if (!e.points || e.points.length === 0) return;
-
-            // 隠すタイマーをキャンセル
             cancelHideTimer();
-
             const point = e.points[0];
             infoBox.innerHTML = createHoverText(point.customdata, lang);
             infoBox.style.opacity = 1;
             infoBox.style.transform = 'translateX(0)';
-            infoBox.style.pointerEvents = 'auto'; // マウスを乗せられるようにする
-
+            infoBox.style.pointerEvents = 'auto';
             updateVisuals(point.customdata[(lang === 'ja' ? 'Card_Name' : 'Card_Name_EN')], point.customdata[(lang === 'ja' ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN')] || []);
         });
 
-        // グラフの点からマウスが離れたら、隠すタイマーを開始
         GRAPH_DIV.on('plotly_unhover', () => {
             startHideTimer();
         });
 
-        // ツールチップにマウスが乗ったら、隠すタイマーをキャンセル
         infoBox.addEventListener('mouseenter', () => {
             cancelHideTimer();
         });
 
-        // ツールチップからマウスが離れたら、隠すタイマーを開始
         infoBox.addEventListener('mouseleave', () => {
             startHideTimer();
         });
@@ -585,7 +561,7 @@ function setupGraphFilters(lang) {
                     infoBox.innerHTML = createHoverText(pointData, lang);
                     infoBox.classList.add('visible');
                 } else {
-                    cancelHideTimer(); // 新しいのを表示する前にタイマーを止める
+                    cancelHideTimer();
                     infoBox.innerHTML = createHoverText(pointData, lang);
                     infoBox.style.opacity = 1;
                     infoBox.style.transform = 'translateX(0)';
@@ -599,6 +575,7 @@ function setupGraphFilters(lang) {
         });
     }
 }
+
 
 function createHoverText(d, lang) {
     if (!d) return "";
@@ -659,17 +636,18 @@ function createHoverText(d, lang) {
             ${createBoxplotHTML(sourceData.Turn_Min, sourceData.Turn_Q1, sourceData.Turn_Median, sourceData.Turn_Q3, sourceData.Turn_Max, sourceData.Weighted_Avg_Turn_Deviation)}
             <div>${UI_TEXT.defense_perf}: ${safeToFixed(sourceData.Weighted_Avg_HP_Deviation, 2)}</div>
             ${createBoxplotHTML(sourceData.HP_Min, sourceData.HP_Q1, sourceData.HP_Median, sourceData.HP_Q3, sourceData.HP_Max, sourceData.Weighted_Avg_HP_Deviation)}
-            <div style='margin-top:5px;'>${UI_TEXT.stability}: ${safeToFixed(sourceData.Stability_Score, 2)}</div>
             <hr style='margin:5px 0;'>
             ${UI_TEXT.atk_tendency}: ${formatTendency(sourceData.Turn_Tendency, 0.25, -0.8)}${star(sourceData.Turn_Tendency)}<br>
             ${UI_TEXT.def_tendency}: ${formatTendency(sourceData.HP_Tendency, 0.25, -1.0)}${star(sourceData.HP_Tendency)}
         `;
         adoptionHtml = `
-            <div style='margin-top:5px;'>
-                ${UI_TEXT.adoption_rate}: ${safeToPercent(sourceData.Adoption_Rate, 1)}%<br>
-                ${UI_TEXT.avg_copies_when_adopted}: ${safeToFixed(sourceData.Avg_Copies, 2)}<br>
-                ${UI_TEXT.avg_upgrade_rate}: ${safeToPercent(sourceData.Avg_Upgrade_Rate, 1)}%
-            </div>
+            <hr style='margin: 8px 0;'>
+            <div class="tooltip-row"><span>${UI_TEXT.adoption_rate || '採用率'}:</span><span>${safeToPercent(sourceData.Adoption_Rate, 1)}%</span></div>
+            <div class="tooltip-row"><span>${UI_TEXT.attention_score_label || '注目度スコア'}:</span><span>${safeToFixed(sourceData.Attention_Score, 1)}</span></div>
+            <div class="tooltip-row"><span>${UI_TEXT.stability || '安定性'}:</span><span>${safeToFixed(sourceData.Stability_Score, 1)}</span></div>
+            <hr style='margin: 8px 0;'>
+            ${UI_TEXT.avg_copies_when_adopted}: ${safeToFixed(sourceData.Avg_Copies, 2)}<br>
+            ${UI_TEXT.avg_upgrade_rate}: ${safeToPercent(sourceData.Avg_Upgrade_Rate, 1)}%
         `;
     } else {
         perfHtml = `
@@ -680,11 +658,9 @@ function createHoverText(d, lang) {
         adoptionHtml = `
             <hr style='margin: 8px 0;'>
             <b>${UI_TEXT.agg_view} Stats:</b><br>
-            <div style='margin-top:5px;'>
-                ${UI_TEXT.adoption_rate}: ${safeToPercent(sourceData.Adoption_Rate, 1)}%<br>
-                ${UI_TEXT.avg_copies_when_adopted}: ${safeToFixed(sourceData.Avg_Copies, 2)}<br>
-                ${UI_TEXT.avg_upgrade_rate}: ${safeToPercent(sourceData.Avg_Upgrade_Rate, 1)}%
-            </div>
+            <div class="tooltip-row"><span>${UI_TEXT.adoption_rate || '採用率'}:</span><span>${safeToPercent(sourceData.Adoption_Rate, 1)}%</span></div>
+            <div class="tooltip-row"><span>${UI_TEXT.attention_score_label || '注目度スコア'}:</span><span>${safeToFixed(sourceData.Attention_Score, 1)}</span></div>
+            <div class="tooltip-row"><span>${UI_TEXT.stability || '安定性'}:</span><span>${safeToFixed(sourceData.Stability_Score, 1)}</span></div>
         `;
     }
 
@@ -694,6 +670,9 @@ function createHoverText(d, lang) {
 function updateVisuals(hoveredCardName, synergyPartners) {
     const rarityValue = document.getElementById('rarity-filter').value;
     const medalValue = document.getElementById('medal-filter').value;
+
+    const attentionScoreValue = attentionSlider ? parseFloat(attentionSlider.get()) : 30;
+
     const isAtkAll = document.getElementById('atk-tendency-all').checked;
     const isDefAll = document.getElementById('def-tendency-all').checked;
     const atkRange = [parseFloat(document.getElementById('atk-tendency-min').value), parseFloat(document.getElementById('atk-tendency-max').value)];
@@ -712,11 +691,15 @@ function updateVisuals(hoveredCardName, synergyPartners) {
         for (let j = 0; j < trace.customdata.length; j++) {
             const d = trace.customdata[j];
             const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
+
+            const attentionMatch = (d.Attention_Score === null || d.Attention_Score >= attentionScoreValue);
+
             const atkTendencyMatch = isAtkAll || (d.Turn_Tendency >= atkRange[0] && d.Turn_Tendency <= atkRange[1]);
             const defTendencyMatch = isDefAll || (d.HP_Tendency >= defRange[0] && d.HP_Tendency <= defRange[1]);
             const tendencyConditionMatch = (tendencyLogic === 'and') ? (atkTendencyMatch && defTendencyMatch) : (atkTendencyMatch || defTendencyMatch);
             let medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && d.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(d.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(d.Medal)) || (medalValue === 'None' && (d.Medal === '' || d.Medal == null));
-            const allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch;
+
+            const allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch && attentionMatch;
 
             let opacity = 0.7, lineWidth = 0, lineColor = 'black', fontColor = '#555';
             if (!allFiltersMatch) {
@@ -752,21 +735,71 @@ function createWikiLink(itemName, itemType, lang) {
     return `<a href="${baseUrl}" target="_blank">${itemName}</a>`;
 }
 
+
+// ★★★★★ ここからが今回の修正のメイン部分です ★★★★★
+
+// エラーを回避するため、呼び出される createAnalysisReportsHtml より前にランキング生成関数を定義します。
+function createAttentionRankingHtml(aggData, cardNameCol, lang) {
+    const sortedData = [...aggData]
+        .filter(d => d.Attention_Score !== null)
+        .sort((a, b) => b.Attention_Score - a.Attention_Score)
+        .slice(0, 20);
+
+    if (sortedData.length === 0) return '';
+
+    const title = UI_TEXT.attention_ranking_title || '注目度ランキング Top20';
+    const description = UI_TEXT.attention_ranking_desc || '採用率、ハイライト、性能を総合的に評価したランキングです。';
+
+    const splitPoint = Math.ceil(sortedData.length / 2);
+    const col1Data = sortedData.slice(0, splitPoint);
+    const col2Data = sortedData.slice(splitPoint);
+
+    const createLi = (d) => {
+        const cardName = d.Medal ? `${d.Medal} ${d[cardNameCol]}` : d[cardNameCol];
+        const performance = (d.Weighted_Avg_Turn_Deviation + d.Weighted_Avg_HP_Deviation) / 2;
+        const stats = `${UI_TEXT.attention_score_label || '注目度'}: ${d.Attention_Score.toFixed(1)}, ${UI_TEXT.adoption_rate_header || '採用率'}: ${(d.Adoption_Rate * 100).toFixed(1)}%, ${UI_TEXT.performance_header || '性能'}: ${performance.toFixed(1)}`;
+        return `<li><strong class="spotlight-card" data-card-name="${d[cardNameCol]}" style="cursor:pointer; background:none; padding:0; display:inline;">${cardName}</strong> (${stats})</li>`;
+    };
+
+    const listItems1 = col1Data.map(createLi).join('');
+    const listItems2 = col2Data.map(createLi).join('');
+
+    const listHtml = `
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+            <ol style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems1}</ol>
+            ${col2Data.length > 0 ? `<ol start="${splitPoint + 1}" style="padding-left: 25px; flex: 1; margin-top: 0; min-width: 300px;">${listItems2}</ol>` : ''}
+        </div>
+    `;
+
+    return `<div id="attention-ranking-report" class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
+}
+
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
-    const aggData = ALL_DATA.agg_data_full;
-    const sitData = ALL_DATA.sit_data;
+    // 1. まず、ランキングに表示すべき「ランク付け可能」なカードだけをフィルタリングします。
+    //    (傾向スコアが null、つまり N/A ではないカード)
+    const rankableAggData = ALL_DATA.agg_data_full.filter(d => d.Turn_Tendency !== null && d.HP_Tendency !== null);
 
-    // ★★★ 追加: データが存在しない場合のガード節 ★★★
-    if (!aggData || aggData.length === 0) return "";
+    if (!rankableAggData || rankableAggData.length === 0) {
+        // 表示できるカードがない場合は、ここで処理を終了します。
+        return `<div id='analysis-reports'><p>${UI_TEXT.no_data || '表示できるデータがありません。'}</p></div>`;
+    }
 
-    const top20Adopted = aggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
-    const spotlightHtml = createSpotlightHtml(aggData, cardNameCol, top20Adopted);
+    // 2. ランク付け可能なカード名のリスト（Set）を作成し、後のフィルタリングで高速に使えるようにします。
+    const rankableCardNames = new Set(rankableAggData.map(d => d[cardNameCol]));
 
-    const act1Data = sitData.filter(d => d.Act === 1);
-    const act4Data = sitData.filter(d => d.Act === 4);
+    // 3. フィルタリング後のデータを使って、各ランキングを生成します。
+    const top20Adopted = rankableAggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
 
+    // ★★★ 「注目のカード」も、フィルタリング済みの rankableAggData から生成します ★★★
+    const spotlightHtml = createSpotlightHtml(rankableAggData, cardNameCol, top20Adopted);
+
+    // Act1とAct4のデータも、ランク付け可能なカードのみに絞り込みます。
+    const act1Data = ALL_DATA.sit_data.filter(d => d.Act === 1 && rankableCardNames.has(d[cardNameCol]));
+    const act4Data = ALL_DATA.sit_data.filter(d => d.Act === 4 && rankableCardNames.has(d[cardNameCol]));
+
+    // このヘルパー関数は変更なし
     const createRankings = (data, nameCol) => {
         const perfMap = new Map();
         const adoptionMap = new Map();
@@ -787,13 +820,18 @@ function createAnalysisReportsHtml(lang) {
         return { topPerformers, topAdoption };
     };
 
+    // 絞り込んだデータでランキングを生成
     const act1Rankings = createRankings(act1Data, cardNameCol);
     const act4Rankings = createRankings(act4Data, cardNameCol);
 
+    // すべてのランキングを生成し直します
     const act1AdoptionHtml = createRankedListHtml("act1-adoption-report", UI_TEXT.act1_top_adoption_title, UI_TEXT.act1_top_adoption_desc, act1Rankings.topAdoption.slice(0, 20), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
     const act1PerfHtml = createRankedListHtml("act1-performers-report", UI_TEXT.act1_top_performers_title, UI_TEXT.act1_top_performers_desc, act1Rankings.topPerformers.slice(0, 20), "Score", ".1f");
     const act4AdoptionHtml = createRankedListHtml("act4-adoption-report", UI_TEXT.act4_top_adoption_title, UI_TEXT.act4_top_adoption_desc, act4Rankings.topAdoption.slice(0, 40), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
     const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.act4_top_performers_title, UI_TEXT.act4_top_performers_desc, act4Rankings.topPerformers.slice(0, 40), "Score", ".1f");
+
+    // 注目度ランキングも、フィルタリング後のデータから生成
+    const attentionRankingHtml = createAttentionRankingHtml(rankableAggData, cardNameCol, lang);
 
     const criteriaHtml = `
         <div id='criteria-explanation' class="analysis-section">
@@ -806,8 +844,10 @@ function createAnalysisReportsHtml(lang) {
             <h4>${UI_TEXT.spotlight_cat4_title}</h4><ul><li>${UI_TEXT.counter_cond1}</li></ul>
         </div>`;
 
-    return `<div id='analysis-reports'>${spotlightHtml}${act1AdoptionHtml}${act1PerfHtml}${act4AdoptionHtml}${act4PerfHtml}</div>${criteriaHtml}`;
+    // HTMLの結合順も、すべてのランキングが含まれるように修正
+    return `<div id='analysis-reports'>${spotlightHtml}${act1AdoptionHtml}${act1PerfHtml}${act4AdoptionHtml}${act4PerfHtml}${attentionRankingHtml}</div>${criteriaHtml}`;
 }
+
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const isLateGameSpecialist = (highlightsStr) => {
