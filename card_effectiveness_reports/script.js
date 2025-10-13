@@ -753,6 +753,7 @@ function createHoverText(d, lang) {
     return `<div class='info-column'><b>${cardName}</b> ${wikiLinkHtml}<br>${UI_TEXT.type}: ${sourceData.Type}<br>${UI_TEXT.rarity}: ${sourceData.Rarity}<hr style='margin:5px 0;'>${perfHtml}${adoptionHtml}${highlightsHtml}</div><div class='info-column'>${coOccurrenceHtml}</div>`;
 }
 
+// この関数を丸ごと置き換えてください
 function updateVisuals(hoveredCardName, synergyPartners) {
     // グラフがまだ描画されていない、または初期化されていない場合は何もしない
     if (!GRAPH_DIV || !GRAPH_DIV.layout) {
@@ -763,7 +764,7 @@ function updateVisuals(hoveredCardName, synergyPartners) {
     const currentViewButtonIndex = GRAPH_DIV.layout.updatemenus[0].active;
     const isAggView = (currentViewButtonIndex === 0);
 
-    // フィルターの値を取得 (総合ビューでのみ使用)
+    // フィルターの値を取得
     const rarityValue = document.getElementById('rarity-filter').value;
     const medalValue = document.getElementById('medal-filter').value;
     const attentionScoreValue = attentionSlider ? parseFloat(attentionSlider.get()) : 30;
@@ -787,36 +788,58 @@ function updateVisuals(hoveredCardName, synergyPartners) {
             const d = trace.customdata[j];
             let opacity = 0.7, lineWidth = 0, lineColor = 'black', fontColor = '#555';
 
+            let allFiltersMatch = true; // デフォルトでは全カード表示
+
             if (isAggView) {
-                // --- 総合ビューのロジック ---
+                // --- 集計ビューのフィルターロジック ---
                 const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
                 const attentionMatch = (d.Attention_Score === null || d.Attention_Score >= attentionScoreValue);
                 const atkTendencyMatch = isAtkAll || (d.Turn_Tendency >= atkRange[0] && d.Turn_Tendency <= atkRange[1]);
                 const defTendencyMatch = isDefAll || (d.HP_Tendency >= defRange[0] && d.HP_Tendency <= defRange[1]);
                 const tendencyConditionMatch = (tendencyLogic === 'and') ? (atkTendencyMatch && defTendencyMatch) : (atkTendencyMatch || defTendencyMatch);
                 const medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && d.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(d.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(d.Medal)) || (medalValue === 'None' && (d.Medal === '' || d.Medal == null));
-                const allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch && attentionMatch;
 
-                if (!allFiltersMatch) {
-                    opacity = 0.05;
-                    fontColor = '#ddd';
-                } else if (hoveredCardName) {
-                    if (d[cardNameCol] === hoveredCardName) {
-                        opacity = 1.0;
-                        lineWidth = 3;
-                        fontColor = '#333';
-                    } else if (synergyPartners && synergyPartners.includes(d[cardNameCol])) {
-                        opacity = 0.9;
-                        lineWidth = 1;
-                        fontColor = '#333';
-                    } else {
-                        opacity = 0.1;
-                        fontColor = '#ccc';
-                    }
-                }
+                allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch && attentionMatch;
+
             } else {
-                // --- 状況別ビューのロジック ---
-                // フィルターもホバーハイライトも適用しない。
+                // ★★★ ここからが修正箇所 ★★★
+                // --- 状況別ビューのフィルターロジック ---
+                // 状況別データ(d)にはメダルや注目度スコアがないため、
+                // 全カードの集計データ(agg_data_full)から対応するカードの情報を探す
+                const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === d[cardNameCol]);
+
+                if (aggCardData) {
+                    // レアリティは状況別データ(d)に存在するので、それを使う
+                    const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
+                    // 注目度とメダルは集計データ(aggCardData)から取得
+                    const attentionMatch = (aggCardData.Attention_Score === null || aggCardData.Attention_Score >= attentionScoreValue);
+                    const medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && aggCardData.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(aggCardData.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(aggCardData.Medal)) || (medalValue === 'None' && (aggCardData.Medal === '' || aggCardData.Medal == null));
+
+                    // 傾向フィルターは集計ビュー専用なので、ここでは適用しない
+                    allFiltersMatch = rarityMatch && medalMatch && attentionMatch;
+                }
+                // ★★★ 修正箇所ここまで ★★★
+            }
+
+            // フィルターに合致しないカードを半透明にする
+            if (!allFiltersMatch) {
+                opacity = 0.05;
+                fontColor = '#ddd';
+            }
+            // ホバー時のハイライト処理
+            else if (hoveredCardName) {
+                if (d[cardNameCol] === hoveredCardName) {
+                    opacity = 1.0;
+                    lineWidth = 3;
+                    fontColor = '#333';
+                } else if (synergyPartners && synergyPartners.includes(d[cardNameCol])) {
+                    opacity = 0.9;
+                    lineWidth = 1;
+                    fontColor = '#333';
+                } else {
+                    opacity = 0.1;
+                    fontColor = '#ccc';
+                }
             }
 
             newOpacities.push(opacity);
@@ -833,7 +856,6 @@ function updateVisuals(hoveredCardName, synergyPartners) {
         Plotly.restyle(GRAPH_DIV, restyleUpdate, tracesToUpdate);
     }
 }
-
 
 function createWikiLink(itemName, itemType, lang) {
     if (!itemName) return "";
