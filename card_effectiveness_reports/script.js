@@ -1160,6 +1160,7 @@ function updateExhibitFilters(value) {
     });
 }
 
+// この関数を丸ごと置き換えてください
 function renderRouteEventTab(lang) {
     const container = document.getElementById('route-event-tab');
     if (!container) return;
@@ -1214,10 +1215,83 @@ function renderRouteEventTab(lang) {
 
             sortedNodeTypes.forEach(([node_type, count]) => {
                 const percentage = count / total_visits_at_level;
-                const color = node_type_colors[node_type] || '#BDBDBD';
+                const node_full_key = `${act}-${level}-${node_type}`;
                 const node_full_id = `${node_id_base}-${node_type}`;
                 const label = node_type_labels[node_type] || node_type[0];
-                barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="width: ${percentage * 100}%; background-color: ${color};" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
+
+                // ★★★ ここからが修正箇所 ★★★
+                let style_attr = `width: ${percentage * 100}%;`;
+                const node_specific_details = node_details[node_full_key] || {};
+                const base_color = node_type_colors[node_type] || '#BDBDBD';
+
+                if (node_type === 'Gap' && node_specific_details.choices) {
+                    const choice_colors = { "カード強化": "#FFB74D", "休憩": "#81C784", "その他": "#BDBDBD" };
+                    const choice_map = { "UpgradeCard": "カード強化", "DrinkTea": "休憩", "Rest": "休憩" };
+
+                    let aggregated_choices = {};
+                    let other_rate = 0;
+                    for (const [choice, stats] of Object.entries(node_specific_details.choices)) {
+                        const mapped_choice = choice_map[choice];
+                        if (mapped_choice) {
+                            aggregated_choices[mapped_choice] = (aggregated_choices[mapped_choice] || 0) + stats.rate;
+                        } else {
+                            other_rate += stats.rate;
+                        }
+                    }
+                    if (other_rate > 0) aggregated_choices["その他"] = other_rate;
+
+                    let gradient_parts_bottom = [];
+                    let current_pos = 0;
+                    for (const choice_name of ["休憩", "カード強化", "その他"]) { // 表示順を固定
+                        if (aggregated_choices[choice_name]) {
+                            const rate = aggregated_choices[choice_name];
+                            const color = choice_colors[choice_name];
+                            gradient_parts_bottom.push(`${color} ${current_pos * 100}%`);
+                            current_pos += rate;
+                            gradient_parts_bottom.push(`${color} ${current_pos * 100}%`);
+                        }
+                    }
+                    if (gradient_parts_bottom.length > 0) {
+                        const bottom_gradient = `linear-gradient(to right, ${gradient_parts_bottom.join(', ')})`;
+                        const top_gradient = `linear-gradient(${base_color}, ${base_color})`;
+                        style_attr += ` background-image: ${bottom_gradient}, ${top_gradient}; background-size: 100% 50%, 100% 100%; background-position: bottom, top; background-repeat: no-repeat;`;
+                    } else {
+                         style_attr += ` background-color: ${base_color};`;
+                    }
+
+                } else if (node_type === 'Shop' && node_specific_details) {
+                    const remove_rate = node_specific_details.remove_card_rate || 0;
+                    const upgrade_rate = node_specific_details.upgrade_card_rate || 0;
+                    const other_rate = Math.max(0, 1 - remove_rate - upgrade_rate);
+
+                    let gradient_parts_bottom = [];
+                    let current_pos = 0;
+
+                    // 削除
+                    gradient_parts_bottom.push(`#42A5F5 ${current_pos * 100}%`);
+                    current_pos += remove_rate;
+                    gradient_parts_bottom.push(`#42A5F5 ${current_pos * 100}%`);
+                    // 強化
+                    gradient_parts_bottom.push(`#FFB74D ${current_pos * 100}%`);
+                    current_pos += upgrade_rate;
+                    gradient_parts_bottom.push(`#FFB74D ${current_pos * 100}%`);
+                    // その他
+                    if (other_rate > 0.001) {
+                        gradient_parts_bottom.push(`#90CAF9 ${current_pos * 100}%`);
+                        current_pos += other_rate;
+                        gradient_parts_bottom.push(`#90CAF9 ${current_pos * 100}%`);
+                    }
+
+                    const bottom_gradient = `linear-gradient(to right, ${gradient_parts_bottom.join(', ')})`;
+                    const top_gradient = `linear-gradient(${base_color}, ${base_color})`;
+                    style_attr += ` background-image: ${bottom_gradient}, ${top_gradient}; background-size: 100% 50%, 100% 100%; background-position: bottom, top; background-repeat: no-repeat;`;
+
+                } else {
+                    style_attr += ` background-color: ${base_color};`;
+                }
+                // ★★★ 修正箇所ここまで ★★★
+
+                barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
             });
             barHtml += '</div></div>';
             actHtmlSegment += barHtml;
@@ -1238,7 +1312,7 @@ function renderRouteEventTab(lang) {
                     const scales = node_specific_details.scales || {};
                     const sorted_enemies = Object.values(enemy_data).sort((a, b) => b.rate - a.rate);
 
-                    let table_html = `<h5>${UI_TEXT.encounter_title}</h5><table class="enemy-stats-table">`;
+                    let table_html = `<h5>${UI_TEXT.encounter_title || '出現する敵'}</h5><table class="enemy-stats-table">`;
                     table_html += `<thead><tr><th>${UI_TEXT.enemy_table_metric}</th>${sorted_enemies.map(e => `<th>${e[lang]}</th>`).join('')}</tr></thead>`;
                     table_html += '<tbody>';
                     table_html += `<tr><td>${UI_TEXT.enemy_table_rate}</td>${sorted_enemies.map(e => `<td>${(e.rate * 100).toFixed(1)}%</td>`).join('')}</tr>`;
@@ -1248,6 +1322,58 @@ function renderRouteEventTab(lang) {
                     table_html += '</tbody></table>';
                     top_section_html = table_html;
                 }
+                // Shopノードの選択肢割合を表示する処理
+                else if (node_type === 'Shop' && node_specific_details) {
+                    let shop_choices_html = `<h5>${UI_TEXT.choice_rates_title || '選択肢の割合'}</h5><ul class="details-list">`;
+                    let has_shop_choices = false;
+                    if (node_specific_details.remove_card_rate != null) {
+                        shop_choices_html += `<li>${UI_TEXT.shop_remove_card || 'カードの削除'}: ${(node_specific_details.remove_card_rate * 100).toFixed(1)}%</li>`;
+                        has_shop_choices = true;
+                    }
+                    if (node_specific_details.upgrade_card_rate != null) {
+                        shop_choices_html += `<li>${UI_TEXT.shop_upgrade_card || 'カードの強化'}: ${(node_specific_details.upgrade_card_rate * 100).toFixed(1)}%</li>`;
+                        has_shop_choices = true;
+                    }
+                    shop_choices_html += '</ul>';
+                    if (has_shop_choices) {
+                        top_section_html = shop_choices_html;
+                        has_content = true;
+                    }
+                }
+                // Gapノードの選択肢割合を表示する処理
+                else if (node_type === 'Gap' && node_specific_details.choices) {
+                    has_content = true;
+                    let gap_choices_html = `<h5>${UI_TEXT.choice_rates_title || '選択肢の割合'}</h5><ul class="details-list">`;
+
+                    const choice_map = {
+                        "UpgradeCard": UI_TEXT.gap_upgrade || "カード強化",
+                        "DrinkTea": UI_TEXT.gap_rest || "休憩",
+                        "Rest": UI_TEXT.gap_rest || "休憩"
+                    };
+                    const other_label = UI_TEXT.gap_other || "その他";
+
+                    let aggregated_choices = {};
+                    let other_rate = 0;
+
+                    for (const [choice, stats] of Object.entries(node_specific_details.choices)) {
+                        if (choice_map[choice]) {
+                            aggregated_choices[choice_map[choice]] = (aggregated_choices[choice_map[choice]] || 0) + stats.rate;
+                        } else {
+                            other_rate += stats.rate;
+                        }
+                    }
+
+                    if (other_rate > 0) {
+                        aggregated_choices[other_label] = other_rate;
+                    }
+
+                    for (const [display_choice, rate] of Object.entries(aggregated_choices)) {
+                         gap_choices_html += `<li>${display_choice}: ${(rate * 100).toFixed(1)}%</li>`;
+                    }
+
+                    gap_choices_html += '</ul>';
+                    top_section_html = gap_choices_html;
+                }
 
                 const node_actions = event_actions[node_full_key] || {};
                 ['Card', 'Exhibit'].forEach(item_type => {
@@ -1255,8 +1381,6 @@ function renderRouteEventTab(lang) {
                         const items = node_actions[`${action_type}_${item_type}`];
                         if (items && items.length > 0) {
                             has_content = true;
-                            const title_key = `${node_type.toLowerCase()}_${action_type.toLowerCase()}_${item_type.toLowerCase()}`;
-                            const title = UI_TEXT[title_key] || UI_TEXT[`${item_type.toLowerCase()}_${action_type.toLowerCase()}`] || `${action_type} ${item_type}`;
 
                             const lookup_table = (item_type === 'Card') ? ALL_DATA.lookup_tables.cards : ALL_DATA.lookup_tables.exhibits;
                             const name_key = (lang === 'ja') ? 'JA' : 'EN';
@@ -1267,18 +1391,22 @@ function renderRouteEventTab(lang) {
                                 return `<li>${createWikiLink(display_name, item_type.toLowerCase(), lang)} (${count})</li>`;
                             }).join('');
 
+                            const action_title_key = `${action_type.toLowerCase()}_${item_type.toLowerCase()}`;
+                            const action_title = UI_TEXT[action_title_key] || `${action_type} ${item_type}`;
+
                             if (item_type === 'Card') {
-                                card_grid_content += `<div><h5>${title}</h5><ol>${list_items}</ol></div>`;
+                                card_grid_content += `<div><h5>${action_title}</h5><ol>${list_items}</ol></div>`;
                             } else {
-                                exhibit_grid_content += `<div><h5>${title}</h5><ol>${list_items}</ol></div>`;
+                                exhibit_grid_content += `<div><h5>${action_title}</h5><ol>${list_items}</ol></div>`;
                             }
                         }
                     });
                 });
 
                 if (top_section_html) details_content += `<div class="details-section">${top_section_html}</div>`;
-                if (card_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.card_section_title}</h5><div class="details-grid">${card_grid_content}</div></div>`;
-                if (exhibit_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.exhibit_section_title}</h5><div class="details-grid">${exhibit_grid_content}</div></div>`;
+
+                if (card_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.card_section_title || 'カード関連'}</h5><div class="details-grid">${card_grid_content}</div></div>`;
+                if (exhibit_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.exhibit_section_title || '展示品関連'}</h5><div class="details-grid">${exhibit_grid_content}</div></div>`;
 
                 if (!has_content) {
                     details_content += `<p>${UI_TEXT.no_data}</p>`;
