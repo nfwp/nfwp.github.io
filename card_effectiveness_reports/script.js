@@ -107,7 +107,6 @@ async function setupUiText(lang) {
     }
 }
 
-// この関数を丸ごと置き換えてください
 function setupNavigation() {
     const tabsConfig = [
         { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
@@ -272,6 +271,7 @@ function renderCardPerformanceTab(char, lang) {
     setupGraphFilters(lang);
 }
 
+// この関数を丸ごと置き換えてください
 function createFilterBarHtml() {
     return `
     <div id="custom-filters">
@@ -304,7 +304,9 @@ function createFilterBarHtml() {
 
             <div class="slider-filter-group" id="filter-group-attention">
                 <label>${UI_TEXT.attention_score_label || '注目度スコア'}:</label>
-                <div class="slider-container-single">
+
+                <!-- ★★★ 修正点: style属性を追加してバーの長さを調整 ★★★ -->
+                <div class="slider-container-single" style="width: 250px;">
                     <div id="attention-score-slider" class="slider"></div>
                     <span id="attention-score-value"></span>
                 </div>
@@ -339,6 +341,7 @@ function createFilterBarHtml() {
         </div>
     </div>`;
 }
+
 
 function drawPlotlyGraph(char, lang) {
     // ★★★ 修正点 1: 関数内での要素検索を削除 ★★★
@@ -523,7 +526,7 @@ function setupGraphFilters(lang) {
     if (attentionSliderEl) {
         attentionSlider = noUiSlider.create(attentionSliderEl, {
             start: 30,
-            range: { 'min': 30, 'max': 70 },
+            range: { 'min': 30, 'max': 90 },
             step: 1,
             format: { to: v => Math.round(v), from: v => Number(v) }
         });
@@ -962,6 +965,7 @@ function createAnalysisReportsHtml(lang) {
             </div>
             ${criteriaHtml}`;
 }
+
 
 // この関数を丸ごと置き換えてください
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
