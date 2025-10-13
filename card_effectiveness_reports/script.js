@@ -963,7 +963,7 @@ function createAnalysisReportsHtml(lang) {
             ${criteriaHtml}`;
 }
 
-
+// この関数を丸ごと置き換えてください
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const isLateGameSpecialist = (highlightsStr) => {
         if (!highlightsStr) return false;
@@ -974,6 +974,11 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const highlightCol = (LANG === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
 
     aggData.forEach(r => {
+        // ★★★ 修正点: 性能評価がないカードは、そもそも選考対象から除外する ★★★
+        if (r.Turn_Tendency === null || r.HP_Tendency === null) {
+            return; // このカードの処理をスキップ
+        }
+
         const atk_tendency = r.Turn_Tendency || 0;
         const def_tendency = r.HP_Tendency || 0;
         const card_type = r.Type;
@@ -987,17 +992,34 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
         const has_big_star = atk_tendency > 0.75 || def_tendency > 0.75;
         const has_bronze_or_better = ["🥇", "🥈", "🥉"].includes(medal);
 
-        if (medal === "🥇" || medal === "🥈") { honor_cards.push(r[cardNameCol]); }
-        else if (is_balanced_positive && has_big_star) { honor_cards.push(r[cardNameCol]); }
-        else if (has_bronze_or_better && is_balanced_positive && has_star) { honor_cards.push(r[cardNameCol]); }
-        else if (perf_sum < 100 && highlight_text.includes("Act 4 - Boss")) { star_cards.push(r[cardNameCol]); }
-        else if (medal && isLateGameSpecialist(highlight_text)) { star_cards.push(r[cardNameCol]); }
-        else if (card_type !== 'Misfortune' && ((tendency_sum >= 0.75 && medal) || (tendency_sum >= 1.0)) && perf_sum >= 100) { honor_cards.push(r[cardNameCol]); }
-        else if (atk_tendency >= 0.25 && (def_tendency >= -0.75 && def_tendency <= 0.25)) { high_roller_cards.push(r[cardNameCol]); }
-        else if (def_tendency >= 0.25 && (atk_tendency >= -0.75 && atk_tendency <= 0.25)) { solid_cards.push(r[cardNameCol]); }
-        else if (atk_tendency > 0 && def_tendency > 0 && tendency_sum >= 0.5) { balancer_cards.push(r[cardNameCol]); }
-        else if (tendency_sum < -1.5 && medal) { counter_cards.push(r[cardNameCol]); }
-        else if (atk_tendency > 1.0 || def_tendency > 1.0) { star_cards.push(r[cardNameCol]); }
+        // ★★★ 修正点: 「優等生」の判定ロジックを厳格化 ★★★
+        if (medal === "🥇" || medal === "🥈") {
+            honor_cards.push(r[cardNameCol]);
+        } else if (is_balanced_positive && has_big_star) {
+            honor_cards.push(r[cardNameCol]);
+        } else if (has_bronze_or_better && is_balanced_positive && has_star) {
+            honor_cards.push(r[cardNameCol]);
+        }
+        // 問題のあった条件を修正: メダルがあり、かつ傾向スコアが高い場合に限定
+        else if (card_type !== 'Misfortune' && (tendency_sum >= 0.75 && has_bronze_or_better) && perf_sum >= 100) {
+            honor_cards.push(r[cardNameCol]);
+        }
+        // --- 他のカテゴリの判定は変更なし ---
+        else if (perf_sum < 100 && highlight_text.includes("Act 4 - Boss")) {
+            star_cards.push(r[cardNameCol]);
+        } else if (medal && isLateGameSpecialist(highlight_text)) {
+            star_cards.push(r[cardNameCol]);
+        } else if (atk_tendency >= 0.25 && (def_tendency >= -0.75 && def_tendency <= 0.25)) {
+            high_roller_cards.push(r[cardNameCol]);
+        } else if (def_tendency >= 0.25 && (atk_tendency >= -0.75 && atk_tendency <= 0.25)) {
+            solid_cards.push(r[cardNameCol]);
+        } else if (atk_tendency > 0 && def_tendency > 0 && tendency_sum >= 0.5) {
+            balancer_cards.push(r[cardNameCol]);
+        } else if (tendency_sum < -1.5 && medal) {
+            counter_cards.push(r[cardNameCol]);
+        } else if (atk_tendency > 1.0 || def_tendency > 1.0) {
+            star_cards.push(r[cardNameCol]);
+        }
     });
 
     const createList = (title, desc, cards) => {
