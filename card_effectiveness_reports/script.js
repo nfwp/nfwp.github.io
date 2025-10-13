@@ -14,8 +14,11 @@ let ALL_DATA = {};
 let UI_TEXT = {};
 let LANG = 'ja';
 let CURRENT_CHAR = 'CirnoA';
-let GRAPH_DIV = null;
+
 let attentionSlider = null;
+
+// ★★★ グラフ関連の変数をここで宣言 ★★★
+let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
 
 
 // =================================================================
@@ -45,6 +48,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderExhibitAnalysisTab(LANG);
     renderRouteEventTab(LANG);
     renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
+    renderCardListTab(ALL_DATA);
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
@@ -103,12 +107,15 @@ async function setupUiText(lang) {
     }
 }
 
+// この関数を丸ごと置き換えてください
 function setupNavigation() {
     const tabsConfig = [
         { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
         { id: 'exhibit-analysis-tab', label: UI_TEXT.exhibit_tab_title },
         { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
-        { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title }
+        { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title },
+        // ★★★ 修正箇所: ハードコードされたラベルを UI_TEXT を使うように変更 ★★★
+        { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' }
     ];
 
     const tabButtonsContainer = document.getElementById('tab-buttons');
@@ -181,6 +188,73 @@ function setupNavigation() {
 
     if (tabsConfig.length > 0 && tabsConfig[0].label) {
         switchTab(tabsConfig[0].id);
+    }
+}
+
+// 既存の renderCardListTab と showCardList を削除し、以下に置き換えてください
+
+/**
+ * 「カード一覧」タブのUIを生成し、コンテナに描画する関数
+ * @param {object} data - 現在のキャラクターの全データ
+ */
+function renderCardListTab(data) {
+    const container = document.getElementById('card-list-tab');
+    if (!container) {
+        console.error("Card list tab container not found!");
+        return;
+    }
+
+    // データが不正な場合にエラーメッセージを表示
+    if (!data || !data.all_available_characters || !data.metadata) {
+        console.error("renderCardListTab: Invalid data object received.", data);
+        container.innerHTML = "<p>カード一覧のデータの読み込みに失敗しました。</p>";
+        return;
+    }
+
+    const allCharacters = data.all_available_characters;
+    const currentCharacter = data.metadata.character;
+
+    // キャラクター選択用のドロップダウンメニューを生成 (現在のキャラクターをデフォルトで選択)
+    const charOptionsHtml = allCharacters.map(char =>
+        `<option value="${char}" ${char === currentCharacter ? 'selected' : ''}>${char}</option>`
+    ).join('');
+
+    // ★★★ 修正箇所: ハードコードされたラベルを UI_TEXT を使うように変更 ★★★
+    container.innerHTML = `
+        <div class="card-list-controls" style="background-color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd; display: flex; align-items: center; flex-wrap: wrap;">
+            <label for="card-list-char-select" style="margin-right: 10px; font-weight: bold;">${UI_TEXT.character_label || 'キャラクター:'}</label>
+            <select id="card-list-char-select" onchange="showCardList()" style="margin-right: 20px; font-size: 14px; padding: 5px;">
+                ${charOptionsHtml}
+            </select>
+            <label style="margin-left: 20px; font-weight: bold;">${UI_TEXT.language_label || '言語:'}</label>
+            <input type="radio" id="lang-ja" name="card-list-lang" value="ja" ${LANG === 'ja' ? 'checked' : ''} onchange="showCardList()" style="margin-left: 10px;">
+            <label for="lang-ja">${UI_TEXT.japanese_label || '日本語'}</label>
+            <input type="radio" id="lang-en" name="card-list-lang" value="en" ${LANG === 'en' ? 'checked' : ''} onchange="showCardList()" style="margin-left: 10px;">
+            <label for="lang-en">${UI_TEXT.english_label || 'English'}</label>
+        </div>
+        <iframe id="card-list-iframe" style="width: 100%; height: 85vh; border: 1px solid #ccc; border-radius: 8px;" frameborder="0"></iframe>
+    `;
+
+    // 最初のリストを読み込む
+    showCardList();
+}
+
+/**
+ * 選択されたキャラクターと言語に基づいて、iframeにカードリストを読み込む関数
+ */
+function showCardList() {
+    const charSelect = document.getElementById('card-list-char-select');
+    const langSelect = document.querySelector('input[name="card-list-lang"]:checked');
+    const iframe = document.getElementById('card-list-iframe');
+
+    if (charSelect && langSelect && iframe) {
+        const selectedChar = charSelect.value;
+        const selectedLang = langSelect.value;
+        // report.html からの相対パス
+        const filePath = `card_lists/${selectedChar}_card_list_${selectedLang}.html`;
+
+        // iframeのsrcが同じでも強制的にリロードさせるため、タイムスタンプを追加
+        iframe.src = `${filePath}?_=${new Date().getTime()}`;
     }
 }
 
@@ -267,6 +341,13 @@ function createFilterBarHtml() {
 }
 
 function drawPlotlyGraph(char, lang) {
+    // ★★★ 修正点 1: 関数内での要素検索を削除 ★★★
+    // GRAPH_DIV は呼び出し元の renderCardPerformanceTab で既に設定済みです。
+    if (!GRAPH_DIV) {
+        console.error("drawPlotlyGraph: The graph container div was not found. It should be set by the calling function.");
+        return; // 描画を中止
+    }
+
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
     const aggData = ALL_DATA.agg_data_for_graph;
     const sitData = ALL_DATA.sit_data;
@@ -279,8 +360,8 @@ function drawPlotlyGraph(char, lang) {
     }
 
     const traces = [];
-    const aggTypes = [...new Set(aggData.map(d => d.Type))].sort();
-    const sizerefVal = 2. * Math.max(...aggData.map(d => d.Total_Fights_With)) / (40. ** 2);
+    const aggTypes = [...new Set(ALL_DATA.agg_data_full.map(d => d.Type))].sort();
+    const sizerefVal = aggData.length > 0 ? 2. * Math.max(...aggData.map(d => d.Total_Fights_With)) / (40.**2) : 1;
 
     aggTypes.forEach(cardType => {
         const dff = aggData.filter(d => d.Type === cardType);
@@ -300,8 +381,9 @@ function drawPlotlyGraph(char, lang) {
     });
 
     orderedSituations.forEach(situation => {
-        const sitDffBase = sitData.filter(d => d.Situation === situation);
+        const sitDffBase = sitData.filter(d => d.Situation === situation && d.IsStarter === false);
         const maxFightsInSituation = Math.max(...sitDffBase.map(d => d.Fights_With), 0);
+
         aggTypes.forEach(cardType => {
             const dff = sitDffBase.filter(d => d.Type === cardType);
             if (dff.length === 0) {
@@ -328,6 +410,7 @@ function drawPlotlyGraph(char, lang) {
     const totalSitTraces = orderedSituations.length * numSitTracesPerSituation;
     const aggVisibility = [...Array(numAggTraces).fill(true), ...Array(totalSitTraces).fill(false)];
     const sitVisibilityInitial = [...Array(numAggTraces).fill(false), ...Array(numSitTracesPerSituation).fill(true), ...Array(totalSitTraces - numSitTracesPerSituation).fill(false)];
+
     const situationButtons = orderedSituations.map((situation, i) => {
         const visibility = Array(numAggTraces + totalSitTraces).fill(false);
         const startIndex = numAggTraces + (i * numSitTracesPerSituation);
@@ -337,27 +420,13 @@ function drawPlotlyGraph(char, lang) {
 
     const layout = {
         height: 800,
-        title: {
-            text: UI_TEXT.agg_title,
-            x: 0.05,
-            y: 0.98,
-            xanchor: 'left',
-            yanchor: 'top'
-        },
+        title: { text: UI_TEXT.agg_title, x: 0.05, y: 0.98, xanchor: 'left', yanchor: 'top' },
         xaxis: { range: X_RANGE, title: UI_TEXT.xaxis },
         yaxis: { range: Y_RANGE, title: UI_TEXT.yaxis, scaleanchor: "x", scaleratio: 1 },
         hovermode: 'closest',
-        legend: {
-            orientation: "h",
-            xanchor: "center",
-            yanchor: "top",
-            x: 0.5,
-            y: -0.15,
-        },
+        legend: { orientation: "h", xanchor: "center", yanchor: "top", x: 0.5, y: -0.15 },
         dragmode: 'pan',
-        modebar: {
-            orientation: 'v',
-        },
+        modebar: { orientation: 'v' },
         updatemenus: [
             { type: "buttons", direction: "right", active: 0, x: 0, y: 1.08, xanchor: "left", yanchor: "top", buttons: [
                 { label: UI_TEXT.agg_view, method: "update", args: [{ visible: aggVisibility }, { "title.text": UI_TEXT.agg_title, "updatemenus[1].visible": false }] },
@@ -365,12 +434,7 @@ function drawPlotlyGraph(char, lang) {
             ]},
             { type: "dropdown", direction: "down", active: 0, x: 0, y: 1.0, xanchor: "left", yanchor: "top", buttons: situationButtons, visible: false, showactive: true }
         ],
-        margin: {
-            l: 60,
-            r: 20,
-            t: 80,
-            b: 120
-        },
+        margin: { l: 60, r: 20, t: 80, b: 120 },
         shapes: [
             ...[5, 10, 15].map(r => ({ type: "circle", xref: "x", yref: "y", x0: 50 - r, y0: 50 - r, x1: 50 + r, y1: 50 + r, line: { color: "LightGrey", width: 1, dash: "dot" }, layer: "below" })),
             { type: "line", xref: "x", yref: "y", x0: 50, y0: Y_RANGE[0], x1: 50, y1: Y_RANGE[1], line: { color: "grey", width: 1, dash: "dash" }, layer: "below" },
@@ -381,6 +445,22 @@ function drawPlotlyGraph(char, lang) {
     const config = { responsive: true, scrollZoom: true, displaylogo: false, modeBarButtonsToRemove: ['select2d', 'lasso2d'] };
 
     Plotly.newPlot(GRAPH_DIV, traces, layout, config);
+
+    // --- ★★★ 修正点 2: イベントリスナーを毎回再設定する ★★★ ---
+    // 既存のリスナーをすべて削除し、重複を防ぐ
+    GRAPH_DIV.removeAllListeners('plotly_relayout');
+
+    // 新しいリスナーを設定
+    GRAPH_DIV.on('plotly_relayout', function(eventData) {
+        // 'updatemenus[0].active' の変更はビューの切り替えを意味する
+        if (eventData['updatemenus[0].active'] !== undefined) {
+            // ホバー状態をリセットし、全バブルのスタイルを再計算・適用する
+            // 少し遅延させて呼び出すことで、Plotlyのビュー切り替え完了を待つ
+            setTimeout(() => {
+                updateVisuals(null, null);
+            }, 50);
+        }
+    });
 }
 
 // =================================================================
@@ -671,11 +751,19 @@ function createHoverText(d, lang) {
 }
 
 function updateVisuals(hoveredCardName, synergyPartners) {
+    // グラフがまだ描画されていない、または初期化されていない場合は何もしない
+    if (!GRAPH_DIV || !GRAPH_DIV.layout) {
+        return;
+    }
+
+    // 現在表示されているのが総合ビューか状況別ビューかを取得
+    const currentViewButtonIndex = GRAPH_DIV.layout.updatemenus[0].active;
+    const isAggView = (currentViewButtonIndex === 0);
+
+    // フィルターの値を取得 (総合ビューでのみ使用)
     const rarityValue = document.getElementById('rarity-filter').value;
     const medalValue = document.getElementById('medal-filter').value;
-
     const attentionScoreValue = attentionSlider ? parseFloat(attentionSlider.get()) : 30;
-
     const isAtkAll = document.getElementById('atk-tendency-all').checked;
     const isDefAll = document.getElementById('def-tendency-all').checked;
     const atkRange = [parseFloat(document.getElementById('atk-tendency-min').value), parseFloat(document.getElementById('atk-tendency-max').value)];
@@ -691,31 +779,43 @@ function updateVisuals(hoveredCardName, synergyPartners) {
         if (!trace.customdata || trace.customdata.length === 0) continue;
         tracesToUpdate.push(i);
         const newOpacities = [], newLineWidths = [], newLineColors = [], newFontColors = [];
+
         for (let j = 0; j < trace.customdata.length; j++) {
             const d = trace.customdata[j];
-            const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
-
-            const attentionMatch = (d.Attention_Score === null || d.Attention_Score >= attentionScoreValue);
-
-            const atkTendencyMatch = isAtkAll || (d.Turn_Tendency >= atkRange[0] && d.Turn_Tendency <= atkRange[1]);
-            const defTendencyMatch = isDefAll || (d.HP_Tendency >= defRange[0] && d.HP_Tendency <= defRange[1]);
-            const tendencyConditionMatch = (tendencyLogic === 'and') ? (atkTendencyMatch && defTendencyMatch) : (atkTendencyMatch || defTendencyMatch);
-            let medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && d.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(d.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(d.Medal)) || (medalValue === 'None' && (d.Medal === '' || d.Medal == null));
-
-            const allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch && attentionMatch;
-
             let opacity = 0.7, lineWidth = 0, lineColor = 'black', fontColor = '#555';
-            if (!allFiltersMatch) {
-                opacity = 0.05; fontColor = '#ddd';
-            } else if (hoveredCardName) {
-                if (d[cardNameCol] === hoveredCardName) {
-                    opacity = 1.0; lineWidth = 3; fontColor = '#333';
-                } else if (synergyPartners && synergyPartners.includes(d[cardNameCol])) {
-                    opacity = 0.9; lineWidth = 1; fontColor = '#333';
-                } else {
-                    opacity = 0.1; fontColor = '#ccc';
+
+            if (isAggView) {
+                // --- 総合ビューのロジック ---
+                const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
+                const attentionMatch = (d.Attention_Score === null || d.Attention_Score >= attentionScoreValue);
+                const atkTendencyMatch = isAtkAll || (d.Turn_Tendency >= atkRange[0] && d.Turn_Tendency <= atkRange[1]);
+                const defTendencyMatch = isDefAll || (d.HP_Tendency >= defRange[0] && d.HP_Tendency <= defRange[1]);
+                const tendencyConditionMatch = (tendencyLogic === 'and') ? (atkTendencyMatch && defTendencyMatch) : (atkTendencyMatch || defTendencyMatch);
+                const medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && d.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(d.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(d.Medal)) || (medalValue === 'None' && (d.Medal === '' || d.Medal == null));
+                const allFiltersMatch = rarityMatch && tendencyConditionMatch && medalMatch && attentionMatch;
+
+                if (!allFiltersMatch) {
+                    opacity = 0.05;
+                    fontColor = '#ddd';
+                } else if (hoveredCardName) {
+                    if (d[cardNameCol] === hoveredCardName) {
+                        opacity = 1.0;
+                        lineWidth = 3;
+                        fontColor = '#333';
+                    } else if (synergyPartners && synergyPartners.includes(d[cardNameCol])) {
+                        opacity = 0.9;
+                        lineWidth = 1;
+                        fontColor = '#333';
+                    } else {
+                        opacity = 0.1;
+                        fontColor = '#ccc';
+                    }
                 }
+            } else {
+                // --- 状況別ビューのロジック ---
+                // フィルターもホバーハイライトも適用しない。
             }
+
             newOpacities.push(opacity);
             newLineWidths.push(lineWidth);
             newLineColors.push(lineColor);
@@ -731,6 +831,7 @@ function updateVisuals(hoveredCardName, synergyPartners) {
     }
 }
 
+
 function createWikiLink(itemName, itemType, lang) {
     if (!itemName) return "";
     const encodedName = encodeURIComponent(itemName.replace(/ /g, '_'));
@@ -738,8 +839,6 @@ function createWikiLink(itemName, itemType, lang) {
     return `<a href="${baseUrl}" target="_blank">${itemName}</a>`;
 }
 
-
-// ★★★★★ ここからが今回の修正のメイン部分です ★★★★★
 
 // エラーを回避するため、呼び出される createAnalysisReportsHtml より前にランキング生成関数を定義します。
 function createAttentionRankingHtml(aggData, cardNameCol, lang) {
@@ -751,14 +850,14 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
 
     if (sortedData.length === 0) return '';
 
-    // --- ★★★ 翻訳と英語フォールバックを追加 ★★★ ---
+
     const isJa = lang === 'ja';
     const title = UI_TEXT.attention_ranking_title || (isJa ? `注目度ランキング Top${topN}` : `Attention Ranking Top ${topN}`);
     const description = UI_TEXT.attention_ranking_desc || (isJa ? '採用率、ハイライト、性能を総合的に評価したランキングです。' : 'A comprehensive ranking based on adoption rate, highlights, and performance.');
     const attentionLabel = UI_TEXT.attention_score_label || (isJa ? '注目度' : 'Attention');
     const adoptionLabel = UI_TEXT.adoption_rate_header || (isJa ? '採用率' : 'Adoption');
     const performanceLabel = UI_TEXT.performance_header || (isJa ? '性能' : 'Perf.');
-    // --- ★★★ ここまで ★★★ ---
+
 
     const splitPoint = Math.ceil(sortedData.length / 2);
     const col1Data = sortedData.slice(0, splitPoint);
@@ -849,7 +948,7 @@ function createAnalysisReportsHtml(lang) {
             <h4>${UI_TEXT.spotlight_cat4_title}</h4><ul><li>${UI_TEXT.counter_cond1}</li></ul>
         </div>`;
 
-    // ★★★ 修正後の部分 ★★★
+
     // 全てのHTML文字列を正しい順序で結合して返します。
     return `<div id='analysis-reports'>
                 ${spotlightHtml}
@@ -1376,7 +1475,7 @@ function createUpgradeRankingHtml(rankingData, cardNameCol, lang) {
     const description = isJa ? 'GapまたはShopで強化された回数の多いカードです。' : 'Cards most frequently upgraded at Gaps or Shops.';
     const countLabel = isJa ? '強化回数' : 'Upgrades';
 
-    // ★★★ ここからレイアウト修正 ★★★
+
     const splitPoint = Math.ceil(sortedData.length / 2);
     const col1Data = sortedData.slice(0, splitPoint);
     const col2Data = sortedData.slice(splitPoint);
@@ -1398,7 +1497,7 @@ function createUpgradeRankingHtml(rankingData, cardNameCol, lang) {
     `;
 
     return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
-    // ★★★ ここまで ★★★
+
 }
 
 /**
@@ -1417,7 +1516,7 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
     const description = isJa ? 'Shopで削除された回数の多いカードです。初期デッキのカードが多くランクインする傾向があります。' : 'Cards most frequently removed at Shops. Initial deck cards tend to rank high.';
     const countLabel = isJa ? '削除回数' : 'Removes';
 
-    // ★★★ ここからレイアウト修正 ★★★
+
     const splitPoint = Math.ceil(sortedData.length / 2);
     const col1Data = sortedData.slice(0, splitPoint);
     const col2Data = sortedData.slice(splitPoint);
@@ -1439,5 +1538,5 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
     `;
 
     return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
-    // ★★★ ここまで ★★★
+
 }
