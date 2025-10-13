@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CirnoA カードリスト</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            /* 文字が長くなった場合に折り返すように設定 */
+            word-break: break-word;
+        }
+        th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            /* ★★★ 要望3: ヘッダーを固定するためのCSS ★★★ */
+            position: sticky;
+            top: 0;
+            /* スクロール時に下のコンテンツに隠れないようにz-indexを設定 */
+            z-index: 1;
+        }
+
+        /* --- 色分けのルール --- */
+
+        /* 1. アクティブキャラクターのカード (タイプ別) */
+        .active-char-attack { background-color: #ffebee; } /* 薄い赤 */
+        .active-char-defense { background-color: #fffde7; } /* 薄い黄色 */
+        .active-char-skill { background-color: #e3f2fd; } /* 薄い青 */
+        .active-char-ability { background-color: #e8f5e9; } /* 薄い緑 */
+        .active-char-friend { background-color: #ede7f6; } /* 薄い紫 */
+        .active-char-tool, .active-char-misfortune, .active-char-unknown { background-color: #fafafa; } /* その他 */
+
+        /* 2. Neutralカード (色別) */
+        .neutral-w { background-color: #fffde7; } /* 黄色 (白) */
+        .neutral-u { background-color: #e3f2fd; } /* 青色 (青) */
+        .neutral-b { background-color: #ede7f6; } /* 紫色 (黒) */
+        .neutral-r { background-color: #ffebee; } /* 赤色 (赤) */
+        .neutral-g { background-color: #e8f5e9; } /* 緑色 (緑) */
+        .neutral-c { background-color: #eceff1; } /* グレー (無) */
+        .neutral-multi { background-color: #f5f5f5; } /* 2色以上は薄いグレー */
+
+        /* 3. 非アクティブキャラクターのカード */
+        .inactive-reimu { background-color: #ffebee; } /* 赤 */
+        .inactive-sakuya { background-color: #fffde7; } /* 黄色 */
+        .inactive-marisa { background-color: #ede7f6; } /* 紫 */
+        .inactive-cirno { background-color: #e3f2fd; } /* 青 */
+        .inactive-koishi { background-color: #e8f5e9; } /* 緑 */
+        .inactive-neutral { background-color: #f5f5f5; } /* Neutralはグレー */
+        .inactive-unknown { background-color: #eceff1; } /* 不明 */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CirnoA カードリスト</h1>
+        <table>
+            <thead>
+                <tr>
+                    <!-- ★★★ 要望1, 2: ヘッダーの表記を修正 ★★★ -->
+                    <th>カード名</th>
+                    <th>採用率</th>
+                    <th>採用時<br>平均枚数</th>
+                    <th>強化率</th>
+                    <th>レアリティ</th>
+                    <th>タイプ</th>
+                    <th>所有者</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr class="active-char-attack">
+                <td>アイスショット</td>
+                <td>20.5%</td>
+                <td>1.67</td>
+                <td>80.0%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>ティニーグレイシャー</td>
+                <td>32.9%</td>
+                <td>1.21</td>
+                <td>93.1%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>氷槍術</td>
+                <td>28.8%</td>
+                <td>1.00</td>
+                <td>19.0%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>ソードフリーザー</td>
+                <td>11.0%</td>
+                <td>1.00</td>
+                <td>37.5%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>ダイヤモンドブレス</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>フルーツクラッシュアイス</td>
+                <td>12.3%</td>
+                <td>1.00</td>
+                <td>22.2%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>冷凍ビーム</td>
+                <td>5.5%</td>
+                <td>1.25</td>
+                <td>60.0%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>猛吹雪</td>
+                <td>43.8%</td>
+                <td>1.06</td>
+                <td>79.4%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>パーフェクトサマーアイス</td>
+                <td>12.3%</td>
+                <td>1.00</td>
+                <td>22.2%</td>
+                <td>Rare</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-attack">
+                <td>フローズンオーブ</td>
+                <td>31.5%</td>
+                <td>1.04</td>
+                <td>62.5%</td>
+                <td>Rare</td>
+                <td>Attack</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>グリーンカバー</td>
+                <td>80.8%</td>
+                <td>2.31</td>
+                <td>51.5%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>凍結弾幕</td>
+                <td>45.2%</td>
+                <td>1.06</td>
+                <td>40.0%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>夏の爽風</td>
+                <td>15.1%</td>
+                <td>1.09</td>
+                <td>66.7%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>完璧な偽装</td>
+                <td>21.9%</td>
+                <td>1.19</td>
+                <td>89.5%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>氷鏡反射</td>
+                <td>27.4%</td>
+                <td>1.25</td>
+                <td>64.0%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-defense">
+                <td>羽ばたく翼</td>
+                <td>23.3%</td>
+                <td>1.00</td>
+                <td>76.5%</td>
+                <td>Rare</td>
+                <td>Defense</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>かき氷</td>
+                <td>13.7%</td>
+                <td>1.00</td>
+                <td>100.0%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>クールな登場</td>
+                <td>12.3%</td>
+                <td>1.11</td>
+                <td>60.0%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>審念熟慮</td>
+                <td>54.8%</td>
+                <td>1.38</td>
+                <td>81.8%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>薄氷を踏む</td>
+                <td>38.4%</td>
+                <td>1.36</td>
+                <td>71.1%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>アイスシールド</td>
+                <td>54.8%</td>
+                <td>1.60</td>
+                <td>45.3%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>ドッキリ専門家</td>
+                <td>9.6%</td>
+                <td>1.00</td>
+                <td>42.9%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>友を呼ぶ</td>
+                <td>39.7%</td>
+                <td>1.14</td>
+                <td>48.5%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>妖精の起床</td>
+                <td>19.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>待ち合わせ</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>25.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>急速冷却</td>
+                <td>23.3%</td>
+                <td>1.00</td>
+                <td>52.9%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>氷上の妖精</td>
+                <td>20.5%</td>
+                <td>1.00</td>
+                <td>53.3%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>氷漬けの標本</td>
+                <td>58.9%</td>
+                <td>1.44</td>
+                <td>75.8%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>流氷</td>
+                <td>6.8%</td>
+                <td>1.60</td>
+                <td>37.5%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>清涼なるパーティー</td>
+                <td>11.0%</td>
+                <td>1.25</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>知性なる妖精</td>
+                <td>35.6%</td>
+                <td>1.23</td>
+                <td>75.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>脳の過負荷</td>
+                <td>9.6%</td>
+                <td>1.00</td>
+                <td>57.1%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>アイスブロック</td>
+                <td>28.8%</td>
+                <td>1.10</td>
+                <td>65.2%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>コールドチェーン</td>
+                <td>19.2%</td>
+                <td>1.00</td>
+                <td>71.4%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>スイフトクールダウン</td>
+                <td>19.2%</td>
+                <td>1.00</td>
+                <td>42.9%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>妖精の悪戯</td>
+                <td>9.6%</td>
+                <td>1.14</td>
+                <td>87.5%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>自然な贈り物</td>
+                <td>28.8%</td>
+                <td>1.14</td>
+                <td>62.5%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-skill">
+                <td>銀氷の血筋</td>
+                <td>13.7%</td>
+                <td>1.00</td>
+                <td>70.0%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>凍てつく玉座</td>
+                <td>17.8%</td>
+                <td>1.08</td>
+                <td>85.7%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>燃える氷</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>社交的な妖精</td>
+                <td>9.6%</td>
+                <td>1.00</td>
+                <td>57.1%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>絶対零度</td>
+                <td>47.9%</td>
+                <td>1.54</td>
+                <td>63.0%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>花園での集い</td>
+                <td>6.8%</td>
+                <td>1.40</td>
+                <td>57.1%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>つららの舞</td>
+                <td>28.8%</td>
+                <td>1.05</td>
+                <td>50.0%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>フリーズマトリックス</td>
+                <td>31.5%</td>
+                <td>1.30</td>
+                <td>90.0%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>妖精大集結</td>
+                <td>16.4%</td>
+                <td>1.00</td>
+                <td>16.7%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-ability">
+                <td>永遠に清涼なる幻想四季</td>
+                <td>20.5%</td>
+                <td>1.00</td>
+                <td>66.7%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-friend">
+                <td>メイド妖精、カスミ</td>
+                <td>26.0%</td>
+                <td>1.21</td>
+                <td>39.1%</td>
+                <td>Common</td>
+                <td>Friend</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-friend">
+                <td>異変調査助手、大妖精</td>
+                <td>13.7%</td>
+                <td>1.00</td>
+                <td>40.0%</td>
+                <td>Common</td>
+                <td>Friend</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-friend">
+                <td>春告精、リリーホワイト</td>
+                <td>4.1%</td>
+                <td>1.00</td>
+                <td>66.7%</td>
+                <td>Uncommon</td>
+                <td>Friend</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-friend">
+                <td>真冬の化身、レティ</td>
+                <td>28.8%</td>
+                <td>1.33</td>
+                <td>28.6%</td>
+                <td>Uncommon</td>
+                <td>Friend</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="active-char-friend">
+                <td>真夏の妖精の夢、ラルバ</td>
+                <td>32.9%</td>
+                <td>1.04</td>
+                <td>40.0%</td>
+                <td>Uncommon</td>
+                <td>Friend</td>
+                <td>Cirno</td>
+            </tr>
+            
+            <tr class="neutral-w">
+                <td>飛光虫ネスト</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Rare</td>
+                <td>Attack</td>
+                <td>🟡</td>
+            </tr>
+            
+            <tr class="neutral-w">
+                <td>聖地巡礼</td>
+                <td>6.8%</td>
+                <td>1.20</td>
+                <td>100.0%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>🟡</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>兎は舞い降りた</td>
+                <td>4.1%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>激流</td>
+                <td>6.8%</td>
+                <td>1.20</td>
+                <td>83.3%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>ウォーターカーペット</td>
+                <td>26.0%</td>
+                <td>1.11</td>
+                <td>42.9%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>タオ胎動</td>
+                <td>6.8%</td>
+                <td>1.00</td>
+                <td>60.0%</td>
+                <td>Uncommon</td>
+                <td>Defense</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>プリンセスウンディネ</td>
+                <td>46.6%</td>
+                <td>1.12</td>
+                <td>63.2%</td>
+                <td>Uncommon</td>
+                <td>Defense</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>水遊び</td>
+                <td>58.9%</td>
+                <td>1.26</td>
+                <td>29.6%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>捏造報道</td>
+                <td>19.2%</td>
+                <td>1.07</td>
+                <td>93.3%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>船底の念縛霊</td>
+                <td>9.6%</td>
+                <td>1.14</td>
+                <td>75.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>神代の記憶</td>
+                <td>20.5%</td>
+                <td>1.07</td>
+                <td>50.0%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>伝道教示</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-u">
+                <td>賢者の帰依</td>
+                <td>34.2%</td>
+                <td>1.08</td>
+                <td>37.0%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>🔵</td>
+            </tr>
+            
+            <tr class="neutral-b">
+                <td>无寿の夢</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>🟣</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>春色の閃光</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>弾幕の玉繭</td>
+                <td>11.0%</td>
+                <td>1.12</td>
+                <td>11.1%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>蓬莱の樹海</td>
+                <td>9.6%</td>
+                <td>1.00</td>
+                <td>100.0%</td>
+                <td>Rare</td>
+                <td>Attack</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>春植えざれば秋実らず</td>
+                <td>30.1%</td>
+                <td>1.00</td>
+                <td>59.1%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>桜色の海</td>
+                <td>31.5%</td>
+                <td>1.04</td>
+                <td>83.3%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>月明かりの水蓮</td>
+                <td>21.9%</td>
+                <td>1.12</td>
+                <td>44.4%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>スイートポテトルーム</td>
+                <td>13.7%</td>
+                <td>1.00</td>
+                <td>10.0%</td>
+                <td>Common</td>
+                <td>Ability</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>花鳥風月</td>
+                <td>4.1%</td>
+                <td>1.00</td>
+                <td>33.3%</td>
+                <td>Uncommon</td>
+                <td>Ability</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-g">
+                <td>竹取物語</td>
+                <td>9.6%</td>
+                <td>1.00</td>
+                <td>85.7%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>ショット</td>
+                <td>32.9%</td>
+                <td>1.54</td>
+                <td>21.6%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>結界</td>
+                <td>64.4%</td>
+                <td>1.64</td>
+                <td>35.1%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>クリーンエネルギー</td>
+                <td>16.4%</td>
+                <td>1.17</td>
+                <td>14.3%</td>
+                <td>Uncommon</td>
+                <td>Defense</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>一攫千金</td>
+                <td>4.1%</td>
+                <td>1.00</td>
+                <td>33.3%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>バックパック</td>
+                <td>20.5%</td>
+                <td>1.07</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>フラッシュ</td>
+                <td>15.1%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>ライオットシールド</td>
+                <td>16.4%</td>
+                <td>1.25</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>使い捨ての護符</td>
+                <td>1.4%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>缶詰</td>
+                <td>15.1%</td>
+                <td>1.09</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>鈴蘭</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>電子ドラム</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>エナジードリンク</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Uncommon</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>フロッピーディスク</td>
+                <td>6.8%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Uncommon</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>救急箱</td>
+                <td>8.2%</td>
+                <td>1.17</td>
+                <td>0.0%</td>
+                <td>Uncommon</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>電磁パルス銃</td>
+                <td>2.7%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Uncommon</td>
+                <td>Tool</td>
+                <td>色不明</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>竜宮の遣い</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>0.0%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>🟡🔵</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>稗田の転生</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>50.0%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>🔵🟣</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>のびーるアーム</td>
+                <td>12.3%</td>
+                <td>1.11</td>
+                <td>40.0%</td>
+                <td>Common</td>
+                <td>Attack</td>
+                <td>🔵🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>逆鱗の荒波</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>66.7%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>🔵🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>フルパノラマショット</td>
+                <td>9.6%</td>
+                <td>1.14</td>
+                <td>75.0%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>🔵🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>蛍光の夜</td>
+                <td>5.5%</td>
+                <td>1.25</td>
+                <td>0.0%</td>
+                <td>Common</td>
+                <td>Defense</td>
+                <td>🟣🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>海が割れる日</td>
+                <td>5.5%</td>
+                <td>1.00</td>
+                <td>75.0%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>🟡🔵🟢</td>
+            </tr>
+            
+            <tr class="neutral-multi">
+                <td>世紀のダブルエスパー</td>
+                <td>11.0%</td>
+                <td>1.00</td>
+                <td>25.0%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>🔵🟣🟢</td>
+            </tr>
+            
+            <tr class="inactive-reimu">
+                <td>夢想桜花封印</td>
+                <td>4.1%</td>
+                <td>1.00</td>
+                <td>66.7%</td>
+                <td>Uncommon</td>
+                <td>Attack</td>
+                <td>Reimu</td>
+            </tr>
+            
+            <tr class="inactive-reimu">
+                <td>春色小径</td>
+                <td>6.8%</td>
+                <td>1.20</td>
+                <td>83.3%</td>
+                <td>Uncommon</td>
+                <td>Skill</td>
+                <td>Reimu</td>
+            </tr>
+            
+            <tr class="inactive-reimu">
+                <td>湖畔の舞</td>
+                <td>6.8%</td>
+                <td>1.00</td>
+                <td>80.0%</td>
+                <td>Rare</td>
+                <td>Ability</td>
+                <td>Reimu</td>
+            </tr>
+            
+            <tr class="inactive-koishi">
+                <td>出まかせ</td>
+                <td>8.2%</td>
+                <td>1.00</td>
+                <td>83.3%</td>
+                <td>Common</td>
+                <td>Skill</td>
+                <td>Koishi</td>
+            </tr>
+            
+            <tr class="inactive-koishi">
+                <td>悟り</td>
+                <td>6.8%</td>
+                <td>1.40</td>
+                <td>57.1%</td>
+                <td>Rare</td>
+                <td>Skill</td>
+                <td>Koishi</td>
+            </tr>
+            
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

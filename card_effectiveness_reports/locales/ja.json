@@ -4,6 +4,7 @@
     "exhibit_tab_title": "展示品分析👑",
     "route_tab_title": "ルート・イベント分析🗺️",
     "enemy_analysis_title": "敵戦闘分析⚔️",
+    "card_list_tab_title": "カード一覧",
     "char_select_label": "キャラクター:",
     "main_title_desc": "カードの総合的な性能を評価します。右上のボタンで表示を切り替えられます。",
     "agg_view": "集計ビュー",
@@ -99,5 +100,9 @@
     "enemy_table_name": "敵グループ名",
     "enemy_table_encounters": "遭遇数",
     "open_filters": "フィルターを開く ▼",
-    "close_filters": "フィルターを閉じる ▲"
+    "close_filters": "フィルターを閉じる ▲",
+    "character_label": "キャラクター:",
+    "language_label": "言語:",
+    "japanese_label": "日本語",
+    "english_label": "English"
 }
