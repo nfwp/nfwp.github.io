@@ -128,5 +128,10 @@
     "character_label": "Character:",
     "language_label": "Language:",
     "japanese_label": "Japanese",
-    "english_label": "English"
+    "english_label": "English",
+    "fights_in_sit": "Number of battles in this situation",
+    "sit_adoption_rate": "Adoption Rate (this sit.)",
+    "sit_attack_perf": "Attack Perf(this sit.)",
+    "sit_defense_perf": "Defense Perf(this sit.)",
+    "sit_top_20": "Top 20 Co-occurring Cards(this sit.)"
 }

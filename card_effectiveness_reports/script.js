@@ -362,7 +362,8 @@ function drawPlotlyGraph(char, lang) {
     });
 
     orderedSituations.forEach(situation => {
-        const sitDffBase = sitData.filter(d => d.Situation === situation && d.IsStarter === false);
+        const [act, combatType] = situation;
+        const sitDffBase = sitData.filter(d => d.Act === act && d.Combat_Type === combatType && d.IsStarter === false);
         const maxFightsInSituation = Math.max(...sitDffBase.map(d => d.Fights_With), 0);
 
         aggTypes.forEach(cardType => {
@@ -396,7 +397,8 @@ function drawPlotlyGraph(char, lang) {
         const visibility = Array(numAggTraces + totalSitTraces).fill(false);
         const startIndex = numAggTraces + (i * numSitTracesPerSituation);
         for (let j = 0; j < numSitTracesPerSituation; j++) { visibility[startIndex + j] = true; }
-        return { label: situation, method: "update", args: [{ visible: visibility }, { "title.text": `${UI_TEXT.sit_title}: ${situation}` }] };
+        const situationLabel = `Act${situation[0]} - ${situation[1]}`;
+        return { label: situationLabel, method: "update", args: [{ visible: visibility }, { "title.text": `${UI_TEXT.sit_title}: ${situationLabel}` }] };
     });
 
     const layout = {
@@ -411,7 +413,7 @@ function drawPlotlyGraph(char, lang) {
         updatemenus: [
             { type: "buttons", direction: "right", active: 0, x: 0, y: 1.08, xanchor: "left", yanchor: "top", buttons: [
                 { label: UI_TEXT.agg_view, method: "update", args: [{ visible: aggVisibility }, { "title.text": UI_TEXT.agg_title, "updatemenus[1].visible": false }] },
-                { label: UI_TEXT.sit_view, method: "update", args: [{ visible: sitVisibilityInitial }, { "title.text": `${UI_TEXT.sit_title}: ${orderedSituations[0] || ''}`, "updatemenus[1].visible": true }] }
+                { label: UI_TEXT.sit_view, method: "update", args: [{ visible: sitVisibilityInitial }, { "title.text": `${UI_TEXT.sit_title}: ${`Act${orderedSituations[0][0]} - ${orderedSituations[0][1]}` || ''}`, "updatemenus[1].visible": true }] }
             ]},
             { type: "dropdown", direction: "down", active: 0, x: 0, y: 1.0, xanchor: "left", yanchor: "top", buttons: situationButtons, visible: false, showactive: true }
         ],
@@ -633,7 +635,7 @@ function setupGraphFilters(lang) {
     }
 }
 
-// ★★★ この関数を丸ごと置き換えてください ★★★
+
 function createHoverText(d, lang) {
     if (!d) return "";
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
@@ -649,30 +651,10 @@ function createHoverText(d, lang) {
     const isAggView = (currentViewButtonIndex === 0);
 
     let sourceData = d;
-    let turnValues, hpValues;
-
-    // 分布プロット用のデータを準備
-    if (isAggView) {
-        // 総合ビューの場合、全状況のパフォーマンスデータを集約する
-        const cardSitData = ALL_DATA.sit_data.filter(sit_d => sit_d[cardNameCol] === cardName);
-        turnValues = cardSitData.flatMap(sit_d => sit_d.Turn_Deviation_Values || []);
-        hpValues = cardSitData.flatMap(sit_d => sit_d.HP_Deviation_Values || []);
-    } else {
-        // 状況別ビューの場合、その状況のデータのみを使用
-        turnValues = d.Turn_Deviation_Values || [];
-        hpValues = d.HP_Deviation_Values || [];
-        // 状況別ビューでも総合的な情報を表示するため、agg_data_fullからデータを取得
-        const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
-        if (aggCardData) {
-            sourceData = { ...aggCardData, ...d };
-        }
+    const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
+    if (aggCardData) {
+        sourceData = { ...aggCardData, ...d };
     }
-
-    const topCol = (lang === 'ja') ? 'Top_20_Co_occurrence' : 'Top_20_Co_occurrence_EN';
-    const highlightCol = (lang === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
-
-    const highlightsHtml = sourceData[highlightCol] ? `<hr style='margin: 8px 0;'><b>${UI_TEXT.highlights}: ${sourceData.Medal || ''}</b><br>${sourceData[highlightCol]}` : "";
-    const coOccurrenceHtml = sourceData[topCol] ? `<b>${UI_TEXT.top_20}:</b><br>${sourceData[topCol]}` : "";
 
     const safeToFixed = (val, digits) => (val != null ? val.toFixed(digits) : 'N/A');
     const safeToPercent = (val, digits) => (val != null ? (val * 100).toFixed(digits) : 'N/A');
@@ -686,22 +668,43 @@ function createHoverText(d, lang) {
         return numVal > 0.75 ? ' ⭐' : numVal > 0.5 ? ' ☆' : '';
     }
 
-    // パフォーマンス情報のHTMLを再構築
-    const perfHtml = `
-        <div>${UI_TEXT.attack_perf}: ${safeToFixed(sourceData.Weighted_Avg_Turn_Deviation, 2)}</div>
-        <div id="dist-plot-turn" class="dist-plot-container"></div>
-        <div>${UI_TEXT.defense_perf}: ${safeToFixed(sourceData.Weighted_Avg_HP_Deviation, 2)}</div>
-        <div id="dist-plot-hp" class="dist-plot-container"></div>
-        <hr style='margin:5px 0;'>
-        <div class="tooltip-row">
-            <span>${UI_TEXT.atk_tendency}:</span>
-            <span>${formatTendency(sourceData.Turn_Tendency, 0.25, -0.8)}${star(sourceData.Turn_Tendency)}</span>
-        </div>
-        <div class="tooltip-row">
-            <span>${UI_TEXT.def_tendency}:</span>
-            <span>${formatTendency(sourceData.HP_Tendency, 0.25, -1.0)}${star(sourceData.HP_Tendency)}</span>
-        </div>
-    `;
+    let perfHtml = '';
+    let turnPlotData, hpPlotData;
+    let turnScalingParams, hpScalingParams;
+    let turnHighlight, hpHighlight;
+
+    if (isAggView) {
+        // --- 総合ビューの表示 ---
+        turnPlotData = sourceData.Turn_Deviation_Situational_Values || [];
+        hpPlotData = sourceData.HP_Deviation_Situational_Values || [];
+        turnScalingParams = undefined; // 偏差値プロットなのでスケーリング不要
+        hpScalingParams = undefined;
+        turnHighlight = sourceData.Weighted_Avg_Turn_Deviation; // 総合偏差値をハイライト
+        hpHighlight = sourceData.Weighted_Avg_HP_Deviation;
+
+        perfHtml = `
+            <div>${UI_TEXT.attack_perf || '攻撃性能'}: ${safeToFixed(sourceData.Weighted_Avg_Turn_Deviation, 2)}</div>
+            <div id="dist-plot-turn" class="dist-plot-container"></div>
+            <div>${UI_TEXT.defense_perf || '防御性能'}: ${safeToFixed(sourceData.Weighted_Avg_HP_Deviation, 2)}</div>
+            <div id="dist-plot-hp" class="dist-plot-container"></div>
+            <hr style='margin:5px 0;'>
+            <div class="tooltip-row">
+                <span>${UI_TEXT.atk_tendency}:</span>
+                <span>${formatTendency(sourceData.Turn_Tendency, 0.25, -0.8)}${star(sourceData.Turn_Tendency)}</span>
+            </div>
+            <div class="tooltip-row">
+                <span>${UI_TEXT.def_tendency}:</span>
+                <span>${formatTendency(sourceData.HP_Tendency, 0.25, -1.0)}${star(sourceData.HP_Tendency)}</span>
+            </div>
+        `;
+    } else {
+        // --- 状況別ビューの表示 ---
+
+        perfHtml = `
+            <div>${UI_TEXT.sit_attack_perf || '攻撃性能 (この状況)'}: ${safeToFixed(d.Turn_Deviation, 2)}</div>
+            <div>${UI_TEXT.sit_defense_perf || '防御性能 (この状況)'}: ${safeToFixed(d.HP_Deviation, 2)}</div>
+        `;
+    }
 
     let adoptionHtml = '';
     if (isAggView) {
@@ -715,29 +718,58 @@ function createHoverText(d, lang) {
             ${UI_TEXT.avg_upgrade_rate}: ${safeToPercent(sourceData.Avg_Upgrade_Rate, 1)}%
         `;
     } else {
+        const sitAdoptionRate = (d.Total_Fights_In_Situation > 0)
+            ? (d.Fights_With / d.Total_Fights_In_Situation)
+            : null;
+
          adoptionHtml = `
             <hr style='margin: 8px 0;'>
-            <b>${UI_TEXT.agg_view} Stats:</b><br>
+            <b>${UI_TEXT.sit_view || '状況別'} Stats:</b><br>
+            <div class="tooltip-row">
+                <span>${UI_TEXT.sit_adoption_rate || 'この状況での採用率'}:</span>
+                <span>${safeToPercent(sitAdoptionRate, 1)}% (${d.Fights_With || 0}回)</span>
+            </div>
+            <hr style='margin: 8px 0;'>
+            <b>${UI_TEXT.agg_view || '総合'} Stats (参考):</b><br>
             <div class="tooltip-row"><span>${UI_TEXT.adoption_rate || '採用率'}:</span><span>${safeToPercent(sourceData.Adoption_Rate, 1)}%</span></div>
             <div class="tooltip-row"><span>${UI_TEXT.attention_score_label || '注目度スコア'}:</span><span>${safeToFixed(sourceData.Attention_Score, 1)}</span></div>
             <div class="tooltip-row"><span>${UI_TEXT.stability || '安定性'}:</span><span>${safeToFixed(sourceData.Stability_Score, 1)}</span></div>
         `;
     }
 
-    // ツールチップのHTMLを生成
+    const highlightCol = (lang === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
+    const highlightsHtml = sourceData[highlightCol] ? `<hr style='margin: 8px 0;'><b>${UI_TEXT.highlights}: ${sourceData.Medal || ''}</b><br>${sourceData[highlightCol]}` : "";
+
+    let coOccurrenceHtml = '';
+    if (isAggView) {
+        const topCol = (lang === 'ja') ? 'Top_20_Co_occurrence' : 'Top_20_Co_occurrence_EN';
+        if (sourceData[topCol]) {
+            coOccurrenceHtml = `<b>${UI_TEXT.top_20 || '共起Top20'}:</b><br>${sourceData[topCol]}`;
+        }
+    } else {
+        const sitTopCol = (lang === 'ja') ? 'Situational_Co_occurrence_JA' : 'Situational_Co_occurrence_EN';
+        const situationalCoOccurrence = d[sitTopCol];
+        if (situationalCoOccurrence) {
+            coOccurrenceHtml = `<b>${UI_TEXT.sit_top_20 || '共起Top20 (この状況)'}:</b><br>${situationalCoOccurrence}`;
+        } else {
+            coOccurrenceHtml = `<b>${UI_TEXT.sit_top_20 || '共起Top20 (この状況)'}:</b><br><span style="font-size:11px; color:#999;">${UI_TEXT.no_data || 'データなし'}</span>`;
+        }
+    }
+
     const tooltipHtml = `<div class='info-column'><b>${cardName}</b> ${wikiLinkHtml}<br>${UI_TEXT.type}: ${sourceData.Type}<br>${UI_TEXT.rarity}: ${sourceData.Rarity}<hr style='margin:5px 0;'>${perfHtml}${adoptionHtml}${highlightsHtml}</div><div class='info-column'>${coOccurrenceHtml}</div>`;
 
-    // 分布プロットを非同期で描画
-    setTimeout(() => {
-        drawDistributionPlot('dist-plot-turn', turnValues, '#E57373');
-        drawDistributionPlot('dist-plot-hp', hpValues, '#64B5F6');
-    }, 0);
+
+    if (isAggView) {
+        setTimeout(() => {
+            drawDistributionPlot('dist-plot-turn', turnPlotData, '#E57373', turnHighlight, turnScalingParams);
+            drawDistributionPlot('dist-plot-hp', hpPlotData, '#64B5F6', hpHighlight, hpScalingParams);
+        }, 0);
+    }
 
     return tooltipHtml;
 }
 
-// ★★★ グラフ描画関数をシンプルな箱ひげ図に変更 ★★★
-function drawDistributionPlot(divId, data, color) {
+function drawDistributionPlot(divId, data, color, highlightValue, scalingParams) {
     const container = document.getElementById(divId);
     if (!container || !data || data.length === 0) {
         if(container) container.innerHTML = `<p style="font-size:10px; color:#999; text-align: center; margin: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
@@ -757,20 +789,71 @@ function drawDistributionPlot(divId, data, color) {
                 outlierwidth: 2
             }
         },
-        boxpoints: 'outliers', // 外れ値のみ表示
+        boxpoints: 'outliers',
         jitter: 0.5,
         hoverinfo: 'none'
     };
 
-    const layout = {
-        height: 40, // 高さをコンパクトに
-        margin: { l: 25, r: 25, b: 20, t: 5 },
-        xaxis: {
-            zeroline: true,
-            zerolinecolor: '#ccc',
-            range: [-25, 25], // X軸の範囲
+    let xAxisLayout;
+    let shapes = [];
+
+    if (scalingParams && scalingParams.median !== undefined && scalingParams.iqr !== undefined && scalingParams.iqr > 0) {
+        // --- 状況別ビュー (生の値を偏差値スケールで表示) ---
+        const { median, iqr } = scalingParams;
+
+        const raw_for_dev = (dev_score) => median + (dev_score - 50) / 10 * iqr;
+
+        xAxisLayout = {
+            range: [raw_for_dev(25), raw_for_dev(75)],
+            tickvals: [raw_for_dev(30), raw_for_dev(40), raw_for_dev(50), raw_for_dev(60), raw_for_dev(70)],
+            ticktext: ['30', '40', '50', '60', '70'],
+            showgrid: true,
+            gridcolor: '#eee',
+            zeroline: false,
             tickfont: { size: 9 }
-        },
+        };
+
+        if (highlightValue !== undefined && highlightValue !== null) {
+            const highlightRawValue = raw_for_dev(highlightValue);
+            shapes.push({
+                type: 'line',
+                x0: highlightRawValue,
+                x1: highlightRawValue,
+                y0: -0.4,
+                y1: 0.4,
+                line: { color: 'red', width: 2, dash: 'solid' },
+                layer: 'above'
+            });
+        }
+
+    } else {
+        // --- 総合ビュー (偏差値の分布をそのまま表示) ---
+        xAxisLayout = {
+            range: [25, 75],
+            tickvals: [30, 40, 50, 60, 70],
+            showgrid: true,
+            gridcolor: '#eee',
+            zeroline: false,
+            tickfont: { size: 9 }
+        };
+
+        if (highlightValue !== undefined && highlightValue !== null) {
+            shapes.push({
+                type: 'line',
+                x0: highlightValue,
+                x1: highlightValue,
+                y0: -0.4,
+                y1: 0.4,
+                line: { color: 'red', width: 2, dash: 'solid' },
+                layer: 'above'
+            });
+        }
+    }
+
+    const layout = {
+        height: 60,
+        margin: { l: 25, r: 25, b: 25, t: 5 },
+        xaxis: xAxisLayout,
         yaxis: {
             showticklabels: false,
             showgrid: false,
@@ -778,6 +861,7 @@ function drawDistributionPlot(divId, data, color) {
         showlegend: false,
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
+        shapes: shapes
     };
 
     const config = {
@@ -946,7 +1030,7 @@ function createAnalysisReportsHtml(lang) {
     const spotlightHtml = createSpotlightHtml(rankableAggData, cardNameCol, top20Adopted);
     const attentionRankingHtml = createAttentionRankingHtml(rankableAggData, cardNameCol, lang);
 
-    // ★★★ ここで新しいランキングのHTMLを生成します ★★★
+
     const upgradeRankingHtml = createUpgradeRankingHtml(ALL_DATA.upgrade_ranking_data, cardNameCol, lang);
     const removeRankingHtml = createRemoveRankingHtml(ALL_DATA.remove_ranking_data, cardNameCol, lang);
 
@@ -1020,7 +1104,6 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     const highlightCol = (LANG === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
 
     aggData.forEach(r => {
-        // ★★★ 修正点: 性能評価がないカードは、そもそも選考対象から除外する ★★★
         if (r.Turn_Tendency === null || r.HP_Tendency === null) {
             return; // このカードの処理をスキップ
         }
@@ -1038,7 +1121,7 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
         const has_big_star = atk_tendency > 0.75 || def_tendency > 0.75;
         const has_bronze_or_better = ["🥇", "🥈", "🥉"].includes(medal);
 
-        // ★★★ 修正点: 「優等生」の判定ロジックを厳格化 ★★★
+
         if (medal === "🥇" || medal === "🥈") {
             honor_cards.push(r[cardNameCol]);
         } else if (is_balanced_positive && has_big_star) {
@@ -1046,7 +1129,7 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
         } else if (has_bronze_or_better && is_balanced_positive && has_star) {
             honor_cards.push(r[cardNameCol]);
         }
-        // 問題のあった条件を修正: メダルがあり、かつ傾向スコアが高い場合に限定
+
         else if (card_type !== 'Misfortune' && (tendency_sum >= 0.75 && has_bronze_or_better) && perf_sum >= 100) {
             honor_cards.push(r[cardNameCol]);
         }
@@ -1239,7 +1322,7 @@ function renderRouteEventTab(lang) {
                 const node_full_id = `${node_id_base}-${node_type}`;
                 const label = node_type_labels[node_type] || node_type[0];
 
-                // ★★★ ここからが修正箇所 ★★★
+
                 let style_attr = `width: ${percentage * 100}%;`;
                 const node_specific_details = node_details[node_full_key] || {};
                 const base_color = node_type_colors[node_type] || '#BDBDBD';
@@ -1309,7 +1392,7 @@ function renderRouteEventTab(lang) {
                 } else {
                     style_attr += ` background-color: ${base_color};`;
                 }
-                // ★★★ 修正箇所ここまで ★★★
+
 
                 barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
             });
