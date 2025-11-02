@@ -1,6 +1,5 @@
 {
     "main_title": "総合パフォーマンス",
-
     "last_updated_label": "最終更新",
     "total_runs_label": "総データ数",
     "run_count_label": "総ラン数: {count}",
@@ -120,5 +119,10 @@
     "sit_adoption_rate": "この状況での採用率",
     "sit_attack_perf": "攻撃性能 (この状況)",
     "sit_defense_perf": "防御性能 (この状況)",
-    "sit_top_20": "共起Top20 (この状況)"
+    "sit_top_20": "共起Top20 (この状況)",
+    "tendency_score_label": "傾向値",
+    "tendency_top_performers_title": "傾向値Top40",
+    "tendency_ranking_desc": "強い上昇傾向を持つカードです。強力なバフやコンボパーツであることが多いです。",
+    "attack_tendency_top_10_title": "攻撃傾向 Top 20",
+    "defense_tendency_top_10_title": "防御傾向 Top 20"
 }

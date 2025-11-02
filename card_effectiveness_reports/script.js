@@ -1074,7 +1074,7 @@ function createAnalysisReportsHtml(lang) {
     const act4Performers = rankableAggData
         .filter(d => d.Turn_Act_4 != null && d.HP_Act_4 != null)
         .map(d => {
-            const score = (d.Turn_Act_4 + d.HP_Act_4) / 2;
+            const score = (d.Turn_Act_4 + d.HP_Act_4) ;
             return [d[cardNameCol], score];
         })
         .sort((a, b) => b[1] - a[1]);
@@ -1083,6 +1083,51 @@ function createAnalysisReportsHtml(lang) {
     // 採用数ランキング (sit_data を使用)
     const act4AdoptionRankings = createSitRankings(act4SitData, cardNameCol);
     const act4AdoptionHtml = createRankedListHtml("act4-adoption-report", UI_TEXT.act4_top_adoption_title, UI_TEXT.act4_top_adoption_desc, act4AdoptionRankings.topAdoption.slice(0, 40), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
+
+
+    // --- 傾向値ランキングの生成 (攻撃Top20 / 防御Top20) ---
+    const baseTendencyData = ALL_DATA.agg_data_full.filter(d => d[cardNameCol]);
+
+    // 攻撃傾向値 Top20
+    const attackTendencyTop20= baseTendencyData
+        .filter(d => d.Turn_Tendency != null)
+        .sort((a, b) => b.Turn_Tendency - a.Turn_Tendency)
+        .slice(0, 20);
+
+    // 防御傾向値 Top20
+    const defenseTendencyTop20 = baseTendencyData
+        .filter(d => d.HP_Tendency != null)
+        .sort((a, b) => b.HP_Tendency - a.HP_Tendency)
+        .slice(0, 20);
+
+    // HTMLのリスト項目を生成するヘルパー関数
+    const createTendencyListItems = (data, valueKey, valueLabel) => {
+        return data.map(d => {
+            const cardName = d[cardNameCol];
+            const value = d[valueKey];
+            return `<li><strong class="spotlight-card" data-card-name="${cardName}" style="cursor:pointer; background:none; padding:0; display:inline;">${cardName}</strong> (${valueLabel}: ${value.toFixed(2)})</li>`;
+        }).join('');
+    };
+
+    const attackListHtml = createTendencyListItems(attackTendencyTop20, 'Turn_Tendency', UI_TEXT.atk_tendency || '攻撃傾向');
+    const defenseListHtml = createTendencyListItems(defenseTendencyTop20, 'HP_Tendency', UI_TEXT.def_tendency || '防御傾向');
+
+    const tendencyPerfHtml = `
+        <div id="tendency-ranking-report" class="analysis-section">
+            <h3>${UI_TEXT.tendency_ranking_title || '傾向値ランキング'}</h3>
+            <p>${UI_TEXT.tendency_ranking_desc || '攻撃または防御に特化したカードです。'}</p>
+            <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h4>${UI_TEXT.attack_tendency_top_10_title || '攻撃傾向 Top 20'}</h4>
+                    <ol style="padding-left: 25px; margin-top: 0;">${attackListHtml}</ol>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h4>${UI_TEXT.defense_tendency_top_10_title || '防御傾向 Top 20'}</h4>
+                    <ol style="padding-left: 25px; margin-top: 0;">${defenseListHtml}</ol>
+                </div>
+            </div>
+        </div>
+    `;
 
 
     const criteriaHtml = `
@@ -1105,12 +1150,10 @@ function createAnalysisReportsHtml(lang) {
                 ${act1PerfHtml}
                 ${act4AdoptionHtml}
                 ${act4PerfHtml}
+                ${tendencyPerfHtml}
             </div>
             ${criteriaHtml}`;
 }
-// ▲▲▲ 置き換えここまで ▲▲▲
-
-// ... (他の関数はそのまま) ...
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     // 1. カテゴリごとのカードリストを初期化
