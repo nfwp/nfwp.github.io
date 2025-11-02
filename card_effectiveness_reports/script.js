@@ -1013,32 +1013,36 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
     return `<div id="attention-ranking-report" class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
 }
 
+// script.js
+
+// script.js
+
+// ... (他の関数はそのまま) ...
+
+// script.js
+
+// ... (他の関数はそのまま) ...
+
+// ▼▼▼ この関数を丸ごと置き換えてください ▼▼▼
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
-    // ランク付け可能なカード（＝グラフに表示されるカード）のみを対象にフィルタリング
     const rankableAggData = ALL_DATA.agg_data_full.filter(d => d.Turn_Tendency !== null && d.HP_Tendency !== null);
 
     if (!rankableAggData || rankableAggData.length === 0) {
         return `<div id='analysis-reports'><p>${UI_TEXT.no_data || '表示できるデータがありません。'}</p></div>`;
     }
 
-    const rankableCardNames = new Set(rankableAggData.map(d => d[cardNameCol]));
     const top20Adopted = rankableAggData.slice().sort((a, b) => b.Total_Fights_With - a.Total_Fights_With).slice(0, 20).map(d => d[cardNameCol]);
 
-    // 各レポートのHTMLを生成
     const spotlightHtml = createSpotlightHtml(rankableAggData, cardNameCol, top20Adopted);
     const attentionRankingHtml = createAttentionRankingHtml(rankableAggData, cardNameCol, lang);
-
-
     const upgradeRankingHtml = createUpgradeRankingHtml(ALL_DATA.upgrade_ranking_data, cardNameCol, lang);
     const removeRankingHtml = createRemoveRankingHtml(ALL_DATA.remove_ranking_data, cardNameCol, lang);
 
-    // Act1とAct4のデータも、ランク付け可能なカードのみに絞り込み
-    const act1Data = ALL_DATA.sit_data.filter(d => d.Act === 1 && rankableCardNames.has(d[cardNameCol]));
-    const act4Data = ALL_DATA.sit_data.filter(d => d.Act === 4 && rankableCardNames.has(d[cardNameCol]));
-
-    const createRankings = (data, nameCol) => {
+    // --- Act1 ランキングの生成 ---
+    const act1Data = ALL_DATA.sit_data.filter(d => d.Act === 1);
+    const createSitRankings = (data, nameCol) => {
         const perfMap = new Map();
         const adoptionMap = new Map();
         data.forEach(d => {
@@ -1049,7 +1053,7 @@ function createAnalysisReportsHtml(lang) {
             perfEntry.count++;
 
             if (!adoptionMap.has(d[nameCol])) adoptionMap.set(d[nameCol], 0);
-            adoptionMap.set(d[nameCol], adoptionMap.get(d[nameCol]) + (d.Fights_With || 0));
+            adoptionMap.set(d[nameCol], (adoptionMap.get(d[nameCol]) || 0) + (d.Fights_With || 0));
         });
 
         const perfAvg = Array.from(perfMap.entries()).map(([name, data]) => [name, data.sum / data.count]);
@@ -1058,13 +1062,28 @@ function createAnalysisReportsHtml(lang) {
         return { topPerformers, topAdoption };
     };
 
-    const act1Rankings = createRankings(act1Data, cardNameCol);
-    const act4Rankings = createRankings(act4Data, cardNameCol);
-
+    const act1Rankings = createSitRankings(act1Data, cardNameCol);
     const act1AdoptionHtml = createRankedListHtml("act1-adoption-report", UI_TEXT.act1_top_adoption_title, UI_TEXT.act1_top_adoption_desc, act1Rankings.topAdoption.slice(0, 20), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
     const act1PerfHtml = createRankedListHtml("act1-performers-report", UI_TEXT.act1_top_performers_title, UI_TEXT.act1_top_performers_desc, act1Rankings.topPerformers.slice(0, 20), "Score", ".1f");
-    const act4AdoptionHtml = createRankedListHtml("act4-adoption-report", UI_TEXT.act4_top_adoption_title, UI_TEXT.act4_top_adoption_desc, act4Rankings.topAdoption.slice(0, 40), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
-    const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.act4_top_performers_title, UI_TEXT.act4_top_performers_desc, act4Rankings.topPerformers.slice(0, 40), "Score", ".1f");
+
+    // --- Act4 ランキングの生成 ---
+    // ★★★ 修正点: Act4のデータソースを明確に分離 ★★★
+    const act4SitData = ALL_DATA.sit_data.filter(d => d.Act === 4);
+
+    // パフォーマンスランキング (agg_data_full を使用)
+    const act4Performers = rankableAggData
+        .filter(d => d.Turn_Act_4 != null && d.HP_Act_4 != null)
+        .map(d => {
+            const score = (d.Turn_Act_4 + d.HP_Act_4) / 2;
+            return [d[cardNameCol], score];
+        })
+        .sort((a, b) => b[1] - a[1]);
+    const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.act4_top_performers_title, UI_TEXT.act4_top_performers_desc, act4Performers.slice(0, 40), "Score", ".1f");
+
+    // 採用数ランキング (sit_data を使用)
+    const act4AdoptionRankings = createSitRankings(act4SitData, cardNameCol);
+    const act4AdoptionHtml = createRankedListHtml("act4-adoption-report", UI_TEXT.act4_top_adoption_title, UI_TEXT.act4_top_adoption_desc, act4AdoptionRankings.topAdoption.slice(0, 40), (lang === 'ja' ? "採用数" : "Adoptions"), ".0f");
+
 
     const criteriaHtml = `
         <div id='criteria-explanation' class="analysis-section">
@@ -1077,8 +1096,6 @@ function createAnalysisReportsHtml(lang) {
             <h4>${UI_TEXT.spotlight_cat4_title}</h4><ul><li>${UI_TEXT.counter_cond1}</li></ul>
         </div>`;
 
-
-    // 全てのHTML文字列を正しい順序で結合して返します。
     return `<div id='analysis-reports'>
                 ${spotlightHtml}
                 ${attentionRankingHtml}
@@ -1091,9 +1108,9 @@ function createAnalysisReportsHtml(lang) {
             </div>
             ${criteriaHtml}`;
 }
+// ▲▲▲ 置き換えここまで ▲▲▲
 
-// script.js
-
+// ... (他の関数はそのまま) ...
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     // 1. カテゴリごとのカードリストを初期化
