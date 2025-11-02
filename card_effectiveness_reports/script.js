@@ -1092,65 +1092,29 @@ function createAnalysisReportsHtml(lang) {
             ${criteriaHtml}`;
 }
 
+// script.js
 
-// この関数を丸ごと置き換えてください
+
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
-    const isLateGameSpecialist = (highlightsStr) => {
-        if (!highlightsStr) return false;
-        return highlightsStr.split('<br>').every(line => line.includes("Act 3") || line.includes("Act 4"));
+    // 1. カテゴリごとのカードリストを初期化
+    const spotlights = {
+        star: [],
+        honor: [],
+        balancer: [],
+        high_roller: [],
+        solid: [],
+        counter: []
     };
 
-    let star_cards = [], honor_cards = [], high_roller_cards = [], solid_cards = [], balancer_cards = [], counter_cards = [];
-    const highlightCol = (LANG === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
-
+    // 2. Pythonで計算済みのカテゴリに基づいてカードを振り分ける
     aggData.forEach(r => {
-        if (r.Turn_Tendency === null || r.HP_Tendency === null) {
-            return; // このカードの処理をスキップ
-        }
-
-        const atk_tendency = r.Turn_Tendency || 0;
-        const def_tendency = r.HP_Tendency || 0;
-        const card_type = r.Type;
-        const tendency_sum = atk_tendency + def_tendency;
-        const perf_sum = (r.Weighted_Avg_Turn_Deviation || 0) + (r.Weighted_Avg_HP_Deviation || 0);
-        const highlight_text = r[highlightCol] || '';
-        const medal = r.Medal;
-
-        const is_balanced_positive = atk_tendency > 0.25 && def_tendency > 0.25;
-        const has_star = atk_tendency > 0.5 || def_tendency > 0.5;
-        const has_big_star = atk_tendency > 0.75 || def_tendency > 0.75;
-        const has_bronze_or_better = ["🥇", "🥈", "🥉"].includes(medal);
-
-
-        if (medal === "🥇" || medal === "🥈") {
-            honor_cards.push(r[cardNameCol]);
-        } else if (is_balanced_positive && has_big_star) {
-            honor_cards.push(r[cardNameCol]);
-        } else if (has_bronze_or_better && is_balanced_positive && has_star) {
-            honor_cards.push(r[cardNameCol]);
-        }
-
-        else if (card_type !== 'Misfortune' && (tendency_sum >= 0.75 && has_bronze_or_better) && perf_sum >= 100) {
-            honor_cards.push(r[cardNameCol]);
-        }
-        // --- 他のカテゴリの判定は変更なし ---
-        else if (perf_sum < 100 && highlight_text.includes("Act 4 - Boss")) {
-            star_cards.push(r[cardNameCol]);
-        } else if (medal && isLateGameSpecialist(highlight_text)) {
-            star_cards.push(r[cardNameCol]);
-        } else if (atk_tendency >= 0.25 && (def_tendency >= -0.75 && def_tendency <= 0.25)) {
-            high_roller_cards.push(r[cardNameCol]);
-        } else if (def_tendency >= 0.25 && (atk_tendency >= -0.75 && atk_tendency <= 0.25)) {
-            solid_cards.push(r[cardNameCol]);
-        } else if (atk_tendency > 0 && def_tendency > 0 && tendency_sum >= 0.5) {
-            balancer_cards.push(r[cardNameCol]);
-        } else if (tendency_sum < -1.0 && medal) {
-            counter_cards.push(r[cardNameCol]);
-        } else if (atk_tendency > 1.0 || def_tendency > 1.0) {
-            star_cards.push(r[cardNameCol]);
+        const category = r.Spotlight_Category; // Pythonが生成したカテゴリ名を取得
+        if (spotlights.hasOwnProperty(category)) {
+            spotlights[category].push(r[cardNameCol]);
         }
     });
 
+    // 3. HTMLを生成するヘルパー関数 (この部分は変更なし)
     const createList = (title, desc, cards) => {
         if (!cards || cards.length === 0) return "";
         const uniqueCards = [...new Set(cards)].sort();
@@ -1161,14 +1125,16 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
         return `<h4>${title}</h4><p class="spotlight-desc">${desc}</p><ul>${listItems}</ul>`;
     };
 
+    // 4. 各カテゴリのリストをHTMLとして組み立てる
     let html = `<div id='spotlight-report' class='analysis-section'><h3>${UI_TEXT.spotlight_title}</h3><p style='font-size:11px; color:#777; margin-top:-5px; margin-bottom:15px;'>${UI_TEXT.spotlight_note}</p>`;
-    html += createList(UI_TEXT.spotlight_cat0_title, UI_TEXT.spotlight_cat0_desc, star_cards);
-    html += createList(UI_TEXT.spotlight_cat1_title, UI_TEXT.spotlight_cat1_desc, honor_cards);
-    html += createList(UI_TEXT.spotlight_cat5_title, UI_TEXT.spotlight_cat5_desc, balancer_cards);
-    html += createList(UI_TEXT.spotlight_cat2_title, UI_TEXT.spotlight_cat2_desc, high_roller_cards);
-    html += createList(UI_TEXT.spotlight_cat3_title, UI_TEXT.spotlight_cat3_desc, solid_cards);
-    html += createList(UI_TEXT.spotlight_cat4_title, UI_TEXT.spotlight_cat4_desc, counter_cards);
+    html += createList(UI_TEXT.spotlight_cat0_title, UI_TEXT.spotlight_cat0_desc, spotlights.star);
+    html += createList(UI_TEXT.spotlight_cat1_title, UI_TEXT.spotlight_cat1_desc, spotlights.honor);
+    html += createList(UI_TEXT.spotlight_cat5_title, UI_TEXT.spotlight_cat5_desc, spotlights.balancer);
+    html += createList(UI_TEXT.spotlight_cat2_title, UI_TEXT.spotlight_cat2_desc, spotlights.high_roller);
+    html += createList(UI_TEXT.spotlight_cat3_title, UI_TEXT.spotlight_cat3_desc, spotlights.solid);
+    html += createList(UI_TEXT.spotlight_cat4_title, UI_TEXT.spotlight_cat4_desc, spotlights.counter);
     html += `</div>`;
+
     return html;
 }
 
@@ -1817,6 +1783,5 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
     `;
 
     return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
-
 
 }
