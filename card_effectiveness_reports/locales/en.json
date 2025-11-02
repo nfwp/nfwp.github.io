@@ -122,7 +122,7 @@
     "balancer_cond1": "Among cards not classified into any other type, those with both positive Attack and Defense Tendencies, and a sum of these tendencies >= 0.5.",
     "high_roller_cond1": "Attack Tendency >= 0.25 AND Defense Tendency is within the range of -0.75 to +0.25.",
     "solid_defender_cond1": "Defense Tendency >= 0.25 AND Attack Tendency is within the range of -0.75 to +0.25.",
-    "counter_cond1": "Tendency Sum < -1.5 AND has a medal.",
+    "counter_cond1": "Tendency Sum < -1 AND has a medal.",
     "open_filters": "Open Filters ▼",
     "close_filters": "Close Filters ▲",
     "character_label": "Character:",
