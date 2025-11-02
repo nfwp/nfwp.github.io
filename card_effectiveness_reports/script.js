@@ -1013,15 +1013,6 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
     return `<div id="attention-ranking-report" class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
 }
 
-// script.js
-
-// script.js
-
-// ... (他の関数はそのまま) ...
-
-// script.js
-
-// ... (他の関数はそのまま) ...
 
 // ▼▼▼ この関数を丸ごと置き換えてください ▼▼▼
 function createAnalysisReportsHtml(lang) {
@@ -1143,7 +1134,6 @@ function createAnalysisReportsHtml(lang) {
         </div>`;
 
     return `<div id='analysis-reports'>
-                ${spotlightHtml}
                 ${attentionRankingHtml}
                 ${upgradeRankingHtml}
                 ${removeRankingHtml}
@@ -1153,8 +1143,13 @@ function createAnalysisReportsHtml(lang) {
                 ${act4PerfHtml}
                 ${tendencyPerfHtml}
             </div>
-            ${criteriaHtml}`;
+            `;
 }
+
+//消した
+//                ${spotlightHtml}
+//            </div>
+//            ${criteriaHtml}`;
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     // 1. カテゴリごとのカードリストを初期化
