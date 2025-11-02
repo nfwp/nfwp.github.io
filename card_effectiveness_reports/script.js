@@ -1067,7 +1067,6 @@ function createAnalysisReportsHtml(lang) {
     const act1PerfHtml = createRankedListHtml("act1-performers-report", UI_TEXT.act1_top_performers_title, UI_TEXT.act1_top_performers_desc, act1Rankings.topPerformers.slice(0, 20), "Score", ".1f");
 
     // --- Act4 ランキングの生成 ---
-    // ★★★ 修正点: Act4のデータソースを明確に分離 ★★★
     const act4SitData = ALL_DATA.sit_data.filter(d => d.Act === 4);
 
     // パフォーマンスランキング (agg_data_full を使用)
@@ -1086,8 +1085,10 @@ function createAnalysisReportsHtml(lang) {
 
 
     // --- 傾向値ランキングの生成 (攻撃Top20 / 防御Top20) ---
-    const baseTendencyData = ALL_DATA.agg_data_full.filter(d => d[cardNameCol]);
-
+    const ADOPTION_RATE_THRESHOLD = 0.05;
+    const baseTendencyData = ALL_DATA.agg_data_full.filter(d =>
+        d[cardNameCol] && d.Adoption_Rate >= ADOPTION_RATE_THRESHOLD
+    );
     // 攻撃傾向値 Top20
     const attackTendencyTop20= baseTendencyData
         .filter(d => d.Turn_Tendency != null)
