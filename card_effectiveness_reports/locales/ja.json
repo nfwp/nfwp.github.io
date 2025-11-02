@@ -69,7 +69,7 @@
     "balancer_cond1": "攻撃・防御傾向が共に0を超え、合計が0.5以上",
     "high_roller_cond1": "攻撃傾向が0.25以上で、防御傾向が-0.75から0.25の間",
     "solid_defender_cond1": "防御傾向が0.25以上で、攻撃傾向が-0.75から0.25の間",
-    "counter_cond1": "傾向スコアの合計が-1.5未満で、かつメダルを獲得している",
+    "counter_cond1": "傾向スコアの合計が-1未満で、かつメダルを獲得している",
     "act1_top_adoption_title": "Act1 採用数 Top 20",
     "act1_top_adoption_desc": "Act1の戦闘で多く使われたカード。序盤の安定に貢献するカードが含まれます。",
     "act1_top_performers_title": "Act1 パフォーマンス Top 20",
