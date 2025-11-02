@@ -1144,7 +1144,7 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
             solid_cards.push(r[cardNameCol]);
         } else if (atk_tendency > 0 && def_tendency > 0 && tendency_sum >= 0.5) {
             balancer_cards.push(r[cardNameCol]);
-        } else if (tendency_sum < -1.5 && medal) {
+        } else if (tendency_sum < -1.0 && medal) {
             counter_cards.push(r[cardNameCol]);
         } else if (atk_tendency > 1.0 || def_tendency > 1.0) {
             star_cards.push(r[cardNameCol]);
@@ -1817,5 +1817,6 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
     `;
 
     return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
+
 
 }
