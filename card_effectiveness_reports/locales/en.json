@@ -133,5 +133,10 @@
     "sit_adoption_rate": "Adoption Rate (this sit.)",
     "sit_attack_perf": "Attack Perf(this sit.)",
     "sit_defense_perf": "Defense Perf(this sit.)",
-    "sit_top_20": "Top 20 Co-occurring Cards(this sit.)"
+    "sit_top_20": "Top 20 Co-occurring Cards(this sit.)",
+    "tendency_score_label": "Tendency",
+    "tendency_ranking_title": "Tendency Ranking",
+    "tendency_ranking_desc": "Cards with a strong positive tendency in either attack or defense like buff.",
+    "attack_tendency_top_10_title": "Attack Tendency Top 20",
+    "defense_tendency_top_10_title": "Defense Tendency Top 20"
 }
