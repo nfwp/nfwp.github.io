@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドーナッツにはなぜ穴があいているのか</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.8;
+    }
+    h1 { text-align: center; margin-bottom: 1.5em; }
+    h2 { margin-top: 2em; border-bottom: 2px solid #ccc; padding-bottom: 4px; }
+    a { text-decoration: none; color: #0070f3; }
+    a:hover { text-decoration: underline; }
+    .section-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1.2em;
+      margin-top: 2em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* グラフテーブル */
+    .styled-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 1em;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .styled-table thead tr {
+      background-color: #009879;
+      color: #fff;
+      text-align: left;
+    }
+    .styled-table th, .styled-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+
+    /* 翻訳カード */
+    .translation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 1em;
+    }
+    .translation-grid a {
+      display: block;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .translation-grid a:hover {
+      background: #e9f5ff;
+      border-color: #0070f3;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 3em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>試作ホットケーキ第一号</h1>
+
+  <!-- 🟦 グラフセクション -->
+  <div class="section-box">
+    <h2>📊 グラフ / Graph Links</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>怪しいグラフ (Ja ver)</th>
+          <th>potato graph (En ver)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lbol Bubble Charts</td>
+          <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
+          <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 🔹 グラフ用Change Log -->
+    <div class="section-box" style="margin-top:1.5em; background:#fefefe;">
+      <h3>🕒 グラフ更新履歴 / Graph Change Log</h3>
+      <details open>
+        <summary>📘 日本語</summary>
+        <ul>
+          <li><strong>2025-11-01:</strong> 1.8.0に対応。集計方法を変更。共起カードにそのカードだけ突出して高いものは★を追加。</li>
+          <li><strong>2025-10-13:</strong> カード使用率のタブを追加。</li>
+          <li><strong>2025-10-11:</strong> 全体集計用のカード評価の重み付けを動的に算出するロジックを導入。(これにより苦手なシーンで活躍したカードほど評価されやすくなります)</li>
+          <li><strong>2025-10-05:</strong> 初版リリース。</li>
+        </ul>
+      </details>
+      <details>
+        <summary>📗 English</summary>
+        <ul>
+          <li><strong>2025-11-01:</strong> Updated for version 1.8.0. Changed the aggregation method. Added a ★ mark to co-occurring cards that stand out with exceptionally high values.</li>
+          <li><strong>2025-10-13:</strong> Added a tab for card usage rates.</li>
+          <li><strong>2025-10-11:</strong> Introduced a logic to dynamically calculate the weighting of card evaluations for overall aggregation. (This makes cards that performed well in difficult situations more highly rated.)</li>
+          <li><strong>2025-10-05:</strong> Initial release.</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+
+  <!-- 💬 Contact -->
+<div class="section-box" style="text-align:center;">
+  <h2>💬 連絡先 / Contact</h2>
+  <p>
+    以下の Discord サーバーで活動しています。<br>
+    ご用の方は気軽にDMしてください。<br>
+    I’m active on the following Discord servers — feel free to DM me there.
+  </p>
+
+  <div style="margin-top:1em; font-size:1.05em; line-height:1.6;">
+    <p><strong>Server:</strong> <em>Touhou Lost Branch of Legend</em><br>
+       <strong>Name:</strong> <code>neff</code></p>
+  </div>
+
+  <p style="margin-top:1em; color:#666; font-size:0.9em;">
+    日本語・英語どちらでもOKです。<br>
+    Both Japanese and English are welcome.
+  </p>
+</div>
+
+
+  <footer>
+    © 2025 nfwp.github.io
+  </footer>
+</body>
+</html>
+
+
+
