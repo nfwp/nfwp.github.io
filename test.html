@@ -107,6 +107,7 @@
   <details open>
     <summary>📘 日本語</summary>
     <ul>
+      <li><strong>2025-11-03:</strong> 制限付きで全プレイヤーを対象に。カードタブにサンプルランを追加。</li>
       <li><strong>2025-11-01:</strong> 1.8.0に対応。集計方法を変更。共起カードにそのカードだけ突出して高いものは★を追加。</li>
       <li><strong>2025-10-13:</strong> カード使用率のタブを追加。</li>
       <li><strong>2025-10-05:</strong> 初版リリース。</li>
@@ -115,6 +116,7 @@
   <details>
     <summary>📗 English</summary>
     <ul>
+      <li><strong>2025-11-03:</strong> Now includes all players with some restrictions. Added sample runs to the card tab.</li>
       <li><strong>2025-11-01:</strong> Updated for version 1.8.0. Changed the aggregation method. Added a ★ mark to highlight standout co-occurring cards.</li>
       <li><strong>2025-10-13:</strong> Added a card usage tab.</li>
       <li><strong>2025-10-05:</strong> Initial release.</li>
@@ -141,15 +143,21 @@
   <h2>🧮 集計方法 / Methodology</h2>
   <p>
     データは公開ログをもとに集計しています。  
-    各カードの評価は <strong>QuantileTransformer</strong> により正規化し、
-    全体平均を偏差値として再計算しています。  
-    一部の値は使用シーンごとの重み付けを反映しています。
+    偏りを防ぐために各キャラ一番多いプレイヤーのラン数は最終的な合計ラン数の15%未満になるように数を調節しています。
+    (あるプレイヤーのプレイ数が多すぎてランが切り捨てられる場合、そのプレイヤーの新しいものを優先的に残しています。)
+    データの整合性のないデータ(チート疑惑)や一部のmodやファーミング疑惑のあるデータは除外しています。
+        
+    各カードの評価は多少人間の感覚に近づけてあるので絶対ではないですが、おおよその関係性は正しいと思います。  
+    総合的な評価には、使用シーンごとの動的重み付けを反映しています。
   </p>
   <p>
-    The data is aggregated from public gameplay logs.  
-    Card performance values are normalized using <strong>QuantileTransformer</strong>
-    and re-scaled to deviation scores.  
-    Certain metrics incorporate contextual weighting based on encounter types.
+    The data is aggregated from public logs.
+    To prevent bias, the number of runs from the single most active player for each character is adjusted so that it accounts for less than 15% of the total runs.
+    (If a player has too many plays and some runs need to be truncated, the newer ones are prioritized.)
+    Data that appears inconsistent (suspected cheating) or that comes from certain mods or farming behaviors is excluded.
+    
+    The evaluation of each card is slightly adjusted to be closer to human intuition, so it is not absolute; however, the overall relationships should be roughly accurate.
+    The overall rating also reflects dynamic weighting based on the context of each play.
   </p>
 </div>
 
