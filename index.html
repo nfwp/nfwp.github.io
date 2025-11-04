@@ -156,8 +156,8 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
     <summary>📘 日本語</summary>
     <p>
 データは公開ログをもとに集計しています。  
-偏りを防ぐために各キャラ一番多いプレイヤーのラン数は最終的な合計ラン数の一定割合未満になるように数を調節しています。  
-(あるプレイヤーのプレイ数が多すぎてランが切り捨てられる場合、そのプレイヤーの新しいものを優先的に残しています。)  
+偏りを防ぐためにラン数が多いプレイヤーは最終的な合計ラン数の一定割合未満になるように数を調節しています。 
+(ランが切り捨てられる場合、偏らないように新しいものほど多く古いほど少なく取得されています。)  
 データの整合性のないデータ(チート疑惑)や一部のmodやファーミング疑惑のあるデータは除外しています。  
 
 各カードの評価は多少人間の感覚に近づけてあるので絶対ではないですが、おおよその関係性は正しいと思います。  
@@ -168,8 +168,8 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
     <summary>📗 English</summary>
     <p>
 The data is aggregated from public logs.  
-To prevent bias, the number of runs from the single most active player for each character is adjusted so that it accounts for less than a fixed percentage of the total runs.  
-(If a player has too many plays and some runs need to be truncated, the newer ones are prioritized.)  
+To prevent bias, the number of runs from players with many runs is adjusted so that their total accounts for less than a certain percentage of the overall runs.
+(When runs need to be trimmed, newer runs are kept more and older ones less, to maintain balance.)
 Data that appears inconsistent (suspected cheating) or that comes from certain mods or farming behaviors is excluded.  
 
 The evaluation of each card is slightly adjusted to be closer to human intuition, so it is not absolute; however, the overall relationships should be roughly accurate.  
