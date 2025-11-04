@@ -1,0 +1,6 @@
+echo *
+echo !card_lists/
+echo !data/
+echo !locales/
+echo !report.html
+echo !script.js
