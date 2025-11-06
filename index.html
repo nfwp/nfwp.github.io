@@ -154,31 +154,134 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
 <!-- 🧮 集計方法 -->
 <div class="section-box">
   <h2>🧮 集計方法 / Methodology</h2>
+
   <details>
     <summary>📘 日本語</summary>
+    <p><strong>1. ログの収集とフィルタリング</strong></p>
     <p>
-データは公開ログをもとに集計しています。  
-偏りを防ぐためにラン数が多いプレイヤーは最終的な合計ラン数の一定割合未満になるように数を調節しています。 
-(ランが切り捨てられる場合、偏らないように新しいものほど多く古いほど少なく取得されています。)  
-データの整合性のないデータ(チート疑惑)や一部のmodやファーミング疑惑のあるデータは除外しています。  
-
-各カードの評価は多少人間の感覚に近づけてあるので絶対ではないですが、おおよその関係性は正しいと思います。  
-総合的な評価には、使用シーンごとの動的重み付けを反映しています。
+      公開されているログリポジトリから最新のログデータを自動で収集します。  
+      その際、以下の条件で分析に適したログだけを厳選しています。
     </p>
+    <ul>
+      <li>Lunatic7 真エンドクリアのログのみを使用</li>
+      <li>一部MODを除外（ゲームバランスに影響を与えるMODが使用されたログは除外）</li>
+      <li>不正が疑われるログの除外（異常なステータス変動・不連続なデータなど）</li>
+    </ul>
+
+    <p><strong>2. プレイヤーごとのログ抽出（サンプリング）</strong></p>
+    <p>
+      特定のプレイヤーのログが多すぎると、その人のプレイスタイルが全体に大きく影響してしまいます。  
+      これを防ぐため、各プレイヤーから抽出するログ数に上限を設けています。
+    </p>
+    <p>
+      ログ数が上限に満たないプレイヤーについては制限を適用せず、すべての有効ログを使用します。  
+      上限を超えるプレイヤーに対しては、<strong>分位加重サンプリング</strong>によってログを選び出します。
+    </p>
+    <ol>
+      <li>ログを新旧4グループに分割（最古・やや古い・やや新しい・最新の25%ずつ）</li>
+      <li>新しいグループから多めに、古いグループから少なめにランダム抽出</li>
+    </ol>
+
+    <p><strong>3. カード性能の計算</strong></p>
+    <p>各カードが戦闘に与える影響を「状況別」に評価します。</p>
+    <ul>
+      <li><strong>状況の定義:</strong> Actごとの進行度や敵種別（例：Act1の雑魚戦、Act2のエリート戦）で分類</li>
+      <li><strong>性能の算出:</strong> カードを所持していた場合と所持していなかった場合の平均クリアターン・HPロスを比較し、貢献度を計算</li>
+      <li><strong>信頼性の担保:</strong>
+        <ul>
+          <li>戦闘回数が一定数以上（例：雑魚戦20回、ボス戦10回）のカードのみ評価</li>
+          <li>ベイズ平均により、サンプル数の少ないカードの極端な値を補正</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><strong>4. 総合評価とランキングの作成</strong></p>
+    <p>
+      状況別に計算された性能スコアを以下の指標で総合評価し、ダッシュボードに表示します。
+    </p>
+    <ul>
+      <li><strong>総合パフォーマンス（バブルグラフ）:</strong>  
+        各状況の性能を「動的重み付け」で加重平均。採用率や戦闘回数の基準を満たすカードを表示。  
+        低採用カードでも評価に参加できるよう、<strong>ソフトフィルター</strong>を導入し、ランキングの安定性を向上。
+      </li>
+      <li><strong>Act別パフォーマンス:</strong> 各Actで特に強力なカードをランキング形式で表示。</li>
+      <li><strong>傾向値（上振れ度）:</strong> カードの安定性・ムラを示す指標。
+        <ul>
+          <li>プラス（上振れ型）: 特定状況で爆発的に強い「ロマン砲」型</li>
+          <li>0付近（安定型）: どの状況でも安定した性能を発揮</li>
+          <li>マイナス（下振れ型）: 特定状況で足を引っ張る可能性があるタイプ</li>
+        </ul>
+      </li>
+      <li><strong>注目度スコア:</strong> 「採用率」「性能」「ハイライト回数」を総合評価し、注目すべきカードを選出。</li>
+    </ul>
   </details>
+
   <details>
     <summary>📗 English</summary>
+    <p><strong>1. Log Collection and Filtering</strong></p>
     <p>
-The data is aggregated from public logs.  
-To prevent bias, the number of runs from players with many runs is adjusted so that their total accounts for less than a certain percentage of the overall runs.
-(When runs need to be trimmed, newer runs are kept more and older ones less, to maintain balance.)
-Data that appears inconsistent (suspected cheating) or that comes from certain mods or farming behaviors is excluded.  
-
-The evaluation of each card is slightly adjusted to be closer to human intuition, so it is not absolute; however, the overall relationships should be roughly accurate.  
-The overall rating also reflects dynamic weighting based on the context of each play.
+      The system automatically collects the latest public log data from the repository.  
+      Only logs suitable for analysis are selected under the following conditions:
     </p>
+    <ul>
+      <li>Only logs from Lunatic7 True Ending clears are used.</li>
+      <li>Logs involving balance-altering mods are excluded.</li>
+      <li>Logs suspected of cheating (abnormal stats, data discontinuity, etc.) are automatically filtered out.</li>
+    </ul>
+
+    <p><strong>2. Player Log Sampling</strong></p>
+    <p>
+      If one player contributes too many logs, their playstyle could dominate the results.  
+      To prevent this, a limit is imposed on the number of logs sampled per player.
+    </p>
+    <p>
+      Players below the limit are unaffected — all their valid logs are used.  
+      For players exceeding the limit, logs are selected using <strong>quantile-weighted sampling</strong>:
+    </p>
+    <ol>
+      <li>Divide the player’s logs into four chronological groups: oldest 25%, slightly old 25%, slightly new 25%, newest 25%.</li>
+      <li>Sample more logs from newer groups and fewer from older ones, randomly within each group.</li>
+    </ol>
+
+
+    <p><strong>3. Card Performance Evaluation</strong></p>
+    <p>Each card’s contribution to battle outcomes is evaluated by context.</p>
+    <ul>
+      <li><strong>Context Definition:</strong> Categorized by game progress and enemy type (e.g., Act 1 normal battles, Act 2 elite battles).</li>
+      <li><strong>Performance Calculation:</strong> Compares average clear turns and HP loss with and without the card, measuring its contribution.</li>
+      <li><strong>Reliability Measures:</strong>
+        <ul>
+          <li>Only cards used in a sufficient number of battles (e.g., 20 normal, 10 boss) are evaluated.</li>
+          <li>Bayesian averaging corrects extreme values caused by low sample counts.</li>
+        </ul>
+      </li>
+    </ul>
+
+
+    <p><strong>4. Overall Rating and Ranking</strong></p>
+    <p>
+      Context-based performance scores are combined into comprehensive indicators displayed on the dashboard:
+    </p>
+    <ul>
+      <li><strong>Overall Performance (Bubble Chart):</strong>  
+        Weighted average using <strong>dynamic weighting</strong> across all contexts.  
+        A <strong>soft filter</strong> smooths influence from low-adoption cards, stabilizing the rankings.
+      </li>
+      <li><strong>Performance by Act:</strong> Highlights cards that perform exceptionally well in specific Acts.</li>
+      <li><strong>Variance Index (Swing Potential):</strong> Shows how consistent or volatile a card’s performance is:
+        <ul>
+          <li><strong>Positive (High-Variance):</strong> Average performance overall, but explosive in certain combos or contexts.</li>
+          <li><strong>Near Zero (Stable):</strong> Reliable cards that perform consistently under most conditions.</li>
+          <li><strong>Negative (Low-Variance):</strong> Generally stable but may hinder performance in specific cases.</li>
+        </ul>
+      </li>
+      <li><strong>Attention Score:</strong> A composite indicator combining adoption rate, performance, and highlight frequency to identify noteworthy cards.</li>
+    </ul>
+    <p>
+
   </details>
 </div>
+
 
 
 <footer>
