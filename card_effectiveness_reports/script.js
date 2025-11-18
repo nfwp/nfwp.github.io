@@ -17,9 +17,10 @@ let CURRENT_CHAR = 'CirnoA';
 
 let attentionSlider = null;
 
-// ★★★ グラフ関連の変数をここで宣言 ★★★
-let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
 
+let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
+const ROUTE_NODE_HOVER_DELAY = 400; // ホバーの遅延時間 (ミリ秒)。この数値を調整してお好みの長さにできます。
+let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
 
 // =================================================================
 // メイン処理
@@ -1416,7 +1417,10 @@ function renderRouteEventTab(lang) {
                 }
 
 
-                barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
+
+                barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="startNodeDetailTimer('${node_full_id}')" onmouseout="cancelNodeDetailTimer()">${label}</div>`;
+
+                //barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
             });
             barHtml += '</div></div>';
             actHtmlSegment += barHtml;
@@ -1596,6 +1600,28 @@ function renderRouteEventTab(lang) {
         <div class='route-analysis-wrapper'>${flowChartHtml}${detailsPanelHtml}</div>
     </div>`;
 }
+
+
+/**
+ * ルートノードの詳細表示タイマーを開始します。
+ * @param {string} nodeId 表示するノードのID
+ */
+function startNodeDetailTimer(nodeId) {
+    // 既に他のタイマーが動いていたらキャンセルする
+    cancelNodeDetailTimer();
+    // 指定した時間後に showNodeDetails を実行するタイマーをセット
+    routeNodeHoverTimer = setTimeout(() => {
+        showNodeDetails(nodeId);
+    }, ROUTE_NODE_HOVER_DELAY);
+}
+
+/**
+ * ルートノードの詳細表示タイマーをキャンセルします。
+ */
+function cancelNodeDetailTimer() {
+    clearTimeout(routeNodeHoverTimer);
+}
+
 
 function showNodeDetails(nodeId) {
     document.querySelectorAll('#route-details-panel-content .node-details').forEach(el => el.classList.remove('active'));
