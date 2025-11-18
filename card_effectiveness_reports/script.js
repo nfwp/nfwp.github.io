@@ -1453,7 +1453,8 @@ function renderRouteEventTab(lang) {
                         }
                         const links = sampleRuns.map((run, index) => {
                             const short_version = run.version.split('.').slice(0, 3).join('.');
-                            const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${level}`;
+                            const prev_level = Math.max(0, parseInt(level, 10) - 1);
+                            const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${prev_level}`;
                             const deckTooltip = run.deck.join(', ');
                             return `<a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a>`;
                         }).join(' '); // ol/liではなく、スペース区切りで横に並べる
