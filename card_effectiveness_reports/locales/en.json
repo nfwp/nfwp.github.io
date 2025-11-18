@@ -138,5 +138,6 @@
     "tendency_ranking_title": "Tendency Ranking",
     "tendency_ranking_desc": "Cards with a strong positive tendency in either attack or defense like buff.",
     "attack_tendency_top_10_title": "Attack Tendency Top 20",
-    "defense_tendency_top_10_title": "Defense Tendency Top 20"
+    "defense_tendency_top_10_title": "Defense Tendency Top 20",
+    "sample_decks_title": "Sample Decks"
 }
