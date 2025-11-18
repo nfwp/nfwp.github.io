@@ -125,5 +125,11 @@
     "tendency_ranking_desc": "強い上昇傾向を持つカードです。強力なバフやコンボパーツであることが多いです。",
     "attack_tendency_top_10_title": "攻撃傾向 Top 20",
     "defense_tendency_top_10_title": "防御傾向 Top 20",
-    "sample_decks_title": "サンプルデッキ"
+    "sample_decks_title": "サンプルデッキ",
+    "boxplot_min": "最小",
+    "boxplot_q1": "25%",
+    "boxplot_median": "中央",
+    "boxplot_q3": "75%",
+    "boxplot_max": "最大",
+    "boxplot_mean": "平均"
 }

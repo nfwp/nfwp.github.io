@@ -1655,9 +1655,22 @@ function createInlineBoxplotHtml(boxplot_data, scale_min, scale_max, is_negative
     const w1_left = p_min, w1_width = q1_pos - p_min;
     const w2_left = q3_pos, w2_width = p_max - q3_pos;
 
+
+    // 翻訳テキストを取得するためのオブジェクト（UI_TEXTはグローバル変数です）
+    const labels = {
+        min: UI_TEXT.boxplot_min || '最小',
+        q1: UI_TEXT.boxplot_q1 || '25%',
+        median: UI_TEXT.boxplot_median || '中央',
+        q3: UI_TEXT.boxplot_q3 || '75%',
+        max: UI_TEXT.boxplot_max || '最大',
+        mean: UI_TEXT.boxplot_mean || '平均'
+    };
+
+    // 翻訳テキストを使ってツールチップ文字列を組み立てる
     const tooltip = is_negative
-        ? `最小: ${(-b_max).toFixed(1)}, 25%: ${(-q3).toFixed(1)}, 中央: ${(-median).toFixed(1)}, 75%: ${(-q1).toFixed(1)}, 最大: ${(-b_min).toFixed(1)}, 平均: ${(-mean).toFixed(1)}`
-        : `最小: ${b_min.toFixed(1)}, 25%: ${q1.toFixed(1)}, 中央: ${median.toFixed(1)}, 75%: ${q3.toFixed(1)}, 最大: ${b_max.toFixed(1)}, 平均: ${mean.toFixed(1)}`;
+        ? `${labels.min}: ${(-b_max).toFixed(1)}, ${labels.q1}: ${(-q3).toFixed(1)}, ${labels.median}: ${(-median).toFixed(1)}, ${labels.q3}: ${(-q1).toFixed(1)}, ${labels.max}: ${(-b_min).toFixed(1)}, ${labels.mean}: ${(-mean).toFixed(1)}`
+        : `${labels.min}: ${b_min.toFixed(1)}, ${labels.q1}: ${q1.toFixed(1)}, ${labels.median}: ${median.toFixed(1)}, ${labels.q3}: ${q3.toFixed(1)}, ${labels.max}: ${b_max.toFixed(1)}, ${labels.mean}: ${mean.toFixed(1)}`;
+    // ▲▲▲ 修正ここまで ▲▲▲
 
     const label_start = is_negative ? (-scale_max).toFixed(0) : scale_min.toFixed(0);
     const label_end = is_negative ? (-scale_min).toFixed(0) : scale_max.toFixed(0);

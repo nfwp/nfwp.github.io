@@ -47,6 +47,7 @@
     "enemy_table_avg_t": "Avg. T",
     "enemy_table_hp": "HP Δ",
     "enemy_table_p": "P Δ",
+    "choice_rates_title": "Choice Rates",
     "enemy_table_act": "Act",
     "enemy_table_name": "Enemy Name",
     "enemy_table_encounters": "Encounters",
@@ -139,5 +140,11 @@
     "tendency_ranking_desc": "Cards with a strong positive tendency in either attack or defense like buff.",
     "attack_tendency_top_10_title": "Attack Tendency Top 20",
     "defense_tendency_top_10_title": "Defense Tendency Top 20",
-    "sample_decks_title": "Sample Decks"
+    "sample_decks_title": "Sample Decks",
+    "boxplot_min": "Min",
+    "boxplot_q1": "25%",
+    "boxplot_median": "Median",
+    "boxplot_q3": "75%",
+    "boxplot_max": "Max",
+    "boxplot_mean": "Avg"
 }
