@@ -1444,6 +1444,22 @@ function renderRouteEventTab(lang) {
                     table_html += `<tr><td>${UI_TEXT.enemy_table_avg_t}</td>${sorted_enemies.map(e => `<td>${e.avg_turns.toFixed(1)}${createInlineBoxplotHtml(e.turns_boxplot, scales.turns_min, scales.turns_max)}</td>`).join('')}</tr>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_hp}</td>${sorted_enemies.map(e => `<td style='background-color:${getColorForValue(e.avg_hp_loss, act_stats[act].hp_min, act_stats[act].hp_max)}'>${(-e.avg_hp_loss).toFixed(1)}${createInlineBoxplotHtml(e.hp_loss_boxplot, scales.hp_loss_min, scales.hp_loss_max, true)}</td>`).join('')}</tr>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_p}</td>${sorted_enemies.map(e => `<td style='background-color:${getColorForValue(e.avg_p_change, act_stats[act].p_min, act_stats[act].p_max, true)}'>${e.avg_p_change.toFixed(1)}${createInlineBoxplotHtml(e.p_change_boxplot, scales.p_change_min, scales.p_change_max)}</td>`).join('')}</tr>`;
+
+                    table_html += `<tr><td>${UI_TEXT.sample_decks_title || 'サンプルデッキ'}</td>`;
+                    table_html += sorted_enemies.map(e => {
+                        const sampleRuns = e.sample_runs || [];
+                        if (sampleRuns.length === 0) {
+                            return '<td>-</td>';
+                        }
+                        const links = sampleRuns.map((run, index) => {
+                            const short_version = run.version.split('.').slice(0, 3).join('.');
+                            const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${level}`;
+                            const deckTooltip = run.deck.join(', ');
+                            return `<a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a>`;
+                        }).join(' '); // ol/liではなく、スペース区切りで横に並べる
+                        return `<td>${links}</td>`;
+                    }).join('');
+                    table_html += '</tr>';
                     table_html += '</tbody></table>';
                     top_section_html = table_html;
                 }
@@ -1500,6 +1516,33 @@ function renderRouteEventTab(lang) {
                     top_section_html = gap_choices_html;
                 }
 
+
+                let sampleDecksHtml = '';
+                // Python側で追加した sample_runs データが存在するかチェック
+                if (node_specific_details.sample_runs && node_specific_details.sample_runs.length > 0) {
+                    has_content = true; // 表示するコンテンツがあることを示すフラグ
+
+                    // サンプルデッキのリスト項目を生成
+                    const listItems = node_specific_details.sample_runs.map((run, index) => {
+                        // バージョン文字列を "1.8.0" のような形式に整形
+                        const short_version = run.version.split('.').slice(0, 3).join('.');
+                        // ご指定の形式でURLを組み立てる
+                        const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${level}`;
+                        // リンクにマウスオーバーした時にデッキ内容が見えるようにtooltipを設定
+                        const deckTooltip = run.deck.join(', ');
+
+                        return `<li><a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a></li>`;
+                    }).join('');
+
+                    // セクション全体のHTMLを組み立てる
+                    sampleDecksHtml = `
+                        <div class="details-section">
+                            <h5>${UI_TEXT.sample_decks_title || 'サンプルデッキ'}</h5>
+                            <ol class="sample-deck-list">${listItems}</ol>
+                        </div>
+                    `;
+                }
+
                 const node_actions = event_actions[node_full_key] || {};
                 ['Card', 'Exhibit'].forEach(item_type => {
                     ['Add', 'Remove', 'Upgrade'].forEach(action_type => {
@@ -1529,7 +1572,7 @@ function renderRouteEventTab(lang) {
                 });
 
                 if (top_section_html) details_content += `<div class="details-section">${top_section_html}</div>`;
-
+                if (sampleDecksHtml) details_content += sampleDecksHtml;
                 if (card_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.card_section_title || 'カード関連'}</h5><div class="details-grid">${card_grid_content}</div></div>`;
                 if (exhibit_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.exhibit_section_title || '展示品関連'}</h5><div class="details-grid">${exhibit_grid_content}</div></div>`;
 
