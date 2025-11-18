@@ -743,7 +743,7 @@ function createHoverText(d, lang) {
 
     let coOccurrenceHtml = '';
     if (isAggView) {
-        const topCol = (lang === 'ja') ? 'Top_20_Co_occurrence' : 'Top_20_Co_occurrence_EN';
+        const topCol = (lang === 'ja') ? 'Top_20_Co_occurrence_JA' : 'Top_20_Co_occurrence_EN';
         if (sourceData[topCol]) {
             coOccurrenceHtml = `<b>${UI_TEXT.top_20 || '共起Top20'}:</b><br>${sourceData[topCol]}`;
         }
