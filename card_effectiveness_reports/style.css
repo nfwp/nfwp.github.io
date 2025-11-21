@@ -1063,3 +1063,76 @@ body {
     background-color: #e9e9e9;
     border-color: #999;
 }
+
+
+.global-header-container {
+    display: flex;
+    justify-content: space-between; /* 左寄せと右寄せを両立 */
+    align-items: center; /* 上下中央揃え */
+    padding: 8px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 16px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center; /* キャラ選択と更新日を中央揃え */
+    gap: 20px; /* 要素間のスペース */
+}
+
+/* 最終更新日のテキストスタイル */
+#last-update {
+    font-size: 12px;
+    color: #6c757d;
+    margin: 0; /* 不要なマージンをリセット */
+    white-space: nowrap; /* 折り返しを防ぐ */
+}
+
+/* 右側のコンテナ */
+.header-right {
+    /* 必要に応じてスタイルを追加 */
+}
+
+/* 既存の #global-header のマージンなどを調整 */
+#global-header {
+    margin-bottom: 0; /* 新しいコンテナに入ったので不要なマージンを削除 */
+}
+
+/* --- モバイル用ヘッダーのスタイル --- */
+#mobile-header {
+    display: none;
+    padding: 8px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 16px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#mobile-tab-selector {
+    flex-grow: 1;
+}
+
+#last-update-mobile {
+    font-size: 11px;
+    color: #6c757d;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+
+/* --- 画面サイズに応じた表示切り替え (メディアクエリ) --- */
+@media (max-width: 768px) {
+    /* PC用のヘッダーを非表示に */
+    .global-header-container {
+        display: none;
+    }
+
+    /* モバイル用のヘッダーを表示に */
+    #mobile-header {
+        display: flex;
+    }
+}
