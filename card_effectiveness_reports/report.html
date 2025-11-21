@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +18,25 @@
         データを読み込み中...
     </div>
 
-    <!-- キャラクター切り替え用のヘッダー -->
-    <div id="global-header"></div>
+    <!-- PC用ヘッダーエリア -->
+    <header class="global-header-container">
+        <!-- 左側にキャラクター選択と最終更新日を配置 -->
+        <div class="header-left">
+            <div id="global-header"></div>
+            <p id="last-update">最終更新: 読み込み中...</p>
+        </div>
+        <!-- 右側にタイトルなどを配置（もしあれば） -->
+        <div class="header-right">
+        </div>
+    </header>
+
+
+    <!-- モバイル用ヘッダーエリア -->
+    <div id="mobile-header">
+        <select id="mobile-tab-selector"></select> <!-- ← ドロップダウンメニューをここに移動 -->
+        <p id="last-update-mobile">最終更新: ...</p> <!-- ← モバイル用の最終更新日 -->
+    </div>
+
 
     <!-- JavaScriptがコンテンツを描画するメインのコンテナ -->
     <div id="dashboard-container" class="dashboard-container" style="visibility: hidden;">
@@ -27,8 +44,8 @@
         <!-- PC用のタブボタンが表示される場所 -->
         <div id="tab-buttons" class="tab-buttons"></div>
 
-        <!-- ★モバイル用のドロップダウンメニューが表示される場所 -->
-        <select id="mobile-tab-selector"></select>
+        <!-- ▼▼▼ この行は削除してください（上の #mobile-header に移動したため） ▼▼▼ -->
+        <!-- <select id="mobile-tab-selector"></select> -->
 
         <!-- 各タブのコンテンツが表示される場所 -->
         <div id="card-performance-tab" class="tab-content"></div>
@@ -36,14 +53,56 @@
         <div id="route-event-tab" class="tab-content"></div>
         <div id="enemy-analysis-tab" class="tab-content"></div>
         <div id="card-list-tab" class="tab-content"></div>
-    </div>		
-
+    </div>
 
     <!-- ホバー時に使う情報ボックス -->
     <div id="info-box"></div>
 
     <!-- メインのスクリプト -->
     <script src="script.js"></script>
-</body>
 
+
+    <!-- 最終更新日時を取得して表示するスクリプト -->
+    <script>
+    // 1. URLから言語設定を取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'ja';
+
+    // 2. 言語に応じたテキストを定義
+    const updateText = (lang === 'en') ? 'Last Update:' : '最終更新:';
+    const errorText = (lang === 'en') ? 'Update info not available' : '更新情報なし';
+    const failText = (lang === 'en') ? 'Failed to get update info' : '更新情報の取得に失敗';
+
+    // 3. GitHub APIを叩く
+    fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports&per_page=1")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+            const commit = data[0];
+            const date = new Date(commit.commit.author.date);
+
+            // 日付と時刻をフォーマット
+            const formattedDate = date.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            // 4. コミットメッセージを含めずに、日付だけで表示を更新
+            const displayText = `${updateText} ${formattedDate}`;
+            document.getElementById("last-update").textContent = displayText;
+            document.getElementById("last-update-mobile").textContent = displayText;
+
+        } else {
+            document.getElementById("last-update").textContent = errorText;
+            document.getElementById("last-update-mobile").textContent = errorText;
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch commit data:", err);
+        document.getElementById("last-update").textContent = failText;
+        document.getElementById("last-update-mobile").textContent = failText;
+      });
+    </script>
+
+</body>
 </html>

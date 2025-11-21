@@ -515,7 +515,7 @@ function setupGraphFilters(lang) {
 
     function createSlider(element, minInput, maxInput) {
         if (!element) return null;
-        const slider = noUiSlider.create(element, { start: [-2.5, 2.5], connect: true, range: { 'min': -2.5, 'max': 2.5 }, step: 0.05, margin: 0.05, format: { to: v => parseFloat(v).toFixed(2), from: v => Number(v) } });
+        const slider = noUiSlider.create(element, { start: [-3.0, 3.0], connect: true, range: { 'min': -3.0, 'max': 3.0 }, step: 0.05, margin: 0.05, format: { to: v => parseFloat(v).toFixed(2), from: v => Number(v) } });
         slider.on('update', values => { minInput.value = values[0]; maxInput.value = values[1]; });
         const syncAndUpdate = () => updateVisuals(null, []);
         slider.on('change', syncAndUpdate);

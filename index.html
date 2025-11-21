@@ -104,6 +104,7 @@
       </tr>
     </tbody>
   </table>
+  <p id="last-update">読み込み中...</p>
 </div>
 
 <!-- 🕒 更新履歴 -->
@@ -287,6 +288,24 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
   </details>
 </div>
 
+
+<script>
+// card_effectiveness_reports ディレクトリの最新コミット取得
+fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports&per_page=1")
+  .then(res => res.json())
+  .then(data => {
+    const commit = data[0];
+    const date = new Date(commit.commit.author.date);
+    const message = commit.commit.message;
+
+    // 好きな場所に書き込む
+    document.getElementById("last-update").textContent =
+      `${date.toLocaleString("ja-JP")} (${message})`;
+  })
+  .catch(err => {
+    document.getElementById("last-update").textContent = "取得に失敗しました";
+  });
+</script>
 
 
 <footer>
