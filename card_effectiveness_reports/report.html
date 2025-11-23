@@ -31,11 +31,16 @@
     </header>
 
 
+
     <!-- モバイル用ヘッダーエリア -->
     <div id="mobile-header">
-        <select id="mobile-tab-selector"></select> <!-- ← ドロップダウンメニューをここに移動 -->
-        <p id="last-update-mobile">最終更新: ...</p> <!-- ← モバイル用の最終更新日 -->
+        <div class="mobile-header-top-row">
+            <div id="global-header-mobile"></div> <!-- ← キャラクター選択 -->
+            <p id="last-update-mobile">最終更新: ...</p> <!-- ← 最終更新日 -->
+        </div>
+        <select id="mobile-tab-selector"></select> <!-- ← タブ選択は下の行のまま -->
     </div>
+
 
 
     <!-- JavaScriptがコンテンツを描画するメインのコンテナ -->
@@ -43,11 +48,6 @@
 
         <!-- PC用のタブボタンが表示される場所 -->
         <div id="tab-buttons" class="tab-buttons"></div>
-
-        <!-- ▼▼▼ この行は削除してください（上の #mobile-header に移動したため） ▼▼▼ -->
-        <!-- <select id="mobile-tab-selector"></select> -->
-
-        <!-- 各タブのコンテンツが表示される場所 -->
         <div id="card-performance-tab" class="tab-content"></div>
         <div id="exhibit-analysis-tab" class="tab-content"></div>
         <div id="route-event-tab" class="tab-content"></div>
@@ -74,7 +74,7 @@
     const failText = (lang === 'en') ? 'Failed to get update info' : '更新情報の取得に失敗';
 
     // 3. GitHub APIを叩く
-    fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports&per_page=1")
+    fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
       .then(res => res.json())
       .then(data => {
         if (data && data.length > 0) {

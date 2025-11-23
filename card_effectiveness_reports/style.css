@@ -1100,29 +1100,41 @@ body {
 }
 
 /* --- モバイル用ヘッダーのスタイル --- */
+
+.mobile-header-top-row {
+    display: flex;                 /* 中の要素を横並びにする */
+    justify-content: space-between;  /* 両端に配置する */
+    align-items: center;           /* 上下中央に揃える */
+    gap: 10px;                     /* 要素間の最小の隙間 */
+}
+
+
 #mobile-header {
     display: none;
-    padding: 8px 16px;
+    padding: 10px 16px;
     background-color: #f8f9fa;
     border-bottom: 1px solid #dee2e6;
     margin-bottom: 16px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+
+    flex-direction: column;   /* 全体としては縦並び */
+    align-items: stretch;     /* 幅をいっぱいまで広げる */
+    gap: 12px;                /* 各行の間の隙間 */
 }
 
-#mobile-tab-selector {
+/* キャラクター選択部分が利用可能な幅を埋めるようにする */
+#global-header-mobile .character-switcher {
     flex-grow: 1;
 }
 
+/* 最終更新日のテキストが縮まないようにする */
 #last-update-mobile {
     font-size: 11px;
     color: #6c757d;
     margin: 0;
-    white-space: nowrap;
-    flex-shrink: 0;
+    white-space: nowrap; /* 折り返しを防ぐ */
+    flex-shrink: 0;    /* コンテナが狭くなってもテキストが縮まないようにする */
+    text-align: right;
 }
-
 
 /* --- 画面サイズに応じた表示切り替え (メディアクエリ) --- */
 @media (max-width: 768px) {

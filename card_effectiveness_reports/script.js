@@ -68,20 +68,45 @@ function renderGlobalHeader() {
         `<option value="${char}" ${char === CURRENT_CHAR ? 'selected' : ''}>${char}</option>`
     ).join('');
 
-    container.innerHTML = `
+    // --- 共通のHTMLコンテンツを作成 ---
+    const switcherHtml = `
         <div class="character-switcher">
             <label for="char-select-global">${UI_TEXT.char_select_label || 'Character:'}</label>
             <select id="char-select-global">${options}</select>
         </div>
     `;
 
-    document.getElementById('char-select-global').addEventListener('change', (e) => {
+    // --- PC用コンテナに描画し、イベントリスナーを設定 ---
+    container.innerHTML = switcherHtml;
+    container.querySelector('select').addEventListener('change', (e) => {
         const newChar = e.target.value;
         const currentParams = new URLSearchParams(window.location.search);
         currentParams.set('char', newChar);
         window.location.search = currentParams.toString();
     });
+
+    // --- モバイル用コンテナにも同じ内容を描画 ---
+    const mobileContainer = document.getElementById('global-header-mobile');
+    if (mobileContainer) {
+        mobileContainer.innerHTML = switcherHtml;
+
+        // ★重要：innerHTMLでコピーした要素にはイベントリスナーが引き継がれないため、再設定します
+        const mobileSelect = mobileContainer.querySelector('select');
+        if (mobileSelect) {
+            // IDが重複しないように、モバイル用のIDを動的に変更
+            mobileSelect.id = 'char-select-mobile';
+            mobileContainer.querySelector('label').setAttribute('for', 'char-select-mobile');
+
+            mobileSelect.addEventListener('change', (e) => {
+                const newChar = e.target.value;
+                const currentParams = new URLSearchParams(window.location.search);
+                currentParams.set('char', newChar);
+                window.location.search = currentParams.toString();
+            });
+        }
+    }
 }
+
 
 async function setupUiText(lang) {
     try {
