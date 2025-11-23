@@ -1040,7 +1040,7 @@ function createAttentionRankingHtml(aggData, cardNameCol, lang) {
 }
 
 
-// ▼▼▼ この関数を丸ごと置き換えてください ▼▼▼
+
 function createAnalysisReportsHtml(lang) {
     const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
@@ -1484,14 +1484,28 @@ function renderRouteEventTab(lang) {
                             const short_version = run.version.split('.').slice(0, 3).join('.');
                             const prev_level = Math.max(0, parseInt(level, 10) - 1);
                             const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${prev_level}`;
-                            const deckTooltip = run.deck.join(', ');
+
+
+                            // カードIDのリストを、言語に応じたカード名のリストに変換します
+                            const cardNameCol = (lang === 'ja') ? 'JA' : 'EN';
+                            const cardLookup = ALL_DATA.lookup_tables.cards;
+                            const deckCardNames = run.deck.map(cardId => {
+                                const cardInfo = cardLookup[cardId];
+                                // カード情報が見つかれば言語に応じた名前を、見つからなければIDをそのまま使う
+                                return (cardInfo && cardInfo[cardNameCol]) ? cardInfo[cardNameCol] : cardId;
+                            });
+                            // カード名のリストをカンマ区切りで結合してツールチップを作成
+                            const deckTooltip = deckCardNames.join(', ');
+
+
                             return `<a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a>`;
-                        }).join(' '); // ol/liではなく、スペース区切りで横に並べる
+                        }).join(' ');
                         return `<td>${links}</td>`;
                     }).join('');
                     table_html += '</tr>';
                     table_html += '</tbody></table>';
                     top_section_html = table_html;
+
                 }
                 // Shopノードの選択肢割合を表示する処理
                 else if (node_type === 'Shop' && node_specific_details) {
