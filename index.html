@@ -167,7 +167,7 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
     <summary>📘 日本語</summary>
     <p><strong>1. ログの収集とフィルタリング</strong></p>
     <p>
-      公開されているログリポジトリから最新のログデータを自動で収集します。  
+      公開されているログリポジトリ(lbol logs)から最新のログデータを自動で収集します。  
       その際、以下の条件で分析に適したログだけを厳選しています。
     </p>
     <ul>
@@ -228,7 +228,7 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
     <summary>📗 English</summary>
     <p><strong>1. Log Collection and Filtering</strong></p>
     <p>
-      The system automatically collects the latest public log data from the repository.  
+      The system automatically collects the latest public log data from the repository(lbol logs).  
       Only logs suitable for analysis are selected under the following conditions:
     </p>
     <ul>
@@ -290,6 +290,27 @@ It analyzes factors such as usage rate, simultaneous adoption tendencies, route 
   </details>
 </div>
 
+<!-- 📮 連絡先（開閉式） -->
+<details class="section-box">
+  <summary>📮 連絡先 / Contact</summary>
+
+  <p>
+    📘 <strong>日本語</strong><br>
+    ご意見・不具合報告・データに関する質問などは、以下の Discord までお願いします。
+    サーバー内の指定チャンネルでお気軽にどうぞ。
+    Discord名: <strong>neff</strong>
+    チャンネル: <strong>Touhou Lost Branch of Legend（公式 Discord）</strong>
+  </p>
+
+  <p>
+    📗 <strong>English</strong><br>
+    For feedback, bug reports, or questions about the data, please contact me on Discord.
+    Feel free to post in the designated channel on the server.
+    Discord name: <strong>neff</strong>
+    Channel: <strong>Touhou Lost Branch of Legend (official Discord)</strong>
+  </p>
+</details>
+
 
 <script>
 // card_effectiveness_reports ディレクトリの最新コミット取得
@@ -300,7 +321,6 @@ fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effect
     const date = new Date(commit.commit.author.date);
     const message = commit.commit.message;
 
-    // 好きな場所に書き込む
     document.getElementById("last-update").textContent =
       `${date.toLocaleString("ja-JP")} (${message})`;
   })
