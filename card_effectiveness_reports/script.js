@@ -2104,7 +2104,8 @@ function renderActTrendTab(lang) {
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
-    container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.'}</p>${subTabsHtml}${contentHtml}</div>`;
+    container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.Changes caused by events are also included.
+'}</p>${subTabsHtml}${contentHtml}</div>`;
 }
 
 
