@@ -556,6 +556,70 @@ body {
     font-weight: bold;
 }
 
+
+/* --- Act別トレンドタブのスタイル --- */
+.sub-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.sub-tab-buttons .filter-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sub-tab-buttons .filter-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.sub-tab-buttons .filter-btn.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+.act-trend-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.act-trend-table th, .act-trend-table td {
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: left;
+}
+
+.act-trend-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.act-trend-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Act別トレンドテーブル内のリンクスタイル */
+.act-trend-table a {
+    color: inherit; /* 親要素の色（黒）を継承 */
+    text-decoration: none; /* 下線を消す */
+}
+
+.act-trend-table a:hover {
+    text-decoration: underline; /* ホバー時のみ下線を表示 */
+}
+
+
 @media (max-width: 768px) {
     #custom-filters {
         flex-direction: column;
