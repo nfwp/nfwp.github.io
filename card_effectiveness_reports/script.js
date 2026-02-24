@@ -49,6 +49,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderExhibitAnalysisTab(LANG);
     renderRouteEventTab(LANG);
     renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
+    renderActTrendTab(LANG);
     renderCardListTab(ALL_DATA);
 
     document.getElementById('loading-overlay').style.display = 'none';
@@ -139,6 +140,7 @@ function setupNavigation() {
         { id: 'exhibit-analysis-tab', label: UI_TEXT.exhibit_tab_title },
         { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
         { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title },
+        { id: 'act-trend-tab', label: (LANG === 'ja' ? 'Act別トレンド' : 'Act Trends') },
         { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' }
     ];
 
@@ -1161,21 +1163,16 @@ function createAnalysisReportsHtml(lang) {
 
     return `<div id='analysis-reports'>
                 ${attentionRankingHtml}
-                ${upgradeRankingHtml}
-                ${removeRankingHtml}
-                ${act1AdoptionHtml}
                 ${act1PerfHtml}
-                ${act4AdoptionHtml}
                 ${act4PerfHtml}
                 ${tendencyPerfHtml}
             </div>
             `;
 }
-
-//消した
-//                ${spotlightHtml}
-//            </div>
-//            ${criteriaHtml}`;
+                //${upgradeRankingHtml}
+                //${removeRankingHtml}
+                //${act1AdoptionHtml}
+                //${act4AdoptionHtml}
 
 function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
     // 1. カテゴリごとのカードリストを初期化
@@ -1311,7 +1308,7 @@ function updateExhibitFilters(value) {
     });
 }
 
-// この関数を丸ごと置き換えてください
+
 function renderRouteEventTab(lang) {
     const container = document.getElementById('route-event-tab');
     if (!container) return;
@@ -1963,3 +1960,170 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
     return `<div class="analysis-section"><h3>${title}</h3><p>${description}</p>${listHtml}</div>`;
 
 }
+
+
+function renderActTrendTab(lang) {
+    const container = document.getElementById('act-trend-tab');
+    if (!container) return;
+
+    const trendData = ALL_DATA.act_trend_data;
+    const totalRuns = ALL_DATA.route_data.total_runs;
+
+    if (!trendData || !totalRuns || Object.keys(trendData).length === 0) {
+        container.innerHTML = `<div class='analysis-section'><p>${UI_TEXT.no_data || 'データなし'}</p></div>`;
+        return;
+    }
+
+    // 展示品IDからカテゴリを引くためのマップを作成
+    const exhibitCategoryMap = {};
+    if (ALL_DATA.exhibit_data) {
+        ALL_DATA.exhibit_data.forEach(ex => {
+            exhibitCategoryMap[ex.Exhibit_ID] = ex.Display_Category;
+        });
+    }
+
+    // サブタブ（Act切り替え）のHTML生成
+    const acts = ['1', '2', '3', '4', 'Total'];
+    let subTabsHtml = '<div class="sub-tab-buttons" style="margin-bottom: 20px;">';
+    acts.forEach((act, index) => {
+        const activeClass = index === 0 ? 'active' : ''; // デフォルトはAct1
+        const label = act === 'Total' ? (lang === 'ja' ? '全体 (Total)' : 'Total') : `Act ${act}`;
+        subTabsHtml += `<button class="filter-btn ${activeClass}" onclick="switchActTrend('${act}')">${label}</button>`;
+    });
+    subTabsHtml += '</div>';
+
+    // 各Actのコンテンツ生成
+    let contentHtml = '';
+    acts.forEach((act, index) => {
+        const displayStyle = index === 0 ? 'block' : 'none';
+        const actData = trendData[act] || {};
+
+        const categories = [
+            { key: 'Add_Card', title: (lang === 'ja' ? 'よく追加されるカード' : 'Added Cards'), type: 'card' },
+            { key: 'Remove_Card', title: (lang === 'ja' ? 'よく削除されるカード' : 'Removed Cards'), type: 'card' },
+            { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
+            { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' }
+        ];
+
+        let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
+
+        categories.forEach(cat => {
+            const items = actData[cat.key] || {};
+
+            // ★★★ 追加: カテゴリ内の合計カウントを計算し、ランあたりの平均を算出 ★★★
+            const totalCount = Object.values(items).reduce((sum, count) => sum + count, 0);
+            const avgTotal = (totalRuns > 0) ? (totalCount / totalRuns).toFixed(1) : "0.0";
+
+            // タイトルに平均値を追加 (少し小さくグレーで表示)
+            const titleWithAvg = `${cat.title} <span style="font-size:0.85em; font-weight:normal; color:#666;">(${avgTotal})</span>`;
+
+            const sortedItems = Object.entries(items)
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 100);
+
+            let categoryBlockHtml = `<div class="analysis-section" style="margin: 0;">`;
+            // 修正: タイトル部分を titleWithAvg に変更
+            categoryBlockHtml += `<h4 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">${titleWithAvg}</h4>`;
+
+            if (sortedItems.length === 0) {
+                categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
+            } else {
+                const headerRank = '#';
+                const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
+                const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
+
+                categoryBlockHtml += `
+                    <div style="max-height: 600px; overflow-y: auto;">
+                        <table class="act-trend-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
+                                    <th style="padding: 8px; width: 40px;">${headerRank}</th>
+                                    <th style="padding: 8px;">${headerName}</th>
+                                    <th style="padding: 8px; width: 80px;">${headerAvg}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                sortedItems.forEach(([id, count], index) => {
+                    const perRun = (count / totalRuns).toFixed(2);
+                    let name = id;
+                    let bgColor = '#FFFFFF'; // デフォルトの行背景色
+
+                    if (cat.type === 'card') {
+                        const cardInfo = ALL_DATA.lookup_tables.cards[id];
+                        name = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
+                        name = createWikiLink(name, 'card', lang);
+                        const cardType = cardInfo ? cardInfo.Type : 'Unknown';
+                        const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
+                        bgColor = `${typeColor}33`;
+                    } else { // exhibit
+                        const exInfo = ALL_DATA.lookup_tables.exhibits[id];
+                        let linkedName = exInfo ? (lang === 'ja' ? exInfo.JA : exInfo.EN) : id;
+                        linkedName = createWikiLink(linkedName, 'exhibit', lang);
+
+                        // 展示品の装飾ロジック
+                        const category = exhibitCategoryMap[id];
+
+                        if (category === '光耀') {
+                            name = `<span style="background-color: #ffe8e8; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                        } else if (category === '一般レア') {
+                            name = `<span style="background-color: #fff3c4; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                        } else if (category === '一般アンコモン') {
+                            name = `<span style="background-color: #e8f4ff; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                        } else if (category === 'ショップ') {
+                            name = `${linkedName} 🛒`;
+                        } else if (category === 'イベント') {
+                            name = `${linkedName} ✨`;
+                        } else {
+                            name = linkedName;
+                        }
+                    }
+
+                    categoryBlockHtml += `
+                        <tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;">
+                            <td style="padding: 6px 8px; text-align: center;">${index + 1}</td>
+                            <td style="padding: 6px 8px;">${name}</td>
+                            <td style="padding: 6px 8px; text-align: right; font-weight: bold;">${perRun}</td>
+                        </tr>
+                    `;
+                });
+
+                categoryBlockHtml += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            categoryBlockHtml += '</div>';
+            gridHtml += categoryBlockHtml;
+        });
+
+        gridHtml += '</div>';
+        contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
+    });
+
+    container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.'}</p>${subTabsHtml}${contentHtml}</div>`;
+}
+
+
+
+// Act切り替え用のグローバル関数
+window.switchActTrend = function(act) {
+    // ボタンのアクティブ状態切り替え
+    const buttons = document.querySelectorAll('#act-trend-tab .sub-tab-buttons .filter-btn');
+    buttons.forEach(btn => {
+        if (btn.textContent.includes(`Act ${act}`) || (act === 'Total' && btn.textContent.includes('Total'))) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // コンテンツの表示切り替え
+    const contents = document.querySelectorAll('#act-trend-tab div[id^="act-trend-content-"]');
+    contents.forEach(div => {
+        div.style.display = div.id === `act-trend-content-${act}` ? 'block' : 'none';
+    });
+};
