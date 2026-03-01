@@ -1973,11 +1973,20 @@ function renderActTrendTab(lang) {
 
     const trendData = ALL_DATA.act_trend_data;
     const totalRuns = ALL_DATA.route_data.total_runs;
+    // 全キャラクターの総ラン数を取得
+    const totalRunsAll = ALL_DATA.metadata.total_runs_all_characters || 1;
+    // 全キャラクターのノード訪問数データ (Act別)
+    const globalNodeVisits = ALL_DATA.route_data.global_node_visits || {};
 
     if (!trendData || !totalRuns || Object.keys(trendData).length === 0) {
         container.innerHTML = `<div class='analysis-section'><p>${UI_TEXT.no_data || 'データなし'}</p></div>`;
         return;
     }
+
+    // ノード名の翻訳マップ
+    const nodeTypeLabels = (lang === 'ja')
+        ? { 'Enemy': '通常敵', 'EliteEnemy': 'エリート', 'Boss': 'ボス', 'Shop': 'お店', 'Gap': '休憩', 'Adventure': 'イベント', 'Trade': '交換', 'Supply': '補給', 'Entry': '入口' }
+        : { 'Enemy': 'Enemy', 'EliteEnemy': 'Elite', 'Boss': 'Boss', 'Shop': 'Shop', 'Gap': 'Gap', 'Adventure': 'Event', 'Trade': 'Trade', 'Supply': 'Supply', 'Entry': 'Entry' };
 
     // 展示品IDからカテゴリを引くためのマップを作成
     const exhibitCategoryMap = {};
@@ -2003,12 +2012,16 @@ function renderActTrendTab(lang) {
         const displayStyle = index === 0 ? 'block' : 'none';
         const actData = trendData[act] || {};
 
+        // そのActの全キャラ平均データ
+        const globalActData = globalNodeVisits[act] || {};
+
         const categories = [
             { key: 'Add_Card', title: (lang === 'ja' ? 'よく追加されるカード' : 'Added Cards'), type: 'card' },
             { key: 'Remove_Card', title: (lang === 'ja' ? 'よく削除されるカード' : 'Removed Cards'), type: 'card' },
             { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
             { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' },
-            { key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' }
+            { key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
+            { key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' }
         ];
 
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
@@ -2017,9 +2030,13 @@ function renderActTrendTab(lang) {
             const items = actData[cat.key] || {};
 
             // カテゴリ内の合計カウントを計算し、ランあたりの平均を算出
-            const totalCount = (cat.type === 'event')
-                ? Object.values(items).reduce((sum, data) => sum + data.count, 0)
-                : Object.values(items).reduce((sum, count) => sum + count, 0);
+            let totalCount = 0;
+            if (cat.type === 'event') {
+                totalCount = Object.values(items).reduce((sum, data) => sum + data.count, 0);
+            } else {
+                totalCount = Object.values(items).reduce((sum, count) => sum + count, 0);
+            }
+
             const avgTotal = (totalRuns > 0) ? (totalCount / totalRuns).toFixed(1) : "0.0";
 
             // タイトルに平均値を追加
@@ -2164,6 +2181,50 @@ function renderActTrendTab(lang) {
                     });
                     categoryBlockHtml += '</div>';
                 }
+            } else if (cat.type === 'node') {
+                // ▼▼▼ 踏破マスの内訳 (全キャラ平均付き) ▼▼▼
+                const sortedItems = Object.entries(items).sort(([, a], [, b]) => b - a);
+
+                if (sortedItems.length === 0) {
+                    categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
+                } else {
+                    categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;">';
+                    categoryBlockHtml += `<table class="act-trend-table" style="width: 100%; border-collapse: collapse;">`;
+
+                    const headerName = lang === 'ja' ? 'マス種類' : 'Node Type';
+                    const headerAvg = lang === 'ja' ? 'Avg/Run (全キャラ平均)' : 'Avg/Run (Global Avg)';
+
+                    categoryBlockHtml += `
+                        <thead>
+                            <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
+                                <th style="padding: 8px;">${headerName}</th>
+                                <th style="padding: 8px; width: 140px;">${headerAvg}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    `;
+
+                    sortedItems.forEach(([type, count]) => {
+                        const name = nodeTypeLabels[type] || type;
+                        const perRun = (count / totalRuns).toFixed(2);
+
+                        // 全キャラ平均の計算
+                        const globalCount = globalActData[type] || 0;
+                        const globalPerRun = (globalCount / totalRunsAll).toFixed(2);
+
+                        categoryBlockHtml += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 6px 8px;">${name}</td>
+                                <td style="padding: 6px 8px; text-align: right;">
+                                    <span style="font-weight: bold;">${perRun}</span>
+                                    <span style="color: #888; font-size: 0.9em; margin-left: 4px;">(${globalPerRun})</span>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    categoryBlockHtml += '</tbody></table></div>';
+                }
+                // ▲▲▲ 追加ここまで ▲▲▲
             }
 
             categoryBlockHtml += '</div>'; // Close analysis-section
@@ -2174,6 +2235,7 @@ function renderActTrendTab(lang) {
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
+    // 円グラフのHTMLは削除
     container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.Changes caused by events are also included.'}</p>${subTabsHtml}${contentHtml}</div>`;
 }
 
