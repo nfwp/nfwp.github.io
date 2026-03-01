@@ -990,14 +990,20 @@ function updateVisuals(hoveredCardName, synergyPartners) {
 }
 
 function createWikiLink(itemName, itemType, lang) {
-    if (!itemName) return "";
-    const encodedName = encodeURIComponent(itemName.replace(/ /g, '_'));
-    const baseUrl = lang === 'ja' ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(itemName)}` : `https://lbol.miraheze.org/wiki/${encodedName}`;
-    return `<a href="${baseUrl}" target="_blank">${itemName}</a>`;
+    if (itemName == null) return ""; // null または undefined の場合は空文字を返す
+
+    // 強制的に文字列に変換して、.replace エラーを防ぐ
+    const nameStr = String(itemName);
+
+    const encodedName = encodeURIComponent(nameStr.replace(/ /g, '_'));
+    const baseUrl = lang === 'ja'
+        ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`
+        : `https://lbol.miraheze.org/wiki/${encodedName}`;
+
+    return `<a href="${baseUrl}" target="_blank">${nameStr}</a>`;
 }
 
 
-// エラーを回避するため、呼び出される createAnalysisReportsHtml より前にランキング生成関数を定義します。
 function createAttentionRankingHtml(aggData, cardNameCol, lang) {
     const topN = 40; // ランキングの表示件数 (Top40)
     const sortedData = [...aggData]
@@ -1961,7 +1967,6 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
 
 }
 
-
 function renderActTrendTab(lang) {
     const container = document.getElementById('act-trend-tab');
     if (!container) return;
@@ -2002,7 +2007,8 @@ function renderActTrendTab(lang) {
             { key: 'Add_Card', title: (lang === 'ja' ? 'よく追加されるカード' : 'Added Cards'), type: 'card' },
             { key: 'Remove_Card', title: (lang === 'ja' ? 'よく削除されるカード' : 'Removed Cards'), type: 'card' },
             { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
-            { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' }
+            { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' },
+            { key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' }
         ];
 
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
@@ -2010,103 +2016,166 @@ function renderActTrendTab(lang) {
         categories.forEach(cat => {
             const items = actData[cat.key] || {};
 
-            // ★★★ 追加: カテゴリ内の合計カウントを計算し、ランあたりの平均を算出 ★★★
-            const totalCount = Object.values(items).reduce((sum, count) => sum + count, 0);
+            // カテゴリ内の合計カウントを計算し、ランあたりの平均を算出
+            const totalCount = (cat.type === 'event')
+                ? Object.values(items).reduce((sum, data) => sum + data.count, 0)
+                : Object.values(items).reduce((sum, count) => sum + count, 0);
             const avgTotal = (totalRuns > 0) ? (totalCount / totalRuns).toFixed(1) : "0.0";
 
-            // タイトルに平均値を追加 (少し小さくグレーで表示)
+            // タイトルに平均値を追加
             const titleWithAvg = `${cat.title} <span style="font-size:0.85em; font-weight:normal; color:#666;">(${avgTotal})</span>`;
 
-            const sortedItems = Object.entries(items)
-                .sort(([, a], [, b]) => b - a)
-                .slice(0, 100);
-
             let categoryBlockHtml = `<div class="analysis-section" style="margin: 0;">`;
-            // 修正: タイトル部分を titleWithAvg に変更
             categoryBlockHtml += `<h4 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">${titleWithAvg}</h4>`;
 
-            if (sortedItems.length === 0) {
-                categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
-            } else {
-                const headerRank = '#';
-                const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
-                const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
+            if (cat.type === 'card' || cat.type === 'exhibit') {
+                const sortedItems = Object.entries(items)
+                    .sort(([, a], [, b]) => b - a)
+                    .slice(0, 100);
 
-                categoryBlockHtml += `
-                    <div style="max-height: 600px; overflow-y: auto;">
-                        <table class="act-trend-table" style="width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
-                                    <th style="padding: 8px; width: 40px;">${headerRank}</th>
-                                    <th style="padding: 8px;">${headerName}</th>
-                                    <th style="padding: 8px; width: 80px;">${headerAvg}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-
-                sortedItems.forEach(([id, count], index) => {
-                    const perRun = (count / totalRuns).toFixed(2);
-                    let name = id;
-                    let bgColor = '#FFFFFF'; // デフォルトの行背景色
-
-                    if (cat.type === 'card') {
-                        const cardInfo = ALL_DATA.lookup_tables.cards[id];
-                        name = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
-                        name = createWikiLink(name, 'card', lang);
-                        const cardType = cardInfo ? cardInfo.Type : 'Unknown';
-                        const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
-                        bgColor = `${typeColor}33`;
-                    } else { // exhibit
-                        const exInfo = ALL_DATA.lookup_tables.exhibits[id];
-                        let linkedName = exInfo ? (lang === 'ja' ? exInfo.JA : exInfo.EN) : id;
-                        linkedName = createWikiLink(linkedName, 'exhibit', lang);
-
-                        // 展示品の装飾ロジック
-                        const category = exhibitCategoryMap[id];
-
-                        if (category === '光耀') {
-                            name = `<span style="background-color: #ffe8e8; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
-                        } else if (category === '一般レア') {
-                            name = `<span style="background-color: #fff3c4; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
-                        } else if (category === '一般アンコモン') {
-                            name = `<span style="background-color: #e8f4ff; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
-                        } else if (category === 'ショップ') {
-                            name = `${linkedName} 🛒`;
-                        } else if (category === 'イベント') {
-                            name = `${linkedName} ✨`;
-                        } else {
-                            name = linkedName;
-                        }
-                    }
+                if (sortedItems.length === 0) {
+                    categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
+                } else {
+                    const headerRank = '#';
+                    const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
+                    const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
 
                     categoryBlockHtml += `
-                        <tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;">
-                            <td style="padding: 6px 8px; text-align: center;">${index + 1}</td>
-                            <td style="padding: 6px 8px;">${name}</td>
-                            <td style="padding: 6px 8px; text-align: right; font-weight: bold;">${perRun}</td>
-                        </tr>
+                        <div style="max-height: 600px; overflow-y: auto;">
+                            <table class="act-trend-table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
+                                        <th style="padding: 8px; width: 40px;">${headerRank}</th>
+                                        <th style="padding: 8px;">${headerName}</th>
+                                        <th style="padding: 8px; width: 80px;">${headerAvg}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                     `;
-                });
 
-                categoryBlockHtml += `
-                            </tbody>
-                        </table>
-                    </div>
-                `;
+                    sortedItems.forEach(([id, count], index) => {
+                        const perRun = (count / totalRuns).toFixed(2);
+                        let name = id;
+                        let bgColor = '#FFFFFF';
+
+                        if (cat.type === 'card') {
+                            const cardInfo = ALL_DATA.lookup_tables.cards[id];
+                            name = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
+                            name = createWikiLink(name, 'card', lang);
+                            const cardType = cardInfo ? cardInfo.Type : 'Unknown';
+                            const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
+                            bgColor = `${typeColor}33`;
+                        } else { // exhibit
+                            const exInfo = ALL_DATA.lookup_tables.exhibits[id];
+                            let linkedName = exInfo ? (lang === 'ja' ? exInfo.JA : exInfo.EN) : id;
+                            linkedName = createWikiLink(linkedName, 'exhibit', lang);
+
+                            const category = exhibitCategoryMap[id];
+                            if (category === '光耀') {
+                                name = `<span style="background-color: #ffe8e8; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                            } else if (category === '一般レア') {
+                                name = `<span style="background-color: #fff3c4; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                            } else if (category === '一般アンコモン') {
+                                name = `<span style="background-color: #e8f4ff; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                            } else if (category === 'ショップ') {
+                                name = `${linkedName} 🛒`;
+                            } else if (category === 'イベント') {
+                                name = `${linkedName} ✨`;
+                            } else {
+                                name = linkedName;
+                            }
+                        }
+
+                        categoryBlockHtml += `
+                            <tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;">
+                                <td style="padding: 6px 8px; text-align: center;">${index + 1}</td>
+                                <td style="padding: 6px 8px;">${name}</td>
+                                <td style="padding: 6px 8px; text-align: right; font-weight: bold;">${perRun}</td>
+                            </tr>
+                        `;
+                    });
+                    categoryBlockHtml += `</tbody></table></div>`;
+                }
+
+            } else if (cat.type === 'event') {
+                const sortedItems = Object.entries(items).sort(([, a], [, b]) => b.count - a.count).slice(0, 100);
+
+                if (sortedItems.length === 0) {
+                    categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
+                } else {
+                    categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;">';
+
+                    sortedItems.forEach(([id, data], index) => {
+                        const eventsLookup = ALL_DATA.lookup_tables.events || {};
+                        const eventInfo = eventsLookup[id];
+
+                        // Wiki名 (イベント名単体)
+                        const wikiName = (eventInfo && (lang === 'ja' ? (eventInfo.Wiki_JA || eventInfo.JA) : (eventInfo.Wiki_EN || eventInfo.EN))) || id;
+
+                        // ホスト名を取得
+                        const hostName = eventInfo && (lang === 'ja' ? eventInfo.Host_JA : eventInfo.Host_EN);
+
+                        // リンク生成
+                        const nameStr = String(wikiName);
+                        const encodedName = encodeURIComponent(nameStr.replace(/ /g, '_'));
+                        const baseUrl = lang === 'ja'
+                            ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`
+                            : `https://lbol.miraheze.org/wiki/${encodedName}`;
+
+                        // リンクはイベント名のみにする
+                        let linkedName = `<a href="${baseUrl}" target="_blank">${nameStr}</a>`;
+
+                        // ホスト名があれば、リンクの後ろにカッコ書きで追加
+                        if (hostName) {
+                            linkedName += ` <span style="font-size:0.9em; color:#666; font-weight:normal;">(${hostName})</span>`;
+                        }
+
+                        const perRun = (data.count / totalRuns).toFixed(2);
+
+                        let choicesHtml = '<ul style="margin: 5px 0 5px 25px; padding: 0; list-style-type: none;">';
+                        const sortedChoices = Object.entries(data.choices).sort(([keyA], [keyB]) => parseInt(keyA) - parseInt(keyB));
+
+                        const choiceTexts = (eventInfo && (lang === 'ja' ? eventInfo.Choices_JA : eventInfo.Choices_EN)) || [];
+
+                        sortedChoices.forEach(([choiceIndexStr, choiceCount]) => {
+                            const choiceIndex = parseInt(choiceIndexStr);
+                            const percentage = (data.count > 0) ? (choiceCount / data.count * 100).toFixed(1) : "0.0";
+
+                            let choiceText = "";
+                            if (choiceIndex >= 0 && choiceIndex < choiceTexts.length) {
+                                choiceText = choiceTexts[choiceIndex];
+                            } else {
+                                choiceText = (lang === 'ja' ? `選択肢 ${choiceIndex}` : `Choice ${choiceIndex}`);
+                            }
+
+                            choicesHtml += `<li style="font-size: 0.9em; color: #555;">- ${choiceText}: <span style="font-weight: bold;">${percentage}%</span> (${choiceCount}回)</li>`;
+                        });
+                        choicesHtml += '</ul>';
+
+                        categoryBlockHtml += `
+                            <div style="border-bottom: 1px solid #eee; padding: 8px 4px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: bold;">${index + 1}. ${linkedName}</span>
+                                    <span style="font-size: 0.9em; font-weight: bold;">${perRun}</span>
+                                </div>
+                                ${choicesHtml}
+                            </div>
+                        `;
+                    });
+                    categoryBlockHtml += '</div>';
+                }
             }
 
-            categoryBlockHtml += '</div>';
-            gridHtml += categoryBlockHtml;
+            categoryBlockHtml += '</div>'; // Close analysis-section
+            gridHtml += categoryBlockHtml; // Append to grid
         });
 
-        gridHtml += '</div>';
+        gridHtml += '</div>'; // Close grid
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
     container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.Changes caused by events are also included.'}</p>${subTabsHtml}${contentHtml}</div>`;
 }
-
 
 
 // Act切り替え用のグローバル関数
