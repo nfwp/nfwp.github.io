@@ -1985,7 +1985,7 @@ function renderActTrendTab(lang) {
 
     // ノード名の翻訳マップ
     const nodeTypeLabels = (lang === 'ja')
-        ? { 'Enemy': '通常敵', 'EliteEnemy': 'エリート', 'Boss': 'ボス', 'Shop': 'お店', 'Gap': '休憩', 'Adventure': 'イベント', 'Trade': '交換', 'Supply': '補給', 'Entry': '入口' }
+        ? { 'Enemy': '通常敵', 'EliteEnemy': 'エリート', 'Boss': 'ボス', 'Shop': 'ショップ', 'Gap': 'スキマ', 'Adventure': 'イベント', 'Trade': '交換', 'Supply': '補給', 'Entry': '入口' }
         : { 'Enemy': 'Enemy', 'EliteEnemy': 'Elite', 'Boss': 'Boss', 'Shop': 'Shop', 'Gap': 'Gap', 'Adventure': 'Event', 'Trade': 'Trade', 'Supply': 'Supply', 'Entry': 'Entry' };
 
     // 展示品IDからカテゴリを引くためのマップを作成
@@ -2020,7 +2020,7 @@ function renderActTrendTab(lang) {
             { key: 'Remove_Card', title: (lang === 'ja' ? 'よく削除されるカード' : 'Removed Cards'), type: 'card' },
             { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
             { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' },
-            //{ key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
+            { key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
             { key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' }
         ];
 
