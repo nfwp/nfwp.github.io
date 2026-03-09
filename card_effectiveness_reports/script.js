@@ -2022,7 +2022,7 @@ function renderActTrendTab(lang) {
             { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' },
             { key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' }
         ];
-
+//{ key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
 
         categories.forEach(cat => {
