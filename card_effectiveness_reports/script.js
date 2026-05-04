@@ -16,6 +16,7 @@ let LANG = 'ja';
 let CURRENT_CHAR = 'CirnoA';
 
 let attentionSlider = null;
+let AGG_MAP = new Map();
 
 
 let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
@@ -34,6 +35,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(`data/${CURRENT_CHAR}_data.json`);
         if (!response.ok) throw new Error(`Failed to load data for ${CURRENT_CHAR}`);
         ALL_DATA = await response.json();
+
+        // ★★★ このブロックを追加 ★★★
+        // AGG_MAP を構築 (Card_Name をキーとして、対応する agg_data_full のエントリを格納)
+        const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
+        AGG_MAP = new Map(ALL_DATA.agg_data_full.map(d => [d[cardNameCol], d]));
+        // ★★★ 追加ここまで ★★★
+
     } catch (error) {
         console.error(error);
         document.getElementById('loading-overlay').textContent = `エラー: ${error.message}`;
@@ -679,7 +687,7 @@ function createHoverText(d, lang) {
     const isAggView = (currentViewButtonIndex === 0);
 
     let sourceData = d;
-    const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === cardName);
+    const aggCardData = AGG_MAP.get(cardName);
     if (aggCardData) {
         sourceData = { ...aggCardData, ...d };
     }
@@ -990,12 +998,10 @@ function updateVisuals(hoveredCardName, synergyPartners) {
 }
 
 function createWikiLink(itemName, itemType, lang) {
-    if (itemName == null) return ""; // null または undefined の場合は空文字を返す
-
-    // 強制的に文字列に変換して、.replace エラーを防ぐ
+    if (!itemName) return ""; // nullチェック
     const nameStr = String(itemName);
-
     const encodedName = encodeURIComponent(nameStr.replace(/ /g, '_'));
+
     const baseUrl = lang === 'ja'
         ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`
         : `https://lbol.miraheze.org/wiki/${encodedName}`;
@@ -1463,6 +1469,7 @@ function renderRouteEventTab(lang) {
                 let has_content = false, top_section_html = "", card_grid_content = "", exhibit_grid_content = "";
                 const node_specific_details = node_details[node_full_key] || {};
 
+
                 if (['Enemy', 'EliteEnemy', 'Boss'].includes(node_type) && node_specific_details.enemies) {
                     has_content = true;
                     const enemy_data = node_specific_details.enemies;
@@ -1590,7 +1597,7 @@ function renderRouteEventTab(lang) {
                     `;
                 }
 
-                const node_actions = event_actions[node_full_key] || {};
+                const node_actions = node_specific_details.event_actions || {};
                 ['Card', 'Exhibit'].forEach(item_type => {
                     ['Add', 'Remove', 'Upgrade'].forEach(action_type => {
                         const items = node_actions[`${action_type}_${item_type}`];
