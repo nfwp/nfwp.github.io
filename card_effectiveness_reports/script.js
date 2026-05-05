@@ -1320,7 +1320,6 @@ function updateExhibitFilters(value) {
     });
 }
 
-
 function renderRouteEventTab(lang) {
     const container = document.getElementById('route-event-tab');
     if (!container) return;
@@ -1402,7 +1401,7 @@ function renderRouteEventTab(lang) {
 
                     let gradient_parts_bottom = [];
                     let current_pos = 0;
-                    for (const choice_name of ["休憩", "カード強化", "その他"]) { // 表示順を固定
+                    for (const choice_name of ["休憩", "カード強化", "その他"]) {
                         if (aggregated_choices[choice_name]) {
                             const rate = aggregated_choices[choice_name];
                             const color = choice_colors[choice_name];
@@ -1427,15 +1426,12 @@ function renderRouteEventTab(lang) {
                     let gradient_parts_bottom = [];
                     let current_pos = 0;
 
-                    // 削除
                     gradient_parts_bottom.push(`#42A5F5 ${current_pos * 100}%`);
                     current_pos += remove_rate;
                     gradient_parts_bottom.push(`#42A5F5 ${current_pos * 100}%`);
-                    // 強化
                     gradient_parts_bottom.push(`#FFB74D ${current_pos * 100}%`);
                     current_pos += upgrade_rate;
                     gradient_parts_bottom.push(`#FFB74D ${current_pos * 100}%`);
-                    // その他
                     if (other_rate > 0.001) {
                         gradient_parts_bottom.push(`#90CAF9 ${current_pos * 100}%`);
                         current_pos += other_rate;
@@ -1450,26 +1446,32 @@ function renderRouteEventTab(lang) {
                     style_attr += ` background-color: ${base_color};`;
                 }
 
-
-
                 barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="startNodeDetailTimer('${node_full_id}')" onmouseout="cancelNodeDetailTimer()">${label}</div>`;
-
-                //barHtml += `<div id="bar-${node_full_id}" class="node-choice-segment" style="${style_attr}" title="${node_type}: ${(percentage * 100).toFixed(1)}%" onmouseover="showNodeDetails('${node_full_id}')">${label}</div>`;
             });
             barHtml += '</div></div>';
             actHtmlSegment += barHtml;
 
+            // 各ノード（マス）の詳細パネルを生成するループ
             Object.keys(level_data).forEach(node_type => {
                 if (node_type === 'total') return;
+
                 const node_full_key = `${act}-${level}-${node_type}`;
                 const visit_count = level_data[node_type] || 0;
                 const details_id = `details-${node_full_key}`;
-                let details_content = `<h4>Act ${act} - Level ${level} (${node_type}) - ${UI_TEXT.traversal_count}: (${visit_count} / ${total_runs}) ${(visit_count / total_runs * 100).toFixed(1)}%</h4>`;
 
-                let has_content = false, top_section_html = "", card_grid_content = "", exhibit_grid_content = "";
+                // 1. データの取得
                 const node_specific_details = node_details[node_full_key] || {};
 
+                let details_content = `<h4>Act ${act} - Level ${level} (${node_type}) - ${UI_TEXT.traversal_count}: (${visit_count} / ${total_runs}) ${(visit_count / total_runs * 100).toFixed(1)}%</h4>`;
 
+                let has_content = false;
+                let top_section_html = "";
+                let card_grid_content = "";
+                let exhibit_grid_content = "";
+
+                // --- 2. ノードタイプ別の詳細表示 (Enemy / Shop / Gap) ---
+
+                // 通常敵・エリート・ボスの統計
                 if (['Enemy', 'EliteEnemy', 'Boss'].includes(node_type) && node_specific_details.enemies) {
                     has_content = true;
                     const enemy_data = node_specific_details.enemies;
@@ -1477,47 +1479,30 @@ function renderRouteEventTab(lang) {
                     const sorted_enemies = Object.values(enemy_data).sort((a, b) => b.rate - a.rate);
 
                     let table_html = `<h5>${UI_TEXT.encounter_title || '出現する敵'}</h5><table class="enemy-stats-table">`;
-                    table_html += `<thead><tr><th>${UI_TEXT.enemy_table_metric}</th>${sorted_enemies.map(e => `<th>${e[lang]}</th>`).join('')}</tr></thead>`;
-                    table_html += '<tbody>';
+                    table_html += `<thead><tr><th>${UI_TEXT.enemy_table_metric}</th>${sorted_enemies.map(e => `<th>${e[lang]}</th>`).join('')}</tr></thead><tbody>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_rate}</td>${sorted_enemies.map(e => `<td>${(e.rate * 100).toFixed(1)}%</td>`).join('')}</tr>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_avg_t}</td>${sorted_enemies.map(e => `<td>${e.avg_turns.toFixed(1)}${createInlineBoxplotHtml(e.turns_boxplot, scales.turns_min, scales.turns_max)}</td>`).join('')}</tr>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_hp}</td>${sorted_enemies.map(e => `<td style='background-color:${getColorForValue(e.avg_hp_loss, act_stats[act].hp_min, act_stats[act].hp_max)}'>${(-e.avg_hp_loss).toFixed(1)}${createInlineBoxplotHtml(e.hp_loss_boxplot, scales.hp_loss_min, scales.hp_loss_max, true)}</td>`).join('')}</tr>`;
                     table_html += `<tr><td>${UI_TEXT.enemy_table_p}</td>${sorted_enemies.map(e => `<td style='background-color:${getColorForValue(e.avg_p_change, act_stats[act].p_min, act_stats[act].p_max, true)}'>${e.avg_p_change.toFixed(1)}${createInlineBoxplotHtml(e.p_change_boxplot, scales.p_change_min, scales.p_change_max)}</td>`).join('')}</tr>`;
 
-                    table_html += `<tr><td>${UI_TEXT.sample_decks_title || 'サンプルデッキ'}</td>`;
+                    // サンプルデッキのリンク（敵ごと）
+                    table_html += `<tr><td>${UI_TEXT.sample_decks_title || 'サンプル'}</td>`;
                     table_html += sorted_enemies.map(e => {
                         const sampleRuns = e.sample_runs || [];
-                        if (sampleRuns.length === 0) {
-                            return '<td>-</td>';
-                        }
+                        if (sampleRuns.length === 0) return '<td>-</td>';
                         const links = sampleRuns.map((run, index) => {
-                            const short_version = run.version.split('.').slice(0, 3).join('.');
-                            const prev_level = Math.max(0, parseInt(level, 10) - 1);
-                            const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${prev_level}`;
-
-
-                            // カードIDのリストを、言語に応じたカード名のリストに変換します
-                            const cardNameCol = (lang === 'ja') ? 'JA' : 'EN';
-                            const cardLookup = ALL_DATA.lookup_tables.cards;
-                            const deckCardNames = run.deck.map(cardId => {
-                                const cardInfo = cardLookup[cardId];
-                                // カード情報が見つかれば言語に応じた名前を、見つからなければIDをそのまま使う
-                                return (cardInfo && cardInfo[cardNameCol]) ? cardInfo[cardNameCol] : cardId;
-                            });
-                            // カード名のリストをカンマ区切りで結合してツールチップを作成
-                            const deckTooltip = deckCardNames.join(', ');
-
-
-                            return `<a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a>`;
+                            const sv = run.version.split('.').slice(0, 3).join('.');
+                            const url = `https://lbol-logs.github.io/${sv}/${run.run_id}/?a=${act}&l=${Math.max(0, parseInt(level) - 1)}`;
+                            return `<a href="${url}" target="_blank">${index + 1}</a>`;
                         }).join(' ');
                         return `<td>${links}</td>`;
                     }).join('');
-                    table_html += '</tr>';
-                    table_html += '</tbody></table>';
-                    top_section_html = table_html;
 
+                    table_html += '</tr></tbody></table>';
+                    top_section_html = table_html;
                 }
-                // Shopノードの選択肢割合を表示する処理
+
+                // ショップ (Shop) の統計
                 else if (node_type === 'Shop' && node_specific_details) {
                     let shop_choices_html = `<h5>${UI_TEXT.choice_rates_title || '選択肢の割合'}</h5><ul class="details-list">`;
                     let has_shop_choices = false;
@@ -1535,7 +1520,8 @@ function renderRouteEventTab(lang) {
                         has_content = true;
                     }
                 }
-                // Gapノードの選択肢割合を表示する処理
+
+                // 休憩所 (Gap) の統計
                 else if (node_type === 'Gap' && node_specific_details.choices) {
                     has_content = true;
                     let gap_choices_html = `<h5>${UI_TEXT.choice_rates_title || '選択肢の割合'}</h5><ul class="details-list">`;
@@ -1551,44 +1537,37 @@ function renderRouteEventTab(lang) {
                     let other_rate = 0;
 
                     for (const [choice, stats] of Object.entries(node_specific_details.choices)) {
+                        const rate = (stats && typeof stats === 'object') ? (stats.rate || 0) : stats;
                         if (choice_map[choice]) {
-                            aggregated_choices[choice_map[choice]] = (aggregated_choices[choice_map[choice]] || 0) + stats.rate;
+                            aggregated_choices[choice_map[choice]] = (aggregated_choices[choice_map[choice]] || 0) + rate;
                         } else {
-                            other_rate += stats.rate;
+                            other_rate += rate;
                         }
                     }
 
-                    if (other_rate > 0) {
-                        aggregated_choices[other_label] = other_rate;
-                    }
+                    if (other_rate > 0) aggregated_choices[other_label] = other_rate;
 
-                    for (const [display_choice, rate] of Object.entries(aggregated_choices)) {
-                         gap_choices_html += `<li>${display_choice}: ${(rate * 100).toFixed(1)}%</li>`;
-                    }
+                    // 「休憩」「カード強化」「その他」の順に並べて表示
+                    [UI_TEXT.gap_rest || "休憩", UI_TEXT.gap_upgrade || "カード強化", other_label].forEach(label => {
+                        if (aggregated_choices[label] !== undefined && aggregated_choices[label] > 0) {
+                            gap_choices_html += `<li>${label}: ${(aggregated_choices[label] * 100).toFixed(1)}%</li>`;
+                        }
+                    });
 
                     gap_choices_html += '</ul>';
                     top_section_html = gap_choices_html;
                 }
 
-
+                // --- 3. サンプルデッキ (全ノード共通) ---
                 let sampleDecksHtml = '';
-                // Python側で追加した sample_runs データが存在するかチェック
                 if (node_specific_details.sample_runs && node_specific_details.sample_runs.length > 0) {
-                    has_content = true; // 表示するコンテンツがあることを示すフラグ
-
-                    // サンプルデッキのリスト項目を生成
+                    has_content = true;
                     const listItems = node_specific_details.sample_runs.map((run, index) => {
-                        // バージョン文字列を "1.8.0" のような形式に整形
-                        const short_version = run.version.split('.').slice(0, 3).join('.');
-                        // ご指定の形式でURLを組み立てる
-                        const url = `https://lbol-logs.github.io/${short_version}/${run.run_id}/?a=${act}&l=${level}`;
-                        // リンクにマウスオーバーした時にデッキ内容が見えるようにtooltipを設定
-                        const deckTooltip = run.deck.join(', ');
-
-                        return `<li><a href="${url}" target="_blank" title="${deckTooltip}">${index + 1}</a></li>`;
+                        const sv = run.version.split('.').slice(0, 3).join('.');
+                        const url = `https://lbol-logs.github.io/${sv}/${run.run_id}/?a=${act}&l=${level}`;
+                        return `<li><a href="${url}" target="_blank" title="${run.deck.join(', ')}">${index + 1}</a></li>`;
                     }).join('');
 
-                    // セクション全体のHTMLを組み立てる
                     sampleDecksHtml = `
                         <div class="details-section">
                             <h5>${UI_TEXT.sample_decks_title || 'サンプルデッキ'}</h5>
@@ -1597,13 +1576,13 @@ function renderRouteEventTab(lang) {
                     `;
                 }
 
+                // --- 4. カード・展示品のアクション (全ノード共通) ---
                 const node_actions = node_specific_details.event_actions || {};
                 ['Card', 'Exhibit'].forEach(item_type => {
                     ['Add', 'Remove', 'Upgrade'].forEach(action_type => {
                         const items = node_actions[`${action_type}_${item_type}`];
                         if (items && items.length > 0) {
                             has_content = true;
-
                             const lookup_table = (item_type === 'Card') ? ALL_DATA.lookup_tables.cards : ALL_DATA.lookup_tables.exhibits;
                             const name_key = (lang === 'ja') ? 'JA' : 'EN';
 
@@ -1613,26 +1592,23 @@ function renderRouteEventTab(lang) {
                                 return `<li>${createWikiLink(display_name, item_type.toLowerCase(), lang)} (${count})</li>`;
                             }).join('');
 
-                            const action_title_key = `${action_type.toLowerCase()}_${item_type.toLowerCase()}`;
-                            const action_title = UI_TEXT[action_title_key] || `${action_type} ${item_type}`;
+                            const action_title = UI_TEXT[`${action_type.toLowerCase()}_${item_type.toLowerCase()}`] || `${action_type} ${item_type}`;
+                            const html = `<div><h5>${action_title}</h5><ol>${list_items}</ol></div>`;
 
-                            if (item_type === 'Card') {
-                                card_grid_content += `<div><h5>${action_title}</h5><ol>${list_items}</ol></div>`;
-                            } else {
-                                exhibit_grid_content += `<div><h5>${action_title}</h5><ol>${list_items}</ol></div>`;
-                            }
+                            if (item_type === 'Card') card_grid_content += html;
+                            else exhibit_grid_content += html;
                         }
                     });
                 });
 
+                // --- 5. 最終組み立て ---
                 if (top_section_html) details_content += `<div class="details-section">${top_section_html}</div>`;
                 if (sampleDecksHtml) details_content += sampleDecksHtml;
                 if (card_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.card_section_title || 'カード関連'}</h5><div class="details-grid">${card_grid_content}</div></div>`;
                 if (exhibit_grid_content) details_content += `<div class="details-section"><h5>${UI_TEXT.exhibit_section_title || '展示品関連'}</h5><div class="details-grid">${exhibit_grid_content}</div></div>`;
 
-                if (!has_content) {
-                    details_content += `<p>${UI_TEXT.no_data}</p>`;
-                }
+                if (!has_content) details_content += `<p>${UI_TEXT.no_data}</p>`;
+
                 detailsPanelHtml += `<div id="${details_id}" class="node-details">${details_content}</div>`;
             });
         });
@@ -1640,7 +1616,7 @@ function renderRouteEventTab(lang) {
         flowChartHtml += actHtmlSegment;
     }
 
-    flowChartHtml += '</div></div>'; // Close route-acts-container and wrapper
+    flowChartHtml += '</div></div>';
     detailsPanelHtml += '</div>';
 
     container.innerHTML = `<div class='analysis-section'>
