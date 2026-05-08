@@ -2247,10 +2247,12 @@ function renderActTrendTab(lang) {
 
             const myAvgDmg = stats.Total_Damage / totalRuns;
             const myAvgRec = stats.Gap_Recovery / totalRuns;
-            const mySustain = (100 - myAvgDmg - myAvgRec).toFixed(1);
+            const myAvgCmbRec = (stats.Combat_Recovery || 0) / totalRuns;
+            const mySustain = (100 - myAvgDmg - myAvgRec + myAvgCmbRec).toFixed(1);
 
             const glAvgDmg = globalStats.Total_Damage / totalRunsAll;
             const glAvgRec = globalStats.Gap_Recovery / totalRunsAll;
+            const glAvgCmbRec = (globalStats.Combat_Recovery || 0) / totalRunsAll;
             const glSustain = (100 - glAvgDmg - glAvgRec).toFixed(1);
 
             const getGradationColor = (val, ref) => {
@@ -2284,6 +2286,7 @@ function renderActTrendTab(lang) {
                 sustainability: lang === 'ja' ? '継戦能力' : 'Combat Endurance',
                 dmgLoss: lang === 'ja' ? '└ 戦闘での総被弾量' : '└ Total Combat Damage taken',
                 gapRec: lang === 'ja' ? '└ スキマでの総回復量' : '└ Total Gap Recovery',
+                cmbRec: lang === 'ja' ? '└ 戦闘終了後の純回復' : '└ Post-combat Pure Recovery',
                 vsPrefix: lang === 'ja' ? '対' : 'Vs. ',
                 vsSuffix: lang === 'ja' ? '性能' : ' Performance',
                 atkTurns: lang === 'ja' ? '└ 攻撃性能' : '└ Attack Score',
@@ -2314,9 +2317,14 @@ function renderActTrendTab(lang) {
                                 <td style="padding-left: 15px;">${i18n.dmgLoss}</td>
                                 <td style="text-align: right;">${myAvgDmg.toFixed(1)} (${glAvgDmg.toFixed(1)})</td>
                             </tr>
-                            <tr style="color: #666; font-size: 0.85em; border-bottom: 1px solid #eee;">
+                            <tr style="color: #666; font-size: 0.85em;">
                                 <td style="padding-left: 15px;">${i18n.gapRec}</td>
                                 <td style="text-align: right;">${myAvgRec.toFixed(1)} (${glAvgRec.toFixed(1)})</td>
+                            </tr>
+                            <!-- ★5. 戦闘終了後の純回復の行を追加 (回復なので少し色を変えるなど) -->
+                            <tr style="color: #27ae60; font-size: 0.85em; border-bottom: 1px solid #eee;">
+                                <td style="padding-left: 15px;">${i18n.cmbRec}</td>
+                                <td style="text-align: right;">+${myAvgCmbRec.toFixed(1)} (+${glAvgCmbRec.toFixed(1)})</td>
                             </tr>
 
                             ${['Enemy', 'EliteEnemy', 'Boss'].map(type => {
