@@ -2253,7 +2253,7 @@ function renderActTrendTab(lang) {
             const glAvgDmg = globalStats.Total_Damage / totalRunsAll;
             const glAvgRec = globalStats.Gap_Recovery / totalRunsAll;
             const glAvgCmbRec = (globalStats.Combat_Recovery || 0) / totalRunsAll;
-            const glSustain = (100 - glAvgDmg - glAvgRec).toFixed(1);
+            const glSustain = (100 - glAvgDmg - glAvgRec + glAvgCmbRec).toFixed(1);
 
             const getGradationColor = (val, ref) => {
                 const diff = val - ref;
