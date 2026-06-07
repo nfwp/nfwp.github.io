@@ -1998,13 +1998,27 @@ function renderActTrendTab(lang) {
         const actData = trendData[act] || trendData[parseInt(act)] || {};
         const globalActData = globalNodeVisits[act] || globalNodeVisits[parseInt(act)] || {};
 
+        // 各Actのコンテンツ生成のループ内 (categories の定義箇所)
+
         const categories = [
             { key: 'Add_Card', title: (lang === 'ja' ? 'よく追加されるカード' : 'Added Cards'), type: 'card' },
             { key: 'Remove_Card', title: (lang === 'ja' ? 'よく削除されるカード' : 'Removed Cards'), type: 'card' },
             { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
-            { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' },
-            { key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' }
+            { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' }
         ];
+
+
+        if (['1', '2', '3', 'Total'].includes(String(act))) {
+            categories.push({
+                key: 'Organize_Card',
+                title: (lang === 'ja' ? '整頓対象(Boss削除変化)' : 'Organized Item (Boss Removal Change)'),
+                type: 'card'
+            });
+        }
+
+
+        // 最後に「踏破マスの内訳」を追加
+        categories.push({ key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' });
         //{ key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
 
@@ -2031,6 +2045,19 @@ function renderActTrendTab(lang) {
                 const sortedItems = Object.entries(items)
                     .sort(([, a], [, b]) => b - a)
                     .slice(0, 100);
+                let removeRankMap = {};
+                if (cat.key === 'Organize_Card') {
+                    const removeItems = actData['Remove_Card'] || {};
+                    // カウントの多い順にソートしてIDの配列を作る
+                    const sortedRemoveIds = Object.entries(removeItems)
+                        .sort(([, a], [, b]) => b - a)
+                        .map(([id]) => id);
+
+                    // IDに対して順位（1〜）を紐付ける
+                    sortedRemoveIds.forEach((id, idx) => {
+                        removeRankMap[id] = idx + 1;
+                    });
+                }
 
                 if (sortedItems.length === 0) {
                     categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
@@ -2052,10 +2079,26 @@ function renderActTrendTab(lang) {
                                 <tbody>
                     `;
 
+
+
                     sortedItems.forEach(([id, count], index) => {
+                        const currentRank = index + 1; // 整頓対象での順位
                         const perRun = (count / totalRuns).toFixed(2);
                         let name = id;
                         let bgColor = '#FFFFFF';
+
+                        // --- 太字判定ロジック ---
+                        let isBold = false;
+                        if (cat.key === 'Organize_Card') {
+                            const removeRank = removeRankMap[id] || 999; // リストにない場合は低い順位にする
+                            if (removeRank - currentRank >= 3) {
+                                isBold = true;
+                            }
+                        }
+
+                        // Wikiリンク（<a>タグ）のスタイルを上書きするために !important を推奨
+                        const nameStyle = isBold ? 'font-weight: 900 !important; color: #000 !important;' : '';
+
 
                         if (cat.type === 'card') {
                             const cardInfo = ALL_DATA.lookup_tables.cards[id];
@@ -2087,11 +2130,12 @@ function renderActTrendTab(lang) {
 
                         categoryBlockHtml += `
                             <tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;">
-                                <td style="padding: 6px 8px; text-align: center;">${index + 1}</td>
-                                <td style="padding: 6px 8px;">${name}</td>
-                                <td style="padding: 6px 8px; text-align: right; font-weight: bold;">${perRun}</td>
+                                <td style="padding: 6px 8px; text-align: center; ${nameStyle}">${currentRank}</td>
+                                <td style="padding: 6px 8px; ${nameStyle}">${name}</td>
+                                <td style="padding: 6px 8px; text-align: right; font-weight: bold; ${nameStyle}">${perRun}</td>
                             </tr>
                         `;
+
                     });
                     categoryBlockHtml += `</tbody></table></div>`;
                 }
