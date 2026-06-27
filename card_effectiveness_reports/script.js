@@ -2576,7 +2576,7 @@ function renderRunFinderTab() {
                     </div>
                     <div class="control-group">
                         <label for="level-filter">${texts.level_label}</label>
-                        <input type="number" id="level-filter" min="1" max="20" placeholder="1-20">
+                        <input type="number" id="level-filter" min="1" max="16" placeholder="1-16">
                     </div>
                     <div class="control-group">
                         <label for="character-select">${texts.char_label}</label>
