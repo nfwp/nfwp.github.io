@@ -1212,3 +1212,232 @@ body {
         display: flex;
     }
 }
+
+/* style.css に追加 */
+.run-finder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.run-finder-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.run-finder-group label {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+}
+
+
+/* --- Run Finder Tab Styles --- */
+.run-finder-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.finder-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.control-group-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-section h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.control-group-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group-input input[type="text"],
+.control-group-input input[type="number"] {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.add-btn {
+    padding: 5px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-logic {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.search-logic label {
+    cursor: pointer;
+}
+
+.item-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 5px;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    min-height: 38px;
+}
+
+.item-tag {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.remove-tag-btn {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+}
+.remove-tag-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.primary-search-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start; /* 左寄せ */
+}
+
+.run-finder-group input {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.run-finder-group.include {
+    border-left: 4px solid #4CAF50; /* 緑 */
+    padding-left: 1em;
+}
+
+.run-finder-group.exclude {
+    border-left: 4px solid #F44336; /* 赤 */
+    padding-left: 1em;
+}
+
+#run-finder-button {
+    margin-top: 1em;
+}
+
+#run-finder-results ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#run-finder-results li {
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #eee;
+}
+#run-finder-results li:last-child {
+    border-bottom: none;
+}
+
+/* --- Run Finder Results Table --- */
+.run-finder-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    table-layout: fixed; /* カラム幅を固定 */
+}
+
+.run-finder-results-table th,
+.run-finder-results-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    overflow: hidden; /* はみ出した部分を隠す */
+    text-overflow: ellipsis; /* はみ出した部分を...で表示 */
+}
+
+.run-finder-results-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+
+.run-finder-results-table th:nth-child(1) { width: 50%; } /* Run ID */
+.run-finder-results-table th:nth-child(2) { width: 20%; } /* Version */
+.run-finder-results-table th:nth-child(3) { width: 30%; } /* キャラクター */
+
+
+.run-finder-results-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.run-finder-results-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.run-finder-results-table td a {
+    font-weight: 500;
+    text-decoration: none;
+    color: #0056b3;
+}
+.run-finder-results-table td a:hover {
+    text-decoration: underline;
+}

@@ -1,4 +1,4 @@
-// script.js (完全版)
+// script.js (完全修正版)
 
 // --- グローバル定数 ---
 const X_RANGE = [30, 70];
@@ -14,14 +14,21 @@ let ALL_DATA = {};
 let UI_TEXT = {};
 let LANG = 'ja';
 let CURRENT_CHAR = 'CirnoA';
+let allRunsData = []; // 全てのランデータを保持するための配列
+let allCards = new Set();    // 全カード名を保持するためのセット
+let allExhibits = new Set(); // 全展示品名を保持するためのセット
 
 let attentionSlider = null;
 let AGG_MAP = new Map();
-
+let ALL_RUN_DETAILS = []; //  全てのランの検索用データを保持する配列
 
 let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
 const ROUTE_NODE_HOVER_DELAY = 400; // ホバーの遅延時間 (ミリ秒)。この数値を調整してお好みの長さにできます。
 let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
+
+
+
+
 
 // =================================================================
 // メイン処理
@@ -29,18 +36,36 @@ let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
 window.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     CURRENT_CHAR = params.get('char') || 'CirnoA';
-    LANG = params.get('lang') || 'ja';
+    LANG = (params.get('lang') || 'ja')
 
     try {
+        // 最初に、キャラクターに依存しない検索用データをロード
+        const runsResponse = await fetch('./data/run_details.json');
+        if (runsResponse.ok) {
+            ALL_RUN_DETAILS = await runsResponse.json();
+        } else {
+            console.error('run_details.json のロードに失敗しました。検索機能は無効になります。');
+        }
+
+        // 次に、キャラクター固有のデータをロード
         const response = await fetch(`data/${CURRENT_CHAR}_data.json`);
         if (!response.ok) throw new Error(`Failed to load data for ${CURRENT_CHAR}`);
         ALL_DATA = await response.json();
 
-        // ★★★ このブロックを追加 ★★★
-        // AGG_MAP を構築 (Card_Name をキーとして、対応する agg_data_full のエントリを格納)
-        const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
-        AGG_MAP = new Map(ALL_DATA.agg_data_full.map(d => [d[cardNameCol], d]));
-        // ★★★ 追加ここまで ★★★
+        const timelineResponse = await fetch('./data/run_decks_by_station.json');
+        if (timelineResponse.ok) {
+            ALL_DECK_TIMELINES = await timelineResponse.json();
+            console.log('Deck timeline data loaded.');
+        } else {
+            console.error('run_decks_by_station.json のロードに失敗しました。');
+        }
+        // 全カードのデータをMapに格納（ホバー時の情報参照を高速化）
+        if (ALL_DATA.agg_data_full) {
+            const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
+            ALL_DATA.agg_data_full.forEach(d => {
+                AGG_MAP.set(d[cardNameCol], d);
+            });
+        }
 
     } catch (error) {
         console.error(error);
@@ -53,12 +78,14 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderGlobalHeader();
     setupNavigation();
 
+    // 各タブの初期描画
     renderCardPerformanceTab(CURRENT_CHAR, LANG);
     renderExhibitAnalysisTab(LANG);
     renderRouteEventTab(LANG);
     renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
     renderActTrendTab(LANG);
     renderCardListTab(ALL_DATA);
+    // renderRunFinderTabは初回クリック時に描画される
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
@@ -77,7 +104,6 @@ function renderGlobalHeader() {
         `<option value="${char}" ${char === CURRENT_CHAR ? 'selected' : ''}>${char}</option>`
     ).join('');
 
-    // --- 共通のHTMLコンテンツを作成 ---
     const switcherHtml = `
         <div class="character-switcher">
             <label for="char-select-global">${UI_TEXT.char_select_label || 'Character:'}</label>
@@ -85,7 +111,6 @@ function renderGlobalHeader() {
         </div>
     `;
 
-    // --- PC用コンテナに描画し、イベントリスナーを設定 ---
     container.innerHTML = switcherHtml;
     container.querySelector('select').addEventListener('change', (e) => {
         const newChar = e.target.value;
@@ -94,18 +119,13 @@ function renderGlobalHeader() {
         window.location.search = currentParams.toString();
     });
 
-    // --- モバイル用コンテナにも同じ内容を描画 ---
     const mobileContainer = document.getElementById('global-header-mobile');
     if (mobileContainer) {
         mobileContainer.innerHTML = switcherHtml;
-
-        // ★重要：innerHTMLでコピーした要素にはイベントリスナーが引き継がれないため、再設定します
         const mobileSelect = mobileContainer.querySelector('select');
         if (mobileSelect) {
-            // IDが重複しないように、モバイル用のIDを動的に変更
             mobileSelect.id = 'char-select-mobile';
             mobileContainer.querySelector('label').setAttribute('for', 'char-select-mobile');
-
             mobileSelect.addEventListener('change', (e) => {
                 const newChar = e.target.value;
                 const currentParams = new URLSearchParams(window.location.search);
@@ -115,7 +135,6 @@ function renderGlobalHeader() {
         }
     }
 }
-
 
 async function setupUiText(lang) {
     try {
@@ -149,7 +168,8 @@ function setupNavigation() {
         { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
         { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title },
         { id: 'act-trend-tab', label: (LANG === 'ja' ? 'Act別トレンド' : 'Act Trends') },
-        { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' }
+        { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' },
+        { id: 'run-finder-tab', label: UI_TEXT.run_finder_tab_title || 'ラン検索' }
     ];
 
     const tabButtonsContainer = document.getElementById('tab-buttons');
@@ -169,6 +189,11 @@ function setupNavigation() {
         const contentToShow = document.getElementById(tabId);
         if (contentToShow) {
             contentToShow.style.display = 'block';
+
+            if (tabId === 'run-finder-tab') {
+                renderRunFinderTab();
+            }
+
             const graphInTab = contentToShow.querySelector('.plotly-graph-div');
             if (graphInTab) {
                 try {
@@ -195,7 +220,9 @@ function setupNavigation() {
     if (mobileTabSelector) mobileTabSelector.innerHTML = '';
 
     tabsConfig.forEach(tabConfig => {
-        if (!tabConfig.label) return;
+        if (!tabConfig.label || (tabConfig.id === 'run-finder-tab' && ALL_RUN_DETAILS.length === 0)) {
+            return;
+        }
 
         if (tabButtonsContainer) {
             const button = document.createElement('button');
@@ -2458,3 +2485,453 @@ window.switchActTrend = function(act) {
         }
     });
 };
+
+
+/**
+ * 「ラン検索」タブのコンテンツを生成・描画する
+ * UIのテキストを多言語対応させる
+ */
+function renderRunFinderTab() {
+    const tabContent = document.getElementById('run-finder-tab');
+    if (!tabContent) return;
+    if (tabContent.innerHTML.trim() !== '') return; // 描画済みなら中断
+
+    // 0. UIテキストを定義
+    const texts = {
+        title: UI_TEXT.run_finder_title || "Run Finder",
+        experimental_warning: UI_TEXT.run_finder_experimental_warning || "<strong>[Experimental Feature]</strong> This search function is under development.",
+        data_scope_warning: UI_TEXT.run_finder_data_scope_warning || "※This search can only be performed within the data range used for creating statistics.",
+        act_label: UI_TEXT.run_finder_act_label || "Act:",
+        level_label: UI_TEXT.run_finder_level_label || "Level:",
+        char_label: UI_TEXT.run_finder_char_label || "Character:",
+        no_specify: UI_TEXT.run_finder_no_specify || "None",
+        include_items_label: UI_TEXT.run_finder_include_items_label || "Include Items",
+        item_placeholder: UI_TEXT.run_finder_item_placeholder || "Enter Card/Exhibit name...",
+        add_btn: UI_TEXT.run_finder_add_btn || "Add",
+        logic_and: UI_TEXT.run_finder_logic_and || "AND (all)",
+        logic_or: UI_TEXT.run_finder_logic_or || "OR (any)",
+        exclude_items_label: UI_TEXT.run_finder_exclude_items_label || "Exclude Items (all specified items will be excluded)",
+        search_btn: UI_TEXT.run_finder_search_btn || "Search Runs",
+        initial_prompt: UI_TEXT.run_finder_initial_prompt || "Enter search criteria and press the 'Search Runs' button."
+    };
+
+    // 1. オートコンプリート用のデータリストを作成
+    const allItems = new Set();
+    if (ALL_DATA.lookup_tables && ALL_DATA.lookup_tables.cards) {
+        const cardNameKey = (LANG === 'ja') ? 'JA' : 'EN';
+        for (const cardId in ALL_DATA.lookup_tables.cards) {
+            const cardData = ALL_DATA.lookup_tables.cards[cardId];
+            if (cardData && cardData[cardNameKey]) {
+                allItems.add(cardData[cardNameKey]);
+            }
+        }
+    }
+    if (ALL_DATA.lookup_tables && ALL_DATA.lookup_tables.exhibits) {
+        const exhibitNameKey = (LANG === 'ja') ? 'name' : 'name_en';
+        for (const exhibitId in ALL_DATA.lookup_tables.exhibits) {
+            const exhibitData = ALL_DATA.lookup_tables.exhibits[exhibitId];
+            if (exhibitData && exhibitData[exhibitNameKey]) {
+                allItems.add(exhibitData[exhibitNameKey]);
+            }
+        }
+    }
+    const datalistOptions = Array.from(allItems).sort().map(item => `<option value="${item}"></option>`).join('');
+
+    // 2. キャラクター選択のプルダウンを作成
+    let charOptions = `<option value="All">All</option>`;
+    if (ALL_DATA && ALL_DATA.all_available_characters) {
+        ALL_DATA.all_available_characters.forEach(char => {
+            const selected = (char === CURRENT_CHAR) ? 'selected' : '';
+            charOptions += `<option value="${char}" ${selected}>${char}</option>`;
+        });
+    }
+
+    // 3. 新しいUIのHTMLを定義
+    const finderHtml = `
+        <div class="run-finder-container">
+            <h3>${texts.title}</h3>
+            <p style="font-style: italic; color: #e67e22; border: 1px solid #f39c12; padding: 8px; border-radius: 4px; background-color: #fef9e7; margin-top: 0;">
+                ${texts.experimental_warning}
+            </p>
+            <p style="font-size: 0.9em; color: #555;">
+                ${texts.data_scope_warning}
+            </p>
+            <div class="finder-controls">
+                <div class="control-group-row">
+                    <div class="control-group">
+                        <label for="act-filter">${texts.act_label}</label>
+                        <select id="act-filter">
+                            <option value="">${texts.no_specify}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="level-filter">${texts.level_label}</label>
+                        <input type="number" id="level-filter" min="1" max="20" placeholder="1-20">
+                    </div>
+                    <div class="control-group">
+                        <label for="character-select">${texts.char_label}</label>
+                        <select id="character-select">${charOptions}</select>
+                    </div>
+                </div>
+                <div class="control-section">
+                    <h4>${texts.include_items_label}</h4>
+                    <div class="control-group-input">
+                        <input list="all-items-datalist" id="include-item-input" placeholder="${texts.item_placeholder}">
+                        <button id="add-include-item-btn" class="add-btn">${texts.add_btn}</button>
+                        <div class="search-logic">
+                            <input type="radio" id="include-logic-and" name="include-logic" value="AND" checked>
+                            <label for="include-logic-and">${texts.logic_and}</label>
+                            <input type="radio" id="include-logic-or" name="include-logic" value="OR">
+                            <label for="include-logic-or">${texts.logic_or}</label>
+                        </div>
+                    </div>
+                    <div id="include-items-list" class="item-tag-list"></div>
+                </div>
+                <div class="control-section">
+                    <h4>${texts.exclude_items_label}</h4>
+                    <div class="control-group-input">
+                        <input list="all-items-datalist" id="exclude-item-input" placeholder="${texts.item_placeholder}">
+                        <button id="add-exclude-item-btn" class="add-btn">${texts.add_btn}</button>
+                    </div>
+                    <div id="exclude-items-list" class="item-tag-list"></div>
+                </div>
+                <button id="run-search-button" class="primary-search-btn">${texts.search_btn}</button>
+            </div>
+            <div id="run-finder-results" style="margin-top: 20px;">
+                <p>${texts.initial_prompt}</p>
+            </div>
+        </div>
+        <datalist id="all-items-datalist">${datalistOptions}</datalist>
+    `;
+
+    tabContent.innerHTML = finderHtml;
+
+    // 4. UIのイベントリスナーを設定
+    document.getElementById('run-search-button').addEventListener('click', performAdvancedSearch);
+
+    const setupTagInput = (inputId, btnId, listId) => {
+        const input = document.getElementById(inputId);
+        const button = document.getElementById(btnId);
+        const list = document.getElementById(listId);
+        const addItem = () => {
+            const value = input.value.trim();
+            const isDuplicate = Array.from(list.children).some(tag => tag.firstChild.textContent === value);
+            if (value && !isDuplicate) {
+                const tag = document.createElement('span');
+                tag.className = 'item-tag';
+                const text = document.createElement('span');
+                text.textContent = value;
+                tag.appendChild(text);
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = '×';
+                removeBtn.className = 'remove-tag-btn';
+                removeBtn.onclick = () => tag.remove();
+                tag.appendChild(removeBtn);
+                list.appendChild(tag);
+            }
+            input.value = '';
+            input.focus();
+        };
+        button.addEventListener('click', addItem);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addItem();
+            }
+        });
+    };
+
+    setupTagInput('include-item-input', 'add-include-item-btn', 'include-items-list');
+    setupTagInput('exclude-item-input', 'add-exclude-item-btn', 'exclude-items-list');
+}
+
+
+/**
+ * 検索タブの入力補完リストを作成する
+ */
+function populateFinderDatalists() {
+    const cardDatalist = document.getElementById('card-list-datalist');
+    const exhibitDatalist = document.getElementById('exhibit-list-datalist');
+    if (!cardDatalist || !exhibitDatalist) return;
+
+    // 既に中身があれば何もしない
+    if (cardDatalist.options.length > 0) return;
+
+    if (!ALL_DATA || !ALL_DATA.lookup_tables || !ALL_DATA.lookup_tables.cards) {
+        console.error("populateFinderDatalists: lookup_tables.cards が見つかりません。");
+        return;
+    }
+
+    const cardNameKey = LANG === 'en' ? 'EN' : 'JA';
+    const exhibitNameKey = LANG === 'en' ? 'EN' : 'JA';
+
+    if (ALL_DATA.lookup_tables.cards) {
+        for (const cardId in ALL_DATA.lookup_tables.cards) {
+            const cardData = ALL_DATA.lookup_tables.cards[cardId];
+            if (cardData && cardData[cardNameKey]) {
+                const cardName = cardData[cardNameKey];
+                const option = document.createElement('option');
+                option.value = cardName;
+                cardDatalist.appendChild(option);
+            }
+        }
+    }
+
+    if (ALL_DATA.lookup_tables.exhibits) {
+        for (const exhibitId in ALL_DATA.lookup_tables.exhibits) {
+            const exhibitData = ALL_DATA.lookup_tables.exhibits[exhibitId];
+            if (exhibitData && exhibitData[exhibitNameKey]) {
+                const exhibitName = exhibitData[exhibitNameKey];
+                const option = document.createElement('option');
+                option.value = exhibitName;
+                exhibitDatalist.appendChild(option);
+            }
+        }
+    }
+}
+
+/**
+ * ランの検索を実行し、結果を表示する
+ */
+function searchRuns() {
+    const conditions = {
+        includeCards: [
+            document.getElementById('include-card-1').value.trim(),
+            document.getElementById('include-card-2').value.trim()
+        ].filter(Boolean),
+        includeExhibits: [
+            document.getElementById('include-exhibit-1').value.trim(),
+            document.getElementById('include-exhibit-2').value.trim()
+        ].filter(Boolean),
+        excludeCards: [
+            document.getElementById('exclude-card-1').value.trim(),
+            document.getElementById('exclude-card-2').value.trim()
+        ].filter(Boolean),
+        excludeExhibits: [
+            document.getElementById('exclude-exhibit-1').value.trim(),
+            document.getElementById('exclude-exhibit-2').value.trim()
+        ].filter(Boolean),
+    };
+
+    const filterByChar = document.getElementById('filter-by-current-char').checked;
+    let runsToSearch = ALL_RUN_DETAILS;
+
+    if (filterByChar) {
+        runsToSearch = ALL_RUN_DETAILS.filter(run => run.character === CURRENT_CHAR);
+    }
+
+    const filteredRuns = runsToSearch.filter(run => {
+        const runCards = new Set(run.cards);
+        const runExhibits = new Set(run.exhibits);
+
+        for (const card of conditions.includeCards) {
+            if (!runCards.has(card)) return false;
+        }
+        for (const exhibit of conditions.includeExhibits) {
+            if (!runExhibits.has(exhibit)) return false;
+        }
+        for (const card of conditions.excludeCards) {
+            if (runCards.has(card)) return false;
+        }
+        for (const exhibit of conditions.excludeExhibits) {
+            if (runExhibits.has(exhibit)) return false;
+        }
+        return true;
+    });
+    console.log("【デバッグ1】検索条件:", { act: actFilter, level: levelFilter });
+    displayRunFinderResults(filteredRuns, actFilter, levelFilter);
+}
+
+
+
+
+/**
+ * 検索結果のランをテーブル形式で表示する。
+ * リンクにはAct/Levelのクエリパラメータを付与する。
+ * @param {Array} runs - 表示するランの配列
+ * @param {string|null} actFilter - 検索で使用されたActフィルターの値
+ * @param {string|null} levelFilter - 検索で使用されたLevelフィルターの値
+ */
+function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
+    const resultsContainer = document.getElementById('run-finder-results');
+    const texts = {
+        title: UI_TEXT.search_results_title || "Found {count} runs",
+        no_results: UI_TEXT.search_no_results || "No runs were found matching the criteria.",
+        run_id: "Run ID",
+        character: UI_TEXT.run_finder_char_label || "Character:",
+        version: "Version"
+    };
+
+    if (!runs || runs.length === 0) {
+        resultsContainer.innerHTML = `<p>${texts.no_results}</p>`;
+        return;
+    }
+
+    const runRows = runs.map(run => {
+        const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
+
+        let queryParams = '';
+        if (actFilter) {
+            queryParams += `?a=${actFilter}`;
+            if (levelFilter) {
+                queryParams += `&l=${levelFilter}`;
+            }
+        }
+
+        const finalUrl = baseUrl + queryParams;
+
+
+        return `
+            <tr>
+                <td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td>
+                <td>${run.version}</td>
+                <td>${run.character}</td>
+            </tr>
+        `;
+
+    }).join('');
+
+    resultsContainer.innerHTML = `
+        <h4>${texts.title.replace('{count}', runs.length)}</h4>
+        <table class="run-finder-results-table">
+            <thead>
+                <tr>
+                    <th>${texts.run_id}</th>
+                    <th>${texts.version}</th>
+                    <th>${texts.character}</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${runRows}
+            </tbody>
+        </table>
+    `;
+}
+
+
+/**
+ * Act別トレンドの表示を切り替える関数
+ */
+window.switchActTrend = function(act) {
+    const container = document.getElementById('act-trend-tab');
+    if (!container) return;
+
+    const buttons = container.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${act}'`)) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    const contents = container.querySelectorAll('div[id^="act-trend-content-"]');
+    contents.forEach(div => {
+        if (div.id === `act-trend-content-${act}`) {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    });
+};
+
+
+
+/**
+ * 新しいUIに基づいてランを検索し、結果を表示する
+ * Act/Levelが指定された場合は、その時点の所持アイテム（カードと展示品）で検索する
+ */
+function performAdvancedSearch() {
+    // 0. 必要なデータがロードされているか確認
+    if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES) {
+        console.warn("検索データがまだ読み込まれていません。");
+        const resultsContainer = document.getElementById('run-finder-results');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = '<p>検索データが読み込まれていません。ページを再読み込みしてください。</p>';
+        }
+        return;
+    }
+
+    // 1. UIから検索条件を取得
+    const selectedChar = document.getElementById('character-select').value;
+    const actFilter = document.getElementById('act-filter').value;
+    const levelFilter = document.getElementById('level-filter').value;
+    const includeLogic = document.getElementById('include-logic-and').checked ? 'AND' : 'OR';
+
+    const getKeywordsFromList = (listId) => {
+        const list = document.getElementById(listId);
+        return Array.from(list.children).map(tag => tag.firstChild.textContent.trim());
+    };
+
+    const includeKeywords = getKeywordsFromList('include-items-list');
+    const excludeKeywords = getKeywordsFromList('exclude-items-list');
+
+    const useTimelineSearch = actFilter && levelFilter;
+    const stationKey = useTimelineSearch ? `${actFilter}-${levelFilter}` : null;
+
+    // 2. ランデータをフィルタリング
+    const filteredRuns = ALL_RUN_DETAILS.filter(run => {
+        // --- 条件A: キャラクターでの絞り込み ---
+        if (selectedChar !== 'All' && run.character !== selectedChar) {
+            return false;
+        }
+
+        // --- 条件B: Act/Level とカード/展示品での絞り込み ---
+        let itemsToSearch;
+        if (useTimelineSearch) {
+            const runTimeline = ALL_DECK_TIMELINES[run.run_id];
+            // そのマスに到達していない、またはデータがない場合は除外
+            if (!runTimeline || !runTimeline[stationKey]) {
+                return false;
+            }
+            // Act/Level指定時は、その時点のカードと展示品を検索対象とする
+            const stationData = runTimeline[stationKey];
+            itemsToSearch = [...(stationData.cards || []), ...(stationData.exhibits || [])];
+        } else {
+            // Act/Level指定なしの場合は、最終的なカードと展示品を検索対象とする
+            itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
+        }
+
+        const lowerCaseItems = itemsToSearch.map(item => item.toLowerCase());
+
+        // --- 条件C: 「含まない」アイテムのフィルター ---
+        if (excludeKeywords.length > 0) {
+            const hasExcludedItem = excludeKeywords.some(keyword =>
+                lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
+            );
+            if (hasExcludedItem) {
+                return false; // 除外リストのアイテムが1つでも含まれていたら、このランは除外
+            }
+        }
+
+        // --- 条件D: 「含む」アイテムのフィルター ---
+        if (includeKeywords.length > 0) {
+            if (includeLogic === 'AND') {
+                // AND検索: すべてのキーワードがアイテムリストに含まれているか
+                const hasAllItems = includeKeywords.every(keyword =>
+                    lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
+                );
+                if (!hasAllItems) return false;
+            } else { // OR検索
+                // OR検索: いずれかのキーワードがアイテムリストに含まれているか
+                const hasAnyItem = includeKeywords.some(keyword =>
+                    lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
+                );
+                if (!hasAnyItem) return false;
+            }
+        }
+
+        // 全てのフィルターを通過したランのみ残す
+        return true;
+    });
+
+    // --- デバッグ用コード（確認後、削除してOKです） ---
+    console.log("【デバッグ1】検索条件:", { act: actFilter, level: levelFilter });
+
+    // 3. 結果を表示
+    displayRunFinderResults(filteredRuns, actFilter, levelFilter);
+}
