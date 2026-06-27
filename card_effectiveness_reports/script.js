@@ -41,6 +41,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     LANG = (params.get('lang') || 'ja').toLowerCase();
 
     try {
+        const itemMasterResponse = await fetch('./data/item_master.json');
+        if (itemMasterResponse.ok) {
+            ITEM_MASTER_LOOKUP = await itemMasterResponse.json();
+            console.log(`Loaded item_master.json with ${Object.keys(ITEM_MASTER_LOOKUP).length} items.`);
+        } else {
+            console.error('item_master.json のロードに失敗しました。検索機能は無効になります。');
+        }
         // 最初に、キャラクターに依存しない検索用データをロード
         const runsResponse = await fetch('./data/run_details.json');
         if (runsResponse.ok) {
@@ -57,6 +64,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (timelineResponse.ok) {
             const timelineData = await timelineResponse.json();
             ALL_DECK_TIMELINES = timelineData.timelines; // .timelines プロパティからオブジェクトを取得
+            STATION_MAP_GLOBAL = timelineData.station_map; // station_mapをグローバル変数に格納
             console.log(`Loaded run_decks_by_station.json generated at: ${timelineData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_decks_by_station.json のロードに失敗しました。');
@@ -2846,11 +2854,54 @@ window.switchActTrend = function(act) {
 };
 
 
-// 既存の performAdvancedSearch 関数と applyKeywordFilters 関数を、
-// 以下の2つの関数のコードでまるごと置き換えてください。
+/**
+ * 差分データから指定されたステーション時点のデッキ状態を復元する
+ * @param {object} runTimeline - 1ラン分のタイムラインデータ {initial: ..., changes: ..., station_map: ...}
+ * @param {number} targetStationIndex - 復元したいステーションのインデックス
+ * @returns {{cards: Set<number>, exhibits: Set<number>}} - 復元されたカードと展示品のIDセット
+ */
+function reconstructDeckAtStation(runTimeline, targetStationIndex) {
+    // 1. 初期デッキから開始 (Setを使うと追加・削除が効率的)
+    const currentDeck = new Set(runTimeline.initial.c || []);
+    const currentExhibits = new Set(runTimeline.initial.e || []);
+
+    // 2. ターゲットのマスまで、変更を順に適用
+    // changesのキーは文字列なので、数値に変換して比較
+    const sortedChangeKeys = Object.keys(runTimeline.changes)
+                                   .map(Number)
+                                   .sort((a, b) => a - b);
+
+    for (const stationIdx of sortedChangeKeys) {
+        if (stationIdx > targetStationIndex) {
+            break; // 目的のステーションを過ぎたらループを抜ける
+        }
+
+        const changesAtStation = runTimeline.changes[String(stationIdx)];
+        if (changesAtStation) {
+            // カードの追加・削除
+            if (changesAtStation.add_c) {
+                changesAtStation.add_c.forEach(id => currentDeck.add(id));
+            }
+            if (changesAtStation.rem_c) {
+                changesAtStation.rem_c.forEach(id => currentDeck.delete(id));
+            }
+            // 展示品の追加・削除
+            if (changesAtStation.add_e) {
+                changesAtStation.add_e.forEach(id => currentExhibits.add(id));
+            }
+            if (changesAtStation.rem_e) {
+                changesAtStation.rem_e.forEach(id => currentExhibits.delete(id));
+            }
+        }
+    }
+
+    // Setを返す
+    return { cards: currentDeck, exhibits: currentExhibits };
+}
+
 
 /**
- * 新しいUIに基づいてランを検索し、結果を表示する
+ * 高度な検索を実行し、結果を表示する
  */
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
@@ -2873,14 +2924,13 @@ function performAdvancedSearch() {
 
     const getKeywordsFromList = (listId) => {
         const list = document.getElementById(listId);
-        return Array.from(list.children).map(tag => tag.firstChild.textContent.trim());
+        return Array.from(list.children).map(tag => tag.firstChild.textContent.trim().toLowerCase());
     };
 
     const includeKeywords = getKeywordsFromList('include-items-list');
     const excludeKeywords = getKeywordsFromList('exclude-items-list');
 
-    // この変数がエラーの原因でした
-    const useTimelineSearch = !!actFilter;
+    const useTimelineSearch = !!actFilter || !!levelFilter;
 
     // 2. ランデータをフィルタリング
     const filteredRuns = ALL_RUN_DETAILS.filter(run => {
@@ -2890,52 +2940,82 @@ function performAdvancedSearch() {
         }
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
-        let itemIdsToSearch;
-
         if (useTimelineSearch) {
             const runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            if (!runTimeline) return false;
+            if (!runTimeline || !STATION_MAP_GLOBAL) {
+                return false;
+            }
 
-            if (levelFilter) {
+            let stationIndicesToSearch = [];
+
+            if (actFilter && levelFilter) {
+                // ActとLevelの両方が指定されている場合
                 const stationKey = `${actFilter}-${levelFilter}`;
-                if (!runTimeline[stationKey]) return false;
-                const stationData = runTimeline[stationKey];
-                itemIdsToSearch = [...(stationData.c || []), ...(stationData.e || [])];
-            } else {
-                const actItemIds = new Set();
+                const targetIndex = STATION_MAP_GLOBAL[stationKey]; // グローバルマップを参照
+                if (targetIndex !== undefined) {
+                    stationIndicesToSearch.push(targetIndex);
+                }
+            } else if (actFilter) {
+                // Actのみが指定されている場合
                 const actPrefix = `${actFilter}-`;
-                let hasReachedAct = false;
-
-                for (const stationKey in runTimeline) {
+                for (const stationKey in STATION_MAP_GLOBAL) { // グローバルマップを走査
                     if (stationKey.startsWith(actPrefix)) {
-                        hasReachedAct = true;
-                        const stationData = runTimeline[stationKey];
-                        if (stationData.c) stationData.c.forEach(id => actItemIds.add(id));
-                        if (stationData.e) stationData.e.forEach(id => actItemIds.add(id));
+                        stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
                     }
                 }
-                if (!hasReachedAct) return false;
-                itemIdsToSearch = Array.from(actItemIds);
+            } else if (levelFilter) {
+                // Levelのみが指定されている場合
+                const levelSuffix = `-${levelFilter}`;
+                 for (const stationKey in STATION_MAP_GLOBAL) { // グローバルマップを走査
+                    if (stationKey.endsWith(levelSuffix)) {
+                        stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
+                    }
+                }
             }
-        } else {
-            // Act指定なしの場合は、run_details.json のデータを使う
-            const itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
-            const searchableItems = itemsToSearch.map(itemObj => {
-                if (!itemObj) return '';
-                return (LANG === 'en' && itemObj.en) ? itemObj.en : itemObj.ja;
+
+            // 検索対象のステーションが見つからなければ、このランは不一致
+            if (stationIndicesToSearch.length === 0) {
+                return false;
+            }
+
+            // 検索対象のステーションのいずれか一つでも条件に合致すれば、このランは一致
+            const runMatches = stationIndicesToSearch.some(stationIndex => {
+                // デッキ復元ロジック
+                const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
+                const allItemIds = [...cards, ...exhibits];
+
+                // IDを名前に変換
+                const searchableItems = [];
+                for (const itemId of allItemIds) {
+                    const itemData = ITEM_MASTER_LOOKUP[itemId];
+                    if (itemData) {
+                        if (itemData.ja) searchableItems.push(itemData.ja.toLowerCase());
+                        if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
+                    }
+                }
+
+                // キーワードフィルターを適用
+                return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
             });
-            const lowerCaseItems = searchableItems.map(item => item ? item.toLowerCase() : '');
-            return applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic);
+
+            return runMatches;
+
+        } else {
+            // Act/Level指定なしのロジック (最終デッキでの検索)
+            const searchableItems = [];
+            const allItemIds = [...(run.cards || []), ...(run.exhibits || [])];
+
+            for (const itemId of allItemIds) {
+                const itemData = ITEM_MASTER_LOOKUP[itemId]; // IDからアイテム情報を取得
+                if (itemData) {
+                    // 検索可能な名前リストに追加
+                    if (itemData.ja) searchableItems.push(itemData.ja.toLowerCase());
+                    if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
+                }
+            }
+
+            return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
         }
-
-        // タイムライン検索の場合の処理 (IDから名前に変換)
-        const itemsAsObjects = itemIdsToSearch.map(id => ITEM_MASTER_LOOKUP[String(id)]).filter(Boolean);
-        const searchableItems = itemsAsObjects.map(itemObj => {
-            return (LANG === 'en' && itemObj.en) ? itemObj.en : itemObj.ja;
-        });
-        const lowerCaseItems = searchableItems.map(item => item.toLowerCase());
-
-        return applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic);
     });
 
     // 3. 結果を表示
@@ -2943,12 +3023,7 @@ function performAdvancedSearch() {
 }
 
 /**
- * キーワードフィルターを適用するヘルパー関数
- * @param {string[]} lowerCaseItems - 検索対象のアイテム名リスト（小文字）
- * @param {string[]} includeKeywords - 含むべきキーワードのリスト
- * @param {string[]} excludeKeywords - 除外すべきキーワードのリスト
- * @param {'AND'|'OR'} includeLogic - 含むべきキーワードの検索論理
- * @returns {boolean} - フィルターを通過したかどうか
+ * キーワードフィルターを適用するヘルパー関数 (この関数は変更なし)
  */
 function applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic) {
     // --- 「含まない」アイテムのフィルター ---
