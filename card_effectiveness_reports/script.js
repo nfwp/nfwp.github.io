@@ -36,29 +36,35 @@ let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
 window.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     CURRENT_CHAR = params.get('char') || 'CirnoA';
-    LANG = (params.get('lang') || 'ja')
+    LANG = (params.get('lang') || 'ja').toLowerCase();
 
     try {
         // 最初に、キャラクターに依存しない検索用データをロード
         const runsResponse = await fetch('./data/run_details.json');
         if (runsResponse.ok) {
-            ALL_RUN_DETAILS = await runsResponse.json();
+            // 新しいデータ構造に合わせて修正
+            const runDetailsData = await runsResponse.json();
+            ALL_RUN_DETAILS = runDetailsData.runs; // .runs プロパティから配列を取得
+            console.log(`Loaded run_details.json generated at: ${runDetailsData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_details.json のロードに失敗しました。検索機能は無効になります。');
         }
 
-        // 次に、キャラクター固有のデータをロード
+        // タイムラインデータも同様に修正
+        const timelineResponse = await fetch('./data/run_decks_by_station.json');
+        if (timelineResponse.ok) {
+            const timelineData = await timelineResponse.json();
+            ALL_DECK_TIMELINES = timelineData.timelines; // .timelines プロパティからオブジェクトを取得
+            console.log(`Loaded run_decks_by_station.json generated at: ${timelineData.metadata?.generated_at || 'N/A'}`);
+        } else {
+            console.error('run_decks_by_station.json のロードに失敗しました。');
+        }
+
+        // 次に、キャラクター固有のデータをロード (ここは変更なし)
         const response = await fetch(`data/${CURRENT_CHAR}_data.json`);
         if (!response.ok) throw new Error(`Failed to load data for ${CURRENT_CHAR}`);
         ALL_DATA = await response.json();
 
-        const timelineResponse = await fetch('./data/run_decks_by_station.json');
-        if (timelineResponse.ok) {
-            ALL_DECK_TIMELINES = await timelineResponse.json();
-            console.log('Deck timeline data loaded.');
-        } else {
-            console.error('run_decks_by_station.json のロードに失敗しました。');
-        }
         // 全カードのデータをMapに格納（ホバー時の情報参照を高速化）
         if (ALL_DATA.agg_data_full) {
             const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
@@ -74,18 +80,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     await setupUiText(LANG);
-
     renderGlobalHeader();
     setupNavigation();
 
-    // 各タブの初期描画
+    // 各タブの初期描画 (ここは変更なし)
     renderCardPerformanceTab(CURRENT_CHAR, LANG);
     renderExhibitAnalysisTab(LANG);
     renderRouteEventTab(LANG);
     renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
     renderActTrendTab(LANG);
     renderCardListTab(ALL_DATA);
-    // renderRunFinderTabは初回クリック時に描画される
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
@@ -2845,6 +2849,7 @@ window.switchActTrend = function(act) {
  * Act/Levelが指定された場合は、その時点の所持アイテム（カードと展示品）で検索する
  */
 function performAdvancedSearch() {
+    console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
     // 0. 必要なデータがロードされているか確認
     if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES) {
         console.warn("検索データがまだ読み込まれていません。");
@@ -2869,7 +2874,6 @@ function performAdvancedSearch() {
     const includeKeywords = getKeywordsFromList('include-items-list');
     const excludeKeywords = getKeywordsFromList('exclude-items-list');
 
-    // ★★★ 変更点1: Actが指定されていればタイムライン検索を有効にする ★★★
     const useTimelineSearch = !!actFilter;
 
     // 2. ランデータをフィルタリング
@@ -2880,56 +2884,57 @@ function performAdvancedSearch() {
         }
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
-        let itemsToSearch;
+        let itemsToSearch; // ここには [{ja:..., en:...}, ...] のオブジェクトのリストが入る
 
-        // ★★★ 変更点2: Act指定時の検索ロジックを修正 ★★★
         if (useTimelineSearch) {
             const runTimeline = ALL_DECK_TIMELINES[run.run_id];
             if (!runTimeline) {
-                return false; // このランのタイムラインデータがない
+                return false;
             }
 
             if (levelFilter) {
-                // --- Levelも指定されている場合 (従来通り) ---
                 const stationKey = `${actFilter}-${levelFilter}`;
                 if (!runTimeline[stationKey]) {
-                    return false; // そのマスに到達していない
+                    return false;
                 }
                 const stationData = runTimeline[stationKey];
                 itemsToSearch = [...(stationData.cards || []), ...(stationData.exhibits || [])];
-
             } else {
-                // --- Actのみが指定されている場合 (新しいロジック) ---
-                const actItems = new Set();
+                const actItems = new Map(); // Mapを使ってアイテムの重複を管理
                 const actPrefix = `${actFilter}-`;
                 let hasReachedAct = false;
 
-                // Actに属するすべての時点のアイテムを収集
                 for (const stationKey in runTimeline) {
                     if (stationKey.startsWith(actPrefix)) {
                         hasReachedAct = true;
                         const stationData = runTimeline[stationKey];
                         if (stationData.cards) {
-                            stationData.cards.forEach(card => actItems.add(card));
+                            stationData.cards.forEach(card => actItems.set(card.ja, card));
                         }
                         if (stationData.exhibits) {
-                            stationData.exhibits.forEach(exhibit => actItems.add(exhibit));
+                            stationData.exhibits.forEach(exhibit => actItems.set(exhibit.ja, exhibit));
                         }
                     }
                 }
 
                 if (!hasReachedAct) {
-                    return false; // このランは指定されたActに到達していない
+                    return false;
                 }
-                itemsToSearch = Array.from(actItems);
+                itemsToSearch = Array.from(actItems.values());
             }
         } else {
-            // --- Act指定なしの場合 (従来通り) ---
-            // run.cards は「入手したことのある全カード」、run.exhibits は「最終所持展示品」
             itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
         }
 
-        const lowerCaseItems = itemsToSearch.map(item => item.toLowerCase());
+        // ▼▼▼ ここが修正点です ▼▼▼
+        // 3. 検索対象のアイテムリストを現在のUI言語に合わせた文字列リストに変換
+        const searchableItems = itemsToSearch.map(itemObj => {
+            if (!itemObj) return '';
+            // 'currentLang' を正しいグローバル変数 'LANG' に修正
+            return (LANG === 'en' && itemObj.en) ? itemObj.en : itemObj.ja;
+        });
+        const lowerCaseItems = searchableItems.map(item => item ? item.toLowerCase() : '');
+        // ▲▲▲ 修正ここまで ▲▲▲
 
         // --- 条件C: 「含まない」アイテムのフィルター ---
         if (excludeKeywords.length > 0) {
@@ -2937,20 +2942,18 @@ function performAdvancedSearch() {
                 lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
             );
             if (hasExcludedItem) {
-                return false; // 除外リストのアイテムが1つでも含まれていたら、このランは除外
+                return false;
             }
         }
 
         // --- 条件D: 「含む」アイテムのフィルター ---
         if (includeKeywords.length > 0) {
             if (includeLogic === 'AND') {
-                // AND検索: すべてのキーワードがアイテムリストに含まれているか
                 const hasAllItems = includeKeywords.every(keyword =>
                     lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
                 );
                 if (!hasAllItems) return false;
             } else { // OR検索
-                // OR検索: いずれかのキーワードがアイテムリストに含まれているか
                 const hasAnyItem = includeKeywords.some(keyword =>
                     lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
                 );
@@ -2958,7 +2961,6 @@ function performAdvancedSearch() {
             }
         }
 
-        // 全てのフィルターを通過したランのみ残す
         return true;
     });
 
