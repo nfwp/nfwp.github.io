@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lbol - Card Performance Report</title>
+    
+    <!-- 外部ライブラリと自作CSS/JSを読み込む -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.plot.ly/plotly-2.29.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    
+
+</head>
+<body>
+    <!-- ローディング表示 -->
+    <div id="loading-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; font-size: 20px; font-family: sans-serif;">
+        データを読み込み中...
+    </div>
+
+    <!-- PC用ヘッダーエリア -->
+    <header class="global-header-container">
+        <!-- 左側にキャラクター選択と最終更新日を配置 -->
+        <div class="header-left">
+            <div id="global-header"></div>
+            <p id="last-update">最終更新: 読み込み中...</p>
+        </div>
+        <!-- 右側にタイトルなどを配置（もしあれば） -->
+        <div class="header-right">
+        </div>
+    </header>
+
+
+
+    <!-- モバイル用ヘッダーエリア -->
+    <div id="mobile-header">
+        <div class="mobile-header-top-row">
+            <div id="global-header-mobile"></div> <!-- ← キャラクター選択 -->
+            <p id="last-update-mobile">最終更新: ...</p> <!-- ← 最終更新日 -->
+        </div>
+        <select id="mobile-tab-selector"></select> <!-- ← タブ選択は下の行のまま -->
+    </div>
+
+
+
+    <!-- JavaScriptがコンテンツを描画するメインのコンテナ -->
+    <div id="dashboard-container" class="dashboard-container" style="visibility: hidden;">
+
+        <!-- PC用のタブボタンが表示される場所 -->
+        <div id="tab-buttons" class="tab-buttons"></div>
+        <div id="card-performance-tab" class="tab-content"></div>
+        <div id="exhibit-analysis-tab" class="tab-content"></div>
+        <div id="route-event-tab" class="tab-content"></div>
+        <div id="enemy-analysis-tab" class="tab-content"></div>
+        <div id="act-trend-tab" class="tab-content"></div>
+        <div id="card-list-tab" class="tab-content"></div>
+        <div id="run-finder-tab" class="tab-content"></div>
+    </div>
+
+
+
+    <!-- ホバー時に使う情報ボックス -->
+    <div id="info-box"></div>
+
+    <!-- メインのスクリプト -->
+    <script src="script.js"></script>
+
+
+    <!-- 最終更新日時を取得して表示するスクリプト -->
+    <script>
+    // 1. URLから言語設定を取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'ja';
+
+    // 2. 言語に応じたテキストを定義
+    const updateText = (lang === 'en') ? 'Last Update:' : '最終更新:';
+    const errorText = (lang === 'en') ? 'Update info not available' : '更新情報なし';
+    const failText = (lang === 'en') ? 'Failed to get update info' : '更新情報の取得に失敗';
+
+    // 3. GitHub APIを叩く
+    fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+            const commit = data[0];
+            const date = new Date(commit.commit.author.date);
+
+            // 日付と時刻をフォーマット
+            const formattedDate = date.toLocaleString(lang === 'en' ? 'en-US' : 'ja-JP', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            // 4. コミットメッセージを含めずに、日付だけで表示を更新
+            const displayText = `${updateText} ${formattedDate}`;
+            document.getElementById("last-update").textContent = displayText;
+            document.getElementById("last-update-mobile").textContent = displayText;
+
+        } else {
+            document.getElementById("last-update").textContent = errorText;
+            document.getElementById("last-update-mobile").textContent = errorText;
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch commit data:", err);
+        document.getElementById("last-update").textContent = failText;
+        document.getElementById("last-update-mobile").textContent = failText;
+      });
+    </script>
+
+</body>
+</html>
