@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドーナッツにはなぜ穴があいているのか</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.8;
+    }
+    h1 { text-align: center; margin-bottom: 1.5em; }
+    h2 { margin-top: 2em; border-bottom: 2px solid #ccc; padding-bottom: 4px; }
+    a { text-decoration: none; color: #0070f3; }
+    a:hover { text-decoration: underline; }
+    .section-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1.2em;
+      margin-top: 2em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* グラフテーブル */
+    .styled-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 1em;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .styled-table thead tr {
+      background-color: #009879;
+      color: #fff;
+      text-align: left;
+    }
+    .styled-table th, .styled-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+
+    /* 翻訳カード */
+    .translation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 1em;
+    }
+    .translation-grid a {
+      display: block;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .translation-grid a:hover {
+      background: #e9f5ff;
+      border-color: #0070f3;
+    }
+
+    /* 改行を反映 */
+    p {
+      white-space: pre-line;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 3em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>試作ホットケーキ第一号</h1>
+
+<!-- 🟦 グラフセクション -->
+<div class="section-box">
+  <h2>📊 グラフ / Graph Links</h2>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>怪しいグラフ (Ja ver)</th>
+        <th>potato graph (En ver)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lbol Bubble Charts</td>
+        <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
+        <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="last-update">読み込み中...</p>
+</div>
+
+<!-- 🕒 更新履歴 -->
+<div class="section-box">
+  <h2>🕒 グラフ更新履歴 / Graph Change Log</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <ul>
+      <li><strong>2026-06-27:</strong>【試験的な機能】ラン検索を実装しました。実験中なので不具合がある可能性もあります。lbol logsのすべてのデータを検索できるわけではないです。</li>
+      <li><strong>2026-06-07:</strong>Act別トレンド分析に整頓項目を追加。ボス戦闘後の変化削除までしかわからないため、厳密な整頓ではないです。</li>
+      <li><strong>2026-05-07:</strong>Act別トレンド分析を拡張。踏破マスの内訳をより詳細に。性能・リソース指標項目を追加。継戦能力は100から「戦闘での被弾」と「スキマでの回復」を引いた値です。スキマでの回復は、強化機会の喪失（ペナルティ）として計算されます。</li>
+      <li><strong>2026-04-03:</strong>ACT3 boss/ACT4 bossの状況別使用率がおかしかったのを修正。総合タブや使用率に影響はないです。</li>
+      <li><strong>2026-02-24:</strong>ACT別トレンド分析のタブを追加。各ACTでどのカードが追加強化削除されてるか等がわかりやすく把握できます。</li>
+      <li><strong>2025-11-24:</strong>キャラMOD適用済みのデータに対しては、バニラには存在しないカードや展示品が選択されている場合除外するように変更しました。これにより対象サンプルデータを増やせると思います。</li>
+      <li><strong>2025-11-18:</strong>各敵遭遇時のサンプルデッキリンクを追加。(うまく飛ばないときもあるのでlevelを確認ください)。</li>
+      <li><strong>2025-11-07:</strong>傾向値の計算方法をわずかに変更(以前より極端な変動は減ると思います)</li>
+      <li><strong>2025-11-05:</strong> カードの集計方法をソフトフィルターに変更。(今までは各状況において規定回数を満たしていて5%以下は除外されていたため5%境界付近の変動が与える影響が大きかったですが、今は影響は最低限になりました。</li>
+      <li><strong>2025-11-03:</strong> 制限付きで全プレイヤーを対象に。カードタブにサンプルランを追加。</li>
+      <li><strong>2025-11-01:</strong> 1.8.0に対応。集計方法を変更。共起カードにそのカードだけ突出して高いものは★を追加。</li>
+      <li><strong>2025-10-13:</strong> カード使用率のタブを追加。</li>
+      <li><strong>2025-10-05:</strong> 初版リリース。</li>
+    </ul>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <ul>
+      <li><strong>2026-06-27:</strong>[Experimental Feature] Run Search is now available! It's still a work in progress, so you may run into bugs. Also, not everything in lbol logs can be searched yet.</li>
+      <li><strong>2026-06-07:</strong>Added deck organization metrics to the Act-based trend analysis. Since only changes up to boss-fight removals can be tracked, this is not a strictly accurate deck organization analysis.</li>
+      <li><strong>2026-05-07:</strong>Expanded the Act-based trend analysis. Added a more detailed breakdown of traversed tiles, as well as new performance and resource metrics. Sustainability is calculated as 100 minus "Combat Damage" and "Gap Recovery". Recovery is treated as an opportunity cost (penalty) for missing upgrades.</li>
+      <li><strong>2026-04-03:</strong> Fixed incorrect situational usage rates for ACT3 and ACT4 bosses. This does not affect the Overview tab or overall usage rates.</li>
+      <li><strong>2026-02-24:</strong> Added a tab for ACT-specific trend analysis. You can easily see which cards are added, upgraded, or removed in each ACT.</li>
+      <li><strong>2025-11-24:</strong>For data with character mods applied, I changed it so that any samples selecting cards or exhibits that don’t exist in the vanilla game are now excluded. This should allow us to increase the amount of valid sample data.</li>
+      <li><strong>2025-11-18:</strong> Added sample deck links for each enemy encounter. (If the link doesn’t jump correctly, please check the level.) Fixed some leftover Japanese text in the English version.</li>
+
+      <li><strong>2025-11-07:</strong> Made a slight adjustment to the trend calculation method (this should reduce extreme fluctuations compared to before).</li>
+      <li><strong>2025-11-05:</strong> Changed the card aggregation method to a soft filter. (Previously, cards were excluded if they appeared in less than 5% of cases that met the required count for each situation, which caused large fluctuations near the 5% threshold. Now, the impact of such fluctuations has been minimized.)</li>
+      <li><strong>2025-11-03:</strong> Now includes all players with some restrictions. Added sample runs to the card tab.</li>
+      <li><strong>2025-11-01:</strong> Updated for version 1.8.0. Changed the aggregation method. Added a ★ mark to highlight standout co-occurring cards.</li>
+      <li><strong>2025-10-13:</strong> Added a card usage tab.</li>
+      <li><strong>2025-10-05:</strong> Initial release.</li>
+    </ul>
+  </details>
+</div>
+
+<!-- 📖 概要 -->
+<div class="section-box">
+  <h2>📖 概要 / Overview</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <p>
+本グラフは、ローグライクカードゲーム <strong>『東方光耀夜 (LBoL)』</strong> における
+各カードのパフォーマンスや共起関係を可視化したものです。  
+使用率・同時採用傾向・ルート選択など分析しています。
+    </p>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <p>
+This graph visualizes the performance and co-occurrence relationships of each card in the roguelike deck-building game <strong>“Touhou Lost Branch of Legend (LBoL)”</strong>.  
+It analyzes factors such as usage rate, simultaneous adoption tendencies, route selection, and so on.
+    </p>
+  </details>
+</div>
+
+<!-- 🧮 集計方法 -->
+<div class="section-box">
+  <h2>🧮 集計方法 / Methodology</h2>
+
+  <details>
+    <summary>📘 日本語</summary>
+    <p><strong>1. ログの収集とフィルタリング</strong></p>
+    <p>
+      公開されているログリポジトリ(lbol logs)から最新のログデータを自動で収集します。  
+      その際、以下の条件で分析に適したログだけを厳選しています。
+    </p>
+    <ul>
+      <li>Lunatic7 真エンドクリアのログのみを使用</li>
+      <li>一部MODを除外（ゲームバランスに影響を与えるMODが使用されたログは除外）</li>
+      <li>サンプルを増やすためにバニラのカードと展示品のみのログのみ抽出(提示にmod品があってもピックされなければ反映される)</li>
+      <li>不正が疑われるログの除外（異常なステータス変動・不連続なデータなど）</li>
+    </ul>
+
+    <p><strong>2. プレイヤーごとのログ抽出（サンプリング）</strong></p>
+    <p>
+      特定のプレイヤーのログが多すぎると、その人のプレイスタイルが全体に大きく影響してしまいます。  
+      これを防ぐため、各プレイヤーから抽出するログ数に上限を設けています。
+    </p>
+    <p>
+      ログ数が上限に満たないプレイヤーについては制限を適用せず、すべての有効ログを使用します。  
+      上限を超えるプレイヤーに対しては、<strong>分位加重サンプリング</strong>によってログを選び出します。
+    </p>
+    <ol>
+      <li>ログを新旧4グループに分割（最古・やや古い・やや新しい・最新の25%ずつ）</li>
+      <li>新しいグループから多めに、古いグループから少なめにランダム抽出</li>
+    </ol>
+
+    <p><strong>3. カード性能の計算</strong></p>
+    <p>各カードが戦闘に与える影響を「状況別」に評価します。</p>
+    <ul>
+      <li><strong>状況の定義:</strong> Actごとの進行度や敵種別（例：Act1の雑魚戦、Act2のエリート戦）で分類</li>
+      <li><strong>性能の算出:</strong> カードを所持していた場合と所持していなかった場合の平均クリアターン・HPロスを比較し、貢献度を計算</li>
+      <li><strong>信頼性の担保:</strong>
+        <ul>
+          <li>戦闘回数が一定数以上（例：雑魚戦20回、ボス戦10回）のカードのみ評価</li>
+          <li>ベイズ平均により、サンプル数の少ないカードの極端な値を補正</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><strong>4. 総合評価とランキングの作成</strong></p>
+    <p>
+      状況別に計算された性能スコアを以下の指標で総合評価し、ダッシュボードに表示します。
+    </p>
+    <ul>
+      <li><strong>総合パフォーマンス（バブルグラフ）:</strong>  
+        各状況の性能を「動的重み付け」で加重平均。採用率や戦闘回数の基準を満たすカードを表示。  
+        低採用カードでも評価に参加できるよう、<strong>ソフトフィルター</strong>を導入し、ランキングの安定性を向上。
+      </li>
+      <li><strong>Act別パフォーマンス:</strong> 各Actで特に強力なカードをランキング形式で表示。</li>
+      <li><strong>傾向値（上振れ度）:</strong> 特定条件下におけるカードの上振れ下振れを示す指標。
+        <ul>
+          <li>プラス: 0.5を超えるとかなり強い上昇傾向にあります。</li>
+          <li>攻撃傾向: 攻撃バフやバリアのような挙動をするものはこれに分類されやすい。</li>
+          <li>防御傾向: 防御バフ、永き夜対策、廃棄、マナカードはこれに分類されやすい。</li>
+        </ul>
+      </li>
+      <li><strong>注目度スコア:</strong> 「採用率」「性能」「ハイライト回数」を総合評価し、注目すべきカードを選出。</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>📗 English</summary>
+    <p><strong>1. Log Collection and Filtering</strong></p>
+    <p>
+      The system automatically collects the latest public log data from the repository(lbol logs).  
+      Only logs suitable for analysis are selected under the following conditions:
+    </p>
+    <ul>
+      <li>Only logs from Lunatic7 True Ending clears are used.</li>
+      <li>Logs involving balance-altering mods are excluded.</li>
+      <li>To increase the sample size, only logs containing vanilla cards and exhibits are extracted (even if modded items are present in the offers, they are included as long as they were not picked).</li>
+      <li>Logs suspected of cheating (abnormal stats, data discontinuity, etc.) are automatically filtered out.</li>
+    </ul>
+
+    <p><strong>2. Player Log Sampling</strong></p>
+    <p>
+      If one player contributes too many logs, their playstyle could dominate the results.  
+      To prevent this, a limit is imposed on the number of logs sampled per player.
+    </p>
+    <p>
+      Players below the limit are unaffected — all their valid logs are used.  
+      For players exceeding the limit, logs are selected using <strong>quantile-weighted sampling</strong>:
+    </p>
+    <ol>
+      <li>Divide the player’s logs into four chronological groups: oldest 25%, slightly old 25%, slightly new 25%, newest 25%.</li>
+      <li>Sample more logs from newer groups and fewer from older ones, randomly within each group.</li>
+    </ol>
+
+
+    <p><strong>3. Card Performance Evaluation</strong></p>
+    <p>Each card’s contribution to battle outcomes is evaluated by context.</p>
+    <ul>
+      <li><strong>Context Definition:</strong> Categorized by game progress and enemy type (e.g., Act 1 normal battles, Act 2 elite battles).</li>
+      <li><strong>Performance Calculation:</strong> Compares average clear turns and HP loss with and without the card, measuring its contribution.</li>
+      <li><strong>Reliability Measures:</strong>
+        <ul>
+          <li>Only cards used in a sufficient number of battles (e.g., 20 normal, 10 boss) are evaluated.</li>
+          <li>Bayesian averaging corrects extreme values caused by low sample counts.</li>
+        </ul>
+      </li>
+    </ul>
+
+
+    <p><strong>4. Overall Rating and Ranking</strong></p>
+    <p>
+      Context-based performance scores are combined into comprehensive indicators displayed on the dashboard:
+    </p>
+    <ul>
+      <li><strong>Overall Performance (Bubble Chart):</strong>  
+        Weighted average using <strong>dynamic weighting</strong> across all contexts.  
+        A <strong>soft filter</strong> smooths influence from low-adoption cards, stabilizing the rankings.
+      </li>
+      <li><strong>Performance by Act:</strong> Highlights cards that perform exceptionally well in specific Acts.</li>
+      <li><strong>Variance Index (Swing Potential):</strong> Shows how consistent or volatile a card’s performance is:
+        <ul>
+          <li>Positive: When it exceeds 0.5, it indicates a fairly strong upward trend.</li>
+          <li>Offensive tendency: Things that behave like attack buffs or barriers are likely to be classified into this category.</li>
+          <li>Defensive tendency: Defense buffs, Eternal Night countermeasures, exhaust effects, and mana cards are likely to be classified into this category.</li>
+        </ul>
+      </li>
+      <li><strong>Attention Score:</strong> A composite indicator combining adoption rate, performance, and highlight frequency to identify noteworthy cards.</li>
+    </ul>
+    <p>
+
+  </details>
+</div>
+
+<!-- 📮 連絡先（開閉式） -->
+<details class="section-box">
+  <summary>📮 連絡先 / Contact</summary>
+
+  <p>
+    📘 <strong>日本語</strong><br>
+    ご意見・不具合報告・データに関する質問などは、以下の Discord までお願いします。
+    サーバー内の指定チャンネルでお気軽にどうぞ。
+    Discord名: <strong>neff</strong>
+    チャンネル: <strong>Touhou Lost Branch of Legend（公式 Discord）</strong>
+  </p>
+
+  <p>
+    📗 <strong>English</strong><br>
+    For feedback, bug reports, or questions about the data, please contact me on Discord.
+    Feel free to post in the designated channel on the server.
+    Discord name: <strong>neff</strong>
+    Channel: <strong>Touhou Lost Branch of Legend (official Discord)</strong>
+  </p>
+</details>
+
+
+<script>
+// card_effectiveness_reports ディレクトリの最新コミット取得
+fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
+  .then(res => res.json())
+  .then(data => {
+    const commit = data[0];
+    const date = new Date(commit.commit.author.date);
+    const message = commit.commit.message;
+
+    document.getElementById("last-update").textContent =
+      `${date.toLocaleString("ja-JP")} (${message})`;
+  })
+  .catch(err => {
+    document.getElementById("last-update").textContent = "取得に失敗しました";
+  });
+</script>
+
+
+<footer>
+  © 2025 nfwp.github.io |
+</footer>
+</body>
+</html>
