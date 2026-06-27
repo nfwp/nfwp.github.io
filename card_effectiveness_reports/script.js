@@ -21,6 +21,8 @@ let allExhibits = new Set(); // 全展示品名を保持するためのセット
 let attentionSlider = null;
 let AGG_MAP = new Map();
 let ALL_RUN_DETAILS = []; //  全てのランの検索用データを保持する配列
+let ALL_DECK_TIMELINES = {}; // 既存の変数を {} に変更
+let ITEM_MASTER_LOOKUP = {}; //
 
 let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
 const ROUTE_NODE_HOVER_DELAY = 400; // ホバーの遅延時間 (ミリ秒)。この数値を調整してお好みの長さにできます。
@@ -2844,14 +2846,17 @@ window.switchActTrend = function(act) {
 };
 
 
+// 既存の performAdvancedSearch 関数と applyKeywordFilters 関数を、
+// 以下の2つの関数のコードでまるごと置き換えてください。
+
 /**
  * 新しいUIに基づいてランを検索し、結果を表示する
- * Act/Levelが指定された場合は、その時点の所持アイテム（カードと展示品）で検索する
  */
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
+
     // 0. 必要なデータがロードされているか確認
-    if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES) {
+    if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES || !ITEM_MASTER_LOOKUP) {
         console.warn("検索データがまだ読み込まれていません。");
         const resultsContainer = document.getElementById('run-finder-results');
         if (resultsContainer) {
@@ -2874,6 +2879,7 @@ function performAdvancedSearch() {
     const includeKeywords = getKeywordsFromList('include-items-list');
     const excludeKeywords = getKeywordsFromList('exclude-items-list');
 
+    // この変数がエラーの原因でした
     const useTimelineSearch = !!actFilter;
 
     // 2. ランデータをフィルタリング
@@ -2884,23 +2890,19 @@ function performAdvancedSearch() {
         }
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
-        let itemsToSearch; // ここには [{ja:..., en:...}, ...] のオブジェクトのリストが入る
+        let itemIdsToSearch;
 
         if (useTimelineSearch) {
             const runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            if (!runTimeline) {
-                return false;
-            }
+            if (!runTimeline) return false;
 
             if (levelFilter) {
                 const stationKey = `${actFilter}-${levelFilter}`;
-                if (!runTimeline[stationKey]) {
-                    return false;
-                }
+                if (!runTimeline[stationKey]) return false;
                 const stationData = runTimeline[stationKey];
-                itemsToSearch = [...(stationData.cards || []), ...(stationData.exhibits || [])];
+                itemIdsToSearch = [...(stationData.c || []), ...(stationData.e || [])];
             } else {
-                const actItems = new Map(); // Mapを使ってアイテムの重複を管理
+                const actItemIds = new Set();
                 const actPrefix = `${actFilter}-`;
                 let hasReachedAct = false;
 
@@ -2908,62 +2910,65 @@ function performAdvancedSearch() {
                     if (stationKey.startsWith(actPrefix)) {
                         hasReachedAct = true;
                         const stationData = runTimeline[stationKey];
-                        if (stationData.cards) {
-                            stationData.cards.forEach(card => actItems.set(card.ja, card));
-                        }
-                        if (stationData.exhibits) {
-                            stationData.exhibits.forEach(exhibit => actItems.set(exhibit.ja, exhibit));
-                        }
+                        if (stationData.c) stationData.c.forEach(id => actItemIds.add(id));
+                        if (stationData.e) stationData.e.forEach(id => actItemIds.add(id));
                     }
                 }
-
-                if (!hasReachedAct) {
-                    return false;
-                }
-                itemsToSearch = Array.from(actItems.values());
+                if (!hasReachedAct) return false;
+                itemIdsToSearch = Array.from(actItemIds);
             }
         } else {
-            itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
+            // Act指定なしの場合は、run_details.json のデータを使う
+            const itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
+            const searchableItems = itemsToSearch.map(itemObj => {
+                if (!itemObj) return '';
+                return (LANG === 'en' && itemObj.en) ? itemObj.en : itemObj.ja;
+            });
+            const lowerCaseItems = searchableItems.map(item => item ? item.toLowerCase() : '');
+            return applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic);
         }
 
-        // ▼▼▼ ここが修正点です ▼▼▼
-        // 3. 検索対象のアイテムリストを現在のUI言語に合わせた文字列リストに変換
-        const searchableItems = itemsToSearch.map(itemObj => {
-            if (!itemObj) return '';
-            // 'currentLang' を正しいグローバル変数 'LANG' に修正
+        // タイムライン検索の場合の処理 (IDから名前に変換)
+        const itemsAsObjects = itemIdsToSearch.map(id => ITEM_MASTER_LOOKUP[String(id)]).filter(Boolean);
+        const searchableItems = itemsAsObjects.map(itemObj => {
             return (LANG === 'en' && itemObj.en) ? itemObj.en : itemObj.ja;
         });
-        const lowerCaseItems = searchableItems.map(item => item ? item.toLowerCase() : '');
-        // ▲▲▲ 修正ここまで ▲▲▲
+        const lowerCaseItems = searchableItems.map(item => item.toLowerCase());
 
-        // --- 条件C: 「含まない」アイテムのフィルター ---
-        if (excludeKeywords.length > 0) {
-            const hasExcludedItem = excludeKeywords.some(keyword =>
-                lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
-            );
-            if (hasExcludedItem) {
-                return false;
-            }
-        }
-
-        // --- 条件D: 「含む」アイテムのフィルター ---
-        if (includeKeywords.length > 0) {
-            if (includeLogic === 'AND') {
-                const hasAllItems = includeKeywords.every(keyword =>
-                    lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
-                );
-                if (!hasAllItems) return false;
-            } else { // OR検索
-                const hasAnyItem = includeKeywords.some(keyword =>
-                    lowerCaseItems.some(item => item.includes(keyword.toLowerCase()))
-                );
-                if (!hasAnyItem) return false;
-            }
-        }
-
-        return true;
+        return applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic);
     });
 
     // 3. 結果を表示
     displayRunFinderResults(filteredRuns, actFilter, levelFilter);
+}
+
+/**
+ * キーワードフィルターを適用するヘルパー関数
+ * @param {string[]} lowerCaseItems - 検索対象のアイテム名リスト（小文字）
+ * @param {string[]} includeKeywords - 含むべきキーワードのリスト
+ * @param {string[]} excludeKeywords - 除外すべきキーワードのリスト
+ * @param {'AND'|'OR'} includeLogic - 含むべきキーワードの検索論理
+ * @returns {boolean} - フィルターを通過したかどうか
+ */
+function applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic) {
+    // --- 「含まない」アイテムのフィルター ---
+    if (excludeKeywords.length > 0) {
+        if (excludeKeywords.some(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
+            return false;
+        }
+    }
+
+    // --- 「含む」アイテムのフィルター ---
+    if (includeKeywords.length > 0) {
+        if (includeLogic === 'AND') {
+            if (!includeKeywords.every(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
+                return false;
+            }
+        } else { // OR検索
+            if (!includeKeywords.some(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
