@@ -2840,7 +2840,6 @@ window.switchActTrend = function(act) {
 };
 
 
-
 /**
  * 新しいUIに基づいてランを検索し、結果を表示する
  * Act/Levelが指定された場合は、その時点の所持アイテム（カードと展示品）で検索する
@@ -2870,8 +2869,8 @@ function performAdvancedSearch() {
     const includeKeywords = getKeywordsFromList('include-items-list');
     const excludeKeywords = getKeywordsFromList('exclude-items-list');
 
-    const useTimelineSearch = actFilter && levelFilter;
-    const stationKey = useTimelineSearch ? `${actFilter}-${levelFilter}` : null;
+    // ★★★ 変更点1: Actが指定されていればタイムライン検索を有効にする ★★★
+    const useTimelineSearch = !!actFilter;
 
     // 2. ランデータをフィルタリング
     const filteredRuns = ALL_RUN_DETAILS.filter(run => {
@@ -2882,17 +2881,51 @@ function performAdvancedSearch() {
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
         let itemsToSearch;
+
+        // ★★★ 変更点2: Act指定時の検索ロジックを修正 ★★★
         if (useTimelineSearch) {
             const runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            // そのマスに到達していない、またはデータがない場合は除外
-            if (!runTimeline || !runTimeline[stationKey]) {
-                return false;
+            if (!runTimeline) {
+                return false; // このランのタイムラインデータがない
             }
-            // Act/Level指定時は、その時点のカードと展示品を検索対象とする
-            const stationData = runTimeline[stationKey];
-            itemsToSearch = [...(stationData.cards || []), ...(stationData.exhibits || [])];
+
+            if (levelFilter) {
+                // --- Levelも指定されている場合 (従来通り) ---
+                const stationKey = `${actFilter}-${levelFilter}`;
+                if (!runTimeline[stationKey]) {
+                    return false; // そのマスに到達していない
+                }
+                const stationData = runTimeline[stationKey];
+                itemsToSearch = [...(stationData.cards || []), ...(stationData.exhibits || [])];
+
+            } else {
+                // --- Actのみが指定されている場合 (新しいロジック) ---
+                const actItems = new Set();
+                const actPrefix = `${actFilter}-`;
+                let hasReachedAct = false;
+
+                // Actに属するすべての時点のアイテムを収集
+                for (const stationKey in runTimeline) {
+                    if (stationKey.startsWith(actPrefix)) {
+                        hasReachedAct = true;
+                        const stationData = runTimeline[stationKey];
+                        if (stationData.cards) {
+                            stationData.cards.forEach(card => actItems.add(card));
+                        }
+                        if (stationData.exhibits) {
+                            stationData.exhibits.forEach(exhibit => actItems.add(exhibit));
+                        }
+                    }
+                }
+
+                if (!hasReachedAct) {
+                    return false; // このランは指定されたActに到達していない
+                }
+                itemsToSearch = Array.from(actItems);
+            }
         } else {
-            // Act/Level指定なしの場合は、最終的なカードと展示品を検索対象とする
+            // --- Act指定なしの場合 (従来通り) ---
+            // run.cards は「入手したことのある全カード」、run.exhibits は「最終所持展示品」
             itemsToSearch = [...(run.cards || []), ...(run.exhibits || [])];
         }
 
@@ -2928,9 +2961,6 @@ function performAdvancedSearch() {
         // 全てのフィルターを通過したランのみ残す
         return true;
     });
-
-    // --- デバッグ用コード（確認後、削除してOKです） ---
-    console.log("【デバッグ1】検索条件:", { act: actFilter, level: levelFilter });
 
     // 3. 結果を表示
     displayRunFinderResults(filteredRuns, actFilter, levelFilter);
