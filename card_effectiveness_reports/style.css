@@ -1490,3 +1490,14 @@ body {
     color: #aaa;
     font-weight: normal;
 }
+
+/* --- Run Finder Table Sorting --- */
+.run-finder-results-table th[onclick] {
+    cursor: pointer;
+    user-select: none; /* ダブルクリックでテキストが選択されるのを防ぐ */
+    transition: background-color 0.2s;
+}
+
+.run-finder-results-table th[onclick]:hover {
+    background-color: #e8e8e8; /* ホバー時の色を少し濃くする */
+}
