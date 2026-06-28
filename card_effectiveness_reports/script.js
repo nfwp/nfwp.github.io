@@ -2532,7 +2532,12 @@ function renderRunFinderTab() {
         logic_or: UI_TEXT.run_finder_logic_or || "OR (any)",
         exclude_items_label: UI_TEXT.run_finder_exclude_items_label || "Exclude Items (all specified items will be excluded)",
         search_btn: UI_TEXT.run_finder_search_btn || "Search Runs",
-        initial_prompt: UI_TEXT.run_finder_initial_prompt || "Enter search criteria and press the 'Search Runs' button."
+        initial_prompt: UI_TEXT.run_finder_initial_prompt || "Enter search criteria and press the 'Search Runs' button.",
+        deck_size_label: UI_TEXT.run_finder_deck_size_label || "Deck Size (at station / final):",
+        deck_size_any: UI_TEXT.run_finder_deck_size_any || "Any",
+        deck_size_lte: UI_TEXT.run_finder_deck_size_lte || "<=",
+        deck_size_gte: UI_TEXT.run_finder_deck_size_gte || ">=",
+        deck_size_placeholder: UI_TEXT.run_finder_deck_size_placeholder || "e.g., 10"
     };
 
     // 1. オートコンプリート用のデータリストを作成
@@ -2595,6 +2600,17 @@ function renderRunFinderTab() {
                     <div class="control-group">
                         <label for="character-select">${texts.char_label}</label>
                         <select id="character-select">${charOptions}</select>
+                    </div>
+                    <div class="control-group-row">
+                        <div class="control-group">
+                            <label for="deck-size-operator">${texts.deck_size_label}</label>
+                            <select id="deck-size-operator">
+                                <option value="any">${texts.deck_size_any}</option>
+                                <option value="lte">${texts.deck_size_lte}</option>
+                                <option value="gte">${texts.deck_size_gte}</option>
+                            </select>
+                            <input type="number" id="deck-size-value" min="0" placeholder="${texts.deck_size_placeholder}" style="width: 80px;">
+                        </div>
                     </div>
                 </div>
                 <div class="control-section">
@@ -2785,26 +2801,38 @@ function handleSortClick(sortKey) {
 
 /**
  * lastFoundRuns を現在のソート設定で並べ替え、テーブルを再描画する
+ * [修正版] DeckSizeのような数値でのソートに正しく対応
+ * @param {string|null} actFilter
+ * @param {string|null} levelFilter
  */
-function sortAndDisplayRuns() {
-    // 元の配列を壊さないようにコピーを作成
+function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
     const sortedRuns = [...lastFoundRuns].sort((a, b) => {
-        const valA = a[currentSortKey] || ''; // null や undefined を考慮
-        const valB = b[currentSortKey] || '';
+        const order = currentSortOrder === 'asc' ? 1 : -1;
 
-        // 文字列として比較
-        const comparison = valA.localeCompare(valB, undefined, { numeric: true });
+        let valA = a[currentSortKey];
+        let valB = b[currentSortKey];
 
-        return currentSortOrder === 'asc' ? comparison : -comparison;
+        // null や undefined は常に最後尾に来るようにする
+        if (valA == null && valB == null) return 0;
+        if (valA == null) return 1;
+        if (valB == null) return -1;
+
+        // 値が数値型の場合 (DeckSizeなど) は、数値として比較
+        if (typeof valA === 'number' && typeof valB === 'number') {
+            return (valA - valB) * order;
+        }
+
+        // それ以外は、文字列として比較 (run_idやversionの数字も正しく扱えるように)
+        return String(valA).localeCompare(String(valB), undefined, { numeric: true }) * order;
     });
 
     // 並べ替えたデータでテーブルを表示
-    displayRunFinderResults(sortedRuns);
+    displayRunFinderResults(sortedRuns, actFilter, levelFilter);
 }
 
 /**
  * 検索結果のランをテーブル形式で表示する。
- * ご希望の列順と、レイアウトが崩れない経路サマリー形式で表示します。
+ * [修正版] DeckSize列のヘッダーをソート可能にする
  * @param {Array} runs - 表示するランの配列
  * @param {string|null} actFilter - 検索で使用されたActフィルターの値
  * @param {string|null} levelFilter - 検索で使用されたLevelフィルターの値
@@ -2812,74 +2840,56 @@ function sortAndDisplayRuns() {
 function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
     const resultsContainer = document.getElementById('run-finder-results');
 
-    // 1. UIテキストとアイコン定義 (変更なし)
+    // 1. UIテキストとアイコン定義
     const texts = {
         title: UI_TEXT.search_results_title || "Found {count} runs",
         no_results: UI_TEXT.search_no_results || "No runs were found matching the criteria.",
         run_id: "Run ID",
         version: "Ver",
         character: "Char",
+        deck_size: "Size",
         player_name: "Player",
         act1_header: "Act1",
         act2_header: "Act2",
         act3_header: "Act3"
     };
-    const nodeIcons = {
-        'EliteEnemy': '👿',
-        'Shop': '🛒',
-        'Gap': '🔥'
-    };
+    const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
 
     if (!runs || runs.length === 0) {
         resultsContainer.innerHTML = `<p>${texts.no_results}</p>`;
         return;
     }
 
-    // 2. 各ランのテーブル行を生成
+    // 2. 各ランのテーブル行を生成 (変更なし)
     const runRows = runs.map(run => {
-        // --- リンクURLの生成 (変更なし) ---
         const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
-        let queryParams = '';
-        if (actFilter) {
-            queryParams += `?a=${actFilter}`;
-            if (levelFilter) {
-                queryParams += `&l=${levelFilter}`;
-            }
-        }
+        const params = [];
+        if (actFilter) params.push(`a=${actFilter}`);
+        if (levelFilter) params.push(`l=${levelFilter}`);
+        const queryParams = params.length > 0 ? '?' + params.join('&') : '';
         const finalUrl = baseUrl + queryParams;
-
 
         const pathStrings = { act1: '', act2: '', act3: '' };
         if (run.path_summary) {
             for (let actNum = 1; actNum <= 3; actNum++) {
                 const stageHtmlParts = [];
-                // 序盤・中盤・終盤の順に処理
                 for (const stage of ['Early', 'Mid', 'Late']) {
                     const key = `Act${actNum} ${stage}`;
                     const nodesInStage = run.path_summary[key] || [];
-
-                    const currentStageString = nodesInStage
-                        .map(node => nodeIcons[node] || null)
-                        .filter(Boolean)
-                        .join('');
-
-                    // 各ステージをspanタグで囲む。中身がなくても高さを維持するため&nbsp;を入れる
+                    const currentStageString = nodesInStage.map(node => nodeIcons[node] || null).filter(Boolean).join('');
                     stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
                 }
-                // 3つのパートを矢印のspanを挟んで結合する
                 pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
             }
         }
 
-
-        // --- テーブル行のHTMLを希望の列順で生成 (変更なし) ---
         return `
             <tr>
                 <td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td>
                 <td>${run.version}</td>
                 <td>${run.character}</td>
+                <td>${run.displayDeckSize ?? 'N/A'}</td>
                 <td>${run.player_name}</td>
-
                 <td class="path-summary-cell-container">
                     <div class="path-summary-grid">${pathStrings.act1}</div>
                 </td>
@@ -2891,10 +2901,9 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                 </td>
             </tr>
         `;
-
     }).join('');
 
-    // 3. テーブル全体のHTMLを希望の列順で生成 (変更なし)
+    // 3. テーブル全体のHTMLを生成
     const getSortIndicator = (key) => {
         if (currentSortKey === key) {
             return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -2910,6 +2919,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                     <th onclick="handleSortClick('run_id')">${texts.run_id}${getSortIndicator('run_id')}</th>
                     <th onclick="handleSortClick('version')">${texts.version}${getSortIndicator('version')}</th>
                     <th onclick="handleSortClick('character')">${texts.character}${getSortIndicator('character')}</th>
+                    <th onclick="handleSortClick('displayDeckSize')">${texts.deck_size}${getSortIndicator('displayDeckSize')}</th>
                     <th onclick="handleSortClick('player_name')">${texts.player_name}${getSortIndicator('player_name')}</th>
                     <th>${texts.act1_header}</th>
                     <th>${texts.act2_header}</th>
@@ -2922,6 +2932,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         </table>
     `;
 }
+
 /**
  * Act別トレンドの表示を切り替える関数
  */
@@ -2951,36 +2962,42 @@ window.switchActTrend = function(act) {
 
 /**
  * 差分データから指定されたステーション時点のデッキ状態を復元する
- * @param {object} runTimeline - 1ラン分のタイムラインデータ {initial: ..., changes: ..., station_map: ...}
+ * [修正版] デッキを配列として扱い、重複を保持する
+ * @param {object} runTimeline - 1ラン分のタイムラインデータ
  * @param {number} targetStationIndex - 復元したいステーションのインデックス
- * @returns {{cards: Set<number>, exhibits: Set<number>}} - 復元されたカードと展示品のIDセット
+ * @returns {{cards: Array<number>, exhibits: Set<number>}} - 復元されたカード(配列)と展示品(Set)
  */
 function reconstructDeckAtStation(runTimeline, targetStationIndex) {
-    // 1. 初期デッキから開始 (Setを使うと追加・削除が効率的)
-    const currentDeck = new Set(runTimeline.initial.c || []);
+    // 1. 初期デッキを配列としてコピーして開始
+    const currentDeck = [...(runTimeline.initial.c || [])];
     const currentExhibits = new Set(runTimeline.initial.e || []);
 
     // 2. ターゲットのマスまで、変更を順に適用
-    // changesのキーは文字列なので、数値に変換して比較
     const sortedChangeKeys = Object.keys(runTimeline.changes)
                                    .map(Number)
                                    .sort((a, b) => a - b);
 
     for (const stationIdx of sortedChangeKeys) {
         if (stationIdx > targetStationIndex) {
-            break; // 目的のステーションを過ぎたらループを抜ける
+            break;
         }
 
         const changesAtStation = runTimeline.changes[String(stationIdx)];
         if (changesAtStation) {
-            // カードの追加・削除
+            // カードの追加 (push)
             if (changesAtStation.add_c) {
-                changesAtStation.add_c.forEach(id => currentDeck.add(id));
+                changesAtStation.add_c.forEach(id => currentDeck.push(id));
             }
+            // カードの削除 (spliceで最初に見つかったものを1つ削除)
             if (changesAtStation.rem_c) {
-                changesAtStation.rem_c.forEach(id => currentDeck.delete(id));
+                changesAtStation.rem_c.forEach(idToRemove => {
+                    const index = currentDeck.indexOf(idToRemove);
+                    if (index > -1) {
+                        currentDeck.splice(index, 1);
+                    }
+                });
             }
-            // 展示品の追加・削除
+            // 展示品はSetのままでOK
             if (changesAtStation.add_e) {
                 changesAtStation.add_e.forEach(id => currentExhibits.add(id));
             }
@@ -2990,17 +3007,18 @@ function reconstructDeckAtStation(runTimeline, targetStationIndex) {
         }
     }
 
-    // Setを返す
+    // カードは配列、展示品はSetとして返す
     return { cards: currentDeck, exhibits: currentExhibits };
 }
 
 /**
  * 高度な検索を実行し、結果を表示する
+ * [修正版] DeckSizeの記録と、act/levelフィルターの引き渡しを追加
  */
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
 
-    // 0. 必要なデータがロードされているか確認
+    // 0. 必要なデータがロードされているか確認 (変更なし)
     if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES || !ITEM_MASTER_LOOKUP) {
         console.warn("検索データがまだ読み込まれていません。");
         const resultsContainer = document.getElementById('run-finder-results');
@@ -3015,6 +3033,9 @@ function performAdvancedSearch() {
     const actFilter = document.getElementById('act-filter').value;
     const levelFilter = document.getElementById('level-filter').value;
     const includeLogic = document.getElementById('include-logic-and').checked ? 'AND' : 'OR';
+    const deckSizeOperator = document.getElementById('deck-size-operator').value;
+    const deckSizeValueStr = document.getElementById('deck-size-value').value;
+    const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
 
     const getKeywordsFromList = (listId) => {
         const list = document.getElementById(listId);
@@ -3026,52 +3047,55 @@ function performAdvancedSearch() {
 
     const useTimelineSearch = !!actFilter || !!levelFilter;
 
-    // 2. ランデータをフィルタリング (変更なし)
-    const filteredRuns = ALL_RUN_DETAILS.filter(run => {
-        // --- 条件A: キャラクターでの絞り込み ---
+    // 2. ランデータをフィルタリング
+    // 元データを壊さないように、シャローコピーの配列を作成して処理する
+    const runsToSearch = ALL_RUN_DETAILS.map(r => ({...r}));
+    const filteredRuns = runsToSearch.filter(run => {
+        // --- 条件A: キャラクターでの絞り込み (変更なし) ---
         if (selectedChar !== 'All' && run.character !== selectedChar) {
             return false;
         }
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
         if (useTimelineSearch) {
+            // --- タイムライン検索 (Act/Level指定あり) ---
             const runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            if (!runTimeline || !STATION_MAP_GLOBAL) {
-                return false;
-            }
+            if (!runTimeline || !STATION_MAP_GLOBAL) return false;
 
             let stationIndicesToSearch = [];
-
             if (actFilter && levelFilter) {
                 const stationKey = `${actFilter}-${levelFilter}`;
                 const targetIndex = STATION_MAP_GLOBAL[stationKey];
-                if (targetIndex !== undefined) {
-                    stationIndicesToSearch.push(targetIndex);
-                }
+                if (targetIndex !== undefined) stationIndicesToSearch.push(targetIndex);
             } else if (actFilter) {
+                // Actのみ指定の場合、そのActの全マスを対象にする
                 const actPrefix = `${actFilter}-`;
                 for (const stationKey in STATION_MAP_GLOBAL) {
-                    if (stationKey.startsWith(actPrefix)) {
-                        stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
-                    }
+                    if (stationKey.startsWith(actPrefix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
                 }
             } else if (levelFilter) {
+                // Levelのみ指定の場合 (変更なし)
                 const levelSuffix = `-${levelFilter}`;
                  for (const stationKey in STATION_MAP_GLOBAL) {
-                    if (stationKey.endsWith(levelSuffix)) {
-                        stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
-                    }
+                    if (stationKey.endsWith(levelSuffix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
                 }
             }
 
-            if (stationIndicesToSearch.length === 0) {
-                return false;
-            }
+            if (stationIndicesToSearch.length === 0) return false;
 
-            const runMatches = stationIndicesToSearch.some(stationIndex => {
+            // 対象ステーションのいずれかで条件を満たせばOK
+            return stationIndicesToSearch.some(stationIndex => {
                 const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
-                const allItemIds = [...cards, ...exhibits];
 
+                // デッキ枚数フィルター
+                if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
+                    const deckSize = cards.length;
+                    if (deckSizeOperator === 'lte' && deckSize > deckSizeValue) return false;
+                    if (deckSizeOperator === 'gte' && deckSize < deckSizeValue) return false;
+                }
+
+                // アイテムフィルター
+                const allItemIds = [...cards, ...exhibits];
                 const searchableItems = [];
                 for (const itemId of allItemIds) {
                     const itemData = ITEM_MASTER_LOOKUP[itemId];
@@ -3080,15 +3104,32 @@ function performAdvancedSearch() {
                         if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
                     }
                 }
-                return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
+                const itemsMatch = applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
+
+                // 全ての条件に一致した場合、表示用のデッキサイズをrunオブジェクトに記録
+                if (itemsMatch) {
+                    run.displayDeckSize = cards.length;
+                    return true;
+                }
+                return false;
             });
 
-            return runMatches;
-
         } else {
+            // --- 最終デッキ検索 (Act/Level指定なし) ---
+            const finalDeckSize = run.cards ? run.cards.length : 0;
+
+            // デッキ枚数フィルター
+            if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
+                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) return false;
+                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) return false;
+            }
+
+            // 表示用のデッキサイズを記録
+            run.displayDeckSize = finalDeckSize;
+
+            // アイテムフィルター (変更なし)
             const searchableItems = [];
             const allItemIds = [...(run.cards || []), ...(run.exhibits || [])];
-
             for (const itemId of allItemIds) {
                 const itemData = ITEM_MASTER_LOOKUP[itemId];
                 if (itemData) {
@@ -3096,27 +3137,18 @@ function performAdvancedSearch() {
                     if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
                 }
             }
-
             return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
         }
     });
 
-
-
-    // 3. 検索結果をグローバル変数に保存
+    // 3. 検索結果をグローバル変数に保存し、ソートして表示
     lastFoundRuns = filteredRuns;
-
-    // 4. 新しい検索が実行されたので、ソート順をデフォルト（Run IDの降順）に戻す
     currentSortKey = 'run_id';
     currentSortOrder = 'asc';
-
-    // 5. ソートして表示 (この関数が内部で displayRunFinderResults を呼び出す)
-    sortAndDisplayRuns();
-
-    // 不要な displayRunFinderResults の呼び出しは削除します。
-
-
+    // ▼▼▼ 検索で使ったフィルター情報を引き渡す ▼▼▼
+    sortAndDisplayRuns(actFilter, levelFilter);
 }
+
 /**
  * キーワードフィルターを適用するヘルパー関数 (この関数は変更なし)
  */

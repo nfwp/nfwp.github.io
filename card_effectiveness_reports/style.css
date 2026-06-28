@@ -1420,14 +1420,17 @@ body {
 }
 
 
-/* 7列用に幅を再配分します */
-.run-finder-results-table th:nth-child(1) { width: 30%; }  /* Run ID */
-.run-finder-results-table th:nth-child(2) { width: 6%; }   /* Version (短縮) */
-.run-finder-results-table th:nth-child(3) { width: 8%; }   /* Character (短縮) */
-.run-finder-results-table th:nth-child(4) { width: 10%; }  /* Player (短縮) */
-.run-finder-results-table th:nth-child(5) { width: 15%; }  /* Act1 (拡大) */
-.run-finder-results-table th:nth-child(6) { width: 15%; }  /* Act2 (拡大) */
-.run-finder-results-table th:nth-child(7) { width: 16%; }  /* Act3 (拡大) */
+
+/* 8列用に幅を再配分します */
+.run-finder-results-table th:nth-child(1) { width: 26%; }  /* Run ID */
+.run-finder-results-table th:nth-child(2) { width: 3%; }   /* Version */
+.run-finder-results-table th:nth-child(3) { width: 4%; }   /* Character */
+.run-finder-results-table th:nth-child(4) { width: 3%; }   /* DeckSize */
+.run-finder-results-table th:nth-child(5) { width: 8%; }   /* Player */
+.run-finder-results-table th:nth-child(6) { width: 15%; }  /* Act1 */
+.run-finder-results-table th:nth-child(7) { width: 15%; }  /* Act2 */
+.run-finder-results-table th:nth-child(8) { width: 16%; }  /* Act3 */
+
 
 .run-finder-results-table tr:nth-child(even) {
     background-color: #f9f9f9;
