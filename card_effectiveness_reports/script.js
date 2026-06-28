@@ -2760,24 +2760,32 @@ function searchRuns() {
     displayRunFinderResults(filteredRuns, actFilter, levelFilter);
 }
 
-
-
-
 /**
  * 検索結果のランをテーブル形式で表示する。
- * リンクにはAct/Levelのクエリパラメータを付与する。
+ * ご希望の列順と、レイアウトが崩れない経路サマリー形式で表示します。
  * @param {Array} runs - 表示するランの配列
  * @param {string|null} actFilter - 検索で使用されたActフィルターの値
  * @param {string|null} levelFilter - 検索で使用されたLevelフィルターの値
  */
 function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
     const resultsContainer = document.getElementById('run-finder-results');
+
+    // 1. UIテキストとアイコン定義 (変更なし)
     const texts = {
         title: UI_TEXT.search_results_title || "Found {count} runs",
         no_results: UI_TEXT.search_no_results || "No runs were found matching the criteria.",
         run_id: "Run ID",
-        character: UI_TEXT.run_finder_char_label || "Character:",
-        version: "Version"
+        version: "Ver",
+        character: "Char",
+        player_name: "Player",
+        act1_header: "Act1",
+        act2_header: "Act2",
+        act3_header: "Act3"
+    };
+    const nodeIcons = {
+        'EliteEnemy': '👿',
+        'Shop': '🛒',
+        'Gap': '🔥'
     };
 
     if (!runs || runs.length === 0) {
@@ -2785,9 +2793,10 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         return;
     }
 
+    // 2. 各ランのテーブル行を生成
     const runRows = runs.map(run => {
+        // --- リンクURLの生成 (変更なし) ---
         const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
-
         let queryParams = '';
         if (actFilter) {
             queryParams += `?a=${actFilter}`;
@@ -2795,20 +2804,55 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                 queryParams += `&l=${levelFilter}`;
             }
         }
-
         const finalUrl = baseUrl + queryParams;
 
+        // --- ▼▼▼ 経路サマリーのHTML生成ロジックを修正 ▼▼▼ ---
+        const pathStrings = { act1: '', act2: '', act3: '' };
+        if (run.path_summary) {
+            for (let actNum = 1; actNum <= 3; actNum++) {
+                const stageHtmlParts = [];
+                // 序盤・中盤・終盤の順に処理
+                for (const stage of ['Early', 'Mid', 'Late']) {
+                    const key = `Act${actNum} ${stage}`;
+                    const nodesInStage = run.path_summary[key] || [];
 
+                    const currentStageString = nodesInStage
+                        .map(node => nodeIcons[node] || null)
+                        .filter(Boolean)
+                        .join('');
+
+                    // 各ステージをspanタグで囲む。中身がなくても高さを維持するため&nbsp;を入れる
+                    stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
+                }
+                // 3つのパートを矢印のspanを挟んで結合する
+                pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
+            }
+        }
+        // --- ▲▲▲ 修正ここまで ▲▲▲ ---
+
+        // --- テーブル行のHTMLを希望の列順で生成 (変更なし) ---
         return `
             <tr>
                 <td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td>
                 <td>${run.version}</td>
                 <td>${run.character}</td>
+                <td>${run.player_name}</td>
+
+                <td class="path-summary-cell-container">
+                    <div class="path-summary-grid">${pathStrings.act1}</div>
+                </td>
+                <td class="path-summary-cell-container">
+                    <div class="path-summary-grid">${pathStrings.act2}</div>
+                </td>
+                <td class="path-summary-cell-container">
+                    <div class="path-summary-grid">${pathStrings.act3}</div>
+                </td>
             </tr>
         `;
-
+        // --- ▲▲▲ 修正ここまで ▲▲▲ ---
     }).join('');
 
+    // 3. テーブル全体のHTMLを希望の列順で生成 (変更なし)
     resultsContainer.innerHTML = `
         <h4>${texts.title.replace('{count}', runs.length)}</h4>
         <table class="run-finder-results-table">
@@ -2817,6 +2861,10 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                     <th>${texts.run_id}</th>
                     <th>${texts.version}</th>
                     <th>${texts.character}</th>
+                    <th>${texts.player_name}</th>
+                    <th>${texts.act1_header}</th>
+                    <th>${texts.act2_header}</th>
+                    <th>${texts.act3_header}</th>
                 </tr>
             </thead>
             <tbody>
@@ -2825,8 +2873,6 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         </table>
     `;
 }
-
-
 /**
  * Act別トレンドの表示を切り替える関数
  */
