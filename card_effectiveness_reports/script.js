@@ -3108,7 +3108,7 @@ function performAdvancedSearch() {
 
     // 4. 新しい検索が実行されたので、ソート順をデフォルト（Run IDの降順）に戻す
     currentSortKey = 'run_id';
-    currentSortOrder = 'aesc';
+    currentSortOrder = 'asc';
 
     // 5. ソートして表示 (この関数が内部で displayRunFinderResults を呼び出す)
     sortAndDisplayRuns();
