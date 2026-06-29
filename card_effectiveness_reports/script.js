@@ -36,12 +36,8 @@ let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
 
 
 
-
-
-// =================================================================
-// メイン処理
-// =================================================================
 window.addEventListener('DOMContentLoaded', async () => {
+    // この 'params' 変数を関数全体で使い回します
     const params = new URLSearchParams(window.location.search);
     CURRENT_CHAR = params.get('char') || 'CirnoA';
     LANG = (params.get('lang') || 'ja').toLowerCase();
@@ -97,19 +93,31 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     await setupUiText(LANG);
     renderGlobalHeader();
-    setupNavigation();
+    setupNavigation(); // ここでタブボタンが生成される
 
-    // 各タブの初期描画 (ここは変更なし)
-    renderCardPerformanceTab(CURRENT_CHAR, LANG);
-    renderExhibitAnalysisTab(LANG);
-    renderRouteEventTab(LANG);
-    renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
-    renderActTrendTab(LANG);
-    renderCardListTab(ALL_DATA);
+    // ▼▼▼ このブロックで、以前の初期描画処理を置き換える ▼▼▼
+    // URLに 'search' パラメータがあるかどうかをチェック
+    if (params.has('search')) {
+        // 共有URLでアクセスされた場合、ラン検索タブを直接開いて自動検索
+        switchTab('run-finder-tab', true); // 第2引数に true を渡して自動検索を指示
+    } else {
+        // 通常の読み込み時は、最初のタブを開く
+        switchTab('card-performance-tab');
+    }
+    // ▲▲▲ ここまで ▲▲▲
+
+    // 各タブのコンテンツは switchTab が必要に応じて描画するため、以下の個別呼び出しは不要
+    // renderCardPerformanceTab(CURRENT_CHAR, LANG);
+    // renderExhibitAnalysisTab(LANG);
+    // renderRouteEventTab(LANG);
+    // renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
+    // renderActTrendTab(LANG);
+    // renderCardListTab(ALL_DATA);
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
 });
+
 
 // =================================================================
 // UIコンポーネント描画
@@ -181,6 +189,95 @@ async function setupUiText(lang) {
     }
 }
 
+/**
+ * 指定されたIDのタブに切り替える（遅延レンダリング対応版）
+ * @param {string} tabId - 表示するタブのID
+ * @param {boolean} [autoSearch=false] - ラン検索タブの場合に自動検索を実行するか
+ */
+function switchTab(tabId, autoSearch = false) {
+    const tabButtonsContainer = document.getElementById('tab-buttons');
+    const mobileTabSelector = document.getElementById('mobile-tab-selector');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // すべてのタブコンテンツを非表示にし、ボタンのアクティブ状態を解除
+    tabContents.forEach(content => {
+        content.style.display = 'none';
+    });
+    if (tabButtonsContainer) {
+        tabButtonsContainer.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+    }
+
+    // 指定されたタブを表示
+    const contentToShow = document.getElementById(tabId);
+    if (contentToShow) {
+        contentToShow.style.display = 'block';
+
+        // ★★★ ここが重要 ★★★
+        // タブの中身が空の場合のみ、対応する描画関数を呼び出す
+        if (contentToShow.innerHTML.trim() === '') {
+            console.log(`Rendering content for tab: ${tabId}`);
+            switch (tabId) {
+                case 'card-performance-tab':
+                    renderCardPerformanceTab(CURRENT_CHAR, LANG);
+                    break;
+                case 'exhibit-analysis-tab':
+                    renderExhibitAnalysisTab(LANG);
+                    break;
+                case 'route-event-tab':
+                    renderRouteEventTab(LANG);
+                    break;
+                case 'enemy-analysis-tab':
+                    renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
+                    break;
+                case 'act-trend-tab':
+                    renderActTrendTab(LANG);
+                    break;
+                case 'card-list-tab':
+                    renderCardListTab(ALL_DATA);
+                    break;
+                case 'run-finder-tab':
+                    renderRunFinderTab(); // ラン検索タブは常に再描画（または初回描画）
+                    break;
+            }
+        }
+
+        // ラン検索タブの自動検索処理（URLパラメータがある場合）
+        if (tabId === 'run-finder-tab') {
+            const uiPopulated = populateUiFromUrlParams();
+            if (autoSearch && uiPopulated) {
+                console.log("自動検索を実行します...");
+                performAdvancedSearch();
+            }
+        }
+
+        // タブ内のグラフがあればリサイズ
+        const graphInTab = contentToShow.querySelector('.plotly-graph-div');
+        if (graphInTab) {
+            try {
+                Plotly.Plots.resize(graphInTab);
+            } catch (e) {
+                // console.warn("Plotly resize failed, maybe graph not ready.", e);
+            }
+        }
+    }
+
+    // 対応するボタンをアクティブにする
+    if (tabButtonsContainer) {
+        const buttonToActivate = tabButtonsContainer.querySelector(`[data-tab-id="${tabId}"]`);
+        if (buttonToActivate) {
+            buttonToActivate.classList.add('active');
+        }
+    }
+
+    // モバイル用セレクターの値を更新
+    if (mobileTabSelector) {
+        mobileTabSelector.value = tabId;
+    }
+}
+
+// setupNavigation 関数は、switchTab を呼び出すだけのシンプルな形になる
 function setupNavigation() {
     const tabsConfig = [
         { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
@@ -194,47 +291,6 @@ function setupNavigation() {
 
     const tabButtonsContainer = document.getElementById('tab-buttons');
     const mobileTabSelector = document.getElementById('mobile-tab-selector');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    const switchTab = (tabId) => {
-        tabContents.forEach(content => {
-            content.style.display = 'none';
-        });
-        if (tabButtonsContainer) {
-            tabButtonsContainer.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-        }
-
-        const contentToShow = document.getElementById(tabId);
-        if (contentToShow) {
-            contentToShow.style.display = 'block';
-
-            if (tabId === 'run-finder-tab') {
-                renderRunFinderTab();
-            }
-
-            const graphInTab = contentToShow.querySelector('.plotly-graph-div');
-            if (graphInTab) {
-                try {
-                    Plotly.Plots.resize(graphInTab);
-                } catch (e) {
-                    // console.warn("Plotly resize failed, maybe graph not ready.", e);
-                }
-            }
-        }
-
-        if (tabButtonsContainer) {
-            const buttonToActivate = tabButtonsContainer.querySelector(`[data-tab-id="${tabId}"]`);
-            if (buttonToActivate) {
-                buttonToActivate.classList.add('active');
-            }
-        }
-
-        if (mobileTabSelector) {
-            mobileTabSelector.value = tabId;
-        }
-    };
 
     if (tabButtonsContainer) tabButtonsContainer.innerHTML = '';
     if (mobileTabSelector) mobileTabSelector.innerHTML = '';
@@ -249,6 +305,7 @@ function setupNavigation() {
             button.className = 'tab-button';
             button.textContent = tabConfig.label;
             button.dataset.tabId = tabConfig.id;
+            // グローバルになった switchTab を呼び出す
             button.addEventListener('click', () => switchTab(tabConfig.id));
             tabButtonsContainer.appendChild(button);
         }
@@ -262,16 +319,14 @@ function setupNavigation() {
     });
 
     if (mobileTabSelector) {
+        // グローバルになった switchTab を呼び出す
         mobileTabSelector.addEventListener('change', (e) => {
             switchTab(e.target.value);
         });
     }
 
-    if (tabsConfig.length > 0 && tabsConfig[0].label) {
-        switchTab(tabsConfig[0].id);
-    }
+    // 初期タブの表示は DOMContentLoaded で制御するので、ここでは不要
 }
-
 function renderCardListTab(data) {
     const container = document.getElementById('card-list-tab');
     if (!container) {
@@ -2663,6 +2718,7 @@ function renderRunFinderTab() {
                 <!-- ▲▲▲ ボスフィルターここまで ▲▲▲ -->
 
                 <button id="run-search-button" class="primary-search-btn">${texts.search_btn}</button>
+                <button onclick="generateAndCopyShareLink()" class="share-link-btn">共有リンクをコピー</button>
             </div>
             <div id="run-finder-results" style="margin-top: 20px;">
                 <p>${texts.initial_prompt}</p>
@@ -3366,4 +3422,108 @@ function addItemToSelection(itemName, listId) {
         tag.style.backgroundColor = '#F44336';
     }
     list.appendChild(tag);
+}
+
+
+// script.js に追加
+
+/**
+ * 現在の検索条件から共有可能なURLを生成し、クリップボードにコピーする
+ */
+function generateAndCopyShareLink() {
+    const params = new URLSearchParams();
+
+    // 1. 基本的なフィルターの値を取得
+    const char = document.getElementById('character-select').value;
+    if (char && char !== 'All') params.set('char', char);
+
+    const act = document.getElementById('act-filter').value;
+    if (act) params.set('act', act);
+
+    const level = document.getElementById('level-filter').value;
+    if (level) params.set('level', level);
+
+    const deckOp = document.getElementById('deck-size-operator').value;
+    const deckVal = document.getElementById('deck-size-value').value;
+    if (deckOp !== 'any' && deckVal) {
+        params.set('deckOp', deckOp);
+        params.set('deckVal', deckVal);
+    }
+
+    // 2. タグ形式のフィルターの値を取得
+    const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
+
+    const includeItems = getItemsFromList('include-items-list');
+    if (includeItems.length > 0) params.set('includeItems', includeItems.join(','));
+
+    const excludeItems = getItemsFromList('exclude-items-list');
+    if (excludeItems.length > 0) params.set('excludeItems', excludeItems.join(','));
+
+    const includeBosses = getItemsFromList('include-bosses-list');
+    if (includeBosses.length > 0) params.set('includeBosses', includeBosses.join(','));
+
+    const excludeBosses = getItemsFromList('exclude-bosses-list');
+    if (excludeBosses.length > 0) params.set('excludeBosses', excludeBosses.join(','));
+
+    // 3. AND/ORロジックの値を取得
+    const itemLogic = document.querySelector('input[name="include-logic"]:checked').value;
+    if (itemLogic !== 'OR') params.set('itemLogic', itemLogic); // デフォルト(OR)は不要
+
+    const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
+    if (bossLogic !== 'OR') params.set('bossLogic', bossLogic); // デフォルト(OR)は不要
+
+    // 4. 検索を実行するためのフラグを追加
+    params.set('search', 'true');
+
+    // 5. URLを組み立ててコピー
+    const baseUrl = window.location.origin + window.location.pathname;
+    const finalUrl = `${baseUrl}?${params.toString()}`;
+
+    navigator.clipboard.writeText(finalUrl).then(() => {
+        alert('検索条件のリンクをクリップボードにコピーしました！');
+    }).catch(err => {
+        console.error('リンクのコピーに失敗しました: ', err);
+        alert('リンクのコピーに失敗しました。');
+    });
+}
+
+/**
+ * URLパラメータに基づいて検索UIを自動的に設定する
+ */
+function populateUiFromUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('search')) return false; // 検索パラメータがなければ何もしない
+
+    console.log("URLパラメータを検出しました。UIに設定します...");
+
+    // 1. 基本的なフィルターを設定
+    if (params.has('char')) document.getElementById('character-select').value = params.get('char');
+    if (params.has('act')) document.getElementById('act-filter').value = params.get('act');
+    if (params.has('level')) document.getElementById('level-filter').value = params.get('level');
+    if (params.has('deckOp')) document.getElementById('deck-size-operator').value = params.get('deckOp');
+    if (params.has('deckVal')) document.getElementById('deck-size-value').value = params.get('deckVal');
+
+    // 2. タグ形式のフィルターを設定
+    if (params.has('includeItems')) {
+        params.get('includeItems').split(',').forEach(item => addItemToSelection(item, 'include-items-list'));
+    }
+    if (params.has('excludeItems')) {
+        params.get('excludeItems').split(',').forEach(item => addItemToSelection(item, 'exclude-items-list'));
+    }
+    if (params.has('includeBosses')) {
+        params.get('includeBosses').split(',').forEach(boss => addBossToSelection(boss, 'include-bosses-list'));
+    }
+    if (params.has('excludeBosses')) {
+        params.get('excludeBosses').split(',').forEach(boss => addBossToSelection(boss, 'exclude-bosses-list'));
+    }
+
+    // 3. AND/ORロジックを設定
+    if (params.has('itemLogic')) {
+        document.querySelector(`input[name="include-logic"][value="${params.get('itemLogic')}"]`).checked = true;
+    }
+    if (params.has('bossLogic')) {
+        document.querySelector(`input[name="boss-logic"][value="${params.get('bossLogic')}"]`).checked = true;
+    }
+
+    return true; // UI設定が実行されたことを示す
 }

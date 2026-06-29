@@ -1683,3 +1683,27 @@ body {
         flex-direction: column;
     }
 }
+
+/* style.css の末尾に追加 */
+
+/* --- 共有ボタンのスタイル --- */
+.share-link-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #28a745; /* 緑色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 15px; /* 検索ボタンとの間隔 */
+    transition: background-color 0.2s;
+}
+
+.share-link-btn:hover {
+    background-color: #218838;
+}
+
+.share-link-btn:active {
+    background-color: #1e7e34;
+}
