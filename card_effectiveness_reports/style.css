@@ -1421,15 +1421,45 @@ body {
 
 
 
-/* 8列用に幅を再配分します */
-.run-finder-results-table th:nth-child(1) { width: 18%; }  /* Run ID */
-.run-finder-results-table th:nth-child(2) { width: 3%; }   /* Version */
-.run-finder-results-table th:nth-child(3) { width: 4%; }   /* Character */
-.run-finder-results-table th:nth-child(4) { width: 3%; }   /* DeckSize */
-.run-finder-results-table th:nth-child(5) { width: 8%; }   /* Player */
-.run-finder-results-table th:nth-child(6) { width: 19%; }  /* Act1 */
-.run-finder-results-table th:nth-child(7) { width: 19%; }  /* Act2 */
-.run-finder-results-table th:nth-child(8) { width: 19%; }  /* Act3 */
+/* 8列用に幅を再配分します (レスポンシブ対応版) */
+
+/* Run ID: 幅を自動調整にし、最小幅だけ指定 */
+.run-finder-results-table th:nth-child(1) {
+    width: 12%; /* 広い画面での目安の幅 */
+    min-width: 120px; /* これ以上は縮まない幅。ただし他の列より優先的に縮む */
+}
+
+/* Version: 固定幅に近いイメージ */
+.run-finder-results-table th:nth-child(2) {
+    width: 4%;
+    min-width: 45px;
+}
+
+/* Character: 固定幅に近いイメージ */
+.run-finder-results-table th:nth-child(3) {
+    width: 5%;
+    min-width: 60px;
+}
+
+/* DeckSize: 固定幅に近いイメージ */
+.run-finder-results-table th:nth-child(4) {
+    width: 4%;
+    min-width: 50px;
+}
+
+/* Player: ある程度伸縮してOK */
+.run-finder-results-table th:nth-child(5) {
+    width: 10%;
+    min-width: 80px;
+}
+
+/* Act列: 最も重要な情報なので、できるだけ幅を維持する */
+.run-finder-results-table th:nth-child(6),
+.run-finder-results-table th:nth-child(7),
+.run-finder-results-table th:nth-child(8) {
+    width: 21.6%;
+    min-width: 180px; /* 最も縮んでほしくない列なので、min-widthを大きめに設定 */
+}
 
 
 .run-finder-results-table tr:nth-child(even) {
@@ -1505,4 +1535,151 @@ body {
     height: 2em; /* 文字の高さに合わせる */
     display: block; /* vertical-alignを不要にするための設定 */
     margin-left: 4px; /* 矢印との間に少し余白を設ける */
+}
+/* style.css の末尾に追加 */
+
+/* --- Run Finder Boss Filter Styles --- */
+.boss-selector-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.boss-selector-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    object-fit: cover;
+}
+
+.boss-selector-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+}
+
+
+}
+
+/* --- 検索タブの展開/折りたたみセクションのスタイル --- */
+.collapsible-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.filter-toggle-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none; /* テキスト選択を防ぐ */
+    transition: background-color 0.2s;
+    margin-bottom: 10px; /* ボタンとコンテンツの間の余白 */
+}
+
+.filter-toggle-button:hover {
+    background-color: #e0e0e0;
+}
+
+.filter-content {
+    /* アニメーションのために高さを指定 */
+    max-height: 500px; /* 十分な高さを確保 */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, margin 0.4s ease-in-out;
+    /* 中身のレイアウト */
+    display: flex;
+    gap: 25px;
+}
+
+/* 折りたたまれた状態のスタイル */
+.filter-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: -10px; /* ボタンとの余白を詰める */
+}
+
+/* --- Run Finder - Boss Filter Collapsible Section --- */
+.boss-collapsible-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Using a specific class name to avoid conflicts */
+.boss-filter-toggle-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    margin-bottom: 10px;
+}
+
+.boss-filter-toggle-button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Using a specific class name for the content area */
+.boss-filter-content {
+    max-height: 500px; /* Set a large max-height for the expanded state */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, margin 0.4s ease-in-out;
+    display: flex;
+    gap: 25px;
+}
+
+/* This style makes the content hidden by default */
+.boss-filter-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: -10px; /* Pulls the content up to the button */
+}
+
+/* --- Run Finder - Boss Icon Styles --- */
+.boss-selector-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.boss-selector-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    object-fit: cover;
+}
+
+.boss-selector-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .boss-filter-content {
+        flex-direction: column;
+    }
 }

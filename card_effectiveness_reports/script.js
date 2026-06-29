@@ -2506,10 +2506,9 @@ window.switchActTrend = function(act) {
     });
 };
 
-
 /**
- * 「ラン検索」タブのコンテンツを生成・描画する
- * UIのテキストを多言語対応させる
+ * "Run Finder"タブのコンテンツを生成・描画する
+ * [修正版] ボスフィルターのHTML構造とクラス名を修正
  */
 function renderRunFinderTab() {
     const tabContent = document.getElementById('run-finder-tab');
@@ -2525,38 +2524,33 @@ function renderRunFinderTab() {
         level_label: UI_TEXT.run_finder_level_label || "Level:",
         char_label: UI_TEXT.run_finder_char_label || "Character:",
         no_specify: UI_TEXT.run_finder_no_specify || "None",
-        include_items_label: UI_TEXT.run_finder_include_items_label || "Include Items",
-        item_placeholder: UI_TEXT.run_finder_item_placeholder || "Enter Card/Exhibit name...",
-        add_btn: UI_TEXT.run_finder_add_btn || "Add",
-        logic_and: UI_TEXT.run_finder_logic_and || "AND (all)",
-        logic_or: UI_TEXT.run_finder_logic_or || "OR (any)",
-        exclude_items_label: UI_TEXT.run_finder_exclude_items_label || "Exclude Items (all specified items will be excluded)",
-        search_btn: UI_TEXT.run_finder_search_btn || "Search Runs",
+        include_items_label: UI_TEXT.run_finder_include_items_label || "含むアイテム",
+        item_placeholder: UI_TEXT.run_finder_item_placeholder || "カード/展示品名を入力...",
+        add_btn: UI_TEXT.run_finder_add_btn || "追加",
+        logic_and: UI_TEXT.run_finder_logic_and || "AND (すべて)",
+        logic_or: UI_TEXT.run_finder_logic_or || "OR (いずれか)",
+        exclude_items_label: UI_TEXT.run_finder_exclude_items_label || "含まないアイテム (指定したものは全て除外)",
+        search_btn: UI_TEXT.run_finder_search_btn || "検索実行",
         initial_prompt: UI_TEXT.run_finder_initial_prompt || "Enter search criteria and press the 'Search Runs' button.",
         deck_size_label: UI_TEXT.run_finder_deck_size_label || "Deck Size (at station / final):",
         deck_size_any: UI_TEXT.run_finder_deck_size_any || "Any",
         deck_size_lte: UI_TEXT.run_finder_deck_size_lte || "<=",
         deck_size_gte: UI_TEXT.run_finder_deck_size_gte || ">=",
-        deck_size_placeholder: UI_TEXT.run_finder_deck_size_placeholder || "e.g., 10"
+        deck_size_placeholder: UI_TEXT.run_finder_deck_size_placeholder || "e.g., 10",
+        include_bosses_label: UI_TEXT.run_finder_include_bosses_label || "Include Bosses",
+        exclude_bosses_label: UI_TEXT.run_finder_exclude_bosses_label || "Exclude Bosses",
+        boss_filter_toggle_expand: UI_TEXT.run_finder_boss_filter_expand || "Open Boss filter▼",
+        boss_filter_toggle_collapse: UI_TEXT.run_finder_boss_filter_collapse || "Close Boss filte ▲"
     };
 
     // 1. オートコンプリート用のデータリストを作成
     const allItems = new Set();
-    if (ALL_DATA.lookup_tables && ALL_DATA.lookup_tables.cards) {
-        const cardNameKey = (LANG === 'ja') ? 'JA' : 'EN';
-        for (const cardId in ALL_DATA.lookup_tables.cards) {
-            const cardData = ALL_DATA.lookup_tables.cards[cardId];
-            if (cardData && cardData[cardNameKey]) {
-                allItems.add(cardData[cardNameKey]);
-            }
-        }
-    }
-    if (ALL_DATA.lookup_tables && ALL_DATA.lookup_tables.exhibits) {
-        const exhibitNameKey = (LANG === 'ja') ? 'name' : 'name_en';
-        for (const exhibitId in ALL_DATA.lookup_tables.exhibits) {
-            const exhibitData = ALL_DATA.lookup_tables.exhibits[exhibitId];
-            if (exhibitData && exhibitData[exhibitNameKey]) {
-                allItems.add(exhibitData[exhibitNameKey]);
+    if (ITEM_MASTER_LOOKUP) {
+        const nameKey = (LANG === 'ja') ? 'ja' : 'en';
+        for (const itemId in ITEM_MASTER_LOOKUP) {
+            const itemData = ITEM_MASTER_LOOKUP[itemId];
+            if (itemData && itemData[nameKey]) {
+                allItems.add(itemData[nameKey]);
             }
         }
     }
@@ -2571,7 +2565,7 @@ function renderRunFinderTab() {
         });
     }
 
-    // 3. 新しいUIのHTMLを定義
+    // 3. UIのHTMLを定義
     const finderHtml = `
         <div class="run-finder-container">
             <h3>${texts.title}</h3>
@@ -2582,7 +2576,12 @@ function renderRunFinderTab() {
                 ${texts.data_scope_warning}
             </p>
             <div class="finder-controls">
+                <!-- Row 1: 基本フィルター -->
                 <div class="control-group-row">
+                    <div class="control-group">
+                        <label for="character-select">${texts.char_label}</label>
+                        <select id="character-select">${charOptions}</select>
+                    </div>
                     <div class="control-group">
                         <label for="act-filter">${texts.act_label}</label>
                         <select id="act-filter">
@@ -2595,46 +2594,67 @@ function renderRunFinderTab() {
                     </div>
                     <div class="control-group">
                         <label for="level-filter">${texts.level_label}</label>
-                        <input type="number" id="level-filter" min="1" max="16" placeholder="1-16">
+                        <input type="number" id="level-filter" min="1" max="16" placeholder="1-16" style="width: 80px;">
                     </div>
                     <div class="control-group">
-                        <label for="character-select">${texts.char_label}</label>
-                        <select id="character-select">${charOptions}</select>
+                        <label for="deck-size-operator">${texts.deck_size_label}</label>
+                        <select id="deck-size-operator">
+                            <option value="any">${texts.deck_size_any}</option>
+                            <option value="lte">${texts.deck_size_lte}</option>
+                            <option value="gte">${texts.deck_size_gte}</option>
+                        </select>
+                        <input type="number" id="deck-size-value" min="0" placeholder="${texts.deck_size_placeholder}" style="width: 80px;">
                     </div>
-                    <div class="control-group-row">
-                        <div class="control-group">
-                            <label for="deck-size-operator">${texts.deck_size_label}</label>
-                            <select id="deck-size-operator">
-                                <option value="any">${texts.deck_size_any}</option>
-                                <option value="lte">${texts.deck_size_lte}</option>
-                                <option value="gte">${texts.deck_size_gte}</option>
-                            </select>
-                            <input type="number" id="deck-size-value" min="0" placeholder="${texts.deck_size_placeholder}" style="width: 80px;">
+                </div>
+
+                <!-- Row 2: カード/展示品フィルター -->
+                <div class="control-group-row">
+                    <div class="control-section" style="flex-grow: 1;">
+                        <h4>${texts.include_items_label}</h4>
+                        <div class="control-group-input">
+                            <input list="all-items-datalist" id="include-item-input" placeholder="${texts.item_placeholder}">
+                            <button id="add-include-item-btn" class="add-btn">${texts.add_btn}</button>
+                            <div class="search-logic">
+                                <input type="radio" id="include-logic-and" name="include-logic" value="AND">
+                                <label for="include-logic-and">${texts.logic_and}</label>
+                                <input type="radio" id="include-logic-or" name="include-logic" value="OR" checked>
+                                <label for="include-logic-or">${texts.logic_or}</label>
+                            </div>
+                        </div>
+                        <div id="include-items-list" class="item-tag-list"></div>
+                    </div>
+                    <div class="control-section" style="flex-grow: 1;">
+                        <h4>${texts.exclude_items_label}</h4>
+                        <div class="control-group-input">
+                            <input list="all-items-datalist" id="exclude-item-input" placeholder="${texts.item_placeholder}">
+                            <button id="add-exclude-item-btn" class="add-btn">${texts.add_btn}</button>
+                        </div>
+                        <div id="exclude-items-list" class="item-tag-list"></div>
+                    </div>
+                </div>
+
+                <!-- ▼▼▼ Row 3: ボスフィルター (クラス名を修正) ▼▼▼ -->
+                <div class="control-group-row boss-collapsible-section">
+                    <div id="boss-filter-toggle" class="boss-filter-toggle-button">${texts.boss_filter_toggle_expand}</div>
+                    <div id="boss-filter-content" class="boss-filter-content collapsed">
+                        <div class="control-section" style="flex-grow: 1;">
+                            <h4>${texts.include_bosses_label}</h4>
+                            <div id="include-boss-selector-container" class="boss-selector-grid"></div>
+                            <div class="search-logic" style="margin-top: 10px;">
+                                <label><input type="radio" name="boss-logic" value="OR" checked> ${texts.logic_or}</label>
+                                <label><input type="radio" name="boss-logic" value="AND"> ${texts.logic_and}</label>
+                            </div>
+                            <div class="item-tag-list" id="include-bosses-list"></div>
+                        </div>
+                        <div class="control-section" style="flex-grow: 1;">
+                            <h4>${texts.exclude_bosses_label}</h4>
+                            <div id="exclude-boss-selector-container" class="boss-selector-grid"></div>
+                            <div class="item-tag-list" id="exclude-bosses-list"></div>
                         </div>
                     </div>
                 </div>
-                <div class="control-section">
-                    <h4>${texts.include_items_label}</h4>
-                    <div class="control-group-input">
-                        <input list="all-items-datalist" id="include-item-input" placeholder="${texts.item_placeholder}">
-                        <button id="add-include-item-btn" class="add-btn">${texts.add_btn}</button>
-                        <div class="search-logic">
-                            <input type="radio" id="include-logic-and" name="include-logic" value="AND" checked>
-                            <label for="include-logic-and">${texts.logic_and}</label>
-                            <input type="radio" id="include-logic-or" name="include-logic" value="OR">
-                            <label for="include-logic-or">${texts.logic_or}</label>
-                        </div>
-                    </div>
-                    <div id="include-items-list" class="item-tag-list"></div>
-                </div>
-                <div class="control-section">
-                    <h4>${texts.exclude_items_label}</h4>
-                    <div class="control-group-input">
-                        <input list="all-items-datalist" id="exclude-item-input" placeholder="${texts.item_placeholder}">
-                        <button id="add-exclude-item-btn" class="add-btn">${texts.add_btn}</button>
-                    </div>
-                    <div id="exclude-items-list" class="item-tag-list"></div>
-                </div>
+                <!-- ▲▲▲ ボスフィルターここまで ▲▲▲ -->
+
                 <button id="run-search-button" class="primary-search-btn">${texts.search_btn}</button>
             </div>
             <div id="run-finder-results" style="margin-top: 20px;">
@@ -2652,22 +2672,10 @@ function renderRunFinderTab() {
     const setupTagInput = (inputId, btnId, listId) => {
         const input = document.getElementById(inputId);
         const button = document.getElementById(btnId);
-        const list = document.getElementById(listId);
         const addItem = () => {
             const value = input.value.trim();
-            const isDuplicate = Array.from(list.children).some(tag => tag.firstChild.textContent === value);
-            if (value && !isDuplicate) {
-                const tag = document.createElement('span');
-                tag.className = 'item-tag';
-                const text = document.createElement('span');
-                text.textContent = value;
-                tag.appendChild(text);
-                const removeBtn = document.createElement('button');
-                removeBtn.textContent = '×';
-                removeBtn.className = 'remove-tag-btn';
-                removeBtn.onclick = () => tag.remove();
-                tag.appendChild(removeBtn);
-                list.appendChild(tag);
+            if (value) {
+                addItemToSelection(value, listId);
             }
             input.value = '';
             input.focus();
@@ -2683,8 +2691,20 @@ function renderRunFinderTab() {
 
     setupTagInput('include-item-input', 'add-include-item-btn', 'include-items-list');
     setupTagInput('exclude-item-input', 'add-exclude-item-btn', 'exclude-items-list');
-}
 
+    // 5. ボス選択UIのセットアップを呼び出す
+    setupBossSelectors();
+
+    // 6. 展開/折りたたみボタンのイベントリスナーを追加
+    const bossToggleBtn = document.getElementById('boss-filter-toggle');
+    const bossContent = document.getElementById('boss-filter-content');
+    if (bossToggleBtn && bossContent) {
+        bossToggleBtn.addEventListener('click', () => {
+            const isCollapsed = bossContent.classList.toggle('collapsed');
+            bossToggleBtn.textContent = isCollapsed ? texts.boss_filter_toggle_expand : texts.boss_filter_toggle_collapse;
+        });
+    }
+}
 
 /**
  * 検索タブの入力補完リストを作成する
@@ -2897,7 +2917,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
 
             const pathStrings = { act1: '', act2: '', act3: '' };
             if (run.path_summary) {
-                // ▼▼▼ ここから修正 ▼▼▼
+
                 for (let actNum = 1; actNum <= 3; actNum++) {
                     const stageHtmlParts = [];
                     for (const stage of ['Early', 'Mid', 'Late']) {
@@ -2921,7 +2941,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                         pathStrings[`act${actNum}`] += bossIconHtml;
                     }
                 }
-                // ▲▲▲ 修正ここまで ▲▲▲
+
             }
 
             return `
@@ -3058,26 +3078,17 @@ function reconstructDeckAtStation(runTimeline, targetStationIndex) {
 
 /**
  * 高度な検索を実行し、結果を表示する
- * [デバッグ版] フィルタリングの各ステップでログを出力する
+ * [修正版] ボスフィルター機能を追加
  */
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
 
-    // 0. 必要なデータがロードされているか確認
     if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES || !ITEM_MASTER_LOOKUP) {
-        console.warn("検索データがまだ読み込まれていません。");
-        const resultsContainer = document.getElementById('run-finder-results');
-        if (resultsContainer) {
-            resultsContainer.innerHTML = '<p>検索データが読み込まれていません。ページを再読み込みしてください。</p>';
-        }
+        // ... (データロード失敗時の処理は変更なし)
         return;
     }
 
-    // ★★★デバッグ★★★ フィルタリング前の全件数をログに出力
     console.log(`[DEBUG] Starting filter. Total runs in ALL_RUN_DETAILS: ${ALL_RUN_DETAILS.length}`);
-    if (ALL_RUN_DETAILS.length === 0) {
-        console.error("[DEBUG] ALL_RUN_DETAILS is empty. The problem is likely in the data generation (Python script).");
-    }
 
     // 1. UIから検索条件を取得
     const selectedChar = document.getElementById('character-select').value;
@@ -3088,29 +3099,50 @@ function performAdvancedSearch() {
     const deckSizeValueStr = document.getElementById('deck-size-value').value;
     const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
 
-    const getKeywordsFromList = (listId) => {
+    const getItemsFromList = (listId) => {
         const list = document.getElementById(listId);
-        return Array.from(list.children).map(tag => tag.firstChild.textContent.trim().toLowerCase());
+        return Array.from(list.children).map(tag => tag.dataset.itemName);
     };
 
-    const includeKeywords = getKeywordsFromList('include-items-list');
-    const excludeKeywords = getKeywordsFromList('exclude-items-list');
+    const includeKeywords = getItemsFromList('include-items-list').map(k => k.toLowerCase());
+    const excludeKeywords = getItemsFromList('exclude-items-list').map(k => k.toLowerCase());
+
+    const includeBosses = getItemsFromList('include-bosses-list');
+    const excludeBosses = getItemsFromList('exclude-bosses-list');
+    const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
+
+
     const useTimelineSearch = !!actFilter || !!levelFilter;
 
     // 2. ランデータをフィルタリング
     const runsToSearch = ALL_RUN_DETAILS.map(r => ({...r}));
     const filteredRuns = runsToSearch.filter((run, index) => {
-        // ★★★デバッグ★★★ 最初の3件だけログを出すように制限
-        const shouldLog = index < 3;
-        if (shouldLog) {
-            console.log(`%c[DEBUG] --- Checking run #${index}: ${run.run_id}`, 'color: blue; font-weight: bold;', run);
-        }
-
         // --- 条件A: キャラクターでの絞り込み ---
         if (selectedChar !== 'All' && run.character !== selectedChar) {
-            if (shouldLog) console.log(`[DEBUG] -> REJECTED by character filter.`);
             return false;
         }
+
+
+        const runBosses = run.bosses ? Object.values(run.bosses) : [];
+
+        // Include Filter
+        if (includeBosses.length > 0) {
+            const includeMatch = (bossLogic === 'AND')
+                ? includeBosses.every(boss => runBosses.includes(boss))
+                : includeBosses.some(boss => runBosses.includes(boss));
+            if (!includeMatch) {
+                return false;
+            }
+        }
+
+        // Exclude Filter
+        if (excludeBosses.length > 0) {
+            const excludeMatch = excludeBosses.some(boss => runBosses.includes(boss));
+            if (excludeMatch) {
+                return false;
+            }
+        }
+
 
         // --- 条件B: Act/Level とカード/展示品での絞り込み ---
         if (useTimelineSearch) {
@@ -3135,7 +3167,12 @@ function performAdvancedSearch() {
                 }
             }
 
-            if (stationIndicesToSearch.length === 0) return false;
+            if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) return false;
+
+            // Act/Level指定がない場合は全マスを対象にする（あまりないケースだが念のため）
+            if (stationIndicesToSearch.length === 0) {
+                 stationIndicesToSearch = Object.values(STATION_MAP_GLOBAL);
+            }
 
             return stationIndicesToSearch.some(stationIndex => {
                 const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
@@ -3169,14 +3206,8 @@ function performAdvancedSearch() {
             const finalDeckSize = run.cards ? run.cards.length : 0;
 
             if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
-                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) {
-                    if (shouldLog) console.log(`[DEBUG] -> REJECTED by deck size (lte).`);
-                    return false;
-                }
-                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) {
-                    if (shouldLog) console.log(`[DEBUG] -> REJECTED by deck size (gte).`);
-                    return false;
-                }
+                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) return false;
+                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) return false;
             }
 
             run.displayDeckSize = finalDeckSize;
@@ -3190,18 +3221,10 @@ function performAdvancedSearch() {
                     if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
                 }
             }
-
-            const result = applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
-
-            if (shouldLog) {
-                console.log(`[DEBUG] -> Keyword filter result: ${result}`);
-            }
-
-            return result;
+            return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
         }
     });
 
-    // ★★★デバッグ★★★ フィルタリング後の件数をログに出力
     console.log(`%c[DEBUG] Filtering complete. Filtered runs count: ${filteredRuns.length}`, 'color: green; font-weight: bold;');
 
     // 3. 検索結果をグローバル変数に保存し、ソートして表示
@@ -3235,4 +3258,105 @@ function applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, i
         }
     }
     return true;
+}
+
+
+// script.js に追加
+
+const bossIconMap = {
+    "Reimu": "./img/boss/Reimu.avif",
+    "Marisa": "./img/boss/Marisa.avif",
+    "Sakuya": "./img/boss/Sakuya.avif",
+    "Cirno": "./img/boss/Cirno.avif",
+    "Koishi": "./img/boss/Koishi.avif",
+    "Long": "./img/boss/Long.avif",
+    "Tianzi": "./img/boss/Tianzi.avif",
+    "Yuyuko": "./img/boss/Yuyuko.avif",
+    "Remilia": "./img/boss/Remilia.avif",
+    "Sanae": "./img/boss/Sanae.avif",
+    "Junko": "./img/boss/Junko.avif",
+    "Seija": "./img/boss/Seija.avif"
+};
+
+/**
+ * 選択されたボスをタグとしてリストに追加する
+ * @param {string} bossName - ボス名
+ * @param {string} listId - タグを追加するリストのID ('include-bosses-list' or 'exclude-bosses-list')
+ */
+function addBossToSelection(bossName, listId) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+
+    const existingTags = Array.from(list.children).map(tag => tag.dataset.itemName);
+    if (existingTags.includes(bossName)) {
+        return; // 既にあれば何もしない
+    }
+
+    const tag = document.createElement('div');
+    tag.className = 'item-tag';
+    tag.dataset.itemName = bossName;
+
+    tag.innerHTML = `
+        <span>${bossName}</span>
+        <button class="remove-tag-btn" onclick="this.parentElement.remove()">&times;</button>
+    `;
+
+    if (listId === 'exclude-bosses-list') {
+        tag.style.backgroundColor = '#F44336';
+    }
+
+    list.appendChild(tag);
+}
+
+/**
+ * ボス選択用のアイコンUIを動的に生成する
+ */
+function setupBossSelectors() {
+    const includeContainer = document.getElementById('include-boss-selector-container');
+    const excludeContainer = document.getElementById('exclude-boss-selector-container');
+    if (!includeContainer || !excludeContainer) return;
+
+    let bossIconsHtml = '';
+    for (const bossName in bossIconMap) {
+        const iconUrl = bossIconMap[bossName];
+        bossIconsHtml += `<img src="${iconUrl}" alt="${bossName}" title="${bossName}" class="boss-selector-icon" data-boss-name="${bossName}">`;
+    }
+
+    includeContainer.innerHTML = bossIconsHtml;
+    excludeContainer.innerHTML = bossIconsHtml;
+
+    includeContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('boss-selector-icon')) {
+            addBossToSelection(event.target.dataset.bossName, 'include-bosses-list');
+        }
+    });
+
+    excludeContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('boss-selector-icon')) {
+            addBossToSelection(event.target.dataset.bossName, 'exclude-bosses-list');
+        }
+    });
+}
+
+// カード/展示品用のタグ追加関数 (汎用化)
+function addItemToSelection(itemName, listId) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+
+    const existingTags = Array.from(list.children).map(tag => tag.dataset.itemName);
+    if (existingTags.includes(itemName)) {
+        return;
+    }
+
+    const tag = document.createElement('div');
+    tag.className = 'item-tag';
+    tag.dataset.itemName = itemName;
+    tag.innerHTML = `
+        <span>${itemName}</span>
+        <button class="remove-tag-btn" onclick="this.parentElement.remove()">&times;</button>
+    `;
+    if (listId === 'exclude-items-list') {
+        tag.style.backgroundColor = '#F44336';
+    }
+    list.appendChild(tag);
 }
