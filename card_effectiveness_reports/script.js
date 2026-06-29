@@ -2801,11 +2801,17 @@ function handleSortClick(sortKey) {
 
 /**
  * lastFoundRuns を現在のソート設定で並べ替え、テーブルを再描画する
- * [修正版] DeckSizeのような数値でのソートに正しく対応
+ * [デバッグ版] ソート前後の配列の状態をログに出力する
  * @param {string|null} actFilter
  * @param {string|null} levelFilter
  */
 function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
+    // ★★★デバッグ★★★ ソート前の配列の状態を確認
+    console.log(`[DEBUG] sortAndDisplayRuns started. lastFoundRuns.length:`, lastFoundRuns.length);
+    if (lastFoundRuns.length > 0) {
+        console.log('[DEBUG] lastFoundRuns (before sort):', [...lastFoundRuns]);
+    }
+
     const sortedRuns = [...lastFoundRuns].sort((a, b) => {
         const order = currentSortOrder === 'asc' ? 1 : -1;
 
@@ -2826,13 +2832,19 @@ function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
         return String(valA).localeCompare(String(valB), undefined, { numeric: true }) * order;
     });
 
+    // ★★★デバッグ★★★ ソート後の配列の状態を確認
+    console.log(`%c[DEBUG] Sorting complete. sortedRuns.length: ${sortedRuns.length}`, 'color: green; font-weight: bold;');
+    if (sortedRuns.length > 0) {
+        console.log('[DEBUG] sortedRuns (after sort):', sortedRuns);
+    }
+
+
     // 並べ替えたデータでテーブルを表示
     displayRunFinderResults(sortedRuns, actFilter, levelFilter);
 }
-
 /**
  * 検索結果のランをテーブル形式で表示する。
- * [修正版] DeckSize列のヘッダーをソート可能にする
+ * [修正版] 各Actの経路サマリーの末尾に、そのActのボスアイコンを追加する
  * @param {Array} runs - 表示するランの配列
  * @param {string|null} actFilter - 検索で使用されたActフィルターの値
  * @param {string|null} levelFilter - 検索で使用されたLevelフィルターの値
@@ -2847,63 +2859,97 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         run_id: "Run ID",
         version: "Ver",
         character: "Char",
-        deck_size: "Size",
+        deck_size: "DeckSize",
         player_name: "Player",
         act1_header: "Act1",
         act2_header: "Act2",
         act3_header: "Act3"
     };
     const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
+    const bossIconMap = {
+        "Reimu": "./img/boss/Reimu.avif",
+        "Marisa": "./img/boss/Marisa.avif",
+        "Sakuya": "./img/boss/Sakuya.avif",
+        "Cirno": "./img/boss/Cirno.avif",
+        "Koishi": "./img/boss/Koishi.avif",
+        "Long": "./img/boss/Long.avif",
+        "Tianzi": "./img/boss/Tianzi.avif",
+        "Yuyuko": "./img/boss/Yuyuko.avif",
+        "Remilia": "./img/boss/Remilia.avif",
+        "Sanae": "./img/boss/Sanae.avif",
+        "Junko": "./img/boss/Junko.avif"
+    };
 
     if (!runs || runs.length === 0) {
         resultsContainer.innerHTML = `<p>${texts.no_results}</p>`;
         return;
     }
 
-    // 2. 各ランのテーブル行を生成 (変更なし)
+    // 2. 各ランのテーブル行を生成
     const runRows = runs.map(run => {
-        const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
-        const params = [];
-        if (actFilter) params.push(`a=${actFilter}`);
-        if (levelFilter) params.push(`l=${levelFilter}`);
-        const queryParams = params.length > 0 ? '?' + params.join('&') : '';
-        const finalUrl = baseUrl + queryParams;
+        try {
+            const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
+            const params = [];
+            if (actFilter) params.push(`a=${actFilter}`);
+            if (levelFilter) params.push(`l=${levelFilter}`);
+            const queryParams = params.length > 0 ? '?' + params.join('&') : '';
+            const finalUrl = baseUrl + queryParams;
 
-        const pathStrings = { act1: '', act2: '', act3: '' };
-        if (run.path_summary) {
-            for (let actNum = 1; actNum <= 3; actNum++) {
-                const stageHtmlParts = [];
-                for (const stage of ['Early', 'Mid', 'Late']) {
-                    const key = `Act${actNum} ${stage}`;
-                    const nodesInStage = run.path_summary[key] || [];
-                    const currentStageString = nodesInStage.map(node => nodeIcons[node] || null).filter(Boolean).join('');
-                    stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
+            const pathStrings = { act1: '', act2: '', act3: '' };
+            if (run.path_summary) {
+                // ▼▼▼ ここから修正 ▼▼▼
+                for (let actNum = 1; actNum <= 3; actNum++) {
+                    const stageHtmlParts = [];
+                    for (const stage of ['Early', 'Mid', 'Late']) {
+                        const key = `Act${actNum} ${stage}`;
+                        const nodesInStage = run.path_summary[key] || [];
+                        const currentStageString = nodesInStage.map(node => nodeIcons[node] || null).filter(Boolean).join('');
+                        stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
+                    }
+                    pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
+
+                    // --- そのActのボスアイコンを追加するロジック ---
+                    const actBossName = run.bosses ? run.bosses[String(actNum)] : null;
+                    if (actBossName && bossIconMap[actBossName]) {
+                        const bossIconUrl = bossIconMap[actBossName] || "./img/boss/Unknown.avif";
+                        const bossIconHtml = `
+                            <span class="stage-separator">→</span>
+                            <span class="boss-icon-container">
+                                <img src="${bossIconUrl}" alt="${actBossName}" title="${actBossName}">
+                            </span>
+                        `;
+                        pathStrings[`act${actNum}`] += bossIconHtml;
+                    }
                 }
-                pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
+                // ▲▲▲ 修正ここまで ▲▲▲
             }
-        }
 
-        return `
-            <tr>
-                <td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td>
-                <td>${run.version}</td>
-                <td>${run.character}</td>
-                <td>${run.displayDeckSize ?? 'N/A'}</td>
-                <td>${run.player_name}</td>
-                <td class="path-summary-cell-container">
-                    <div class="path-summary-grid">${pathStrings.act1}</div>
-                </td>
-                <td class="path-summary-cell-container">
-                    <div class="path-summary-grid">${pathStrings.act2}</div>
-                </td>
-                <td class="path-summary-cell-container">
-                    <div class="path-summary-grid">${pathStrings.act3}</div>
-                </td>
-            </tr>
-        `;
+            return `
+                <tr>
+                    <td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td>
+                    <td>${run.version}</td>
+                    <td>${run.character}</td>
+                    <td>${run.displayDeckSize ?? 'N/A'}</td>
+                    <td>${run.player_name}</td>
+                    <td class="path-summary-cell-container">
+                        <div class="path-summary-grid">${pathStrings.act1}</div>
+                    </td>
+                    <td class="path-summary-cell-container">
+                        <div class="path-summary-grid">${pathStrings.act2}</div>
+                    </td>
+                    <td class="path-summary-cell-container">
+                        <div class="path-summary-grid">${pathStrings.act3}</div>
+                    </td>
+                </tr>
+            `;
+        } catch (error) {
+            console.error(`[ERROR] Failed to process run HTML for run_id: ${run ? run.run_id : 'unknown'}.`, error, run);
+            // エラーが発生した行はスキップして、残りの処理を続ける
+            return '';
+        }
     }).join('');
 
-    // 3. テーブル全体のHTMLを生成
+    // 3. テーブル全体のHTMLを生成 (変更なし)
     const getSortIndicator = (key) => {
         if (currentSortKey === key) {
             return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -2932,7 +2978,6 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         </table>
     `;
 }
-
 /**
  * Act別トレンドの表示を切り替える関数
  */
@@ -3013,12 +3058,12 @@ function reconstructDeckAtStation(runTimeline, targetStationIndex) {
 
 /**
  * 高度な検索を実行し、結果を表示する
- * [修正版] DeckSizeの記録と、act/levelフィルターの引き渡しを追加
+ * [デバッグ版] フィルタリングの各ステップでログを出力する
  */
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
 
-    // 0. 必要なデータがロードされているか確認 (変更なし)
+    // 0. 必要なデータがロードされているか確認
     if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES || !ITEM_MASTER_LOOKUP) {
         console.warn("検索データがまだ読み込まれていません。");
         const resultsContainer = document.getElementById('run-finder-results');
@@ -3028,7 +3073,13 @@ function performAdvancedSearch() {
         return;
     }
 
-    // 1. UIから検索条件を取得 (変更なし)
+    // ★★★デバッグ★★★ フィルタリング前の全件数をログに出力
+    console.log(`[DEBUG] Starting filter. Total runs in ALL_RUN_DETAILS: ${ALL_RUN_DETAILS.length}`);
+    if (ALL_RUN_DETAILS.length === 0) {
+        console.error("[DEBUG] ALL_RUN_DETAILS is empty. The problem is likely in the data generation (Python script).");
+    }
+
+    // 1. UIから検索条件を取得
     const selectedChar = document.getElementById('character-select').value;
     const actFilter = document.getElementById('act-filter').value;
     const levelFilter = document.getElementById('level-filter').value;
@@ -3044,15 +3095,20 @@ function performAdvancedSearch() {
 
     const includeKeywords = getKeywordsFromList('include-items-list');
     const excludeKeywords = getKeywordsFromList('exclude-items-list');
-
     const useTimelineSearch = !!actFilter || !!levelFilter;
 
     // 2. ランデータをフィルタリング
-    // 元データを壊さないように、シャローコピーの配列を作成して処理する
     const runsToSearch = ALL_RUN_DETAILS.map(r => ({...r}));
-    const filteredRuns = runsToSearch.filter(run => {
-        // --- 条件A: キャラクターでの絞り込み (変更なし) ---
+    const filteredRuns = runsToSearch.filter((run, index) => {
+        // ★★★デバッグ★★★ 最初の3件だけログを出すように制限
+        const shouldLog = index < 3;
+        if (shouldLog) {
+            console.log(`%c[DEBUG] --- Checking run #${index}: ${run.run_id}`, 'color: blue; font-weight: bold;', run);
+        }
+
+        // --- 条件A: キャラクターでの絞り込み ---
         if (selectedChar !== 'All' && run.character !== selectedChar) {
+            if (shouldLog) console.log(`[DEBUG] -> REJECTED by character filter.`);
             return false;
         }
 
@@ -3068,13 +3124,11 @@ function performAdvancedSearch() {
                 const targetIndex = STATION_MAP_GLOBAL[stationKey];
                 if (targetIndex !== undefined) stationIndicesToSearch.push(targetIndex);
             } else if (actFilter) {
-                // Actのみ指定の場合、そのActの全マスを対象にする
                 const actPrefix = `${actFilter}-`;
                 for (const stationKey in STATION_MAP_GLOBAL) {
                     if (stationKey.startsWith(actPrefix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
                 }
             } else if (levelFilter) {
-                // Levelのみ指定の場合 (変更なし)
                 const levelSuffix = `-${levelFilter}`;
                  for (const stationKey in STATION_MAP_GLOBAL) {
                     if (stationKey.endsWith(levelSuffix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
@@ -3083,18 +3137,15 @@ function performAdvancedSearch() {
 
             if (stationIndicesToSearch.length === 0) return false;
 
-            // 対象ステーションのいずれかで条件を満たせばOK
             return stationIndicesToSearch.some(stationIndex => {
                 const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
 
-                // デッキ枚数フィルター
                 if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
                     const deckSize = cards.length;
                     if (deckSizeOperator === 'lte' && deckSize > deckSizeValue) return false;
                     if (deckSizeOperator === 'gte' && deckSize < deckSizeValue) return false;
                 }
 
-                // アイテムフィルター
                 const allItemIds = [...cards, ...exhibits];
                 const searchableItems = [];
                 for (const itemId of allItemIds) {
@@ -3106,7 +3157,6 @@ function performAdvancedSearch() {
                 }
                 const itemsMatch = applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
 
-                // 全ての条件に一致した場合、表示用のデッキサイズをrunオブジェクトに記録
                 if (itemsMatch) {
                     run.displayDeckSize = cards.length;
                     return true;
@@ -3118,16 +3168,19 @@ function performAdvancedSearch() {
             // --- 最終デッキ検索 (Act/Level指定なし) ---
             const finalDeckSize = run.cards ? run.cards.length : 0;
 
-            // デッキ枚数フィルター
             if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
-                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) return false;
-                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) return false;
+                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) {
+                    if (shouldLog) console.log(`[DEBUG] -> REJECTED by deck size (lte).`);
+                    return false;
+                }
+                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) {
+                    if (shouldLog) console.log(`[DEBUG] -> REJECTED by deck size (gte).`);
+                    return false;
+                }
             }
 
-            // 表示用のデッキサイズを記録
             run.displayDeckSize = finalDeckSize;
 
-            // アイテムフィルター (変更なし)
             const searchableItems = [];
             const allItemIds = [...(run.cards || []), ...(run.exhibits || [])];
             for (const itemId of allItemIds) {
@@ -3137,15 +3190,24 @@ function performAdvancedSearch() {
                     if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
                 }
             }
-            return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
+
+            const result = applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
+
+            if (shouldLog) {
+                console.log(`[DEBUG] -> Keyword filter result: ${result}`);
+            }
+
+            return result;
         }
     });
+
+    // ★★★デバッグ★★★ フィルタリング後の件数をログに出力
+    console.log(`%c[DEBUG] Filtering complete. Filtered runs count: ${filteredRuns.length}`, 'color: green; font-weight: bold;');
 
     // 3. 検索結果をグローバル変数に保存し、ソートして表示
     lastFoundRuns = filteredRuns;
     currentSortKey = 'run_id';
     currentSortOrder = 'asc';
-    // ▼▼▼ 検索で使ったフィルター情報を引き渡す ▼▼▼
     sortAndDisplayRuns(actFilter, levelFilter);
 }
 

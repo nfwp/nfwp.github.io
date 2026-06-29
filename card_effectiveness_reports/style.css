@@ -1422,14 +1422,14 @@ body {
 
 
 /* 8列用に幅を再配分します */
-.run-finder-results-table th:nth-child(1) { width: 26%; }  /* Run ID */
+.run-finder-results-table th:nth-child(1) { width: 18%; }  /* Run ID */
 .run-finder-results-table th:nth-child(2) { width: 3%; }   /* Version */
 .run-finder-results-table th:nth-child(3) { width: 4%; }   /* Character */
 .run-finder-results-table th:nth-child(4) { width: 3%; }   /* DeckSize */
 .run-finder-results-table th:nth-child(5) { width: 8%; }   /* Player */
-.run-finder-results-table th:nth-child(6) { width: 15%; }  /* Act1 */
-.run-finder-results-table th:nth-child(7) { width: 15%; }  /* Act2 */
-.run-finder-results-table th:nth-child(8) { width: 16%; }  /* Act3 */
+.run-finder-results-table th:nth-child(6) { width: 19%; }  /* Act1 */
+.run-finder-results-table th:nth-child(7) { width: 19%; }  /* Act2 */
+.run-finder-results-table th:nth-child(8) { width: 19%; }  /* Act3 */
 
 
 .run-finder-results-table tr:nth-child(even) {
@@ -1461,22 +1461,20 @@ body {
 /* --- 経路サマリーのレイアウトを整えるためのスタイル --- */
 
 /* 経路サマリーのセル(<td>)自体のスタイル */
-/* ここでは上下中央揃えと、内側の余白をリセットするだけ */
 .path-summary-cell-container {
     vertical-align: middle;
     padding: 0 !important; /* 他のスタイルを上書きして余白をなくす */
+    /* はみ出した場合に横スクロールを許可 */
+    overflow-x: auto;
 }
 
-/* セルの中に入れたdivに「5列の透明なテーブル」レイアウトを適用する */
+/* セルの中に入れたdivにレイアウトを適用する */
 .path-summary-grid {
-    display: grid;
-    /* 5つの列を定義: [パート] [矢印] [パート] [矢印] [パート] */
-    /* 1frは利用可能なスペースを均等に分割する単位です */
-    grid-template-columns: 1fr auto 1fr auto 1fr;
+    display: flex;           /* GridではなくFlexboxに変更 */
     align-items: center;     /* 上下中央に揃える */
-    width: 100%;             /* セルの全幅を使用する */
-    padding: 8px 2px;        /* このdivの内側に余白を設定 */
+    padding: 2px 4px;        /* このdivの内側に余白を設定 */
     gap: 4px;                /* 各パート間の隙間 */
+    white-space: nowrap;     /* 強制的に一行で表示させる */
     font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
     font-size: 1.1em;
 }
@@ -1486,6 +1484,9 @@ body {
     text-align: center;      /* パート内のアイコンを中央揃え */
     letter-spacing: 0.1em;
     font-weight: bold;
+    /* Flexboxの子要素として、均等にスペースを分け合う */
+    flex: 1 1 0;
+    min-width: 0; /* flexアイテムが縮小できるようにする */
 }
 
 /* 矢印のスタイル */
@@ -1494,13 +1495,14 @@ body {
     font-weight: normal;
 }
 
-/* --- Run Finder Table Sorting --- */
-.run-finder-results-table th[onclick] {
-    cursor: pointer;
-    user-select: none; /* ダブルクリックでテキストが選択されるのを防ぐ */
-    transition: background-color 0.2s;
+/* --- Run Finder Boss Icon --- */
+.boss-icon-container {
+    /* Flexboxの子要素として、自身のサイズを保つ */
+    flex-shrink: 0;
 }
 
-.run-finder-results-table th[onclick]:hover {
-    background-color: #e8e8e8; /* ホバー時の色を少し濃くする */
+.boss-icon-container img {
+    height: 2em; /* 文字の高さに合わせる */
+    display: block; /* vertical-alignを不要にするための設定 */
+    margin-left: 4px; /* 矢印との間に少し余白を設ける */
 }
