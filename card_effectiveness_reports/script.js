@@ -2161,7 +2161,14 @@ function renderActTrendTab(lang) {
 
                             const category = exhibitCategoryMap[id];
                             if (category === '光耀') {
-                                name = `<span style="background-color: #ffe8e8; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
+                                const manaType = ALL_DATA.lookup_tables.exhibit_mana_map[id];
+                                if (manaType) {
+                                    const icon = ALL_DATA.lookup_tables.mana_icon_map[manaType];
+                                    if (icon) {
+                                        linkedName = `${icon} ${linkedName}`;
+                                    }
+                                }
+                                name = `<span class="exhibit-name-shining">${linkedName}</span>`;
                             } else if (category === '一般レア') {
                                 name = `<span style="background-color: #fff3c4; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
                             } else if (category === '一般アンコモン') {
