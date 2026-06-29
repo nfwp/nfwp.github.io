@@ -1684,26 +1684,42 @@ body {
     }
 }
 
-/* style.css の末尾に追加 */
 
-/* --- 共有ボタンのスタイル --- */
-.share-link-btn {
-    padding: 10px 15px;
-    font-size: 16px;
+
+
+/* --- 検索結果ヘッダーのレイアウト --- */
+
+
+.results-header {
+    display: flex;
+    /* justify-content: space-between;  <-- この行を削除またはコメントアウト */
+    align-items: center;
+    gap: 15px; /* 要素間のスペースを追加 */
+    margin-bottom: 1em;
+}
+
+.results-header h3 {
+    margin: 0; /* h3タグのデフォルトマージンをリセット */
+}
+
+/* --- 新しい共有リンクのスタイル --- */
+.copy-share-link {
+    font-size: 14px;
     font-weight: bold;
+    color: #007bff;
+    background-color: transparent;
+    border: 1px solid #007bff;
+    border-radius: 15px; /* 角を丸くして柔らかい印象に */
+    padding: 4px 12px;
     cursor: pointer;
-    background-color: #28a745; /* 緑色 */
+    text-decoration: none;
+    display: inline-flex; /* アイコンとテキストを中央揃え */
+    align-items: center;
+    gap: 6px; /* アイコンとテキストの間隔 */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.copy-share-link:hover {
+    background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 15px; /* 検索ボタンとの間隔 */
-    transition: background-color 0.2s;
-}
-
-.share-link-btn:hover {
-    background-color: #218838;
-}
-
-.share-link-btn:active {
-    background-color: #1e7e34;
 }

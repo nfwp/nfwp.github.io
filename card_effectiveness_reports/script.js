@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             console.error('run_decks_by_station.json のロードに失敗しました。');
         }
 
-        // 次に、キャラクター固有のデータをロード (ここは変更なし)
+
         const response = await fetch(`data/${CURRENT_CHAR}_data.json`);
         if (!response.ok) throw new Error(`Failed to load data for ${CURRENT_CHAR}`);
         ALL_DATA = await response.json();
@@ -1307,7 +1307,7 @@ function createSpotlightHtml(aggData, cardNameCol, top20Adopted) {
         }
     });
 
-    // 3. HTMLを生成するヘルパー関数 (この部分は変更なし)
+    // 3. HTMLを生成するヘルパー関数
     const createList = (title, desc, cards) => {
         if (!cards || cards.length === 0) return "";
         const uniqueCards = [...new Set(cards)].sort();
@@ -2718,7 +2718,7 @@ function renderRunFinderTab() {
                 <!-- ▲▲▲ ボスフィルターここまで ▲▲▲ -->
 
                 <button id="run-search-button" class="primary-search-btn">${texts.search_btn}</button>
-                <button onclick="generateAndCopyShareLink()" class="share-link-btn">共有リンクをコピー</button>
+
             </div>
             <div id="run-finder-results" style="margin-top: 20px;">
                 <p>${texts.initial_prompt}</p>
@@ -2942,7 +2942,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         run_id: "Run ID",
         version: "Ver",
         character: "Char",
-        deck_size: "DeckSize",
+        deck_size: "Size",
         player_name: "Player",
         act1_header: "Act1",
         act2_header: "Act2",
@@ -3032,7 +3032,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         }
     }).join('');
 
-    // 3. テーブル全体のHTMLを生成 (変更なし)
+    // 3. テーブル全体のHTMLを生成
     const getSortIndicator = (key) => {
         if (currentSortKey === key) {
             return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -3041,7 +3041,12 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
     };
 
     resultsContainer.innerHTML = `
-        <h4>${texts.title.replace('{count}', runs.length)}</h4>
+        <div class="results-header">
+            <h4>${texts.title.replace('{count}', runs.length)}</h4>
+            <button onclick="generateAndCopyShareLink()" class="copy-share-link">
+                🔗 Copy Link
+            </button>
+        </div>
         <table class="run-finder-results-table">
             <thead>
                 <tr>
@@ -3146,9 +3151,19 @@ function reconstructDeckAtStation(runTimeline, targetStationIndex) {
 function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
 
-    if (!ALL_RUN_DETAILS || !ALL_DECK_TIMELINES || !ITEM_MASTER_LOOKUP) {
-        // ... (データロード失敗時の処理は変更なし)
-        return;
+    if (!ALL_RUN_DETAILS || Object.keys(ALL_RUN_DETAILS).length === 0 ||
+        !ALL_DECK_TIMELINES || Object.keys(ALL_DECK_TIMELINES).length === 0 ||
+        !ITEM_MASTER_LOOKUP || Object.keys(ITEM_MASTER_LOOKUP).length === 0) {
+
+        const resultsContainer = document.getElementById('run-finder-results');
+        const errorMessage = UI_TEXT.run_finder_data_error || "検索データの読み込みに失敗しました。ページを再読み込みしてください。";
+
+        console.error("検索を中止: 必須データ (ALL_RUN_DETAILS, ALL_DECK_TIMELINES, ITEM_MASTER_LOOKUP) が見つかりません。");
+
+        if (resultsContainer) {
+            resultsContainer.innerHTML = `<p style="color: red; font-weight: bold;">${errorMessage}</p>`;
+        }
+        return; // ここで処理を中断
     }
 
     console.log(`[DEBUG] Starting filter. Total runs in ALL_RUN_DETAILS: ${ALL_RUN_DETAILS.length}`);
