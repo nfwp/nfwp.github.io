@@ -1723,3 +1723,20 @@ body {
     background-color: #007bff;
     color: white;
 }
+
+/* ラン検索結果の経路アイコンのリンクスタイル */
+.path-icon-link {
+    text-decoration: none; /* 下線を消す */
+    color: inherit; /* 親要素の色を継承（絵文字の色が変わらないように） */
+    display: inline-block; /* ホバー範囲をアイコンに合わせる */
+}
+
+.path-icon-link:hover {
+    transform: scale(1.2); /* ホバー時に少し拡大 */
+    transition: transform 0.1s ease-in-out;
+}
+
+/* ボスアイコンのコンテナも同様に */
+.boss-icon-container {
+    vertical-align: middle; /* 他のアイコンと高さを合わせる */
+}

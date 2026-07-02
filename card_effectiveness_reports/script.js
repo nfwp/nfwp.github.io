@@ -2925,9 +2925,11 @@ function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
     // 並べ替えたデータでテーブルを表示
     displayRunFinderResults(sortedRuns, actFilter, levelFilter);
 }
+
+
 /**
  * 検索結果のランをテーブル形式で表示する。
- * [修正版] 各Actの経路サマリーの末尾に、そのActのボスアイコンを追加する
+ * [修正版] 各Actの経路サマリーのアイコンとボスアイコンに、そのマスへのリンクを追加する
  * @param {Array} runs - 表示するランの配列
  * @param {string|null} actFilter - 検索で使用されたActフィルターの値
  * @param {string|null} levelFilter - 検索で使用されたLevelフィルターの値
@@ -2948,7 +2950,9 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         act2_header: "Act2",
         act3_header: "Act3"
     };
+    // ▼▼▼ 変更箇所: 表示するアイコンを限定する ▼▼▼
     const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
+    // ▲▲▲ 変更ここまで ▲▲▲
     const bossIconMap = {
         "Reimu": "./img/boss/Reimu.avif",
         "Marisa": "./img/boss/Marisa.avif",
@@ -2960,7 +2964,8 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         "Yuyuko": "./img/boss/Yuyuko.avif",
         "Remilia": "./img/boss/Remilia.avif",
         "Sanae": "./img/boss/Sanae.avif",
-        "Junko": "./img/boss/Junko.avif"
+        "Junko": "./img/boss/Junko.avif",
+        "Seija": "./img/boss/Seija.avif"
     };
 
     if (!runs || runs.length === 0) {
@@ -2973,6 +2978,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         try {
             const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
             const params = [];
+            // 検索時のフィルターを維持する
             if (actFilter) params.push(`a=${actFilter}`);
             if (levelFilter) params.push(`l=${levelFilter}`);
             const queryParams = params.length > 0 ? '?' + params.join('&') : '';
@@ -2986,25 +2992,33 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
                     for (const stage of ['Early', 'Mid', 'Late']) {
                         const key = `Act${actNum} ${stage}`;
                         const nodesInStage = run.path_summary[key] || [];
-                        const currentStageString = nodesInStage.map(node => nodeIcons[node] || null).filter(Boolean).join('');
+
+                        const currentStageString = nodesInStage.map(node => {
+                            const icon = nodeIcons[node.type] || null;
+                            if (!icon) return null; // 表示対象外のアイコンはここで弾かれる
+                            // 各アイコンに、そのマスへのリンクを付与
+                            const nodeUrl = `${baseUrl}?a=${actNum}&l=${node.level}`;
+                            return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" title="Act ${actNum}, Level ${node.level}: ${node.type}">${icon}</a>`;
+                        }).filter(Boolean).join('');
+
                         stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
                     }
                     pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
 
-                    // --- そのActのボスアイコンを追加するロジック ---
-                    const actBossName = run.bosses ? run.bosses[String(actNum)] : null;
-                    if (actBossName && bossIconMap[actBossName]) {
-                        const bossIconUrl = bossIconMap[actBossName] || "./img/boss/Unknown.avif";
+                    const actBossData = run.bosses ? run.bosses[String(actNum)] : null;
+                    if (actBossData && bossIconMap[actBossData.name]) {
+                        const bossIconUrl = bossIconMap[actBossData.name] || "./img/boss/Unknown.avif";
+                        // ボスのレベル情報を使ってリンクを生成
+                        const bossUrl = `${baseUrl}?a=${actNum}&l=${actBossData.level}`;
                         const bossIconHtml = `
                             <span class="stage-separator">→</span>
-                            <span class="boss-icon-container">
-                                <img src="${bossIconUrl}" alt="${actBossName}" title="${actBossName}">
-                            </span>
+                            <a href="${bossUrl}" target="_blank" class="path-icon-link boss-icon-container" title="${actBossData.name} (Lvl ${actBossData.level})">
+                                <img src="${bossIconUrl}" alt="${actBossData.name}">
+                            </a>
                         `;
                         pathStrings[`act${actNum}`] += bossIconHtml;
                     }
                 }
-
             }
 
             return `
@@ -3027,12 +3041,11 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
             `;
         } catch (error) {
             console.error(`[ERROR] Failed to process run HTML for run_id: ${run ? run.run_id : 'unknown'}.`, error, run);
-            // エラーが発生した行はスキップして、残りの処理を続ける
             return '';
         }
     }).join('');
 
-    // 3. テーブル全体のHTMLを生成
+    // 3. テーブル全体のHTMLを生成 (変更なし)
     const getSortIndicator = (key) => {
         if (currentSortKey === key) {
             return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -3066,6 +3079,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         </table>
     `;
 }
+
 /**
  * Act別トレンドの表示を切り替える関数
  */
