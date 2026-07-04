@@ -2194,7 +2194,7 @@ function renderActTrendTab(lang) {
                             } else if (category === '一般アンコモン') {
                                 name = `<span style="background-color: #e8f4ff; padding: 2px 4px; border-radius: 3px;">${linkedName}</span>`;
                             } else if (category === 'ショップ') {
-                                name = `${linkedName} 🛒`;
+                                name = `🛒 ${linkedName} `;
                             } else if (category === 'イベント') {
                                 name = `✨ ${linkedName}`;
                             } else {
