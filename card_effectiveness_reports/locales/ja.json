@@ -151,5 +151,7 @@
     "run_finder_search_btn": "検索実行",
     "run_finder_initial_prompt": "検索条件を入力して「検索実行」ボタンを押してください。",
     "run_finder_deck_size": "デッキ枚数",
-    "run_finder_player_name": "プレイヤー名"
+    "run_finder_player_name": "プレイヤー名",
+    "act_trend_analysis_title": "Act別トレンド分析",
+    "act_trend_analysis_desc": "各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>"
 }

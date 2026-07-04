@@ -1,3 +1,4 @@
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
@@ -1736,7 +1737,177 @@ body {
     transition: transform 0.1s ease-in-out;
 }
 
-/* ボスアイコンのコンテナも同様に */
 .boss-icon-container {
-    vertical-align: middle; /* 他のアイコンと高さを合わせる */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+}
+
+
+
+.shop-tendency-container {
+    display: flex;
+    flex-wrap: wrap; /* 画面が狭い場合に折り返す */
+    gap: 1rem;       /* 列間のスペース */
+}
+
+.shop-tendency-column {
+    flex: 1;         /* 各列が均等に幅を取る */
+    min-width: 280px;/* 列の最小幅を指定 */
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* 各列内の見出しのスタイルを調整 */
+.shop-tendency-column h4 {
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.shop-tendency-column h5 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* --- 行動傾向レポートのレイアウト改善 --- */
+
+/* 2カラムリスト */
+.two-column-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0 2rem; /* 縦の隙間は0, 横の隙間を広げる */
+    padding-left: 1.5rem;
+}
+
+.two-column-list li {
+    break-inside: avoid; /* カラムの途中で改ページされるのを防ぐ */
+}
+
+
+/* ショップ行動傾向のグリッドレイアウト */
+.shop-item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* レスポンシブ対応 */
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.shop-item-sub-column h5 {
+    margin-top: 0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.shop-item-sub-column ul {
+    padding-left: 20px;
+    margin-top: 0;
+}
+
+.shop-item-sub-column p {
+    font-style: italic;
+    color: #888;
+}
+
+/* アイテム名の色分け */
+.text-upgrade,
+.text-purchase {
+    color: #e74c3c; /* 明るめの赤 */
+    font-weight: 600;
+}
+
+.text-exhibit {
+    color: #9b59b6; /* 紫 */
+    font-weight: 600;
+}
+
+.text-remove {
+    color: #3498db; /* 青 */
+    font-weight: 600;
+}
+
+/* 2列レイアウト用のスタイル */
+.two-column-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px; /* 列間のスペース */
+}
+.column {
+    flex: 1;
+    min-width: 300px; /* 幅が狭い場合に折り返すための最小幅 */
+}
+.column ul {
+    padding-left: 20px;
+    margin-top: 0;
+}
+
+/* エリート特効カードのテーブル用のスタイル */
+.specialist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    font-size: 0.9em;
+}
+.specialist-table th, .specialist-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+}
+.specialist-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+.specialist-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 2カラムレイアウトのためのコンテナ設定 */
+.tendency-container {
+    display: flex;
+    flex-wrap: wrap; /* 画面が狭い場合に折り返す */
+    gap: 20px;       /* カラム間の隙間 */
+    align-items: flex-start; /* 上揃えにする */
+    margin-bottom: 2em;
+}
+
+/* テキストとグラフの各カラム設定 */
+.tendency-text,
+.tendency-graph {
+    flex: 1; /* カラム幅を均等に分ける */
+    min-width: 300px; /* 最小幅を指定して、極端に狭くならないようにする */
+}
+
+/* グラフ画像のサイズを親要素に合わせて自動調整 */
+.tendency-graph img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* 見た目を少し柔らかくする角丸 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 影を付けて立体感を出す */
+}
+
+/* スマートフォンなどの狭い画面向けの調整 */
+@media (max-width: 768px) {
+    .tendency-container {
+        flex-direction: column; /* 縦並びに戻す */
+    }
+}
+
+/* エリート特効カードの行を強調表示するスタイル */
+.specialist-table tbody tr.specialist-row {
+    background-color: #fffbe6; /* 薄い黄色の背景 */
+}
+
+/* 特効カードの行の文字を太字にする */
+.specialist-table tbody tr.specialist-row td {
+    font-weight: bold;
+}
+
+/* 特効カードのスコア部分（4列目以降）の色を赤に変更 */
+.specialist-table tbody tr.specialist-row td:nth-child(n+4) {
+    color: #c0392b; /* やや暗めの赤色 */
 }

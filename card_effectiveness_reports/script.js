@@ -22,7 +22,7 @@ let allExhibits = new Set(); // 全展示品名を保持するためのセット
 // --- Run Finder の状態管理 ---
 let lastFoundRuns = []; // 最後に検索した結果を保持する配列
 let currentSortKey = 'run_id'; // 現在のソートキー
-let currentSortOrder = 'asc'; // 現在のソート順 ('asc' または 'desc')
+let currentSortOrder = 'desc'; // 現在のソート順 ('asc' または 'desc')
 
 let attentionSlider = null;
 let AGG_MAP = new Map();
@@ -39,9 +39,9 @@ let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
 window.addEventListener('DOMContentLoaded', async () => {
     // この 'params' 変数を関数全体で使い回します
     const params = new URLSearchParams(window.location.search);
-    CURRENT_CHAR = params.get('char') || 'CirnoA';
+    const requestedChar = params.get('char') || 'CirnoA';
     LANG = (params.get('lang') || 'ja').toLowerCase();
-
+    const charToLoad = (requestedChar === 'All') ? 'CirnoA' : requestedChar;
     try {
         const itemMasterResponse = await fetch('./data/item_master.json');
         if (itemMasterResponse.ok) {
@@ -73,9 +73,20 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
 
 
-        const response = await fetch(`data/${CURRENT_CHAR}_data.json`);
-        if (!response.ok) throw new Error(`Failed to load data for ${CURRENT_CHAR}`);
+        console.log(`Requested character: '${requestedChar}'. Loading data for: '${charToLoad}' to initialize UI.`);
+        // 実際に読み込むのは charToLoad のデータ
+        const response = await fetch(`data/${charToLoad}_data.json`);
+        if (!response.ok) {
+            // 'All' の時にデフォルトキャラの読み込みに失敗した場合、より親切なエラーを出す
+            if (requestedChar === 'All') {
+                 throw new Error(`Failed to load default data for '${charToLoad}' to handle 'All' characters view.`);
+            }
+            throw new Error(`Failed to load data for ${charToLoad}`);
+        }
         ALL_DATA = await response.json();
+
+        // データを読み込んだ後、グローバルなキャラクター選択状態をURLで要求されたものに設定する
+        CURRENT_CHAR = requestedChar;
 
         // 全カードのデータをMapに格納（ホバー時の情報参照を高速化）
         if (ALL_DATA.agg_data_full) {
@@ -95,7 +106,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderGlobalHeader();
     setupNavigation(); // ここでタブボタンが生成される
 
-    // ▼▼▼ このブロックで、以前の初期描画処理を置き換える ▼▼▼
+
     // URLに 'search' パラメータがあるかどうかをチェック
     if (params.has('search')) {
         // 共有URLでアクセスされた場合、ラン検索タブを直接開いて自動検索
@@ -104,7 +115,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         // 通常の読み込み時は、最初のタブを開く
         switchTab('card-performance-tab');
     }
-    // ▲▲▲ ここまで ▲▲▲
+
 
     // 各タブのコンテンツは switchTab が必要に応じて描画するため、以下の個別呼び出しは不要
     // renderCardPerformanceTab(CURRENT_CHAR, LANG);
@@ -2527,13 +2538,32 @@ function renderActTrendTab(lang) {
                 </div>
             `;
             gridHtml += resourceHtml;
+            if (act === '1') {
+                const report_ja = ALL_DATA.act1_tendency_report_ja;
+                const report_en = ALL_DATA.act1_tendency_report_en;
+                // langに応じて表示するレポートを選択
+                const reportToShow = (lang === 'ja' ? report_ja : report_en) || '';
+
+                if (reportToShow) {
+                    // レポートはグリッドレイアウトの中で横幅いっぱいに広げる
+                    const reportHtml = `
+                        <div class="analysis-section" style="grid-column: 1 / -1; margin-top: 20px; padding: 20px;">
+                            ${reportToShow}
+                        </div>
+                    `;
+                    gridHtml += reportHtml;
+                }
+            }
         }
         gridHtml += '</div>';
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
     // 円グラフのHTMLは削除
-    container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run.Changes caused by events are also included.'}</p>${subTabsHtml}${contentHtml}</div>`;
+
+    // JSONから読み込んだテキストを使用するように変更
+    // ▼▼▼ この行をまるごと置き換えてください ▼▼▼
+container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run. Changes caused by events are also included.<br><strong>Note: A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>'}</p>${subTabsHtml}${contentHtml}</div>`;
 }
 
 
@@ -3464,7 +3494,9 @@ function generateAndCopyShareLink() {
 
     // 1. 基本的なフィルターの値を取得
     const char = document.getElementById('character-select').value;
-    if (char && char !== 'All') params.set('char', char);
+    if (char) {
+        params.set('char', char);
+    }
 
     const act = document.getElementById('act-filter').value;
     if (act) params.set('act', act);
