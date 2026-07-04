@@ -88,20 +88,20 @@
 <td style='text-align: right;'>94.7</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 陰陽血印</strong></td>
-<td style='text-align: right;'>+23.04</td>
-<td style='text-align: right;'>48.8%</td>
-<td style='text-align: right;'>24.0%</td>
-<td style='text-align: right;'>43</td>
-<td style='text-align: right;'><strong>114.8</strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 博麗縁日</strong></td>
 <td style='text-align: right;'>+23.04</td>
 <td style='text-align: right;'>48.8%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>43</td>
 <td style='text-align: right;'><strong>122.8</strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 陰陽血印</strong></td>
+<td style='text-align: right;'>+23.04</td>
+<td style='text-align: right;'>48.8%</td>
+<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>43</td>
+<td style='text-align: right;'><strong>114.8</strong></td>
 </tr>
 <tr>
 <td>厄祓い</td>

@@ -239,6 +239,14 @@
 <td style='text-align: right;'>40</td>
 <td style='text-align: right;'>83.3</td>
 </tr>
+<tr>
+<td>Heart Blossoms</td>
+<td style='text-align: right;'>+14.66</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>84.5</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Light the Furnace</strong></td>
 <td style='text-align: right;'>+14.66</td>
@@ -254,14 +262,6 @@
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>22</td>
 <td style='text-align: right;'>94.9</td>
-</tr>
-<tr>
-<td>Heart Blossoms</td>
-<td style='text-align: right;'>+14.66</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>84.5</td>
 </tr>
 <tr>
 <td>Stardust Reverie</td>
@@ -280,20 +280,20 @@
 <td style='text-align: right;'>86.9</td>
 </tr>
 <tr>
-<td>Violin Solo</td>
-<td style='text-align: right;'>+13.66</td>
-<td style='text-align: right;'>45.0%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>20</td>
-<td style='text-align: right;'>100.7</td>
-</tr>
-<tr>
 <td>Battle Stance</td>
 <td style='text-align: right;'>+13.66</td>
 <td style='text-align: right;'>45.0%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>20</td>
 <td style='text-align: right;'>96.9</td>
+</tr>
+<tr>
+<td>Violin Solo</td>
+<td style='text-align: right;'>+13.66</td>
+<td style='text-align: right;'>45.0%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>20</td>
+<td style='text-align: right;'>100.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Bright Starry Sky</strong></td>

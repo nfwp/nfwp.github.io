@@ -112,20 +112,20 @@
 <td style='text-align: right;'>95.0</td>
 </tr>
 <tr>
-<td>大天狗の号令</td>
-<td style='text-align: right;'>+22.42</td>
-<td style='text-align: right;'>41.3%</td>
-<td style='text-align: right;'>17.9%</td>
-<td style='text-align: right;'>46</td>
-<td style='text-align: right;'>91.5</td>
-</tr>
-<tr>
 <td>本読み</td>
 <td style='text-align: right;'>+22.42</td>
 <td style='text-align: right;'>41.3%</td>
 <td style='text-align: right;'>17.9%</td>
 <td style='text-align: right;'>46</td>
 <td style='text-align: right;'>88.3</td>
+</tr>
+<tr>
+<td>大天狗の号令</td>
+<td style='text-align: right;'>+22.42</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>17.9%</td>
+<td style='text-align: right;'>46</td>
+<td style='text-align: right;'>91.5</td>
 </tr>
 <tr>
 <td>きゅうりミサイル</td>

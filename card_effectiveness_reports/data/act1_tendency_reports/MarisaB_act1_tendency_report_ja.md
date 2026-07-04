@@ -239,6 +239,14 @@
 <td style='text-align: right;'>40</td>
 <td style='text-align: right;'>83.3</td>
 </tr>
+<tr>
+<td>咲いた心</td>
+<td style='text-align: right;'>+14.66</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>84.5</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 イグニッション</strong></td>
 <td style='text-align: right;'>+14.66</td>
@@ -254,14 +262,6 @@
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>22</td>
 <td style='text-align: right;'>94.9</td>
-</tr>
-<tr>
-<td>咲いた心</td>
-<td style='text-align: right;'>+14.66</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>84.5</td>
 </tr>
 <tr>
 <td>スターダストレヴァリエ</td>
@@ -280,20 +280,20 @@
 <td style='text-align: right;'>86.9</td>
 </tr>
 <tr>
-<td>ルナサ・ソロライブ</td>
-<td style='text-align: right;'>+13.66</td>
-<td style='text-align: right;'>45.0%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>20</td>
-<td style='text-align: right;'>100.7</td>
-</tr>
-<tr>
 <td>作戦姿勢</td>
 <td style='text-align: right;'>+13.66</td>
 <td style='text-align: right;'>45.0%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>20</td>
 <td style='text-align: right;'>96.9</td>
+</tr>
+<tr>
+<td>ルナサ・ソロライブ</td>
+<td style='text-align: right;'>+13.66</td>
+<td style='text-align: right;'>45.0%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>20</td>
+<td style='text-align: right;'>100.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ブライトスターリースカイ</strong></td>

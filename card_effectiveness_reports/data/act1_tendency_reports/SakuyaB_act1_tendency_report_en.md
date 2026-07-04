@@ -112,20 +112,20 @@
 <td style='text-align: right;'>95.0</td>
 </tr>
 <tr>
-<td>Great Tengu's Decree</td>
-<td style='text-align: right;'>+22.42</td>
-<td style='text-align: right;'>41.3%</td>
-<td style='text-align: right;'>17.9%</td>
-<td style='text-align: right;'>46</td>
-<td style='text-align: right;'>91.5</td>
-</tr>
-<tr>
 <td>Youkai Study</td>
 <td style='text-align: right;'>+22.42</td>
 <td style='text-align: right;'>41.3%</td>
 <td style='text-align: right;'>17.9%</td>
 <td style='text-align: right;'>46</td>
 <td style='text-align: right;'>88.3</td>
+</tr>
+<tr>
+<td>Great Tengu's Decree</td>
+<td style='text-align: right;'>+22.42</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>17.9%</td>
+<td style='text-align: right;'>46</td>
+<td style='text-align: right;'>91.5</td>
 </tr>
 <tr>
 <td>Cucumber Missile</td>
