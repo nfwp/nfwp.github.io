@@ -44,7 +44,7 @@
 <li><strong>通常戦闘選択時の平均HP</strong>: 54.5 (中央値: 61.0, N=1484)</li>
 </ul>
 <h4>2.1 Act 1 エリート挑戦・影響度カード分析 (Top 40)</h4>
-<p>カードの所持・非所持がエリートマスへの挑戦率に与える影響をスコア化しました。スコアが高いほど、そのカードがエリート挑戦を後押ししていることを示します。サンプル数が少ないカードの影響度は補正されています。<br>また、Act1エリート戦でのパフォーマンス（攻防合計）が110以上のカードは、**背景色と🔥アイコン**で強調表示されます。</p>
+<p>カードの所持・非所持がエリートマスへの挑戦率に与える影響をスコア化しました。スコアが高いほど、そのカードがエリート挑戦を後押ししていることを示します。サンプル数が少ないカードの影響度は補正されています。<br>また、Act1エリート戦でのパフォーマンスにおいて、<strong>攻撃偏差値が60以上<strong>、または<strong>合計値が110以上<strong>のカードは、<strong>背景色と🔥アイコン<strong>で強調表示されます。</p>
 <table class="data-table specialist-table">
 <thead><tr>
 <th> カード名</th>
@@ -52,7 +52,9 @@
 <th>挑戦率(所持)</th>
 <th>挑戦率(非所持)</th>
 <th>N(所持)</th>
-<th>攻防合計 </th>
+<th>攻撃</th>
+<th>防御</th>
+<th>合計 </th>
 </tr></thead>
 <tbody>
 <tr>
@@ -61,6 +63,8 @@
 <td style='text-align: right;'>48.5%</td>
 <td style='text-align: right;'>20.6%</td>
 <td style='text-align: right;'>194</td>
+<td style='text-align: right;'>46.3</td>
+<td style='text-align: right;'>46.3</td>
 <td style='text-align: right;'>92.6</td>
 </tr>
 <tr>
@@ -69,6 +73,8 @@
 <td style='text-align: right;'>46.8%</td>
 <td style='text-align: right;'>21.3%</td>
 <td style='text-align: right;'>156</td>
+<td style='text-align: right;'>38.9</td>
+<td style='text-align: right;'>52.8</td>
 <td style='text-align: right;'>91.7</td>
 </tr>
 <tr>
@@ -77,6 +83,8 @@
 <td style='text-align: right;'>47.4%</td>
 <td style='text-align: right;'>22.1%</td>
 <td style='text-align: right;'>97</td>
+<td style='text-align: right;'>35.0</td>
+<td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'>84.4</td>
 </tr>
 <tr>
@@ -85,14 +93,18 @@
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>51</td>
+<td style='text-align: right;'>45.4</td>
+<td style='text-align: right;'>47.2</td>
 <td style='text-align: right;'>92.6</td>
 </tr>
-<tr>
-<td>失敗の産物</td>
+<tr class="specialist-row">
+<td><strong>🔥 失敗の産物</strong></td>
 <td style='text-align: right;'>+24.02</td>
 <td style='text-align: right;'>44.9%</td>
 <td style='text-align: right;'>20.9%</td>
 <td style='text-align: right;'>198</td>
+<td style='text-align: right;'><strong><span style='color: red;'>64.2</span></strong></td>
+<td style='text-align: right;'>43.8</td>
 <td style='text-align: right;'>108.0</td>
 </tr>
 <tr>
@@ -101,6 +113,8 @@
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>22.3%</td>
 <td style='text-align: right;'>91</td>
+<td style='text-align: right;'>44.4</td>
+<td style='text-align: right;'>55.9</td>
 <td style='text-align: right;'>100.3</td>
 </tr>
 <tr>
@@ -109,6 +123,8 @@
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>22.0%</td>
 <td style='text-align: right;'>116</td>
+<td style='text-align: right;'>50.0</td>
+<td style='text-align: right;'>58.0</td>
 <td style='text-align: right;'>108.0</td>
 </tr>
 <tr>
@@ -117,6 +133,8 @@
 <td style='text-align: right;'>42.9%</td>
 <td style='text-align: right;'>21.0%</td>
 <td style='text-align: right;'>212</td>
+<td style='text-align: right;'>48.3</td>
+<td style='text-align: right;'>42.4</td>
 <td style='text-align: right;'>90.7</td>
 </tr>
 <tr>
@@ -125,6 +143,8 @@
 <td style='text-align: right;'>44.1%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>68</td>
+<td style='text-align: right;'>46.0</td>
+<td style='text-align: right;'>50.0</td>
 <td style='text-align: right;'>96.0</td>
 </tr>
 <tr>
@@ -133,6 +153,8 @@
 <td style='text-align: right;'>43.5%</td>
 <td style='text-align: right;'>22.1%</td>
 <td style='text-align: right;'>115</td>
+<td style='text-align: right;'>42.4</td>
+<td style='text-align: right;'>36.5</td>
 <td style='text-align: right;'>78.9</td>
 </tr>
 <tr>
@@ -141,6 +163,8 @@
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>22.1%</td>
 <td style='text-align: right;'>120</td>
+<td style='text-align: right;'>42.0</td>
+<td style='text-align: right;'>46.9</td>
 <td style='text-align: right;'>88.9</td>
 </tr>
 <tr>
@@ -149,6 +173,8 @@
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>21.8%</td>
 <td style='text-align: right;'>146</td>
+<td style='text-align: right;'>39.4</td>
+<td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'>91.6</td>
 </tr>
 <tr>
@@ -157,14 +183,18 @@
 <td style='text-align: right;'>42.2%</td>
 <td style='text-align: right;'>21.7%</td>
 <td style='text-align: right;'>161</td>
+<td style='text-align: right;'>43.1</td>
+<td style='text-align: right;'>61.1</td>
 <td style='text-align: right;'>104.2</td>
 </tr>
-<tr>
-<td>元素放射</td>
+<tr class="specialist-row">
+<td><strong>🔥 元素放射</strong></td>
 <td style='text-align: right;'>+20.37</td>
 <td style='text-align: right;'>43.1%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>65</td>
+<td style='text-align: right;'><strong><span style='color: red;'>65.0</span></strong></td>
+<td style='text-align: right;'>44.8</td>
 <td style='text-align: right;'>109.8</td>
 </tr>
 <tr>
@@ -173,6 +203,8 @@
 <td style='text-align: right;'>42.1%</td>
 <td style='text-align: right;'>22.2%</td>
 <td style='text-align: right;'>114</td>
+<td style='text-align: right;'>51.7</td>
+<td style='text-align: right;'>35.0</td>
 <td style='text-align: right;'>86.7</td>
 </tr>
 <tr>
@@ -181,6 +213,8 @@
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>22.9%</td>
 <td style='text-align: right;'>37</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>45.4</td>
 <td style='text-align: right;'>103.4</td>
 </tr>
 <tr>
@@ -189,6 +223,8 @@
 <td style='text-align: right;'>43.5%</td>
 <td style='text-align: right;'>22.9%</td>
 <td style='text-align: right;'>46</td>
+<td style='text-align: right;'>40.3</td>
+<td style='text-align: right;'>52.5</td>
 <td style='text-align: right;'>92.9</td>
 </tr>
 <tr>
@@ -197,14 +233,18 @@
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>26</td>
+<td style='text-align: right;'>48.7</td>
+<td style='text-align: right;'>54.0</td>
 <td style='text-align: right;'>102.7</td>
 </tr>
-<tr>
-<td>ブラックペガサスの罪</td>
+<tr class="specialist-row">
+<td><strong>🔥 ブラックペガサスの罪</strong></td>
 <td style='text-align: right;'>+19.43</td>
 <td style='text-align: right;'>41.8%</td>
 <td style='text-align: right;'>22.4%</td>
 <td style='text-align: right;'>98</td>
+<td style='text-align: right;'><strong><span style='color: red;'>62.8</span></strong></td>
+<td style='text-align: right;'>45.7</td>
 <td style='text-align: right;'>108.5</td>
 </tr>
 <tr>
@@ -213,6 +253,8 @@
 <td style='text-align: right;'>41.5%</td>
 <td style='text-align: right;'>22.2%</td>
 <td style='text-align: right;'>123</td>
+<td style='text-align: right;'>42.7</td>
+<td style='text-align: right;'>39.9</td>
 <td style='text-align: right;'>82.6</td>
 </tr>
 <tr class="specialist-row">
@@ -221,7 +263,9 @@
 <td style='text-align: right;'>41.8%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>67</td>
-<td style='text-align: right;'><strong>111.3</strong></td>
+<td style='text-align: right;'>41.2</td>
+<td style='text-align: right;'>70.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.3</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ナビゲーションスター</strong></td>
@@ -229,7 +273,9 @@
 <td style='text-align: right;'>41.6%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>77</td>
-<td style='text-align: right;'><strong>119.9</strong></td>
+<td style='text-align: right;'>54.9</td>
+<td style='text-align: right;'>65.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.9</span></strong></td>
 </tr>
 <tr>
 <td>无寿の夢</td>
@@ -237,6 +283,8 @@
 <td style='text-align: right;'>40.0%</td>
 <td style='text-align: right;'>21.3%</td>
 <td style='text-align: right;'>220</td>
+<td style='text-align: right;'>52.8</td>
+<td style='text-align: right;'>56.9</td>
 <td style='text-align: right;'>109.7</td>
 </tr>
 <tr>
@@ -245,6 +293,8 @@
 <td style='text-align: right;'>40.2%</td>
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>189</td>
+<td style='text-align: right;'>49.2</td>
+<td style='text-align: right;'>47.8</td>
 <td style='text-align: right;'>96.9</td>
 </tr>
 <tr>
@@ -253,6 +303,8 @@
 <td style='text-align: right;'>39.5%</td>
 <td style='text-align: right;'>21.2%</td>
 <td style='text-align: right;'>228</td>
+<td style='text-align: right;'>40.8</td>
+<td style='text-align: right;'>67.0</td>
 <td style='text-align: right;'>107.8</td>
 </tr>
 <tr>
@@ -261,6 +313,8 @@
 <td style='text-align: right;'>41.1%</td>
 <td style='text-align: right;'>22.9%</td>
 <td style='text-align: right;'>56</td>
+<td style='text-align: right;'>44.8</td>
+<td style='text-align: right;'>35.8</td>
 <td style='text-align: right;'>80.6</td>
 </tr>
 <tr>
@@ -269,6 +323,8 @@
 <td style='text-align: right;'>40.9%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>66</td>
+<td style='text-align: right;'>59.7</td>
+<td style='text-align: right;'>48.9</td>
 <td style='text-align: right;'>108.6</td>
 </tr>
 <tr>
@@ -277,6 +333,8 @@
 <td style='text-align: right;'>40.8%</td>
 <td style='text-align: right;'>22.9%</td>
 <td style='text-align: right;'>49</td>
+<td style='text-align: right;'>52.2</td>
+<td style='text-align: right;'>48.0</td>
 <td style='text-align: right;'>100.3</td>
 </tr>
 <tr>
@@ -285,6 +343,8 @@
 <td style='text-align: right;'>46.4%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>28</td>
+<td style='text-align: right;'>43.4</td>
+<td style='text-align: right;'>45.1</td>
 <td style='text-align: right;'>88.5</td>
 </tr>
 <tr class="specialist-row">
@@ -293,14 +353,18 @@
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>40</td>
-<td style='text-align: right;'><strong>119.8</strong></td>
+<td style='text-align: right;'>55.6</td>
+<td style='text-align: right;'>64.2</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.8</span></strong></td>
 </tr>
-<tr>
-<td>花火の調合</td>
+<tr class="specialist-row">
+<td><strong>🔥 花火の調合</strong></td>
 <td style='text-align: right;'>+16.72</td>
 <td style='text-align: right;'>41.5%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>41</td>
+<td style='text-align: right;'><strong><span style='color: red;'>60.6</span></strong></td>
+<td style='text-align: right;'>46.6</td>
 <td style='text-align: right;'>107.2</td>
 </tr>
 <tr class="specialist-row">
@@ -309,7 +373,9 @@
 <td style='text-align: right;'>42.1%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>38</td>
-<td style='text-align: right;'><strong>123.8</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>62.2</span></strong></td>
+<td style='text-align: right;'>61.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.8</span></strong></td>
 </tr>
 <tr>
 <td>スコアデザイアイーター</td>
@@ -317,6 +383,8 @@
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>23.1%</td>
 <td style='text-align: right;'>26</td>
+<td style='text-align: right;'>34.1</td>
+<td style='text-align: right;'>49.2</td>
 <td style='text-align: right;'>83.2</td>
 </tr>
 <tr class="specialist-row">
@@ -325,7 +393,9 @@
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>23.1%</td>
 <td style='text-align: right;'>29</td>
-<td style='text-align: right;'><strong>111.8</strong></td>
+<td style='text-align: right;'>53.4</td>
+<td style='text-align: right;'>58.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.8</span></strong></td>
 </tr>
 <tr>
 <td>重低音バスドラム</td>
@@ -333,6 +403,8 @@
 <td style='text-align: right;'>38.7%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>75</td>
+<td style='text-align: right;'>54.3</td>
+<td style='text-align: right;'>39.4</td>
 <td style='text-align: right;'>93.7</td>
 </tr>
 <tr>
@@ -341,6 +413,8 @@
 <td style='text-align: right;'>36.5%</td>
 <td style='text-align: right;'>20.9%</td>
 <td style='text-align: right;'>310</td>
+<td style='text-align: right;'>50.6</td>
+<td style='text-align: right;'>44.4</td>
 <td style='text-align: right;'>95.0</td>
 </tr>
 <tr class="specialist-row">
@@ -349,7 +423,9 @@
 <td style='text-align: right;'>37.6%</td>
 <td style='text-align: right;'>22.2%</td>
 <td style='text-align: right;'>149</td>
-<td style='text-align: right;'><strong>117.0</strong></td>
+<td style='text-align: right;'>57.3</td>
+<td style='text-align: right;'>59.7</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.0</span></strong></td>
 </tr>
 <tr>
 <td>スターダストレヴァリエ</td>
@@ -357,6 +433,8 @@
 <td style='text-align: right;'>37.6%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>109</td>
+<td style='text-align: right;'>41.6</td>
+<td style='text-align: right;'>37.2</td>
 <td style='text-align: right;'>78.8</td>
 </tr>
 <tr>
@@ -365,6 +443,8 @@
 <td style='text-align: right;'>37.6%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>93</td>
+<td style='text-align: right;'>49.4</td>
+<td style='text-align: right;'>56.6</td>
 <td style='text-align: right;'>106.0</td>
 </tr>
 <tr>
@@ -373,6 +453,8 @@
 <td style='text-align: right;'>36.8%</td>
 <td style='text-align: right;'>22.1%</td>
 <td style='text-align: right;'>171</td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'>50.6</td>
 <td style='text-align: right;'>103.1</td>
 </tr>
 </tbody>

@@ -1847,24 +1847,7 @@ body {
     margin-top: 0;
 }
 
-/* エリート特効カードのテーブル用のスタイル */
-.specialist-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1em;
-    font-size: 0.9em;
-}
-.specialist-table th, .specialist-table td {
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-}
-.specialist-table th {
-    background-color: #f2f2f2;
-    text-align: center;
-}
-.specialist-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+
 
 /* 2カラムレイアウトのためのコンテナ設定 */
 .tendency-container {
@@ -1897,17 +1880,31 @@ body {
     }
 }
 
+/* エリート特効カードのテーブル用のスタイル */
+.specialist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    font-size: 0.9em;
+}
+.specialist-table th, .specialist-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+}
+.specialist-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+.specialist-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 /* エリート特効カードの行を強調表示するスタイル */
 .specialist-table tbody tr.specialist-row {
     background-color: #fffbe6; /* 薄い黄色の背景 */
 }
 
-/* 特効カードの行の文字を太字にする */
-.specialist-table tbody tr.specialist-row td {
-    font-weight: bold;
-}
 
-/* 特効カードのスコア部分（4列目以降）の色を赤に変更 */
-.specialist-table tbody tr.specialist-row td:nth-child(n+4) {
-    color: #c0392b; /* やや暗めの赤色 */
-}
+
+
+

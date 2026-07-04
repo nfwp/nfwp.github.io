@@ -44,7 +44,7 @@
 <li><strong>Average HP when choosing normal combats</strong>: 54.3 (Median: 60.0, N=1264)</li>
 </ul>
 <h4>2.1 Act 1 Elite Challenge Influence Card Analysis (Top 40)</h4>
-<p>This score measures the influence of owning a card on the decision to challenge an elite. A higher score indicates that owning the card encourages challenging elites. The influence of cards with fewer samples is adjusted.<br>Cards with a performance score (Atk+Def) of 110 or higher in Act 1 elite battles are highlighted with a **background color and a 🔥 icon**.</p>
+<p>This score measures the influence of owning a card on the decision to challenge an elite. A higher score indicates that owning the card encourages challenging elites. The influence of cards with fewer samples is adjusted.<br>Cards with a performance score in Act 1 elite battles meeting the criteria (<strong>Attack ≥ 60<strong> or <strong>Total ≥ 110<strong>) are highlighted with a <strong>background color and a 🔥 icon<strong>.</p>
 <table class="data-table specialist-table">
 <thead><tr>
 <th> Card Name</th>
@@ -52,7 +52,9 @@
 <th>Rate (w/ Card)</th>
 <th>Rate (w/o Card)</th>
 <th>N (w/ Card)</th>
-<th>Atk+Def </th>
+<th>Atk</th>
+<th>Def</th>
+<th>Total </th>
 </tr></thead>
 <tbody>
 <tr>
@@ -61,6 +63,8 @@
 <td style='text-align: right;'>55.4%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>74</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>54.7</td>
 <td style='text-align: right;'>104.3</td>
 </tr>
 <tr>
@@ -69,6 +73,8 @@
 <td style='text-align: right;'>52.2%</td>
 <td style='text-align: right;'>24.9%</td>
 <td style='text-align: right;'>115</td>
+<td style='text-align: right;'>34.0</td>
+<td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>91.7</td>
 </tr>
 <tr class="specialist-row">
@@ -77,7 +83,9 @@
 <td style='text-align: right;'>52.1%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>48</td>
-<td style='text-align: right;'><strong>135.5</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>67.1</span></strong></td>
+<td style='text-align: right;'>68.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>135.5</span></strong></td>
 </tr>
 <tr>
 <td>Claustrophobia</td>
@@ -85,6 +93,8 @@
 <td style='text-align: right;'>50.5%</td>
 <td style='text-align: right;'>25.3%</td>
 <td style='text-align: right;'>97</td>
+<td style='text-align: right;'>48.5</td>
+<td style='text-align: right;'>53.2</td>
 <td style='text-align: right;'>101.7</td>
 </tr>
 <tr class="specialist-row">
@@ -93,7 +103,9 @@
 <td style='text-align: right;'>49.5%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>105</td>
-<td style='text-align: right;'><strong>116.1</strong></td>
+<td style='text-align: right;'>53.8</td>
+<td style='text-align: right;'>62.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.1</span></strong></td>
 </tr>
 <tr>
 <td>DNA's Flaw</td>
@@ -101,6 +113,8 @@
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>60</td>
+<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>49.3</td>
 <td style='text-align: right;'>98.3</td>
 </tr>
 <tr class="specialist-row">
@@ -109,7 +123,9 @@
 <td style='text-align: right;'>48.9%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>135</td>
-<td style='text-align: right;'><strong>115.9</strong></td>
+<td style='text-align: right;'>43.0</td>
+<td style='text-align: right;'>72.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.9</span></strong></td>
 </tr>
 <tr>
 <td>Instinctive Action</td>
@@ -117,6 +133,8 @@
 <td style='text-align: right;'>49.4%</td>
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>85</td>
+<td style='text-align: right;'>52.9</td>
+<td style='text-align: right;'>41.1</td>
 <td style='text-align: right;'>94.0</td>
 </tr>
 <tr>
@@ -125,14 +143,18 @@
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>48</td>
+<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'>52.1</td>
 <td style='text-align: right;'>107.1</td>
 </tr>
-<tr>
-<td>Passionate Memories</td>
+<tr class="specialist-row">
+<td><strong>🔥 Passionate Memories</strong></td>
 <td style='text-align: right;'>+22.49</td>
 <td style='text-align: right;'>46.5%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>202</td>
+<td style='text-align: right;'><strong><span style='color: red;'>64.3</span></strong></td>
+<td style='text-align: right;'>45.0</td>
 <td style='text-align: right;'>109.2</td>
 </tr>
 <tr class="specialist-row">
@@ -141,7 +163,9 @@
 <td style='text-align: right;'>48.0%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>50</td>
-<td style='text-align: right;'><strong>110.0</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>66.0</span></strong></td>
+<td style='text-align: right;'>44.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.0</span></strong></td>
 </tr>
 <tr>
 <td>Shade</td>
@@ -149,6 +173,8 @@
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>40</td>
+<td style='text-align: right;'>39.3</td>
+<td style='text-align: right;'>61.7</td>
 <td style='text-align: right;'>101.0</td>
 </tr>
 <tr>
@@ -157,6 +183,8 @@
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>25.0%</td>
 <td style='text-align: right;'>135</td>
+<td style='text-align: right;'>51.2</td>
+<td style='text-align: right;'>48.5</td>
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
@@ -165,6 +193,8 @@
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>91</td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'>49.0</td>
 <td style='text-align: right;'>107.5</td>
 </tr>
 <tr>
@@ -173,6 +203,8 @@
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>105</td>
+<td style='text-align: right;'>35.7</td>
+<td style='text-align: right;'>36.5</td>
 <td style='text-align: right;'>72.2</td>
 </tr>
 <tr class="specialist-row">
@@ -181,14 +213,18 @@
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>24.9%</td>
 <td style='text-align: right;'>154</td>
-<td style='text-align: right;'><strong>111.1</strong></td>
+<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>62.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.1</span></strong></td>
 </tr>
-<tr>
-<td>Wheel of Misfortune</td>
+<tr class="specialist-row">
+<td><strong>🔥 Wheel of Misfortune</strong></td>
 <td style='text-align: right;'>+19.62</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>34</td>
+<td style='text-align: right;'><strong><span style='color: red;'>62.3</span></strong></td>
+<td style='text-align: right;'>37.7</td>
 <td style='text-align: right;'>100.0</td>
 </tr>
 <tr class="specialist-row">
@@ -197,7 +233,9 @@
 <td style='text-align: right;'>46.7%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>45</td>
-<td style='text-align: right;'><strong>119.5</strong></td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'>63.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.5</span></strong></td>
 </tr>
 <tr>
 <td>Mischievous Rose</td>
@@ -205,6 +243,8 @@
 <td style='text-align: right;'>45.5%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>55</td>
+<td style='text-align: right;'>46.5</td>
+<td style='text-align: right;'>54.4</td>
 <td style='text-align: right;'>100.9</td>
 </tr>
 <tr>
@@ -213,6 +253,8 @@
 <td style='text-align: right;'>42.8%</td>
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>269</td>
+<td style='text-align: right;'>37.7</td>
+<td style='text-align: right;'>60.2</td>
 <td style='text-align: right;'>97.9</td>
 </tr>
 <tr>
@@ -221,6 +263,8 @@
 <td style='text-align: right;'>44.6%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>65</td>
+<td style='text-align: right;'>49.9</td>
+<td style='text-align: right;'>59.7</td>
 <td style='text-align: right;'>109.6</td>
 </tr>
 <tr class="specialist-row">
@@ -229,7 +273,9 @@
 <td style='text-align: right;'>44.3%</td>
 <td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>88</td>
-<td style='text-align: right;'><strong>113.7</strong></td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ageless Dream</strong></td>
@@ -237,7 +283,9 @@
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>24.7%</td>
 <td style='text-align: right;'>183</td>
-<td style='text-align: right;'><strong>115.6</strong></td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>58.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.6</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Canned Food</strong></td>
@@ -245,7 +293,9 @@
 <td style='text-align: right;'>44.2%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>86</td>
-<td style='text-align: right;'><strong>135.2</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>65.1</span></strong></td>
+<td style='text-align: right;'>70.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>135.2</span></strong></td>
 </tr>
 <tr>
 <td>Dance of the Heart</td>
@@ -253,6 +303,8 @@
 <td style='text-align: right;'>43.8%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>105</td>
+<td style='text-align: right;'>43.3</td>
+<td style='text-align: right;'>56.3</td>
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
@@ -261,6 +313,8 @@
 <td style='text-align: right;'>52.0%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>25</td>
+<td style='text-align: right;'>56.3</td>
+<td style='text-align: right;'>44.7</td>
 <td style='text-align: right;'>101.0</td>
 </tr>
 <tr>
@@ -269,6 +323,8 @@
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>139</td>
+<td style='text-align: right;'>38.8</td>
+<td style='text-align: right;'>50.1</td>
 <td style='text-align: right;'>89.0</td>
 </tr>
 <tr>
@@ -277,6 +333,8 @@
 <td style='text-align: right;'>42.4%</td>
 <td style='text-align: right;'>24.7%</td>
 <td style='text-align: right;'>191</td>
+<td style='text-align: right;'>52.6</td>
+<td style='text-align: right;'>56.7</td>
 <td style='text-align: right;'>109.3</td>
 </tr>
 <tr>
@@ -285,6 +343,8 @@
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>39</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>59.3</td>
 <td style='text-align: right;'>109.5</td>
 </tr>
 <tr>
@@ -293,6 +353,8 @@
 <td style='text-align: right;'>42.9%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>63</td>
+<td style='text-align: right;'>58.9</td>
+<td style='text-align: right;'>38.8</td>
 <td style='text-align: right;'>97.7</td>
 </tr>
 <tr class="specialist-row">
@@ -301,7 +363,9 @@
 <td style='text-align: right;'>42.0%</td>
 <td style='text-align: right;'>25.3%</td>
 <td style='text-align: right;'>138</td>
-<td style='text-align: right;'><strong>119.9</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.4</span></strong></td>
+<td style='text-align: right;'>51.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.9</span></strong></td>
 </tr>
 <tr>
 <td>Dark Dancer</td>
@@ -309,6 +373,8 @@
 <td style='text-align: right;'>44.2%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>43</td>
+<td style='text-align: right;'>47.4</td>
+<td style='text-align: right;'>47.4</td>
 <td style='text-align: right;'>94.7</td>
 </tr>
 <tr>
@@ -317,6 +383,8 @@
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>54</td>
+<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>48.8</td>
 <td style='text-align: right;'>96.4</td>
 </tr>
 <tr>
@@ -325,6 +393,8 @@
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>35</td>
+<td style='text-align: right;'>36.5</td>
+<td style='text-align: right;'>47.9</td>
 <td style='text-align: right;'>84.4</td>
 </tr>
 <tr class="specialist-row">
@@ -333,7 +403,9 @@
 <td style='text-align: right;'>48.1%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>27</td>
-<td style='text-align: right;'><strong>117.1</strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>63.5</span></strong></td>
+<td style='text-align: right;'>53.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.1</span></strong></td>
 </tr>
 <tr>
 <td>Grimoire Study</td>
@@ -341,6 +413,8 @@
 <td style='text-align: right;'>45.5%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>33</td>
+<td style='text-align: right;'>48.8</td>
+<td style='text-align: right;'>55.7</td>
 <td style='text-align: right;'>104.4</td>
 </tr>
 <tr class="specialist-row">
@@ -349,7 +423,9 @@
 <td style='text-align: right;'>41.7%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>60</td>
-<td style='text-align: right;'><strong>115.1</strong></td>
+<td style='text-align: right;'>58.1</td>
+<td style='text-align: right;'>57.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.1</span></strong></td>
 </tr>
 <tr>
 <td>🧰 Wolf Fur</td>
@@ -357,6 +433,8 @@
 <td style='text-align: right;'>40.5%</td>
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>173</td>
+<td style='text-align: right;'>40.3</td>
+<td style='text-align: right;'>34.9</td>
 <td style='text-align: right;'>75.2</td>
 </tr>
 <tr>
@@ -365,6 +443,8 @@
 <td style='text-align: right;'>42.9%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>42</td>
+<td style='text-align: right;'>34.9</td>
+<td style='text-align: right;'>41.9</td>
 <td style='text-align: right;'>76.8</td>
 </tr>
 <tr>
@@ -373,6 +453,8 @@
 <td style='text-align: right;'>46.4%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>28</td>
+<td style='text-align: right;'>55.7</td>
+<td style='text-align: right;'>43.7</td>
 <td style='text-align: right;'>99.3</td>
 </tr>
 </tbody>
