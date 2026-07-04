@@ -64,7 +64,7 @@
 <td style='text-align: right;'>107.3</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Canned Food</strong></td>
+<td><strong>🧰 Canned Food</strong></td>
 <td style='text-align: right;'>46.7%</td>
 <td style='text-align: right;'>(+10.9%)</td>
 <td style='text-align: right;'>55.0</td>
@@ -272,7 +272,7 @@
 <td style='text-align: right;'>123.0</td>
 </tr>
 <tr>
-<td>Wolf Fur</td>
+<td>🧰 Wolf Fur</td>
 <td style='text-align: right;'>39.1%</td>
 <td style='text-align: right;'>(+3.3%)</td>
 <td style='text-align: right;'>48.9</td>
@@ -388,7 +388,7 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">Clean Energy</span>: 11</li>
-<li><span class="text-purchase">Canned Food</span>: 8</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 8</li>
 <li><span class="text-purchase">Dangerous Illusionist</span>: 6</li>
 <li><span class="text-purchase">Room Cleaning</span>: 5</li>
 <li><span class="text-purchase">Elegant Maid</span>: 5</li>
@@ -405,7 +405,7 @@
 <li><span class="text-purchase">Time Magic</span>: 1</li>
 <li><span class="text-purchase">Déjà Vu</span>: 1</li>
 <li><span class="text-purchase">Jack the Ludo Bile</span>: 1</li>
-<li><span class="text-purchase">Supply Backpack</span>: 1</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
 <li><span class="text-purchase">Sakuya's Special Watch</span>: 1</li>
 </ul>
 </div>
@@ -418,7 +418,7 @@
 <ul>
 <li><span class="text-remove">Misdirection</span>: 38</li>
 <li><span class="text-remove">Shoot</span>: 16</li>
-<li><span class="text-remove">Creeping Hunger</span>: 15</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 15</li>
 <li><span class="text-remove">Danger Foretold</span>: 8</li>
 <li><span class="text-remove">Bouncing Knives</span>: 1</li>
 </ul>
@@ -431,11 +431,11 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 26</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 26</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 21</li>
 <li><span class="text-purchase">Guard Up</span>: 18</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 18</li>
-<li><span class="text-purchase">Water Gun</span>: 17</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 18</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 17</li>
 <li><span class="text-purchase">Clean Energy</span>: 17</li>
 <li><span class="text-purchase">Winter Resolution</span>: 16</li>
 <li><span class="text-purchase">Travel Preparation</span>: 13</li>
@@ -448,7 +448,7 @@
 <li><span class="text-purchase">Short Break</span>: 10</li>
 <li><span class="text-purchase">Play With Water</span>: 9</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 9</li>
-<li><span class="text-purchase">Supply Backpack</span>: 8</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 8</li>
 <li><span class="text-purchase">Time Suppression</span>: 8</li>
 <li><span class="text-purchase">Purify the Land</span>: 7</li>
 </ul>
@@ -468,8 +468,8 @@
 <li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
-<li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
 <li><span class="text-exhibit">Peony</span>: 1</li>
+<li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
 <li><span class="text-exhibit">Heavy Bass Drum</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Moriya Purification Rod</span>: 1</li>
@@ -480,11 +480,11 @@
 <ul>
 <li><span class="text-remove">Misdirection</span>: 165</li>
 <li><span class="text-remove">Shoot</span>: 30</li>
-<li><span class="text-remove">Creeping Hunger</span>: 19</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 19</li>
 <li><span class="text-remove">Danger Foretold</span>: 18</li>
 <li><span class="text-remove">Boundary</span>: 4</li>
 <li><span class="text-remove">Bouncing Knives</span>: 2</li>
-<li><span class="text-remove">Jealous</span>: 1</li>
+<li><span class="text-remove">🌀 Jealous</span>: 1</li>
 </ul>
 </div>
 </div>
@@ -495,9 +495,9 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 16</li>
-<li><span class="text-purchase">Water Gun</span>: 6</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 5</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 16</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 5</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 4</li>
 <li><span class="text-purchase">Changeling Magic</span>: 4</li>
 <li><span class="text-purchase">Room Cleaning</span>: 4</li>
@@ -506,13 +506,13 @@
 <li><span class="text-purchase">Princess Undine</span>: 3</li>
 <li><span class="text-purchase">Travel Preparation</span>: 3</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 3</li>
-<li><span class="text-purchase">Supply Backpack</span>: 3</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 3</li>
 <li><span class="text-purchase">Elegant Maid</span>: 3</li>
 <li><span class="text-purchase">Guard Up</span>: 2</li>
 <li><span class="text-purchase">Sure Gamble</span>: 2</li>
-<li><span class="text-purchase">Energy Drink</span>: 2</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
 <li><span class="text-purchase">Knife of Damocles</span>: 2</li>
-<li><span class="text-purchase">Flashlight</span>: 2</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 2</li>
 <li><span class="text-purchase">Devour History</span>: 2</li>
 </ul>
@@ -546,9 +546,9 @@
 <ul>
 <li><span class="text-remove">Misdirection</span>: 27</li>
 <li><span class="text-remove">Shoot</span>: 7</li>
-<li><span class="text-remove">Misfortune</span>: 5</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 5</li>
 <li><span class="text-remove">Boundary</span>: 2</li>
-<li><span class="text-remove">Creeping Hunger</span>: 1</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 1</li>
 </ul>
 </div>
 </div>

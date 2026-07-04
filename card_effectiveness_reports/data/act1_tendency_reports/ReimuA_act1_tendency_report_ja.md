@@ -56,7 +56,7 @@
 </tr></thead>
 <tbody>
 <tr>
-<td>ライオットシールド</td>
+<td>🧰 ライオットシールド</td>
 <td style='text-align: right;'>65.2%</td>
 <td style='text-align: right;'>(+25.3%)</td>
 <td style='text-align: right;'>41.1</td>
@@ -64,7 +64,7 @@
 <td style='text-align: right;'>96.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>缶詰</strong></td>
+<td><strong>🧰 缶詰</strong></td>
 <td style='text-align: right;'>64.0%</td>
 <td style='text-align: right;'>(+24.0%)</td>
 <td style='text-align: right;'>52.0</td>
@@ -128,7 +128,7 @@
 <td style='text-align: right;'>90.4</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>嫉妬</strong></td>
+<td><strong>🌀 嫉妬</strong></td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>(+10.0%)</td>
 <td style='text-align: right;'>66.3</td>
@@ -320,7 +320,7 @@
 <td style='text-align: right;'>104.9</td>
 </tr>
 <tr>
-<td>今泉影狼の毛</td>
+<td>🧰 今泉影狼の毛</td>
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>(+2.5%)</td>
 <td style='text-align: right;'>52.5</td>
@@ -390,11 +390,11 @@
 <li><span class="text-purchase">昇天脚</span>: 13回</li>
 <li><span class="text-purchase">長袖善舞</span>: 7回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 6回</li>
-<li><span class="text-purchase">水鉄砲</span>: 6回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 5回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
 <li><span class="text-purchase">清めの儀式</span>: 5回</li>
-<li><span class="text-purchase">缶詰</span>: 4回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
 <li><span class="text-purchase">住吉三神</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
 <li><span class="text-purchase">弾幕対決</span>: 2回</li>
@@ -404,7 +404,7 @@
 <li><span class="text-purchase">桜の舞</span>: 1回</li>
 <li><span class="text-purchase">浄化活動</span>: 1回</li>
 <li><span class="text-purchase">紅内勁</span>: 1回</li>
-<li><span class="text-purchase">電子ドラム</span>: 1回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">均衡の玉</span>: 1回</li>
 <li><span class="text-purchase">ホーミングアミュレット</span>: 1回</li>
 </ul>
@@ -419,10 +419,10 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">博麗アミュレット</span>: 53回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 11回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 11回</li>
 <li><span class="text-remove">弾幕護符</span>: 5回</li>
 <li><span class="text-remove">ショット</span>: 2回</li>
-<li><span class="text-remove">嫉妬</span>: 2回</li>
+<li><span class="text-remove">🌀 嫉妬</span>: 2回</li>
 </ul>
 </div>
 </div>
@@ -433,9 +433,9 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">ライオットシールド</span>: 16回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 16回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 13回</li>
-<li><span class="text-purchase">缶詰</span>: 13回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 13回</li>
 <li><span class="text-purchase">弾幕対決</span>: 11回</li>
 <li><span class="text-purchase">長袖善舞</span>: 8回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 8回</li>
@@ -445,14 +445,14 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
 <li><span class="text-purchase">常置陣</span>: 6回</li>
 <li><span class="text-purchase">紅内勁</span>: 5回</li>
-<li><span class="text-purchase">水鉄砲</span>: 5回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 5回</li>
 <li><span class="text-purchase">住吉三神</span>: 4回</li>
 <li><span class="text-purchase">浄化活動</span>: 4回</li>
 <li><span class="text-purchase">自由自在</span>: 4回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 4回</li>
 <li><span class="text-purchase">作戦姿勢</span>: 4回</li>
 <li><span class="text-purchase">二重大結界</span>: 3回</li>
-<li><span class="text-purchase">電子ドラム</span>: 3回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 3回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -475,12 +475,12 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">博麗アミュレット</span>: 63回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 12回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 12回</li>
 <li><span class="text-remove">ショット</span>: 10回</li>
 <li><span class="text-remove">弾幕護符</span>: 9回</li>
 <li><span class="text-remove">結界</span>: 4回</li>
 <li><span class="text-remove">封魔陣</span>: 1回</li>
-<li><span class="text-remove">不幸</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 1回</li>
 </ul>
 </div>
 </div>
@@ -491,19 +491,19 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">ライオットシールド</span>: 7回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 7回</li>
 <li><span class="text-purchase">自由自在</span>: 5回</li>
-<li><span class="text-purchase">救急箱</span>: 4回</li>
-<li><span class="text-purchase">缶詰</span>: 4回</li>
-<li><span class="text-purchase">フラッシュ</span>: 3回</li>
-<li><span class="text-purchase">水鉄砲</span>: 3回</li>
+<li><span class="text-purchase">🧰 救急箱</span>: 4回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 3回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 3回</li>
 <li><span class="text-purchase">逆転結界</span>: 3回</li>
 <li><span class="text-purchase">桜の舞</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
 <li><span class="text-purchase">二色蓮花蝶</span>: 2回</li>
 <li><span class="text-purchase">初詣</span>: 2回</li>
-<li><span class="text-purchase">バックパック</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">陰陽血印</span>: 2回</li>
 <li><span class="text-purchase">博麗縁日</span>: 2回</li>
 <li><span class="text-purchase">肉体強化</span>: 2回</li>
@@ -544,10 +544,10 @@
 <li><span class="text-remove">博麗アミュレット</span>: 6回</li>
 <li><span class="text-remove">弾幕護符</span>: 4回</li>
 <li><span class="text-remove">ショット</span>: 1回</li>
-<li><span class="text-remove">不幸</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 1回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 1回</li>
-<li><span class="text-remove">嫉妬</span>: 1回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
 </ul>
 </div>
 </div>

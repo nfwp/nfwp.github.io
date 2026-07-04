@@ -136,7 +136,7 @@
 <td style='text-align: right;'>105.9</td>
 </tr>
 <tr>
-<td>Jealous</td>
+<td>🌀 Jealous</td>
 <td style='text-align: right;'>42.4%</td>
 <td style='text-align: right;'>(+9.3%)</td>
 <td style='text-align: right;'>55.9</td>
@@ -160,7 +160,7 @@
 <td style='text-align: right;'>87.4</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Canned Food</strong></td>
+<td><strong>🧰 Canned Food</strong></td>
 <td style='text-align: right;'>42.0%</td>
 <td style='text-align: right;'>(+8.8%)</td>
 <td style='text-align: right;'>51.7</td>
@@ -192,7 +192,7 @@
 <td style='text-align: right;'>89.3</td>
 </tr>
 <tr>
-<td>Wolf Fur</td>
+<td>🧰 Wolf Fur</td>
 <td style='text-align: right;'>40.3%</td>
 <td style='text-align: right;'>(+7.1%)</td>
 <td style='text-align: right;'>39.4</td>
@@ -387,10 +387,10 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 5</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">In Plain Sight</span>: 4</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 4</li>
-<li><span class="text-purchase">Water Gun</span>: 4</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 4</li>
 <li><span class="text-purchase">Social Butterfly</span>: 3</li>
 <li><span class="text-purchase">Play With Water</span>: 3</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 2</li>
@@ -403,8 +403,8 @@
 <li><span class="text-purchase">Ice Barrier</span>: 1</li>
 <li><span class="text-purchase">Clean Energy</span>: 1</li>
 <li><span class="text-purchase">Tao Fetal Movement</span>: 1</li>
-<li><span class="text-purchase">Floppy Disk</span>: 1</li>
-<li><span class="text-purchase">Charged Tambourine</span>: 1</li>
+<li><span class="text-purchase">🧰 Floppy Disk</span>: 1</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Blizzard</span>: 1</li>
 <li><span class="text-purchase">Lily White, Herald of Spring</span>: 1</li>
 </ul>
@@ -417,10 +417,10 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Frosty Leaf Razor</span>: 34</li>
-<li><span class="text-remove">Creeping Hunger</span>: 21</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 21</li>
 <li><span class="text-remove">Shoot</span>: 8</li>
 <li><span class="text-remove">Crystal Shield</span>: 3</li>
-<li><span class="text-remove">Jealous</span>: 1</li>
+<li><span class="text-remove">🌀 Jealous</span>: 1</li>
 </ul>
 </div>
 </div>
@@ -431,13 +431,13 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Ballistic Shield</span>: 27</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 27</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 16</li>
-<li><span class="text-purchase">Canned Food</span>: 15</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 15</li>
 <li><span class="text-purchase">Call on Friends</span>: 13</li>
 <li><span class="text-purchase">Clean Energy</span>: 13</li>
 <li><span class="text-purchase">Social Butterfly</span>: 12</li>
-<li><span class="text-purchase">Water Gun</span>: 12</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 12</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 12</li>
 <li><span class="text-purchase">In Plain Sight</span>: 11</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 8</li>
@@ -478,9 +478,9 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Frosty Leaf Razor</span>: 117</li>
-<li><span class="text-remove">Creeping Hunger</span>: 23</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 23</li>
 <li><span class="text-remove">Shoot</span>: 13</li>
-<li><span class="text-remove">Misfortune</span>: 7</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 7</li>
 <li><span class="text-remove">Boundary</span>: 5</li>
 <li><span class="text-remove">Crystal Shield</span>: 3</li>
 </ul>
@@ -493,10 +493,10 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 5</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Social Butterfly</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 3</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">In Plain Sight</span>: 3</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 3</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 2</li>
@@ -507,9 +507,9 @@
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
 <li><span class="text-purchase">Garden of the Sun</span>: 1</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 1</li>
-<li><span class="text-purchase">Floppy Disk</span>: 1</li>
+<li><span class="text-purchase">🧰 Floppy Disk</span>: 1</li>
 <li><span class="text-purchase">Vivid Color Downpour</span>: 1</li>
-<li><span class="text-purchase">Water Gun</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">Play With Water</span>: 1</li>
 <li><span class="text-purchase">Ice Block</span>: 1</li>
 <li><span class="text-purchase">Forest Depths</span>: 1</li>
@@ -533,7 +533,7 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Frosty Leaf Razor</span>: 18</li>
-<li><span class="text-remove">Misfortune</span>: 3</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 3</li>
 <li><span class="text-remove">Shoot</span>: 2</li>
 <li><span class="text-remove">Crystal Shield</span>: 1</li>
 </ul>

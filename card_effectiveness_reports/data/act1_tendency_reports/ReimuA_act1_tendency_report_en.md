@@ -56,7 +56,7 @@
 </tr></thead>
 <tbody>
 <tr>
-<td>Ballistic Shield</td>
+<td>🧰 Ballistic Shield</td>
 <td style='text-align: right;'>65.2%</td>
 <td style='text-align: right;'>(+25.3%)</td>
 <td style='text-align: right;'>41.1</td>
@@ -64,7 +64,7 @@
 <td style='text-align: right;'>96.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Canned Food</strong></td>
+<td><strong>🧰 Canned Food</strong></td>
 <td style='text-align: right;'>64.0%</td>
 <td style='text-align: right;'>(+24.0%)</td>
 <td style='text-align: right;'>52.0</td>
@@ -128,7 +128,7 @@
 <td style='text-align: right;'>90.4</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Jealous</strong></td>
+<td><strong>🌀 Jealous</strong></td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>(+10.0%)</td>
 <td style='text-align: right;'>66.3</td>
@@ -320,7 +320,7 @@
 <td style='text-align: right;'>104.9</td>
 </tr>
 <tr>
-<td>Wolf Fur</td>
+<td>🧰 Wolf Fur</td>
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>(+2.5%)</td>
 <td style='text-align: right;'>52.5</td>
@@ -390,11 +390,11 @@
 <li><span class="text-purchase">Ascension Kick</span>: 13</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 7</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 6</li>
-<li><span class="text-purchase">Water Gun</span>: 6</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 5</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 5</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 5</li>
-<li><span class="text-purchase">Canned Food</span>: 4</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 2</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 2</li>
@@ -404,7 +404,7 @@
 <li><span class="text-purchase">Dance of Sacred Sakura</span>: 1</li>
 <li><span class="text-purchase">Purify the Land</span>: 1</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 1</li>
-<li><span class="text-purchase">Charged Tambourine</span>: 1</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Balanced Orbs</span>: 1</li>
 <li><span class="text-purchase">Homing Amulet</span>: 1</li>
 </ul>
@@ -419,10 +419,10 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Hakurei Amulet</span>: 53</li>
-<li><span class="text-remove">Creeping Hunger</span>: 11</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 11</li>
 <li><span class="text-remove">Danmaku Protection</span>: 5</li>
 <li><span class="text-remove">Shoot</span>: 2</li>
-<li><span class="text-remove">Jealous</span>: 2</li>
+<li><span class="text-remove">🌀 Jealous</span>: 2</li>
 </ul>
 </div>
 </div>
@@ -433,9 +433,9 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Ballistic Shield</span>: 16</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 16</li>
 <li><span class="text-purchase">Clean Energy</span>: 13</li>
-<li><span class="text-purchase">Canned Food</span>: 13</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 13</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 11</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 8</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 8</li>
@@ -445,14 +445,14 @@
 <li><span class="text-purchase">Cucumber Missile</span>: 6</li>
 <li><span class="text-purchase">Permanent Border</span>: 6</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 5</li>
-<li><span class="text-purchase">Water Gun</span>: 5</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 5</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 4</li>
 <li><span class="text-purchase">Purify the Land</span>: 4</li>
 <li><span class="text-purchase">Freefly</span>: 4</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 4</li>
 <li><span class="text-purchase">Battle Stance</span>: 4</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 3</li>
-<li><span class="text-purchase">Charged Tambourine</span>: 3</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -475,12 +475,12 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Hakurei Amulet</span>: 63</li>
-<li><span class="text-remove">Creeping Hunger</span>: 12</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 12</li>
 <li><span class="text-remove">Shoot</span>: 10</li>
 <li><span class="text-remove">Danmaku Protection</span>: 9</li>
 <li><span class="text-remove">Boundary</span>: 4</li>
 <li><span class="text-remove">Evil-Sealing Circle</span>: 1</li>
-<li><span class="text-remove">Misfortune</span>: 1</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 1</li>
 </ul>
 </div>
 </div>
@@ -491,19 +491,19 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Ballistic Shield</span>: 7</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 7</li>
 <li><span class="text-purchase">Freefly</span>: 5</li>
-<li><span class="text-purchase">First Aid Kit</span>: 4</li>
-<li><span class="text-purchase">Canned Food</span>: 4</li>
-<li><span class="text-purchase">Flashlight</span>: 3</li>
-<li><span class="text-purchase">Water Gun</span>: 3</li>
+<li><span class="text-purchase">🧰 First Aid Kit</span>: 4</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 3</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 3</li>
 <li><span class="text-purchase">Reverse Boundary</span>: 3</li>
 <li><span class="text-purchase">Dance of Sacred Sakura</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 2</li>
 <li><span class="text-purchase">Dichromatic Lotus Butterfly</span>: 2</li>
 <li><span class="text-purchase">New Year Visit</span>: 2</li>
-<li><span class="text-purchase">Supply Backpack</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Yin-Yang Rune</span>: 2</li>
 <li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 <li><span class="text-purchase">Strengthen Body</span>: 2</li>
@@ -544,10 +544,10 @@
 <li><span class="text-remove">Hakurei Amulet</span>: 6</li>
 <li><span class="text-remove">Danmaku Protection</span>: 4</li>
 <li><span class="text-remove">Shoot</span>: 1</li>
-<li><span class="text-remove">Misfortune</span>: 1</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 1</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
-<li><span class="text-remove">Creeping Hunger</span>: 1</li>
-<li><span class="text-remove">Jealous</span>: 1</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 1</li>
+<li><span class="text-remove">🌀 Jealous</span>: 1</li>
 </ul>
 </div>
 </div>

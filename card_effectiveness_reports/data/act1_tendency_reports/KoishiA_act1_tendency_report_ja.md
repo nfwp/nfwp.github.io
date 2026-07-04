@@ -120,7 +120,7 @@
 <td style='text-align: right;'>118.7</td>
 </tr>
 <tr>
-<td>今泉影狼の毛</td>
+<td>🧰 今泉影狼の毛</td>
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>(+9.9%)</td>
 <td style='text-align: right;'>45.9</td>
@@ -184,7 +184,7 @@
 <td style='text-align: right;'>71.8</td>
 </tr>
 <tr>
-<td>ライオットシールド</td>
+<td>🧰 ライオットシールド</td>
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>(+5.4%)</td>
 <td style='text-align: right;'>47.0</td>
@@ -272,7 +272,7 @@
 <td style='text-align: right;'>111.0</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>缶詰</strong></td>
+<td><strong>🧰 缶詰</strong></td>
 <td style='text-align: right;'>40.0%</td>
 <td style='text-align: right;'>(+2.8%)</td>
 <td style='text-align: right;'>58.0</td>
@@ -390,20 +390,20 @@
 <li><span class="text-purchase">原因不明の熱病</span>: 6回</li>
 <li><span class="text-purchase">色褪せた夢</span>: 4回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">出まかせ</span>: 3回</li>
 <li><span class="text-purchase">両思いの恋煩い</span>: 3回</li>
 <li><span class="text-purchase">花鳥風月</span>: 2回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 2回</li>
-<li><span class="text-purchase">水鉄砲</span>: 2回</li>
-<li><span class="text-purchase">缶詰</span>: 2回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 1回</li>
 <li><span class="text-purchase">深層記憶</span>: 1回</li>
-<li><span class="text-purchase">バックパック</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 1回</li>
 <li><span class="text-purchase">フィルドミアズマ</span>: 1回</li>
 <li><span class="text-purchase">最奥の森域</span>: 1回</li>
-<li><span class="text-purchase">電子ドラム</span>: 1回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">隠者のタロット</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 </ul>
@@ -416,7 +416,7 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">二重らせん</span>: 20回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 7回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 7回</li>
 <li><span class="text-remove">ショット</span>: 5回</li>
 <li><span class="text-remove">結界</span>: 4回</li>
 <li><span class="text-remove">自閉</span>: 2回</li>
@@ -431,11 +431,11 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">色褪せた夢</span>: 17回</li>
-<li><span class="text-purchase">缶詰</span>: 16回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 16回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 14回</li>
-<li><span class="text-purchase">水鉄砲</span>: 12回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 12回</li>
 <li><span class="text-purchase">出まかせ</span>: 11回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 9回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 9回</li>
 <li><span class="text-purchase">孤独な心</span>: 9回</li>
 <li><span class="text-purchase">閉じた心</span>: 8回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 7回</li>
@@ -443,7 +443,7 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
 <li><span class="text-purchase">両思いの恋煩い</span>: 6回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 6回</li>
-<li><span class="text-purchase">バックパック</span>: 5回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 5回</li>
 <li><span class="text-purchase">心変わりの刃</span>: 5回</li>
 <li><span class="text-purchase">DNAの瑕</span>: 4回</li>
 <li><span class="text-purchase">無の心</span>: 4回</li>
@@ -475,7 +475,7 @@
 <li><span class="text-remove">二重らせん</span>: 64回</li>
 <li><span class="text-remove">ショット</span>: 25回</li>
 <li><span class="text-remove">結界</span>: 16回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 12回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 12回</li>
 <li><span class="text-remove">ロマンティック・ローズ</span>: 1回</li>
 </ul>
 </div>
@@ -487,16 +487,16 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">水鉄砲</span>: 7回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 7回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
 <li><span class="text-purchase">色褪せた夢</span>: 3回</li>
-<li><span class="text-purchase">缶詰</span>: 3回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
-<li><span class="text-purchase">エナジードリンク</span>: 2回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
 <li><span class="text-purchase">A.T.フィールド</span>: 2回</li>
-<li><span class="text-purchase">バックパック</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 2回</li>
 <li><span class="text-purchase">孤独な心</span>: 2回</li>
 <li><span class="text-purchase">いばらの舞</span>: 2回</li>
@@ -527,9 +527,9 @@
 <ul>
 <li><span class="text-remove">二重らせん</span>: 11回</li>
 <li><span class="text-remove">ショット</span>: 3回</li>
-<li><span class="text-remove">不幸</span>: 2回</li>
-<li><span class="text-remove">嫉妬</span>: 1回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 2回</li>
+<li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
 </ul>
 </div>
 </div>

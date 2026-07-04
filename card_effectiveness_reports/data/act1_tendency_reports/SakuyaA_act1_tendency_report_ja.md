@@ -64,7 +64,7 @@
 <td style='text-align: right;'>107.3</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>缶詰</strong></td>
+<td><strong>🧰 缶詰</strong></td>
 <td style='text-align: right;'>46.7%</td>
 <td style='text-align: right;'>(+10.9%)</td>
 <td style='text-align: right;'>55.0</td>
@@ -272,7 +272,7 @@
 <td style='text-align: right;'>123.0</td>
 </tr>
 <tr>
-<td>今泉影狼の毛</td>
+<td>🧰 今泉影狼の毛</td>
 <td style='text-align: right;'>39.1%</td>
 <td style='text-align: right;'>(+3.3%)</td>
 <td style='text-align: right;'>48.9</td>
@@ -388,7 +388,7 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">クリーンエネルギー</span>: 11回</li>
-<li><span class="text-purchase">缶詰</span>: 8回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 8回</li>
 <li><span class="text-purchase">危険な手品師</span>: 6回</li>
 <li><span class="text-purchase">部屋掃除</span>: 5回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 5回</li>
@@ -405,7 +405,7 @@
 <li><span class="text-purchase">タイムマジック</span>: 1回</li>
 <li><span class="text-purchase">デジャヴ</span>: 1回</li>
 <li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 1回</li>
-<li><span class="text-purchase">バックパック</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 <li><span class="text-purchase">咲夜特製ストップウォッチ</span>: 1回</li>
 </ul>
 </div>
@@ -418,7 +418,7 @@
 <ul>
 <li><span class="text-remove">フェイント投げ</span>: 38回</li>
 <li><span class="text-remove">ショット</span>: 16回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 15回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 15回</li>
 <li><span class="text-remove">危険予知</span>: 8回</li>
 <li><span class="text-remove">跳弾するナイフ</span>: 1回</li>
 </ul>
@@ -431,11 +431,11 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">缶詰</span>: 26回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 26回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 21回</li>
 <li><span class="text-purchase">時間厳守</span>: 18回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 18回</li>
-<li><span class="text-purchase">水鉄砲</span>: 17回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 18回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 17回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 17回</li>
 <li><span class="text-purchase">降雪決行</span>: 16回</li>
 <li><span class="text-purchase">準備</span>: 13回</li>
@@ -448,7 +448,7 @@
 <li><span class="text-purchase">一休み</span>: 10回</li>
 <li><span class="text-purchase">水遊び</span>: 9回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 9回</li>
-<li><span class="text-purchase">バックパック</span>: 8回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 8回</li>
 <li><span class="text-purchase">拘束時間</span>: 8回</li>
 <li><span class="text-purchase">浄化活動</span>: 7回</li>
 </ul>
@@ -468,8 +468,8 @@
 <li><span class="text-exhibit">魔人経巻</span>: 1回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 <li><span class="text-exhibit">魔導書</span>: 1回</li>
-<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">芍薬</span>: 1回</li>
+<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">重低音バスドラム</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">守矢の御幣</span>: 1回</li>
@@ -480,11 +480,11 @@
 <ul>
 <li><span class="text-remove">フェイント投げ</span>: 165回</li>
 <li><span class="text-remove">ショット</span>: 30回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 19回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 19回</li>
 <li><span class="text-remove">危険予知</span>: 18回</li>
 <li><span class="text-remove">結界</span>: 4回</li>
 <li><span class="text-remove">跳弾するナイフ</span>: 2回</li>
-<li><span class="text-remove">嫉妬</span>: 1回</li>
+<li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
 </ul>
 </div>
 </div>
@@ -495,9 +495,9 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">缶詰</span>: 16回</li>
-<li><span class="text-purchase">水鉄砲</span>: 6回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 5回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 16回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
 <li><span class="text-purchase">チェンジリングマジック</span>: 4回</li>
 <li><span class="text-purchase">部屋掃除</span>: 4回</li>
@@ -506,13 +506,13 @@
 <li><span class="text-purchase">プリンセスウンディネ</span>: 3回</li>
 <li><span class="text-purchase">準備</span>: 3回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 3回</li>
-<li><span class="text-purchase">バックパック</span>: 3回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 3回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 3回</li>
 <li><span class="text-purchase">時間厳守</span>: 2回</li>
 <li><span class="text-purchase">イカサマ</span>: 2回</li>
-<li><span class="text-purchase">エナジードリンク</span>: 2回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
 <li><span class="text-purchase">ダモクレスの刃</span>: 2回</li>
-<li><span class="text-purchase">フラッシュ</span>: 2回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">心抄斬</span>: 2回</li>
 <li><span class="text-purchase">歴史喰い</span>: 2回</li>
 </ul>
@@ -546,9 +546,9 @@
 <ul>
 <li><span class="text-remove">フェイント投げ</span>: 27回</li>
 <li><span class="text-remove">ショット</span>: 7回</li>
-<li><span class="text-remove">不幸</span>: 5回</li>
+<li><span class="text-remove">🌀 不幸</span>: 5回</li>
 <li><span class="text-remove">結界</span>: 2回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
 </ul>
 </div>
 </div>

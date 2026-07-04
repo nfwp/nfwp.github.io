@@ -120,7 +120,7 @@
 <td style='text-align: right;'>95.7</td>
 </tr>
 <tr>
-<td>Ballistic Shield</td>
+<td>🧰 Ballistic Shield</td>
 <td style='text-align: right;'>42.0%</td>
 <td style='text-align: right;'>(+7.7%)</td>
 <td style='text-align: right;'>37.6</td>
@@ -224,7 +224,7 @@
 <td style='text-align: right;'>91.8</td>
 </tr>
 <tr>
-<td>Water Gun</td>
+<td>🧰 Water Gun</td>
 <td style='text-align: right;'>37.8%</td>
 <td style='text-align: right;'>(+3.5%)</td>
 <td style='text-align: right;'>47.3</td>
@@ -248,7 +248,7 @@
 <td style='text-align: right;'>96.9</td>
 </tr>
 <tr>
-<td>Wolf Fur</td>
+<td>🧰 Wolf Fur</td>
 <td style='text-align: right;'>37.5%</td>
 <td style='text-align: right;'>(+3.2%)</td>
 <td style='text-align: right;'>42.1</td>
@@ -392,13 +392,13 @@
 <li><span class="text-purchase">Cucumber Missile</span>: 3</li>
 <li><span class="text-purchase">Shoot the Moon</span>: 3</li>
 <li><span class="text-purchase">Speed Duel</span>: 3</li>
-<li><span class="text-purchase">Canned Food</span>: 3</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
-<li><span class="text-purchase">Water Gun</span>: 2</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
 <li><span class="text-purchase">Impatience</span>: 2</li>
 <li><span class="text-purchase">Improvisation</span>: 1</li>
-<li><span class="text-purchase">Flashlight</span>: 1</li>
-<li><span class="text-purchase">Charged Tambourine</span>: 1</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 1</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
@@ -413,7 +413,7 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Hot Star Impact</span>: 17</li>
-<li><span class="text-remove">Creeping Hunger</span>: 5</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 5</li>
 <li><span class="text-remove">Stardust Defense</span>: 2</li>
 <li><span class="text-remove">Shoot</span>: 2</li>
 </ul>
@@ -426,25 +426,25 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 17</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 14</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 17</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 14</li>
 <li><span class="text-purchase">Danmaku Notes</span>: 13</li>
 <li><span class="text-purchase">Speed Duel</span>: 11</li>
-<li><span class="text-purchase">Water Gun</span>: 10</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 10</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 10</li>
 <li><span class="text-purchase">Rocket Broom</span>: 9</li>
 <li><span class="text-purchase">Ready For Burst</span>: 8</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 7</li>
 <li><span class="text-purchase">Hand Warmer</span>: 7</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 6</li>
-<li><span class="text-purchase">Charged Tambourine</span>: 6</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 6</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 6</li>
 <li><span class="text-purchase">Devil's Codex</span>: 5</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 5</li>
-<li><span class="text-purchase">Supply Backpack</span>: 4</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 4</li>
 <li><span class="text-purchase">Emergency Defense</span>: 4</li>
 <li><span class="text-purchase">Luminous Mushroom</span>: 3</li>
-<li><span class="text-purchase">Energy Drink</span>: 3</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 3</li>
 <li><span class="text-purchase">Shoot the Moon</span>: 3</li>
 </ul>
 </div>
@@ -468,10 +468,10 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Hot Star Impact</span>: 61</li>
-<li><span class="text-remove">Creeping Hunger</span>: 15</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 15</li>
 <li><span class="text-remove">Boundary</span>: 10</li>
 <li><span class="text-remove">Stardust Defense</span>: 4</li>
-<li><span class="text-remove">Misfortune</span>: 2</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 2</li>
 <li><span class="text-remove">Shoot</span>: 1</li>
 </ul>
 </div>
@@ -484,7 +484,7 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">Bask in Stardust</span>: 3</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 3</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 2</li>
 <li><span class="text-purchase">Emergency Defense</span>: 2</li>
 <li><span class="text-purchase">Magic Converter</span>: 2</li>
@@ -497,7 +497,7 @@
 <li><span class="text-purchase">Ageless Dream</span>: 1</li>
 <li><span class="text-purchase">Light the Furnace</span>: 1</li>
 <li><span class="text-purchase">Ready For Burst</span>: 1</li>
-<li><span class="text-purchase">Canned Food</span>: 1</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 1</li>
 <li><span class="text-purchase">And Then Will There Be None?</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
 <li><span class="text-purchase">Orrery's Sun</span>: 1</li>
@@ -522,8 +522,8 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Hot Star Impact</span>: 6</li>
-<li><span class="text-remove">Misfortune</span>: 3</li>
-<li><span class="text-remove">Creeping Hunger</span>: 1</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 3</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 1</li>
 <li><span class="text-remove">Stardust Defense</span>: 1</li>
 </ul>
 </div>

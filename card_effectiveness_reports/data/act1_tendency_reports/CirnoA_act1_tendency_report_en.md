@@ -56,7 +56,7 @@
 </tr></thead>
 <tbody>
 <tr class="specialist-row">
-<td><strong>Canned Food</strong></td>
+<td><strong>🧰 Canned Food</strong></td>
 <td style='text-align: right;'>72.0%</td>
 <td style='text-align: right;'>(+33.7%)</td>
 <td style='text-align: right;'>55.2</td>
@@ -88,7 +88,7 @@
 <td style='text-align: right;'>117.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Flashlight</strong></td>
+<td><strong>🧰 Flashlight</strong></td>
 <td style='text-align: right;'>51.9%</td>
 <td style='text-align: right;'>(+13.6%)</td>
 <td style='text-align: right;'>58.4</td>
@@ -96,7 +96,7 @@
 <td style='text-align: right;'>115.2</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Ballistic Shield</strong></td>
+<td><strong>🧰 Ballistic Shield</strong></td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>(+11.7%)</td>
 <td style='text-align: right;'>72.4</td>
@@ -304,7 +304,7 @@
 <td style='text-align: right;'>96.2</td>
 </tr>
 <tr>
-<td>Wolf Fur</td>
+<td>🧰 Wolf Fur</td>
 <td style='text-align: right;'>40.2%</td>
 <td style='text-align: right;'>(+1.9%)</td>
 <td style='text-align: right;'>57.1</td>
@@ -387,7 +387,7 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Ballistic Shield</span>: 4</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
 <li><span class="text-purchase">Princess Undine</span>: 3</li>
 <li><span class="text-purchase">Tao Fetal Movement</span>: 3</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 3</li>
@@ -396,13 +396,13 @@
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
 <li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 2</li>
-<li><span class="text-purchase">Canned Food</span>: 2</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
 <li><span class="text-purchase">Riptide</span>: 2</li>
-<li><span class="text-purchase">Flashlight</span>: 2</li>
-<li><span class="text-purchase">Water Gun</span>: 2</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
 <li><span class="text-purchase">Blizzard</span>: 2</li>
 <li><span class="text-purchase">Absolute Zero</span>: 2</li>
-<li><span class="text-purchase">Supply Backpack</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 2</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 1</li>
 <li><span class="text-purchase">Clean Energy</span>: 1</li>
@@ -419,7 +419,7 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Ice Shot</span>: 49</li>
-<li><span class="text-remove">Creeping Hunger</span>: 7</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 7</li>
 <li><span class="text-remove">Shoot</span>: 5</li>
 <li><span class="text-remove">Leafy Protection</span>: 2</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
@@ -435,16 +435,16 @@
 <ul>
 <li><span class="text-purchase">Absolute Zero</span>: 14</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 13</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 10</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 10</li>
 <li><span class="text-purchase">Blizzard</span>: 10</li>
-<li><span class="text-purchase">Canned Food</span>: 10</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 10</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 9</li>
 <li><span class="text-purchase">Play With Water</span>: 8</li>
 <li><span class="text-purchase">Clean Energy</span>: 8</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 7</li>
 <li><span class="text-purchase">Ice Barrier</span>: 7</li>
-<li><span class="text-purchase">Water Gun</span>: 6</li>
-<li><span class="text-purchase">Flashlight</span>: 6</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 6</li>
 <li><span class="text-purchase">On Thin Ice</span>: 6</li>
 <li><span class="text-purchase">Frozen Specimen</span>: 5</li>
 <li><span class="text-purchase">Water Blanket</span>: 5</li>
@@ -475,7 +475,7 @@
 <ul>
 <li><span class="text-remove">Ice Shot</span>: 104</li>
 <li><span class="text-remove">Shoot</span>: 9</li>
-<li><span class="text-remove">Creeping Hunger</span>: 7</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 7</li>
 <li><span class="text-remove">Leafy Protection</span>: 5</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
 </ul>
@@ -488,15 +488,15 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 4</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
 <li><span class="text-purchase">Absolute Zero</span>: 3</li>
 <li><span class="text-purchase">Water Blanket</span>: 3</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 3</li>
-<li><span class="text-purchase">Water Gun</span>: 2</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
 <li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
-<li><span class="text-purchase">Flashlight</span>: 2</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Blizzard</span>: 2</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 2</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
 <li><span class="text-purchase">Sakura-Colored Sea</span>: 1</li>
 <li><span class="text-purchase">Princess Undine</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
@@ -507,7 +507,7 @@
 <li><span class="text-purchase">Fairy's Wake-Up</span>: 1</li>
 <li><span class="text-purchase">Clean Energy</span>: 1</li>
 <li><span class="text-purchase">In Plain Sight</span>: 1</li>
-<li><span class="text-purchase">Supply Backpack</span>: 1</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -539,9 +539,9 @@
 <li><span class="text-remove">Ice Shot</span>: 15</li>
 <li><span class="text-remove">Leafy Protection</span>: 3</li>
 <li><span class="text-remove">Shoot</span>: 2</li>
-<li><span class="text-remove">Misfortune</span>: 1</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 1</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
-<li><span class="text-remove">Creeping Hunger</span>: 1</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 1</li>
 </ul>
 </div>
 </div>

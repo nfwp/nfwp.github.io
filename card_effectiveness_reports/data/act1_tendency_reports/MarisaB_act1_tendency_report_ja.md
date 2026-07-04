@@ -120,7 +120,7 @@
 <td style='text-align: right;'>95.7</td>
 </tr>
 <tr>
-<td>ライオットシールド</td>
+<td>🧰 ライオットシールド</td>
 <td style='text-align: right;'>42.0%</td>
 <td style='text-align: right;'>(+7.7%)</td>
 <td style='text-align: right;'>37.6</td>
@@ -224,7 +224,7 @@
 <td style='text-align: right;'>91.8</td>
 </tr>
 <tr>
-<td>水鉄砲</td>
+<td>🧰 水鉄砲</td>
 <td style='text-align: right;'>37.8%</td>
 <td style='text-align: right;'>(+3.5%)</td>
 <td style='text-align: right;'>47.3</td>
@@ -248,7 +248,7 @@
 <td style='text-align: right;'>96.9</td>
 </tr>
 <tr>
-<td>今泉影狼の毛</td>
+<td>🧰 今泉影狼の毛</td>
 <td style='text-align: right;'>37.5%</td>
 <td style='text-align: right;'>(+3.2%)</td>
 <td style='text-align: right;'>42.1</td>
@@ -392,13 +392,13 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 3回</li>
 <li><span class="text-purchase">シュート・ザ・ムーン</span>: 3回</li>
 <li><span class="text-purchase">スピードバトル</span>: 3回</li>
-<li><span class="text-purchase">缶詰</span>: 3回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 2回</li>
-<li><span class="text-purchase">水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
 <li><span class="text-purchase">焦燥</span>: 2回</li>
 <li><span class="text-purchase">臨機応変</span>: 1回</li>
-<li><span class="text-purchase">フラッシュ</span>: 1回</li>
-<li><span class="text-purchase">電子ドラム</span>: 1回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 1回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">冬日和</span>: 1回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">鳳翼天翔</span>: 1回</li>
@@ -413,7 +413,7 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">スターインパクト</span>: 17回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 5回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 5回</li>
 <li><span class="text-remove">スターダストディフェンス</span>: 2回</li>
 <li><span class="text-remove">ショット</span>: 2回</li>
 </ul>
@@ -426,25 +426,25 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">缶詰</span>: 17回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 14回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 17回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 14回</li>
 <li><span class="text-purchase">ダンマクノート</span>: 13回</li>
 <li><span class="text-purchase">スピードバトル</span>: 11回</li>
-<li><span class="text-purchase">水鉄砲</span>: 10回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 10回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 10回</li>
 <li><span class="text-purchase">ロケットブルーム</span>: 9回</li>
 <li><span class="text-purchase">チャージ</span>: 8回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 7回</li>
 <li><span class="text-purchase">冬日和</span>: 7回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 6回</li>
-<li><span class="text-purchase">電子ドラム</span>: 6回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 6回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 6回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 5回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 5回</li>
-<li><span class="text-purchase">バックパック</span>: 4回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 4回</li>
 <li><span class="text-purchase">エマージェンシーディフェンス</span>: 4回</li>
 <li><span class="text-purchase">ヤコウタケ</span>: 3回</li>
-<li><span class="text-purchase">エナジードリンク</span>: 3回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 3回</li>
 <li><span class="text-purchase">シュート・ザ・ムーン</span>: 3回</li>
 </ul>
 </div>
@@ -468,10 +468,10 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">スターインパクト</span>: 61回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 15回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 15回</li>
 <li><span class="text-remove">結界</span>: 10回</li>
 <li><span class="text-remove">スターダストディフェンス</span>: 4回</li>
-<li><span class="text-remove">不幸</span>: 2回</li>
+<li><span class="text-remove">🌀 不幸</span>: 2回</li>
 <li><span class="text-remove">ショット</span>: 1回</li>
 </ul>
 </div>
@@ -484,7 +484,7 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 3回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 3回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 2回</li>
 <li><span class="text-purchase">エマージェンシーディフェンス</span>: 2回</li>
 <li><span class="text-purchase">マジックコンバーター</span>: 2回</li>
@@ -497,7 +497,7 @@
 <li><span class="text-purchase">无寿の夢</span>: 1回</li>
 <li><span class="text-purchase">イグニッション</span>: 1回</li>
 <li><span class="text-purchase">チャージ</span>: 1回</li>
-<li><span class="text-purchase">缶詰</span>: 1回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 1回</li>
 <li><span class="text-purchase">そして誰もいなくなるか？</span>: 1回</li>
 <li><span class="text-purchase">冬日和</span>: 1回</li>
 <li><span class="text-purchase">太陽系儀</span>: 1回</li>
@@ -522,8 +522,8 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">スターインパクト</span>: 6回</li>
-<li><span class="text-remove">不幸</span>: 3回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 3回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
 <li><span class="text-remove">スターダストディフェンス</span>: 1回</li>
 </ul>
 </div>

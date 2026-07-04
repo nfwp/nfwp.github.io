@@ -1413,8 +1413,8 @@ function renderExhibitAnalysisTab(lang) {
         }
         else if (category === '一般レア') nameHtml = `<span class="exhibit-name-rare">${linkedName}</span>`;
         else if (category === '一般アンコモン') nameHtml = `<span class="exhibit-name-uncommon">${linkedName}</span>`;
-        else if (category === 'ショップ') nameHtml = `${linkedName} 🛒`;
-        else if (category === 'イベント') nameHtml = `${linkedName} ✨`;
+        else if (category === 'ショップ') nameHtml = `🛒 ${linkedName}`;
+        else if (category === 'イベント') nameHtml = `✨ ${linkedName}`;
 
         return `<tr data-category="${category}" ${groupAttr}><td>${nameHtml}</td><td><div class="exhibit-bar-container"><div class="exhibit-bar" style="width: ${barWidth}%;">${(rate * 100).toFixed(1)}%</div></div></td></tr>`;
     }).join('');
@@ -1456,6 +1456,7 @@ function renderRouteEventTab(lang) {
             const [act, ,] = key.split('-');
             if (parseInt(act) === act_num && node_details[key].enemies) {
                 Object.values(node_details[key].enemies).forEach(enemy_stats => {
+
                     hp_losses.push(enemy_stats.avg_hp_loss);
                     p_changes.push(enemy_stats.avg_p_change);
                 });
@@ -1979,7 +1980,6 @@ function sortTable(tableId, columnIndex, type) {
     rows.forEach(row => tbody.appendChild(row));
 }
 
-// script.js に以下の2つの関数を追加
 
 /**
  * Gap/Shopでのカード強化ランキングのHTMLを生成します。
@@ -2069,9 +2069,7 @@ function renderActTrendTab(lang) {
 
     const trendData = ALL_DATA.act_trend_data;
     const totalRuns = ALL_DATA.route_data.total_runs;
-    // 全キャラクターの総ラン数を取得
     const totalRunsAll = ALL_DATA.metadata.total_runs_all_characters || 1;
-    // 全キャラクターのノード訪問数データ (Act別)
     const globalNodeVisits = ALL_DATA.route_data.global_node_visits || {};
 
     if (!trendData || !totalRuns || Object.keys(trendData).length === 0) {
@@ -2079,12 +2077,10 @@ function renderActTrendTab(lang) {
         return;
     }
 
-    // ノード名の翻訳マップ
     const nodeTypeLabels = (lang === 'ja')
         ? { 'Enemy': '通常敵', 'EliteEnemy': 'エリート', 'Boss': 'ボス', 'Shop': 'ショップ', 'Gap': 'スキマ', 'Adventure': 'イベント', 'Trade': '交換', 'Supply': '補給', 'Entry': '入口' }
         : { 'Enemy': 'Enemy', 'EliteEnemy': 'Elite', 'Boss': 'Boss', 'Shop': 'Shop', 'Gap': 'Gap', 'Adventure': 'Event', 'Trade': 'Trade', 'Supply': 'Supply', 'Entry': 'Entry' };
 
-    // 展示品IDからカテゴリを引くためのマップを作成
     const exhibitCategoryMap = {};
     if (ALL_DATA.exhibit_data) {
         ALL_DATA.exhibit_data.forEach(ex => {
@@ -2092,26 +2088,20 @@ function renderActTrendTab(lang) {
         });
     }
 
-    // サブタブ（Act切り替え）のHTML生成
     const acts = ['1', '2', '3', '4', 'Total'];
     let subTabsHtml = '<div class="sub-tab-buttons" style="margin-bottom: 20px;">';
     acts.forEach((act, index) => {
-        const activeClass = index === 0 ? 'active' : ''; // デフォルトはAct1
+        const activeClass = index === 0 ? 'active' : '';
         const label = act === 'Total' ? (lang === 'ja' ? '全体 (Total)' : 'Total') : `Act ${act}`;
         subTabsHtml += `<button class="filter-btn ${activeClass}" onclick="switchActTrend('${act}')">${label}</button>`;
     });
     subTabsHtml += '</div>';
 
-    // 各Actのコンテンツ生成
     let contentHtml = '';
     acts.forEach((act, index) => {
         const displayStyle = index === 0 ? 'block' : 'none';
-
-        // trendData[act] が存在しない場合に備えて空オブジェクトを確保
         const actData = trendData[act] || trendData[parseInt(act)] || {};
         const globalActData = globalNodeVisits[act] || globalNodeVisits[parseInt(act)] || {};
-
-        // 各Actのコンテンツ生成のループ内 (categories の定義箇所)
 
         const categories = [
             { key: 'Add_Card', title: (lang === 'ja' ? 'よく追加されるカード' : 'Added Cards'), type: 'card' },
@@ -2119,7 +2109,6 @@ function renderActTrendTab(lang) {
             { key: 'Upgrade_Card', title: (lang === 'ja' ? 'よく強化されるカード' : 'Upgraded Cards'), type: 'card' },
             { key: 'Add_Exhibit', title: (lang === 'ja' ? 'よく追加される展示品' : 'Added Exhibits'), type: 'exhibit' }
         ];
-
 
         if (['1', '2', '3', 'Total'].includes(String(act))) {
             categories.push({
@@ -2129,47 +2118,24 @@ function renderActTrendTab(lang) {
             });
         }
 
-
-        // 最後に「踏破マスの内訳」を追加
         categories.push({ key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' });
-        //{ key: 'Encountered_Events', title: (lang === 'ja' ? 'よく遭遇するイベント' : 'Encountered Events'), type: 'event' },
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
 
         categories.forEach(cat => {
             const items = actData[cat.key] || {};
-
-            // カテゴリ内の合計カウントを計算し、ランあたりの平均を算出
-            let totalCount = 0;
-            if (cat.type === 'event') {
-                totalCount = Object.values(items).reduce((sum, data) => sum + data.count, 0);
-            } else {
-                totalCount = Object.values(items).reduce((sum, count) => sum + count, 0);
-            }
-
+            let totalCount = Object.values(items).reduce((sum, count) => sum + count, 0);
             const avgTotal = (totalRuns > 0) ? (totalCount / totalRuns).toFixed(1) : "0.0";
-
-            // タイトルに平均値を追加
             const titleWithAvg = `${cat.title} <span style="font-size:0.85em; font-weight:normal; color:#666;">(${avgTotal})</span>`;
 
-            let categoryBlockHtml = `<div class="analysis-section" style="margin: 0;">`;
-            categoryBlockHtml += `<h4 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">${titleWithAvg}</h4>`;
+            let categoryBlockHtml = `<div class="analysis-section" style="margin: 0;"><h4 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">${titleWithAvg}</h4>`;
 
             if (cat.type === 'card' || cat.type === 'exhibit') {
-                const sortedItems = Object.entries(items)
-                    .sort(([, a], [, b]) => b - a)
-                    .slice(0, 100);
+                const sortedItems = Object.entries(items).sort(([, a], [, b]) => b - a).slice(0, 100);
                 let removeRankMap = {};
                 if (cat.key === 'Organize_Card') {
                     const removeItems = actData['Remove_Card'] || {};
-                    // カウントの多い順にソートしてIDの配列を作る
-                    const sortedRemoveIds = Object.entries(removeItems)
-                        .sort(([, a], [, b]) => b - a)
-                        .map(([id]) => id);
-
-                    // IDに対して順位（1〜）を紐付ける
-                    sortedRemoveIds.forEach((id, idx) => {
-                        removeRankMap[id] = idx + 1;
-                    });
+                    const sortedRemoveIds = Object.entries(removeItems).sort(([, a], [, b]) => b - a).map(([id]) => id);
+                    sortedRemoveIds.forEach((id, idx) => { removeRankMap[id] = idx + 1; });
                 }
 
                 if (sortedItems.length === 0) {
@@ -2178,61 +2144,49 @@ function renderActTrendTab(lang) {
                     const headerRank = '#';
                     const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
                     const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
-
-                    categoryBlockHtml += `
-                        <div style="max-height: 600px; overflow-y: auto;">
-                            <table class="act-trend-table" style="width: 100%; border-collapse: collapse;">
-                                <thead>
-                                    <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
-                                        <th style="padding: 8px; width: 40px;">${headerRank}</th>
-                                        <th style="padding: 8px;">${headerName}</th>
-                                        <th style="padding: 8px; width: 80px;">${headerAvg}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                    `;
-
-
+                    categoryBlockHtml += `<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;"><thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px; width: 40px;">${headerRank}</th><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 80px;">${headerAvg}</th></tr></thead><tbody>`;
 
                     sortedItems.forEach(([id, count], index) => {
-                        const currentRank = index + 1; // 整頓対象での順位
+                        const currentRank = index + 1;
                         const perRun = (count / totalRuns).toFixed(2);
                         let name = id;
                         let bgColor = '#FFFFFF';
-
-                        // --- 太字判定ロジック ---
                         let isBold = false;
                         if (cat.key === 'Organize_Card') {
-                            const removeRank = removeRankMap[id] || 999; // リストにない場合は低い順位にする
+                            const removeRank = removeRankMap[id] || 999;
                             if (removeRank - currentRank >= 3) {
                                 isBold = true;
                             }
                         }
-
-                        // Wikiリンク（<a>タグ）のスタイルを上書きするために !important を推奨
                         const nameStyle = isBold ? 'font-weight: 900 !important; color: #000 !important;' : '';
-
 
                         if (cat.type === 'card') {
                             const cardInfo = ALL_DATA.lookup_tables.cards[id];
-                            name = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
-                            name = createWikiLink(name, 'card', lang);
+                            let displayName = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
+                            name = createWikiLink(displayName, 'card', lang);
                             const cardType = cardInfo ? cardInfo.Type : 'Unknown';
                             const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
                             bgColor = `${typeColor}33`;
+
+
+                            // 道具カードと厄災カードにアイコンを追加
+                            if (cardType === 'Tool') {
+                                name = '🧰 ' + name; // アイコンとスペースを前に追加
+                            } else if (cardType === 'Misfortune') {
+                                name = '🌀 ' + name; // アイコンとスペースを前に追加
+                            }
+
+
                         } else { // exhibit
                             const exInfo = ALL_DATA.lookup_tables.exhibits[id];
                             let linkedName = exInfo ? (lang === 'ja' ? exInfo.JA : exInfo.EN) : id;
                             linkedName = createWikiLink(linkedName, 'exhibit', lang);
-
                             const category = exhibitCategoryMap[id];
                             if (category === '光耀') {
                                 const manaType = ALL_DATA.lookup_tables.exhibit_mana_map[id];
                                 if (manaType) {
                                     const icon = ALL_DATA.lookup_tables.mana_icon_map[manaType];
-                                    if (icon) {
-                                        linkedName = `${icon} ${linkedName}`;
-                                    }
+                                    if (icon) linkedName = `${icon} ${linkedName}`;
                                 }
                                 name = `<span class="exhibit-name-shining">${linkedName}</span>`;
                             } else if (category === '一般レア') {
@@ -2242,95 +2196,18 @@ function renderActTrendTab(lang) {
                             } else if (category === 'ショップ') {
                                 name = `${linkedName} 🛒`;
                             } else if (category === 'イベント') {
-                                name = `${linkedName} ✨`;
+                                name = `✨ ${linkedName}`;
                             } else {
                                 name = linkedName;
                             }
                         }
 
-                        categoryBlockHtml += `
-                            <tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;">
-                                <td style="padding: 6px 8px; text-align: center; ${nameStyle}">${currentRank}</td>
-                                <td style="padding: 6px 8px; ${nameStyle}">${name}</td>
-                                <td style="padding: 6px 8px; text-align: right; font-weight: bold; ${nameStyle}">${perRun}</td>
-                            </tr>
-                        `;
-
+                        categoryBlockHtml += `<tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;"><td style="padding: 6px 8px; text-align: center; ${nameStyle}">${currentRank}</td><td style="padding: 6px 8px; ${nameStyle}">${name}</td><td style="padding: 6px 8px; text-align: right; font-weight: bold; ${nameStyle}">${perRun}</td></tr>`;
                     });
                     categoryBlockHtml += `</tbody></table></div>`;
                 }
-
-            } else if (cat.type === 'event') {
-                const sortedItems = Object.entries(items).sort(([, a], [, b]) => b.count - a.count).slice(0, 100);
-
-                if (sortedItems.length === 0) {
-                    categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${UI_TEXT.no_data || 'データなし'}</p>`;
-                } else {
-                    categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;">';
-
-                    sortedItems.forEach(([id, data], index) => {
-                        const eventsLookup = ALL_DATA.lookup_tables.events || {};
-                        const eventInfo = eventsLookup[id];
-
-                        // Wiki名 (イベント名単体)
-                        const wikiName = (eventInfo && (lang === 'ja' ? (eventInfo.Wiki_JA || eventInfo.JA) : (eventInfo.Wiki_EN || eventInfo.EN))) || id;
-
-                        // ホスト名を取得
-                        const hostName = eventInfo && (lang === 'ja' ? eventInfo.Host_JA : eventInfo.Host_EN);
-
-                        // リンク生成
-                        const nameStr = String(wikiName);
-                        const encodedName = encodeURIComponent(nameStr.replace(/ /g, '_'));
-                        const baseUrl = lang === 'ja'
-                            ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`
-                            : `https://lbol.miraheze.org/wiki/${encodedName}`;
-
-                        // リンクはイベント名のみにする
-                        let linkedName = `<a href="${baseUrl}" target="_blank">${nameStr}</a>`;
-
-                        // ホスト名があれば、リンクの後ろにカッコ書きで追加
-                        if (hostName) {
-                            linkedName += ` <span style="font-size:0.9em; color:#666; font-weight:normal;">(${hostName})</span>`;
-                        }
-
-                        const perRun = (data.count / totalRuns).toFixed(2);
-
-                        let choicesHtml = '<ul style="margin: 5px 0 5px 25px; padding: 0; list-style-type: none;">';
-                        const sortedChoices = Object.entries(data.choices).sort(([keyA], [keyB]) => parseInt(keyA) - parseInt(keyB));
-
-                        const choiceTexts = (eventInfo && (lang === 'ja' ? eventInfo.Choices_JA : eventInfo.Choices_EN)) || [];
-
-                        sortedChoices.forEach(([choiceIndexStr, choiceCount]) => {
-                            const choiceIndex = parseInt(choiceIndexStr);
-                            const percentage = (data.count > 0) ? (choiceCount / data.count * 100).toFixed(1) : "0.0";
-
-                            let choiceText = "";
-                            if (choiceIndex >= 0 && choiceIndex < choiceTexts.length) {
-                                choiceText = choiceTexts[choiceIndex];
-                            } else {
-                                choiceText = (lang === 'ja' ? `選択肢 ${choiceIndex}` : `Choice ${choiceIndex}`);
-                            }
-
-                            choicesHtml += `<li style="font-size: 0.9em; color: #555;">- ${choiceText}: <span style="font-weight: bold;">${percentage}%</span> (${choiceCount}回)</li>`;
-                        });
-                        choicesHtml += '</ul>';
-
-                        categoryBlockHtml += `
-                            <div style="border-bottom: 1px solid #eee; padding: 8px 4px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold;">${index + 1}. ${linkedName}</span>
-                                    <span style="font-size: 0.9em; font-weight: bold;">${perRun}</span>
-                                </div>
-                                ${choicesHtml}
-                            </div>
-                        `;
-                    });
-                    categoryBlockHtml += '</div>';
-                }
             } else if (cat.type === 'node') {
-                // --- 踏破マスの内訳 (詳細表示 & 平均値の参照パス修正版) ---
-
-                // 1. 表示する行の定義 (順番と階層、データソースの指定)
+                // ... (nodeタイプの処理は変更なし) ...
                 const breakdownRows = [
                     { label: nodeTypeLabels['Enemy'], key: 'Enemy', type: 'node' },
                     { label: nodeTypeLabels['EliteEnemy'], key: 'EliteEnemy', type: 'node' },
@@ -2343,9 +2220,6 @@ function renderActTrendTab(lang) {
                     { label: (lang === 'ja' ? '└ 強化' : '└ Upgrade'), key: 'Upgrade', type: 'gap_detail', indent: true },
                     { label: nodeTypeLabels['Adventure'], key: 'Adventure', type: 'node' }
                 ];
-
-                // 2. カウント取得用のヘルパー関数
-                // actData と globalActData の構造に合わせてデータを抽出
                 const getCount = (dataObj, categoryType, key) => {
                     if (!dataObj) return 0;
                     if (categoryType === 'node') return dataObj.Node_Visits?.[key] || 0;
@@ -2353,72 +2227,39 @@ function renderActTrendTab(lang) {
                     if (categoryType === 'gap_detail') return dataObj.Gap_Details?.[key] || 0;
                     return 0;
                 };
-
-                categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;">';
-                categoryBlockHtml += `<table class="act-trend-table" style="width: 100%; border-collapse: collapse;">`;
-
+                categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;">';
                 const headerName = lang === 'ja' ? 'マス種類' : 'Node Type';
                 const headerAvg = lang === 'ja' ? 'Avg/Run (全キャラ平均)' : 'Avg/Run (Global Avg)';
-
-                categoryBlockHtml += `
-                    <thead>
-                        <tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;">
-                            <th style="padding: 8px;">${headerName}</th>
-                            <th style="padding: 8px; width: 140px;">${headerAvg}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-
-                // 定義した行に従ってループを実行
+                categoryBlockHtml += `<thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 140px;">${headerAvg}</th></tr></thead><tbody>`;
                 breakdownRows.forEach(row => {
                     const count = getCount(actData, row.type, row.key);
                     const globalCount = getCount(globalActData, row.type, row.key);
-
-                    // 両方のデータが 0 の場合は非表示（Actによって存在しないマスがあるため）
                     if (count === 0 && globalCount === 0) return;
-
                     const perRun = (count / totalRuns).toFixed(2);
                     const globalPerRun = (globalCount / totalRunsAll).toFixed(2);
-
                     const paddingStyle = row.indent ? 'padding-left: 20px; color: #666; font-size: 0.9em;' : 'font-weight: bold;';
-
-                    categoryBlockHtml += `
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 6px 8px; ${paddingStyle}">${row.label}</td>
-                            <td style="padding: 6px 8px; text-align: right;">
-                                <span style="font-weight: bold;">${perRun}</span>
-                                <span style="color: #888; font-size: 0.9em; margin-left: 4px;">(${globalPerRun})</span>
-                            </td>
-                        </tr>
-                    `;
+                    categoryBlockHtml += `<tr style="border-bottom: 1px solid #eee;"><td style="padding: 6px 8px; ${paddingStyle}">${row.label}</td><td style="padding: 6px 8px; text-align: right;"><span style="font-weight: bold;">${perRun}</span><span style="color: #888; font-size: 0.9em; margin-left: 4px;">(${globalPerRun})</span></td></tr>`;
                 });
                 categoryBlockHtml += '</tbody></table></div>';
             }
-
-            categoryBlockHtml += '</div>'; // Close analysis-section
-            gridHtml += categoryBlockHtml; // Append to grid
+            categoryBlockHtml += '</div>';
+            gridHtml += categoryBlockHtml;
         });
 
-
-
-
         if (act !== 'Total') {
+            // ... (パフォーマンス指標の処理は変更なし) ...
             const stats = actData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const globalStats = globalActData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const perfStats = actData.Vs_Performance_Stats || {};
             const devMeta = ALL_DATA.combat_deviation_metadata?.[act] || {};
-
             const myAvgDmg = stats.Total_Damage / totalRuns;
             const myAvgRec = stats.Gap_Recovery / totalRuns;
             const myAvgCmbRec = (stats.Combat_Recovery || 0) / totalRuns;
             const mySustain = (100 - myAvgDmg - myAvgRec + myAvgCmbRec).toFixed(1);
-
             const glAvgDmg = globalStats.Total_Damage / totalRunsAll;
             const glAvgRec = globalStats.Gap_Recovery / totalRunsAll;
             const glAvgCmbRec = (globalStats.Combat_Recovery || 0) / totalRunsAll;
             const glSustain = (100 - glAvgDmg - glAvgRec + glAvgCmbRec).toFixed(1);
-
             const getGradationColor = (val, ref) => {
                 const diff = val - ref;
                 const range = 15;
@@ -2436,13 +2277,10 @@ function renderActTrendTab(lang) {
                     return `rgb(${r},${g},${b})`;
                 }
             };
-
             const calcTScore = (myAvg, mean, sd) => {
                 if (!sd || sd <= 0) return 50.0;
                 return (50 + 10 * (mean - myAvg) / sd).toFixed(1);
             };
-
-            // --- 翻訳用オブジェクト ---
             const i18n = {
                 title: lang === 'ja' ? '性能・リソース指標' : 'Performance Metrics',
                 headerItem: lang === 'ja' ? '項目' : 'Item',
@@ -2456,101 +2294,14 @@ function renderActTrendTab(lang) {
                 atkTurns: lang === 'ja' ? '└ 攻撃性能' : '└ Attack Score',
                 defLoss: lang === 'ja' ? '└ 防御性能' : '└ Defense Score'
             };
-
-            let resourceHtml = `
-                <div class="analysis-section" style="margin: 0;">
-                    <h4 style="margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">
-                        ${i18n.title}
-                    </h4>
-                    <table class="act-trend-table" style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
-                        <thead>
-                            <tr style="text-align: left; background: #f8f8f8; border-bottom: 2px solid #eee;">
-                                <th style="padding: 8px;">${i18n.headerItem}</th>
-                                <th style="padding: 8px; text-align: right;">${i18n.headerValue}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="padding: 8px; font-weight: bold;">${i18n.sustainability}</td>
-                                <td style="padding: 8px; text-align: right; font-weight: bold;">
-                                    <span style="color: ${getGradationColor(mySustain, glSustain)}; font-size: 1.1em;">${mySustain}</span>
-                                    <span style="color: #888; font-weight: normal; margin-left: 5px;">(${glSustain})</span>
-                                </td>
-                            </tr>
-                            <tr style="color: #666; font-size: 0.85em;">
-                                <td style="padding-left: 15px;">${i18n.dmgLoss}</td>
-                                <td style="text-align: right;">${myAvgDmg.toFixed(1)} (${glAvgDmg.toFixed(1)})</td>
-                            </tr>
-                            <tr style="color: #666; font-size: 0.85em;">
-                                <td style="padding-left: 15px;">${i18n.gapRec}</td>
-                                <td style="text-align: right;">${myAvgRec.toFixed(1)} (${glAvgRec.toFixed(1)})</td>
-                            </tr>
-                            <!-- ★5. 戦闘終了後の純回復の行を追加 (回復なので少し色を変えるなど) -->
-                            <tr style="color: #27ae60; font-size: 0.85em; border-bottom: 1px solid #eee;">
-                                <td style="padding-left: 15px;">${i18n.cmbRec}</td>
-                                <td style="text-align: right;">+${myAvgCmbRec.toFixed(1)} (+${glAvgCmbRec.toFixed(1)})</td>
-                            </tr>
-
-                            ${['Enemy', 'EliteEnemy', 'Boss'].map(type => {
-                                const s = perfStats[type];
-                                const meta = devMeta[type];
-                                if (!s || s.Count === 0 || !meta) return '';
-
-                                const atkScore = calcTScore(s.Turn_Sum / s.Count, meta.turn_mean, meta.turn_sd);
-                                const defScore = calcTScore(s.HP_Loss_Sum / s.Count, meta.hp_mean, meta.hp_sd);
-
-                                // --- 指数の計算 ---
-                                // 個人の指数: (攻撃偏差値 + 防御偏差値) / 2 * 1ランあたりの踏破数
-                                const encountersPerRun = s.Count / totalRuns;
-                                const perfIndex = ((parseFloat(atkScore) + parseFloat(defScore)) / 2 * encountersPerRun).toFixed(1);
-
-                                // 全体平均の指数 (比較用): (平均偏差値50 + 50) / 2 * 全体平均の踏破数
-                                const globalEncounters = (globalActData.Node_Visits?.[type] || 0) / totalRunsAll;
-                                const globalPerfIndex = (50 * globalEncounters).toFixed(1);
-                                // ------------------
-
-                                const label = nodeTypeLabels[type] || type;
-                                const vsPrefix = lang === 'ja' ? '対' : 'Vs. ';
-                                const vsSuffix = lang === 'ja' ? '性能' : ' Perf.';
-                                const indexLabel = lang === 'ja' ? '└ 指数 (性能×踏破数)' : '└ Efficiency Index';
-
-                                return `
-                                    <tr style="background: #fafafa;"><td colspan="2" style="padding: 4px 8px; font-weight: bold;">${vsPrefix}${label}${vsSuffix}</td></tr>
-                                    <tr>
-                                        <td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 攻撃 (ターン)' : '└ Attack (Turns)'}</td>
-                                        <td style="text-align: right; font-weight: bold; color: ${getGradationColor(atkScore, 50)}">${atkScore}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 防御 (被弾)' : '└ Defense (Damage)'}</td>
-                                        <td style="text-align: right; font-weight: bold; color: ${getGradationColor(defScore, 50)}">${defScore}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #eee;">
-                                        <td style="padding-left: 20px; color: #333; font-weight: bold;">${indexLabel}</td>
-                                        <td style="text-align: right; font-weight: bold; color: ${getGradationColor(perfIndex, globalPerfIndex)}">
-                                            <span style="font-size: 1.1em;">${perfIndex}</span>
-                                            <span style="color: #888; font-weight: normal; margin-left: 5px; font-size: 0.9em;">(${globalPerfIndex})</span>
-                                        </td>
-                                    </tr>
-                                `;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
+            let resourceHtml = `<div class="analysis-section" style="margin: 0;"><h4 style="margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">${i18n.title}</h4><table class="act-trend-table" style="width: 100%; border-collapse: collapse; font-size: 0.95em;"><thead><tr style="text-align: left; background: #f8f8f8; border-bottom: 2px solid #eee;"><th style="padding: 8px;">${i18n.headerItem}</th><th style="padding: 8px; text-align: right;">${i18n.headerValue}</th></tr></thead><tbody><tr><td style="padding: 8px; font-weight: bold;">${i18n.sustainability}</td><td style="padding: 8px; text-align: right; font-weight: bold;"><span style="color: ${getGradationColor(mySustain, glSustain)}; font-size: 1.1em;">${mySustain}</span><span style="color: #888; font-weight: normal; margin-left: 5px;">(${glSustain})</span></td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.dmgLoss}</td><td style="text-align: right;">${myAvgDmg.toFixed(1)} (${glAvgDmg.toFixed(1)})</td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.gapRec}</td><td style="text-align: right;">${myAvgRec.toFixed(1)} (${glAvgRec.toFixed(1)})</td></tr><tr style="color: #27ae60; font-size: 0.85em; border-bottom: 1px solid #eee;"><td style="padding-left: 15px;">${i18n.cmbRec}</td><td style="text-align: right;">+${myAvgCmbRec.toFixed(1)} (+${glAvgCmbRec.toFixed(1)})</td></tr>${['Enemy', 'EliteEnemy', 'Boss'].map(type => { const s = perfStats[type]; const meta = devMeta[type]; if (!s || s.Count === 0 || !meta) return ''; const atkScore = calcTScore(s.Turn_Sum / s.Count, meta.turn_mean, meta.turn_sd); const defScore = calcTScore(s.HP_Loss_Sum / s.Count, meta.hp_mean, meta.hp_sd); const encountersPerRun = s.Count / totalRuns; const perfIndex = ((parseFloat(atkScore) + parseFloat(defScore)) / 2 * encountersPerRun).toFixed(1); const globalEncounters = (globalActData.Node_Visits?.[type] || 0) / totalRunsAll; const globalPerfIndex = (50 * globalEncounters).toFixed(1); const label = nodeTypeLabels[type] || type; const vsPrefix = lang === 'ja' ? '対' : 'Vs. '; const vsSuffix = lang === 'ja' ? '性能' : ' Perf.'; const indexLabel = lang === 'ja' ? '└ 指数 (性能×踏破数)' : '└ Efficiency Index'; return `<tr style="background: #fafafa;"><td colspan="2" style="padding: 4px 8px; font-weight: bold;">${vsPrefix}${label}${vsSuffix}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 攻撃 (ターン)' : '└ Attack (Turns)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(atkScore, 50)}">${atkScore}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 防御 (被弾)' : '└ Defense (Damage)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(defScore, 50)}">${defScore}</td></tr><tr style="border-bottom: 1px solid #eee;"><td style="padding-left: 20px; color: #333; font-weight: bold;">${indexLabel}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(perfIndex, globalPerfIndex)}"><span style="font-size: 1.1em;">${perfIndex}</span><span style="color: #888; font-weight: normal; margin-left: 5px; font-size: 0.9em;">(${globalPerfIndex})</span></td></tr>`; }).join('')}</tbody></table></div>`;
             gridHtml += resourceHtml;
             if (act === '1') {
                 const report_ja = ALL_DATA.act1_tendency_report_ja;
                 const report_en = ALL_DATA.act1_tendency_report_en;
-                // langに応じて表示するレポートを選択
                 const reportToShow = (lang === 'ja' ? report_ja : report_en) || '';
-
                 if (reportToShow) {
-                    // レポートはグリッドレイアウトの中で横幅いっぱいに広げる
-                    const reportHtml = `
-                        <div class="analysis-section" style="grid-column: 1 / -1; margin-top: 20px; padding: 20px;">
-                            ${reportToShow}
-                        </div>
-                    `;
+                    const reportHtml = `<div class="analysis-section" style="grid-column: 1 / -1; margin-top: 20px; padding: 20px;">${reportToShow}</div>`;
                     gridHtml += reportHtml;
                 }
             }
@@ -2559,13 +2310,11 @@ function renderActTrendTab(lang) {
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
-    // 円グラフのHTMLは削除
-
-    // JSONから読み込んだテキストを使用するように変更
-    // ▼▼▼ この行をまるごと置き換えてください ▼▼▼
-container.innerHTML = `<div class='analysis-section'><h3>${lang === 'ja' ? 'Act別トレンド分析' : 'Act Trend Analysis'}</h3><p>${lang === 'ja' ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>' : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run. Changes caused by events are also included.<br><strong>Note: A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>'}</p>${subTabsHtml}${contentHtml}</div>`;
+    const desc = lang === 'ja'
+        ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>'
+        : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run. Changes caused by events are also included.<br><strong>Note: A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>';
+    container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.act_trend_tab_title}</h3><p>${desc}</p>${subTabsHtml}${contentHtml}</div>`;
 }
-
 
 /**
  * Act別トレンドの表示を切り替える関数

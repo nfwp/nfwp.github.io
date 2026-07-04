@@ -387,13 +387,13 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">缶詰</span>: 6回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 6回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">水遊び</span>: 4回</li>
 <li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 4回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">水鉄砲</span>: 3回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">月相</span>: 3回</li>
 <li><span class="text-purchase">星剣の舞</span>: 3回</li>
 <li><span class="text-purchase">降雪決行</span>: 3回</li>
@@ -418,7 +418,7 @@
 <ul>
 <li><span class="text-remove">トランプ射撃</span>: 23回</li>
 <li><span class="text-remove">ショット</span>: 9回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 9回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 9回</li>
 <li><span class="text-remove">黒鍵パリィ</span>: 8回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
 </ul>
@@ -431,10 +431,10 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">水鉄砲</span>: 22回</li>
-<li><span class="text-purchase">缶詰</span>: 20回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 22回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 20回</li>
 <li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 19回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 13回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 13回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 12回</li>
 <li><span class="text-purchase">危険な手品師</span>: 11回</li>
 <li><span class="text-purchase">Ｃ．リコシェ</span>: 10回</li>
@@ -449,7 +449,7 @@
 <li><span class="text-purchase">プリンセスウンディネ</span>: 6回</li>
 <li><span class="text-purchase">月相</span>: 5回</li>
 <li><span class="text-purchase">船底の念縛霊</span>: 5回</li>
-<li><span class="text-purchase">救急箱</span>: 5回</li>
+<li><span class="text-purchase">🧰 救急箱</span>: 5回</li>
 <li><span class="text-purchase">時間厳守</span>: 5回</li>
 </ul>
 </div>
@@ -482,12 +482,12 @@
 <ul>
 <li><span class="text-remove">トランプ射撃</span>: 101回</li>
 <li><span class="text-remove">ショット</span>: 16回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 9回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 9回</li>
 <li><span class="text-remove">黒鍵パリィ</span>: 7回</li>
 <li><span class="text-remove">離剣乱舞</span>: 2回</li>
-<li><span class="text-remove">財禍</span>: 1回</li>
+<li><span class="text-remove">🌀 財禍</span>: 1回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
-<li><span class="text-remove">嫉妬</span>: 1回</li>
+<li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
 </ul>
 </div>
 </div>
@@ -503,19 +503,19 @@
 <li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 5回</li>
 <li><span class="text-purchase">準備</span>: 5回</li>
 <li><span class="text-purchase">ティータイム</span>: 4回</li>
-<li><span class="text-purchase">水鉄砲</span>: 4回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 4回</li>
 <li><span class="text-purchase">水遊び</span>: 3回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 3回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 3回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
 <li><span class="text-purchase">咲夜特製ストップウォッチ</span>: 2回</li>
 <li><span class="text-purchase">静穏</span>: 2回</li>
-<li><span class="text-purchase">缶詰</span>: 2回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
 <li><span class="text-purchase">心抄斬</span>: 2回</li>
 <li><span class="text-purchase">危険な手品師</span>: 2回</li>
-<li><span class="text-purchase">バックパック</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">ダモクレスの刃</span>: 2回</li>
 <li><span class="text-purchase">Ｃ．リコシェ</span>: 2回</li>
-<li><span class="text-purchase">エナジードリンク</span>: 2回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
 <li><span class="text-purchase">タイムマジック</span>: 2回</li>
 <li><span class="text-purchase">イカサマ</span>: 2回</li>
 </ul>
@@ -544,9 +544,9 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">トランプ射撃</span>: 18回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 3回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 3回</li>
 <li><span class="text-remove">ショット</span>: 3回</li>
-<li><span class="text-remove">不幸</span>: 2回</li>
+<li><span class="text-remove">🌀 不幸</span>: 2回</li>
 <li><span class="text-remove">離剣乱舞</span>: 1回</li>
 <li><span class="text-remove">黒鍵パリィ</span>: 1回</li>
 <li><span class="text-remove">結界</span>: 1回</li>

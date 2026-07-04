@@ -56,7 +56,7 @@
 </tr></thead>
 <tbody>
 <tr class="specialist-row">
-<td><strong>缶詰</strong></td>
+<td><strong>🧰 缶詰</strong></td>
 <td style='text-align: right;'>72.0%</td>
 <td style='text-align: right;'>(+33.7%)</td>
 <td style='text-align: right;'>55.2</td>
@@ -88,7 +88,7 @@
 <td style='text-align: right;'>117.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>フラッシュ</strong></td>
+<td><strong>🧰 フラッシュ</strong></td>
 <td style='text-align: right;'>51.9%</td>
 <td style='text-align: right;'>(+13.6%)</td>
 <td style='text-align: right;'>58.4</td>
@@ -96,7 +96,7 @@
 <td style='text-align: right;'>115.2</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>ライオットシールド</strong></td>
+<td><strong>🧰 ライオットシールド</strong></td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>(+11.7%)</td>
 <td style='text-align: right;'>72.4</td>
@@ -304,7 +304,7 @@
 <td style='text-align: right;'>96.2</td>
 </tr>
 <tr>
-<td>今泉影狼の毛</td>
+<td>🧰 今泉影狼の毛</td>
 <td style='text-align: right;'>40.2%</td>
 <td style='text-align: right;'>(+1.9%)</td>
 <td style='text-align: right;'>57.1</td>
@@ -387,7 +387,7 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 3回</li>
 <li><span class="text-purchase">タオ胎動</span>: 3回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 3回</li>
@@ -396,13 +396,13 @@
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
 <li><span class="text-purchase">真冬の化身、レティ</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
-<li><span class="text-purchase">缶詰</span>: 2回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
 <li><span class="text-purchase">激流</span>: 2回</li>
-<li><span class="text-purchase">フラッシュ</span>: 2回</li>
-<li><span class="text-purchase">水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
 <li><span class="text-purchase">猛吹雪</span>: 2回</li>
 <li><span class="text-purchase">絶対零度</span>: 2回</li>
-<li><span class="text-purchase">バックパック</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 1回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 1回</li>
@@ -419,7 +419,7 @@
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">アイスショット</span>: 49回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 7回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 7回</li>
 <li><span class="text-remove">ショット</span>: 5回</li>
 <li><span class="text-remove">グリーンカバー</span>: 2回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
@@ -435,16 +435,16 @@
 <ul>
 <li><span class="text-purchase">絶対零度</span>: 14回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 13回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 10回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 10回</li>
 <li><span class="text-purchase">猛吹雪</span>: 10回</li>
-<li><span class="text-purchase">缶詰</span>: 10回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 10回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 9回</li>
 <li><span class="text-purchase">水遊び</span>: 8回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 8回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 7回</li>
 <li><span class="text-purchase">アイスシールド</span>: 7回</li>
-<li><span class="text-purchase">水鉄砲</span>: 6回</li>
-<li><span class="text-purchase">フラッシュ</span>: 6回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 6回</li>
 <li><span class="text-purchase">薄氷を踏む</span>: 6回</li>
 <li><span class="text-purchase">氷漬けの標本</span>: 5回</li>
 <li><span class="text-purchase">ウォーターカーペット</span>: 5回</li>
@@ -475,7 +475,7 @@
 <ul>
 <li><span class="text-remove">アイスショット</span>: 104回</li>
 <li><span class="text-remove">ショット</span>: 9回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 7回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 7回</li>
 <li><span class="text-remove">グリーンカバー</span>: 5回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
 </ul>
@@ -488,15 +488,15 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">缶詰</span>: 4回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
 <li><span class="text-purchase">絶対零度</span>: 3回</li>
 <li><span class="text-purchase">ウォーターカーペット</span>: 3回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 3回</li>
-<li><span class="text-purchase">水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
 <li><span class="text-purchase">真冬の化身、レティ</span>: 2回</li>
-<li><span class="text-purchase">フラッシュ</span>: 2回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">猛吹雪</span>: 2回</li>
-<li><span class="text-purchase">ライオットシールド</span>: 2回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
 <li><span class="text-purchase">桜色の海</span>: 1回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
@@ -507,7 +507,7 @@
 <li><span class="text-purchase">妖精の起床</span>: 1回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 1回</li>
 <li><span class="text-purchase">完璧な偽装</span>: 1回</li>
-<li><span class="text-purchase">バックパック</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -539,9 +539,9 @@
 <li><span class="text-remove">アイスショット</span>: 15回</li>
 <li><span class="text-remove">グリーンカバー</span>: 3回</li>
 <li><span class="text-remove">ショット</span>: 2回</li>
-<li><span class="text-remove">不幸</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 1回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
-<li><span class="text-remove">忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
 </ul>
 </div>
 </div>

@@ -387,13 +387,13 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Canned Food</span>: 6</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 6</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 5</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 4</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
 <li><span class="text-purchase">Play With Water</span>: 4</li>
 <li><span class="text-purchase">Jack the Ludo Bile</span>: 4</li>
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
-<li><span class="text-purchase">Water Gun</span>: 3</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
 <li><span class="text-purchase">Lunar Cycle</span>: 3</li>
 <li><span class="text-purchase">Starry Sword Dance</span>: 3</li>
 <li><span class="text-purchase">Winter Resolution</span>: 3</li>
@@ -418,7 +418,7 @@
 <ul>
 <li><span class="text-remove">Poker Shot</span>: 23</li>
 <li><span class="text-remove">Shoot</span>: 9</li>
-<li><span class="text-remove">Creeping Hunger</span>: 9</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 9</li>
 <li><span class="text-remove">Black Key Defense</span>: 8</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
 </ul>
@@ -431,10 +431,10 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Water Gun</span>: 22</li>
-<li><span class="text-purchase">Canned Food</span>: 20</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 22</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 20</li>
 <li><span class="text-purchase">Jack the Ludo Bile</span>: 19</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 13</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 13</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 12</li>
 <li><span class="text-purchase">Dangerous Illusionist</span>: 11</li>
 <li><span class="text-purchase">C. Ricochet</span>: 10</li>
@@ -449,7 +449,7 @@
 <li><span class="text-purchase">Princess Undine</span>: 6</li>
 <li><span class="text-purchase">Lunar Cycle</span>: 5</li>
 <li><span class="text-purchase">Ship's Phantom</span>: 5</li>
-<li><span class="text-purchase">First Aid Kit</span>: 5</li>
+<li><span class="text-purchase">🧰 First Aid Kit</span>: 5</li>
 <li><span class="text-purchase">Guard Up</span>: 5</li>
 </ul>
 </div>
@@ -482,12 +482,12 @@
 <ul>
 <li><span class="text-remove">Poker Shot</span>: 101</li>
 <li><span class="text-remove">Shoot</span>: 16</li>
-<li><span class="text-remove">Creeping Hunger</span>: 9</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 9</li>
 <li><span class="text-remove">Black Key Defense</span>: 7</li>
 <li><span class="text-remove">Sight of Distant Blade</span>: 2</li>
-<li><span class="text-remove">Buy Safety</span>: 1</li>
+<li><span class="text-remove">🌀 Buy Safety</span>: 1</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
-<li><span class="text-remove">Jealous</span>: 1</li>
+<li><span class="text-remove">🌀 Jealous</span>: 1</li>
 </ul>
 </div>
 </div>
@@ -503,19 +503,19 @@
 <li><span class="text-purchase">Jack the Ludo Bile</span>: 5</li>
 <li><span class="text-purchase">Travel Preparation</span>: 5</li>
 <li><span class="text-purchase">Tea Brewing</span>: 4</li>
-<li><span class="text-purchase">Water Gun</span>: 4</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 4</li>
 <li><span class="text-purchase">Play With Water</span>: 3</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 3</li>
-<li><span class="text-purchase">Ballistic Shield</span>: 3</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">Sakuya's Special Watch</span>: 2</li>
 <li><span class="text-purchase">Tranquility</span>: 2</li>
-<li><span class="text-purchase">Canned Food</span>: 2</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 2</li>
 <li><span class="text-purchase">Dangerous Illusionist</span>: 2</li>
-<li><span class="text-purchase">Supply Backpack</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Knife of Damocles</span>: 2</li>
 <li><span class="text-purchase">C. Ricochet</span>: 2</li>
-<li><span class="text-purchase">Energy Drink</span>: 2</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
 <li><span class="text-purchase">Time Magic</span>: 2</li>
 <li><span class="text-purchase">Sure Gamble</span>: 2</li>
 </ul>
@@ -544,9 +544,9 @@
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Poker Shot</span>: 18</li>
-<li><span class="text-remove">Creeping Hunger</span>: 3</li>
+<li><span class="text-remove">🌀 Creeping Hunger</span>: 3</li>
 <li><span class="text-remove">Shoot</span>: 3</li>
-<li><span class="text-remove">Misfortune</span>: 2</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 2</li>
 <li><span class="text-remove">Sight of Distant Blade</span>: 1</li>
 <li><span class="text-remove">Black Key Defense</span>: 1</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
