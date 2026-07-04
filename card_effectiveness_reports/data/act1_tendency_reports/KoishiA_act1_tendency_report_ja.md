@@ -56,324 +56,324 @@
 </tr></thead>
 <tbody>
 <tr>
-<td>A.T.フィールド</td>
-<td style='text-align: right;'>53.3%</td>
-<td style='text-align: right;'>(+16.1%)</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>53.3</td>
-<td style='text-align: right;'>103.9</td>
+<td>両思いの恋煩い</td>
+<td style='text-align: right;'>59.5%</td>
+<td style='text-align: right;'>(+20.2%)</td>
+<td style='text-align: right;'>50.0</td>
+<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>93.7</td>
 </tr>
-<tr>
-<td>考えさせて</td>
-<td style='text-align: right;'>52.2%</td>
-<td style='text-align: right;'>(+15.0%)</td>
-<td style='text-align: right;'>55.6</td>
-<td style='text-align: right;'>51.9</td>
-<td style='text-align: right;'>107.5</td>
+<tr class="specialist-row">
+<td><strong>被害妄想</strong></td>
+<td style='text-align: right;'>54.2%</td>
+<td style='text-align: right;'>(+14.9%)</td>
+<td style='text-align: right;'>51.6</td>
+<td style='text-align: right;'>62.5</td>
+<td style='text-align: right;'>114.1</td>
 </tr>
-<tr>
-<td>クリーンエネルギー</td>
-<td style='text-align: right;'>51.6%</td>
-<td style='text-align: right;'>(+14.4%)</td>
-<td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>36.3</td>
-<td style='text-align: right;'>77.6</td>
+<tr class="specialist-row">
+<td><strong>ローズケージ</strong></td>
+<td style='text-align: right;'>52.4%</td>
+<td style='text-align: right;'>(+13.2%)</td>
+<td style='text-align: right;'>68.5</td>
+<td style='text-align: right;'>58.7</td>
+<td style='text-align: right;'>127.3</td>
 </tr>
 <tr>
 <td>天啓</td>
-<td style='text-align: right;'>51.4%</td>
-<td style='text-align: right;'>(+14.2%)</td>
+<td style='text-align: right;'>52.2%</td>
+<td style='text-align: right;'>(+13.0%)</td>
 <td style='text-align: right;'>39.1</td>
 <td style='text-align: right;'>29.7</td>
 <td style='text-align: right;'>68.8</td>
 </tr>
 <tr>
-<td>両思いの恋煩い</td>
-<td style='text-align: right;'>51.1%</td>
-<td style='text-align: right;'>(+13.9%)</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>43.7</td>
-<td style='text-align: right;'>93.7</td>
-</tr>
-<tr>
-<td>一時の平穏</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>(+12.8%)</td>
-<td style='text-align: right;'>46.5</td>
-<td style='text-align: right;'>56.3</td>
-<td style='text-align: right;'>102.7</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>サバイバル本能</strong></td>
-<td style='text-align: right;'>48.0%</td>
-<td style='text-align: right;'>(+10.8%)</td>
-<td style='text-align: right;'>55.3</td>
-<td style='text-align: right;'>54.7</td>
-<td style='text-align: right;'>110.0</td>
+<td>クリーンエネルギー</td>
+<td style='text-align: right;'>51.6%</td>
+<td style='text-align: right;'>(+12.4%)</td>
+<td style='text-align: right;'>41.3</td>
+<td style='text-align: right;'>36.3</td>
+<td style='text-align: right;'>77.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>戦車のタロット</strong></td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>(+10.5%)</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>(+10.8%)</td>
 <td style='text-align: right;'>59.1</td>
 <td style='text-align: right;'>59.5</td>
 <td style='text-align: right;'>118.7</td>
 </tr>
 <tr>
-<td>🧰 今泉影狼の毛</td>
-<td style='text-align: right;'>47.1%</td>
-<td style='text-align: right;'>(+9.9%)</td>
-<td style='text-align: right;'>45.9</td>
-<td style='text-align: right;'>38.1</td>
-<td style='text-align: right;'>84.0</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>ルナサ・ソロライブ</strong></td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>(+8.3%)</td>
-<td style='text-align: right;'>62.5</td>
-<td style='text-align: right;'>60.4</td>
-<td style='text-align: right;'>122.9</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>被害妄想</strong></td>
-<td style='text-align: right;'>45.0%</td>
-<td style='text-align: right;'>(+7.8%)</td>
-<td style='text-align: right;'>51.6</td>
-<td style='text-align: right;'>62.5</td>
-<td style='text-align: right;'>114.1</td>
-</tr>
-<tr>
-<td>月明かりの水蓮</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>(+7.6%)</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>45.0</td>
-<td style='text-align: right;'>95.7</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>ローズケージ</strong></td>
-<td style='text-align: right;'>44.4%</td>
-<td style='text-align: right;'>(+7.2%)</td>
-<td style='text-align: right;'>68.5</td>
-<td style='text-align: right;'>58.7</td>
-<td style='text-align: right;'>127.3</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>零れ落ちる意識</strong></td>
-<td style='text-align: right;'>44.0%</td>
-<td style='text-align: right;'>(+6.8%)</td>
+<td>花鳥風月</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>(+10.8%)</td>
+<td style='text-align: right;'>43.7</td>
 <td style='text-align: right;'>64.4</td>
-<td style='text-align: right;'>60.0</td>
-<td style='text-align: right;'>124.4</td>
+<td style='text-align: right;'>108.2</td>
 </tr>
 <tr>
-<td>春の野遊び</td>
-<td style='text-align: right;'>43.5%</td>
-<td style='text-align: right;'>(+6.3%)</td>
-<td style='text-align: right;'>37.5</td>
-<td style='text-align: right;'>42.4</td>
-<td style='text-align: right;'>79.9</td>
+<td>A.T.フィールド</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>(+10.8%)</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>103.9</td>
+</tr>
+<tr>
+<td>心変わりの刃</td>
+<td style='text-align: right;'>48.5%</td>
+<td style='text-align: right;'>(+9.3%)</td>
+<td style='text-align: right;'>61.4</td>
+<td style='text-align: right;'>46.2</td>
+<td style='text-align: right;'>107.6</td>
 </tr>
 <tr>
 <td>暗闇演舞</td>
-<td style='text-align: right;'>42.9%</td>
-<td style='text-align: right;'>(+5.7%)</td>
+<td style='text-align: right;'>48.3%</td>
+<td style='text-align: right;'>(+9.1%)</td>
 <td style='text-align: right;'>29.7</td>
 <td style='text-align: right;'>42.0</td>
 <td style='text-align: right;'>71.8</td>
 </tr>
 <tr>
-<td>🧰 ライオットシールド</td>
-<td style='text-align: right;'>42.6%</td>
-<td style='text-align: right;'>(+5.4%)</td>
-<td style='text-align: right;'>47.0</td>
-<td style='text-align: right;'>59.1</td>
-<td style='text-align: right;'>106.1</td>
-</tr>
-<tr>
-<td>好奇心</td>
-<td style='text-align: right;'>42.3%</td>
-<td style='text-align: right;'>(+5.1%)</td>
-<td style='text-align: right;'>38.6</td>
-<td style='text-align: right;'>33.9</td>
-<td style='text-align: right;'>72.5</td>
-</tr>
-<tr>
-<td>花鳥風月</td>
-<td style='text-align: right;'>42.1%</td>
-<td style='text-align: right;'>(+4.9%)</td>
-<td style='text-align: right;'>43.7</td>
-<td style='text-align: right;'>64.4</td>
-<td style='text-align: right;'>108.2</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>平静の追憶</strong></td>
-<td style='text-align: right;'>42.0%</td>
-<td style='text-align: right;'>(+4.8%)</td>
-<td style='text-align: right;'>67.2</td>
-<td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>114.5</td>
-</tr>
-<tr>
-<td>仮想弾幕</td>
-<td style='text-align: right;'>41.7%</td>
-<td style='text-align: right;'>(+4.5%)</td>
-<td style='text-align: right;'>49.5</td>
-<td style='text-align: right;'>49.5</td>
-<td style='text-align: right;'>98.9</td>
-</tr>
-<tr>
-<td>閃きの瞬間</td>
-<td style='text-align: right;'>41.2%</td>
-<td style='text-align: right;'>(+4.0%)</td>
-<td style='text-align: right;'>27.0</td>
-<td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'>82.0</td>
-</tr>
-<tr>
-<td>本能の愛</td>
-<td style='text-align: right;'>41.1%</td>
-<td style='text-align: right;'>(+3.9%)</td>
-<td style='text-align: right;'>48.9</td>
-<td style='text-align: right;'>49.2</td>
-<td style='text-align: right;'>98.1</td>
-</tr>
-<tr>
-<td>高鳴る鼓動</td>
-<td style='text-align: right;'>41.1%</td>
-<td style='text-align: right;'>(+3.9%)</td>
-<td style='text-align: right;'>60.0</td>
-<td style='text-align: right;'>45.3</td>
-<td style='text-align: right;'>105.3</td>
-</tr>
-<tr>
 <td>太陽の畑</td>
-<td style='text-align: right;'>40.6%</td>
-<td style='text-align: right;'>(+3.4%)</td>
+<td style='text-align: right;'>48.1%</td>
+<td style='text-align: right;'>(+8.9%)</td>
 <td style='text-align: right;'>35.6</td>
 <td style='text-align: right;'>56.6</td>
 <td style='text-align: right;'>92.1</td>
 </tr>
 <tr>
-<td>心変わりの刃</td>
-<td style='text-align: right;'>40.3%</td>
-<td style='text-align: right;'>(+3.1%)</td>
-<td style='text-align: right;'>61.4</td>
-<td style='text-align: right;'>46.2</td>
-<td style='text-align: right;'>107.6</td>
+<td>月明かりの水蓮</td>
+<td style='text-align: right;'>48.0%</td>
+<td style='text-align: right;'>(+8.8%)</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>45.0</td>
+<td style='text-align: right;'>95.7</td>
+</tr>
+<tr>
+<td>春の野遊び</td>
+<td style='text-align: right;'>47.8%</td>
+<td style='text-align: right;'>(+8.6%)</td>
+<td style='text-align: right;'>37.5</td>
+<td style='text-align: right;'>42.4</td>
+<td style='text-align: right;'>79.9</td>
+</tr>
+<tr>
+<td>ブラックペガサスの罪</td>
+<td style='text-align: right;'>47.6%</td>
+<td style='text-align: right;'>(+8.4%)</td>
+<td style='text-align: right;'>56.9</td>
+<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>104.5</td>
+</tr>
+<tr>
+<td>高鳴る鼓動</td>
+<td style='text-align: right;'>46.7%</td>
+<td style='text-align: right;'>(+7.4%)</td>
+<td style='text-align: right;'>60.0</td>
+<td style='text-align: right;'>45.3</td>
+<td style='text-align: right;'>105.3</td>
+</tr>
+<tr>
+<td>熱情の追憶</td>
+<td style='text-align: right;'>46.0%</td>
+<td style='text-align: right;'>(+6.8%)</td>
+<td style='text-align: right;'>53.5</td>
+<td style='text-align: right;'>53.8</td>
+<td style='text-align: right;'>107.4</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>夢枕にご先祖総立ち</strong></td>
-<td style='text-align: right;'>40.1%</td>
-<td style='text-align: right;'>(+2.9%)</td>
-<td style='text-align: right;'>58.3</td>
-<td style='text-align: right;'>52.7</td>
-<td style='text-align: right;'>111.0</td>
+<td><strong>ルナサ・ソロライブ</strong></td>
+<td style='text-align: right;'>45.7%</td>
+<td style='text-align: right;'>(+6.5%)</td>
+<td style='text-align: right;'>62.5</td>
+<td style='text-align: right;'>60.4</td>
+<td style='text-align: right;'>122.9</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🧰 缶詰</strong></td>
-<td style='text-align: right;'>40.0%</td>
-<td style='text-align: right;'>(+2.8%)</td>
-<td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>73.0</td>
-<td style='text-align: right;'>131.0</td>
+<td><strong>幻想郷の開花</strong></td>
+<td style='text-align: right;'>45.3%</td>
+<td style='text-align: right;'>(+6.1%)</td>
+<td style='text-align: right;'>65.2</td>
+<td style='text-align: right;'>66.1</td>
+<td style='text-align: right;'>131.4</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>我に返る</strong></td>
-<td style='text-align: right;'>39.7%</td>
-<td style='text-align: right;'>(+2.5%)</td>
-<td style='text-align: right;'>57.6</td>
-<td style='text-align: right;'>61.9</td>
-<td style='text-align: right;'>119.5</td>
+<td><strong>サバイバル本能</strong></td>
+<td style='text-align: right;'>45.0%</td>
+<td style='text-align: right;'>(+5.8%)</td>
+<td style='text-align: right;'>55.3</td>
+<td style='text-align: right;'>54.7</td>
+<td style='text-align: right;'>110.0</td>
+</tr>
+<tr>
+<td>好奇心</td>
+<td style='text-align: right;'>44.9%</td>
+<td style='text-align: right;'>(+5.7%)</td>
+<td style='text-align: right;'>38.6</td>
+<td style='text-align: right;'>33.9</td>
+<td style='text-align: right;'>72.5</td>
 </tr>
 <tr>
 <td>サブタレイニアンローズ</td>
-<td style='text-align: right;'>39.6%</td>
-<td style='text-align: right;'>(+2.4%)</td>
+<td style='text-align: right;'>44.7%</td>
+<td style='text-align: right;'>(+5.5%)</td>
 <td style='text-align: right;'>45.6</td>
 <td style='text-align: right;'>44.7</td>
 <td style='text-align: right;'>90.3</td>
 </tr>
 <tr>
-<td>いばらの舞</td>
-<td style='text-align: right;'>39.6%</td>
-<td style='text-align: right;'>(+2.4%)</td>
-<td style='text-align: right;'>52.7</td>
-<td style='text-align: right;'>51.3</td>
-<td style='text-align: right;'>104.0</td>
+<td>春植えざれば秋実らず</td>
+<td style='text-align: right;'>44.4%</td>
+<td style='text-align: right;'>(+5.2%)</td>
+<td style='text-align: right;'>53.0</td>
+<td style='text-align: right;'>47.0</td>
+<td style='text-align: right;'>100.0</td>
+</tr>
+<tr>
+<td>本能の愛</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>(+4.9%)</td>
+<td style='text-align: right;'>48.9</td>
+<td style='text-align: right;'>49.2</td>
+<td style='text-align: right;'>98.1</td>
+</tr>
+<tr>
+<td>🧰 ライオットシールド</td>
+<td style='text-align: right;'>43.8%</td>
+<td style='text-align: right;'>(+4.5%)</td>
+<td style='text-align: right;'>47.0</td>
+<td style='text-align: right;'>59.1</td>
+<td style='text-align: right;'>106.1</td>
+</tr>
+<tr>
+<td>🧰 今泉影狼の毛</td>
+<td style='text-align: right;'>43.2%</td>
+<td style='text-align: right;'>(+4.0%)</td>
+<td style='text-align: right;'>45.9</td>
+<td style='text-align: right;'>38.1</td>
+<td style='text-align: right;'>84.0</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>幻想郷の開花</strong></td>
-<td style='text-align: right;'>39.1%</td>
-<td style='text-align: right;'>(+1.9%)</td>
-<td style='text-align: right;'>65.2</td>
-<td style='text-align: right;'>66.1</td>
-<td style='text-align: right;'>131.4</td>
+<td><strong>夢枕にご先祖総立ち</strong></td>
+<td style='text-align: right;'>43.1%</td>
+<td style='text-align: right;'>(+3.9%)</td>
+<td style='text-align: right;'>58.3</td>
+<td style='text-align: right;'>52.7</td>
+<td style='text-align: right;'>111.0</td>
 </tr>
 <tr>
-<td>蛍光の夜</td>
-<td style='text-align: right;'>38.9%</td>
-<td style='text-align: right;'>(+1.7%)</td>
-<td style='text-align: right;'>43.1</td>
-<td style='text-align: right;'>50.8</td>
-<td style='text-align: right;'>93.9</td>
+<td>仮想弾幕</td>
+<td style='text-align: right;'>42.9%</td>
+<td style='text-align: right;'>(+3.6%)</td>
+<td style='text-align: right;'>49.5</td>
+<td style='text-align: right;'>49.5</td>
+<td style='text-align: right;'>98.9</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>我に返る</strong></td>
+<td style='text-align: right;'>42.6%</td>
+<td style='text-align: right;'>(+3.3%)</td>
+<td style='text-align: right;'>57.6</td>
+<td style='text-align: right;'>61.9</td>
+<td style='text-align: right;'>119.5</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>心の解放</strong></td>
+<td style='text-align: right;'>42.4%</td>
+<td style='text-align: right;'>(+3.2%)</td>
+<td style='text-align: right;'>70.3</td>
+<td style='text-align: right;'>53.0</td>
+<td style='text-align: right;'>123.3</td>
 </tr>
 <tr>
-<td>ハートステップ</td>
-<td style='text-align: right;'>38.8%</td>
-<td style='text-align: right;'>(+1.6%)</td>
-<td style='text-align: right;'>53.8</td>
-<td style='text-align: right;'>39.1</td>
-<td style='text-align: right;'>92.9</td>
+<td>ロマンスの夜のラストコール</td>
+<td style='text-align: right;'>42.3%</td>
+<td style='text-align: right;'>(+3.1%)</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>100.5</td>
 </tr>
-<tr>
-<td>土着神崇拝</td>
-<td style='text-align: right;'>38.7%</td>
-<td style='text-align: right;'>(+1.5%)</td>
-<td style='text-align: right;'>52.4</td>
-<td style='text-align: right;'>39.6</td>
-<td style='text-align: right;'>92.0</td>
-</tr>
-<tr>
-<td>熱情の追憶</td>
-<td style='text-align: right;'>38.6%</td>
-<td style='text-align: right;'>(+1.4%)</td>
-<td style='text-align: right;'>53.5</td>
-<td style='text-align: right;'>53.8</td>
-<td style='text-align: right;'>107.4</td>
+<tr class="specialist-row">
+<td><strong>无寿の夢</strong></td>
+<td style='text-align: right;'>41.9%</td>
+<td style='text-align: right;'>(+2.7%)</td>
+<td style='text-align: right;'>59.5</td>
+<td style='text-align: right;'>57.3</td>
+<td style='text-align: right;'>116.8</td>
 </tr>
 <tr>
 <td>眠れぬ夜</td>
-<td style='text-align: right;'>38.3%</td>
-<td style='text-align: right;'>(+1.1%)</td>
+<td style='text-align: right;'>41.5%</td>
+<td style='text-align: right;'>(+2.2%)</td>
 <td style='text-align: right;'>63.7</td>
 <td style='text-align: right;'>40.9</td>
 <td style='text-align: right;'>104.6</td>
 </tr>
 <tr>
+<td>閃きの瞬間</td>
+<td style='text-align: right;'>41.4%</td>
+<td style='text-align: right;'>(+2.2%)</td>
+<td style='text-align: right;'>27.0</td>
+<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'>82.0</td>
+</tr>
+<tr>
 <td>胎児の夢</td>
-<td style='text-align: right;'>38.1%</td>
-<td style='text-align: right;'>(+0.9%)</td>
+<td style='text-align: right;'>41.2%</td>
+<td style='text-align: right;'>(+2.0%)</td>
 <td style='text-align: right;'>42.4</td>
 <td style='text-align: right;'>51.6</td>
 <td style='text-align: right;'>94.0</td>
 </tr>
 <tr>
+<td>投げキッス</td>
+<td style='text-align: right;'>40.7%</td>
+<td style='text-align: right;'>(+1.5%)</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>55.9</td>
+<td style='text-align: right;'>103.2</td>
+</tr>
+<tr>
+<td>蛍光の夜</td>
+<td style='text-align: right;'>40.6%</td>
+<td style='text-align: right;'>(+1.4%)</td>
+<td style='text-align: right;'>43.1</td>
+<td style='text-align: right;'>50.8</td>
+<td style='text-align: right;'>93.9</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>春色の閃光</strong></td>
+<td style='text-align: right;'>40.5%</td>
+<td style='text-align: right;'>(+1.3%)</td>
+<td style='text-align: right;'>51.3</td>
+<td style='text-align: right;'>63.7</td>
+<td style='text-align: right;'>115.1</td>
+</tr>
+<tr>
 <td>丑の刻参り</td>
-<td style='text-align: right;'>37.5%</td>
-<td style='text-align: right;'>(+0.3%)</td>
+<td style='text-align: right;'>40.0%</td>
+<td style='text-align: right;'>(+0.8%)</td>
 <td style='text-align: right;'>52.1</td>
 <td style='text-align: right;'>51.1</td>
 <td style='text-align: right;'>103.2</td>
 </tr>
 <tr>
-<td>无寿の夢</td>
-<td style='text-align: right;'>37.2%</td>
-<td style='text-align: right;'>(-0.0%)</td>
-<td style='text-align: right;'>59.5</td>
-<td style='text-align: right;'>57.3</td>
-<td style='text-align: right;'>116.8</td>
+<td>いばらの舞</td>
+<td style='text-align: right;'>39.3%</td>
+<td style='text-align: right;'>(+0.1%)</td>
+<td style='text-align: right;'>52.7</td>
+<td style='text-align: right;'>51.3</td>
+<td style='text-align: right;'>104.0</td>
+</tr>
+<tr>
+<td>🧰 缶詰</td>
+<td style='text-align: right;'>38.9%</td>
+<td style='text-align: right;'>(-0.3%)</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>73.0</td>
+<td style='text-align: right;'>131.0</td>
 </tr>
 </tbody>
 </table>

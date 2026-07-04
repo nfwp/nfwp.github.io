@@ -56,324 +56,324 @@
 </tr></thead>
 <tbody>
 <tr>
-<td>Shikigami Protection</td>
-<td style='text-align: right;'>52.6%</td>
-<td style='text-align: right;'>(+22.6%)</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>104.1</td>
-</tr>
-<tr>
-<td>Gather Faith</td>
-<td style='text-align: right;'>52.4%</td>
-<td style='text-align: right;'>(+22.4%)</td>
-<td style='text-align: right;'>41.4</td>
-<td style='text-align: right;'>33.4</td>
-<td style='text-align: right;'>74.8</td>
-</tr>
-<tr>
-<td>Maid's Trick</td>
-<td style='text-align: right;'>46.9%</td>
-<td style='text-align: right;'>(+16.9%)</td>
-<td style='text-align: right;'>59.5</td>
-<td style='text-align: right;'>37.7</td>
-<td style='text-align: right;'>97.2</td>
+<td>Déjà Vu</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>(+18.7%)</td>
+<td style='text-align: right;'>40.5</td>
+<td style='text-align: right;'>53.1</td>
+<td style='text-align: right;'>93.6</td>
 </tr>
 <tr>
 <td>Wall of Bhaavaagra</td>
-<td style='text-align: right;'>46.7%</td>
-<td style='text-align: right;'>(+16.6%)</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>(+18.7%)</td>
 <td style='text-align: right;'>27.5</td>
 <td style='text-align: right;'>52.8</td>
 <td style='text-align: right;'>80.3</td>
 </tr>
 <tr>
-<td>The Reclusive Sage</td>
-<td style='text-align: right;'>46.2%</td>
-<td style='text-align: right;'>(+16.1%)</td>
-<td style='text-align: right;'>51.5</td>
-<td style='text-align: right;'>52.2</td>
-<td style='text-align: right;'>103.7</td>
+<td>Maid's Trick</td>
+<td style='text-align: right;'>48.3%</td>
+<td style='text-align: right;'>(+17.0%)</td>
+<td style='text-align: right;'>59.5</td>
+<td style='text-align: right;'>37.7</td>
+<td style='text-align: right;'>97.2</td>
 </tr>
 <tr>
 <td>Trick Bullets</td>
-<td style='text-align: right;'>44.0%</td>
-<td style='text-align: right;'>(+14.0%)</td>
+<td style='text-align: right;'>44.1%</td>
+<td style='text-align: right;'>(+12.8%)</td>
 <td style='text-align: right;'>45.6</td>
 <td style='text-align: right;'>53.4</td>
 <td style='text-align: right;'>99.0</td>
 </tr>
+<tr>
+<td>Shikigami Protection</td>
+<td style='text-align: right;'>43.3%</td>
+<td style='text-align: right;'>(+12.1%)</td>
+<td style='text-align: right;'>50.0</td>
+<td style='text-align: right;'>54.1</td>
+<td style='text-align: right;'>104.1</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>Time Magic</strong></td>
-<td style='text-align: right;'>42.6%</td>
-<td style='text-align: right;'>(+12.5%)</td>
+<td style='text-align: right;'>42.9%</td>
+<td style='text-align: right;'>(+11.6%)</td>
 <td style='text-align: right;'>65.5</td>
 <td style='text-align: right;'>55.1</td>
 <td style='text-align: right;'>120.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Dragon Palace's Message</strong></td>
-<td style='text-align: right;'>41.2%</td>
-<td style='text-align: right;'>(+11.2%)</td>
-<td style='text-align: right;'>62.3</td>
-<td style='text-align: right;'>49.1</td>
-<td style='text-align: right;'>111.4</td>
-</tr>
-<tr>
-<td>Luna Clock</td>
-<td style='text-align: right;'>40.9%</td>
-<td style='text-align: right;'>(+10.9%)</td>
-<td style='text-align: right;'>58.2</td>
-<td style='text-align: right;'>42.7</td>
-<td style='text-align: right;'>100.8</td>
-</tr>
-<tr>
-<td>Cucumber Missile</td>
-<td style='text-align: right;'>40.0%</td>
-<td style='text-align: right;'>(+10.0%)</td>
-<td style='text-align: right;'>67.9</td>
-<td style='text-align: right;'>41.4</td>
-<td style='text-align: right;'>109.3</td>
-</tr>
-<tr>
-<td>Déjà Vu</td>
-<td style='text-align: right;'>40.0%</td>
-<td style='text-align: right;'>(+10.0%)</td>
-<td style='text-align: right;'>40.5</td>
-<td style='text-align: right;'>53.1</td>
-<td style='text-align: right;'>93.6</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>Fortress of Silver</strong></td>
-<td style='text-align: right;'>39.6%</td>
-<td style='text-align: right;'>(+9.6%)</td>
-<td style='text-align: right;'>63.0</td>
-<td style='text-align: right;'>62.3</td>
-<td style='text-align: right;'>125.2</td>
-</tr>
-<tr>
-<td>Starry Sword Dance</td>
-<td style='text-align: right;'>38.3%</td>
-<td style='text-align: right;'>(+8.3%)</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>38.9</td>
-<td style='text-align: right;'>89.2</td>
-</tr>
-<tr>
-<td>Great Tengu's Decree</td>
-<td style='text-align: right;'>38.2%</td>
-<td style='text-align: right;'>(+8.2%)</td>
-<td style='text-align: right;'>49.7</td>
-<td style='text-align: right;'>41.8</td>
-<td style='text-align: right;'>91.5</td>
-</tr>
-<tr class="specialist-row">
 <td><strong>Elegant Maid</strong></td>
-<td style='text-align: right;'>36.1%</td>
-<td style='text-align: right;'>(+6.1%)</td>
+<td style='text-align: right;'>41.9%</td>
+<td style='text-align: right;'>(+10.6%)</td>
 <td style='text-align: right;'>50.9</td>
 <td style='text-align: right;'>61.1</td>
 <td style='text-align: right;'>112.0</td>
 </tr>
 <tr>
-<td>Purchase Materials</td>
-<td style='text-align: right;'>35.9%</td>
-<td style='text-align: right;'>(+5.9%)</td>
-<td style='text-align: right;'>47.2</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>97.2</td>
+<td>Great Tengu's Decree</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>(+10.0%)</td>
+<td style='text-align: right;'>49.7</td>
+<td style='text-align: right;'>41.8</td>
+<td style='text-align: right;'>91.5</td>
+</tr>
+<tr>
+<td>Youkai Study</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>(+10.0%)</td>
+<td style='text-align: right;'>37.0</td>
+<td style='text-align: right;'>51.2</td>
+<td style='text-align: right;'>88.3</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>Time Domination</strong></td>
-<td style='text-align: right;'>35.8%</td>
-<td style='text-align: right;'>(+5.8%)</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>(+10.0%)</td>
 <td style='text-align: right;'>58.6</td>
 <td style='text-align: right;'>60.5</td>
 <td style='text-align: right;'>119.1</td>
 </tr>
 <tr>
-<td>Time Suppression</td>
-<td style='text-align: right;'>35.8%</td>
-<td style='text-align: right;'>(+5.8%)</td>
-<td style='text-align: right;'>44.2</td>
-<td style='text-align: right;'>52.5</td>
-<td style='text-align: right;'>96.7</td>
-</tr>
-<tr>
-<td>Youkai Study</td>
-<td style='text-align: right;'>35.5%</td>
-<td style='text-align: right;'>(+5.5%)</td>
-<td style='text-align: right;'>37.0</td>
-<td style='text-align: right;'>51.2</td>
-<td style='text-align: right;'>88.3</td>
-</tr>
-<tr>
-<td>Dangerous Illusionist</td>
-<td style='text-align: right;'>35.4%</td>
-<td style='text-align: right;'>(+5.4%)</td>
-<td style='text-align: right;'>46.6</td>
-<td style='text-align: right;'>48.5</td>
-<td style='text-align: right;'>95.0</td>
-</tr>
-<tr>
-<td>Princess Undine</td>
-<td style='text-align: right;'>34.9%</td>
-<td style='text-align: right;'>(+4.9%)</td>
-<td style='text-align: right;'>30.3</td>
-<td style='text-align: right;'>64.5</td>
-<td style='text-align: right;'>94.8</td>
-</tr>
-<tr>
-<td>Time Walk</td>
-<td style='text-align: right;'>34.7%</td>
-<td style='text-align: right;'>(+4.7%)</td>
-<td style='text-align: right;'>51.8</td>
-<td style='text-align: right;'>47.8</td>
-<td style='text-align: right;'>99.7</td>
-</tr>
-<tr>
 <td>Silver Dimension</td>
-<td style='text-align: right;'>34.6%</td>
-<td style='text-align: right;'>(+4.6%)</td>
+<td style='text-align: right;'>40.9%</td>
+<td style='text-align: right;'>(+9.7%)</td>
 <td style='text-align: right;'>51.2</td>
 <td style='text-align: right;'>47.2</td>
 <td style='text-align: right;'>98.4</td>
 </tr>
 <tr>
-<td>Tranquility</td>
-<td style='text-align: right;'>33.7%</td>
-<td style='text-align: right;'>(+3.7%)</td>
-<td style='text-align: right;'>32.1</td>
-<td style='text-align: right;'>44.9</td>
-<td style='text-align: right;'>77.0</td>
+<td>Starry Sword Dance</td>
+<td style='text-align: right;'>40.5%</td>
+<td style='text-align: right;'>(+9.3%)</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>38.9</td>
+<td style='text-align: right;'>89.2</td>
 </tr>
 <tr>
-<td>Marble Phantasm</td>
-<td style='text-align: right;'>33.3%</td>
-<td style='text-align: right;'>(+3.3%)</td>
-<td style='text-align: right;'>-</td>
-<td style='text-align: right;'>-</td>
-<td style='text-align: right;'>-</td>
+<td>Purchase Materials</td>
+<td style='text-align: right;'>40.0%</td>
+<td style='text-align: right;'>(+8.7%)</td>
+<td style='text-align: right;'>47.2</td>
+<td style='text-align: right;'>50.0</td>
+<td style='text-align: right;'>97.2</td>
+</tr>
+<tr>
+<td>Cucumber Missile</td>
+<td style='text-align: right;'>40.0%</td>
+<td style='text-align: right;'>(+8.7%)</td>
+<td style='text-align: right;'>67.9</td>
+<td style='text-align: right;'>41.4</td>
+<td style='text-align: right;'>109.3</td>
+</tr>
+<tr>
+<td>Dangerous Illusionist</td>
+<td style='text-align: right;'>39.7%</td>
+<td style='text-align: right;'>(+8.4%)</td>
+<td style='text-align: right;'>46.6</td>
+<td style='text-align: right;'>48.5</td>
+<td style='text-align: right;'>95.0</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Private Square</strong></td>
-<td style='text-align: right;'>33.3%</td>
-<td style='text-align: right;'>(+3.3%)</td>
-<td style='text-align: right;'>52.8</td>
-<td style='text-align: right;'>61.7</td>
-<td style='text-align: right;'>114.4</td>
+<td><strong>Dragon Palace's Message</strong></td>
+<td style='text-align: right;'>39.3%</td>
+<td style='text-align: right;'>(+8.0%)</td>
+<td style='text-align: right;'>62.3</td>
+<td style='text-align: right;'>49.1</td>
+<td style='text-align: right;'>111.4</td>
 </tr>
 <tr>
-<td>Room Cleaning</td>
-<td style='text-align: right;'>32.9%</td>
-<td style='text-align: right;'>(+2.8%)</td>
+<td>Time Suppression</td>
+<td style='text-align: right;'>39.1%</td>
+<td style='text-align: right;'>(+7.9%)</td>
+<td style='text-align: right;'>44.2</td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'>96.7</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>Fortress of Silver</strong></td>
+<td style='text-align: right;'>38.3%</td>
+<td style='text-align: right;'>(+7.0%)</td>
+<td style='text-align: right;'>63.0</td>
+<td style='text-align: right;'>62.3</td>
+<td style='text-align: right;'>125.2</td>
+</tr>
+<tr>
+<td>Time Walk</td>
+<td style='text-align: right;'>37.7%</td>
+<td style='text-align: right;'>(+6.4%)</td>
+<td style='text-align: right;'>51.8</td>
 <td style='text-align: right;'>47.8</td>
-<td style='text-align: right;'>56.2</td>
-<td style='text-align: right;'>104.0</td>
+<td style='text-align: right;'>99.7</td>
+</tr>
+<tr>
+<td>Princess Undine</td>
+<td style='text-align: right;'>37.5%</td>
+<td style='text-align: right;'>(+6.2%)</td>
+<td style='text-align: right;'>30.3</td>
+<td style='text-align: right;'>64.5</td>
+<td style='text-align: right;'>94.8</td>
+</tr>
+<tr>
+<td>Entrench Body</td>
+<td style='text-align: right;'>36.8%</td>
+<td style='text-align: right;'>(+5.6%)</td>
+<td style='text-align: right;'>43.4</td>
+<td style='text-align: right;'>41.0</td>
+<td style='text-align: right;'>84.4</td>
 </tr>
 <tr>
 <td>Apotheosis</td>
-<td style='text-align: right;'>32.6%</td>
-<td style='text-align: right;'>(+2.5%)</td>
+<td style='text-align: right;'>35.9%</td>
+<td style='text-align: right;'>(+4.6%)</td>
 <td style='text-align: right;'>40.0</td>
 <td style='text-align: right;'>40.0</td>
 <td style='text-align: right;'>80.0</td>
 </tr>
 <tr>
-<td>You Are Next!</td>
-<td style='text-align: right;'>32.1%</td>
-<td style='text-align: right;'>(+2.1%)</td>
+<td>Danmaku Deflection</td>
+<td style='text-align: right;'>35.7%</td>
+<td style='text-align: right;'>(+4.5%)</td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'>54.4</td>
+<td style='text-align: right;'>106.9</td>
+</tr>
+<tr>
+<td>Room Cleaning</td>
+<td style='text-align: right;'>35.7%</td>
+<td style='text-align: right;'>(+4.5%)</td>
+<td style='text-align: right;'>47.8</td>
 <td style='text-align: right;'>56.2</td>
-<td style='text-align: right;'>43.1</td>
-<td style='text-align: right;'>99.2</td>
-</tr>
-<tr>
-<td>Entrench Body</td>
-<td style='text-align: right;'>31.9%</td>
-<td style='text-align: right;'>(+1.9%)</td>
-<td style='text-align: right;'>43.4</td>
-<td style='text-align: right;'>41.0</td>
-<td style='text-align: right;'>84.4</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>Sure Gamble</strong></td>
-<td style='text-align: right;'>31.9%</td>
-<td style='text-align: right;'>(+1.9%)</td>
-<td style='text-align: right;'>57.7</td>
-<td style='text-align: right;'>58.2</td>
-<td style='text-align: right;'>115.9</td>
-</tr>
-<tr>
-<td>Short Break</td>
-<td style='text-align: right;'>31.6%</td>
-<td style='text-align: right;'>(+1.6%)</td>
-<td style='text-align: right;'>38.9</td>
-<td style='text-align: right;'>46.6</td>
-<td style='text-align: right;'>85.5</td>
-</tr>
-<tr>
-<td>Jack the Ludo Bile</td>
-<td style='text-align: right;'>31.4%</td>
-<td style='text-align: right;'>(+1.4%)</td>
-<td style='text-align: right;'>50.6</td>
-<td style='text-align: right;'>43.4</td>
-<td style='text-align: right;'>94.1</td>
-</tr>
-<tr>
-<td>Preparing the Banquet</td>
-<td style='text-align: right;'>31.2%</td>
-<td style='text-align: right;'>(+1.2%)</td>
-<td style='text-align: right;'>42.3</td>
-<td style='text-align: right;'>63.7</td>
-<td style='text-align: right;'>106.0</td>
-</tr>
-<tr>
-<td>Water Blanket</td>
-<td style='text-align: right;'>30.8%</td>
-<td style='text-align: right;'>(+0.8%)</td>
-<td style='text-align: right;'>33.4</td>
-<td style='text-align: right;'>46.9</td>
-<td style='text-align: right;'>80.3</td>
-</tr>
-<tr>
-<td>Travel Preparation</td>
-<td style='text-align: right;'>30.6%</td>
-<td style='text-align: right;'>(+0.5%)</td>
-<td style='text-align: right;'>45.2</td>
-<td style='text-align: right;'>45.9</td>
-<td style='text-align: right;'>91.2</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr>
 <td>Winter Resolution</td>
-<td style='text-align: right;'>30.5%</td>
-<td style='text-align: right;'>(+0.5%)</td>
+<td style='text-align: right;'>35.4%</td>
+<td style='text-align: right;'>(+4.2%)</td>
 <td style='text-align: right;'>34.5</td>
 <td style='text-align: right;'>50.9</td>
 <td style='text-align: right;'>85.5</td>
 </tr>
 <tr>
-<td>Danmaku Deflection</td>
-<td style='text-align: right;'>30.5%</td>
-<td style='text-align: right;'>(+0.5%)</td>
-<td style='text-align: right;'>52.5</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>106.9</td>
+<td>Travel Preparation</td>
+<td style='text-align: right;'>35.4%</td>
+<td style='text-align: right;'>(+4.1%)</td>
+<td style='text-align: right;'>45.2</td>
+<td style='text-align: right;'>45.9</td>
+<td style='text-align: right;'>91.2</td>
+</tr>
+<tr>
+<td>Short Break</td>
+<td style='text-align: right;'>34.8%</td>
+<td style='text-align: right;'>(+3.5%)</td>
+<td style='text-align: right;'>38.9</td>
+<td style='text-align: right;'>46.6</td>
+<td style='text-align: right;'>85.5</td>
+</tr>
+<tr>
+<td>Tranquility</td>
+<td style='text-align: right;'>34.6%</td>
+<td style='text-align: right;'>(+3.4%)</td>
+<td style='text-align: right;'>32.1</td>
+<td style='text-align: right;'>44.9</td>
+<td style='text-align: right;'>77.0</td>
+</tr>
+<tr>
+<td>Jack the Ludo Bile</td>
+<td style='text-align: right;'>33.8%</td>
+<td style='text-align: right;'>(+2.5%)</td>
+<td style='text-align: right;'>50.6</td>
+<td style='text-align: right;'>43.4</td>
+<td style='text-align: right;'>94.1</td>
+</tr>
+<tr>
+<td>You Are Next!</td>
+<td style='text-align: right;'>33.3%</td>
+<td style='text-align: right;'>(+2.1%)</td>
+<td style='text-align: right;'>56.2</td>
+<td style='text-align: right;'>43.1</td>
+<td style='text-align: right;'>99.2</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>Purify the Land</strong></td>
-<td style='text-align: right;'>30.4%</td>
-<td style='text-align: right;'>(+0.4%)</td>
+<td><strong>Sure Gamble</strong></td>
+<td style='text-align: right;'>33.0%</td>
+<td style='text-align: right;'>(+1.8%)</td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>58.2</td>
+<td style='text-align: right;'>115.9</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>Private Square</strong></td>
+<td style='text-align: right;'>32.8%</td>
+<td style='text-align: right;'>(+1.5%)</td>
+<td style='text-align: right;'>52.8</td>
+<td style='text-align: right;'>61.7</td>
+<td style='text-align: right;'>114.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>C. Ricochet</strong></td>
+<td style='text-align: right;'>32.6%</td>
+<td style='text-align: right;'>(+1.4%)</td>
+<td style='text-align: right;'>61.7</td>
+<td style='text-align: right;'>48.8</td>
+<td style='text-align: right;'>110.4</td>
+</tr>
+<tr>
+<td>Vampire Huntress</td>
+<td style='text-align: right;'>32.5%</td>
+<td style='text-align: right;'>(+1.2%)</td>
+<td style='text-align: right;'>56.9</td>
+<td style='text-align: right;'>49.4</td>
+<td style='text-align: right;'>106.3</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>Stone Stacking</strong></td>
+<td style='text-align: right;'>32.1%</td>
+<td style='text-align: right;'>(+0.8%)</td>
+<td style='text-align: right;'>48.8</td>
+<td style='text-align: right;'>69.7</td>
+<td style='text-align: right;'>118.5</td>
+</tr>
+<tr>
+<td>Pagoda's Glare</td>
+<td style='text-align: right;'>32.1%</td>
+<td style='text-align: right;'>(+0.8%)</td>
+<td style='text-align: right;'>42.7</td>
+<td style='text-align: right;'>32.1</td>
+<td style='text-align: right;'>74.7</td>
+</tr>
+<tr>
+<td>Sakuya's Special Watch</td>
+<td style='text-align: right;'>31.5%</td>
+<td style='text-align: right;'>(+0.2%)</td>
+<td style='text-align: right;'>47.5</td>
+<td style='text-align: right;'>59.0</td>
+<td style='text-align: right;'>106.6</td>
+</tr>
+<tr>
+<td>Preparing the Banquet</td>
+<td style='text-align: right;'>31.2%</td>
+<td style='text-align: right;'>(-0.0%)</td>
+<td style='text-align: right;'>42.3</td>
+<td style='text-align: right;'>63.7</td>
+<td style='text-align: right;'>106.0</td>
+</tr>
+<tr>
+<td>Purify the Land</td>
+<td style='text-align: right;'>31.2%</td>
+<td style='text-align: right;'>(-0.1%)</td>
 <td style='text-align: right;'>54.1</td>
 <td style='text-align: right;'>57.3</td>
 <td style='text-align: right;'>111.4</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>C. Ricochet</strong></td>
-<td style='text-align: right;'>30.4%</td>
-<td style='text-align: right;'>(+0.3%)</td>
-<td style='text-align: right;'>61.7</td>
-<td style='text-align: right;'>48.8</td>
-<td style='text-align: right;'>110.4</td>
+<tr>
+<td>Water Plate</td>
+<td style='text-align: right;'>31.0%</td>
+<td style='text-align: right;'>(-0.2%)</td>
+<td style='text-align: right;'>69.7</td>
+<td style='text-align: right;'>43.8</td>
+<td style='text-align: right;'>113.5</td>
 </tr>
 </tbody>
 </table>
