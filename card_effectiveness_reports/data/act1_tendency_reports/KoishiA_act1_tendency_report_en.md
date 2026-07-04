@@ -360,20 +360,20 @@
 <td style='text-align: right;'>85.3</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 🧰 Canned Food</strong></td>
-<td style='text-align: right;'>+14.53</td>
-<td style='text-align: right;'>38.9%</td>
-<td style='text-align: right;'>24.4%</td>
-<td style='text-align: right;'>54</td>
-<td style='text-align: right;'><strong>131.0</strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Serene Memories</strong></td>
 <td style='text-align: right;'>+14.53</td>
 <td style='text-align: right;'>38.9%</td>
 <td style='text-align: right;'>24.4%</td>
 <td style='text-align: right;'>54</td>
 <td style='text-align: right;'><strong>114.5</strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 Canned Food</strong></td>
+<td style='text-align: right;'>+14.53</td>
+<td style='text-align: right;'>38.9%</td>
+<td style='text-align: right;'>24.4%</td>
+<td style='text-align: right;'>54</td>
+<td style='text-align: right;'><strong>131.0</strong></td>
 </tr>
 </tbody>
 </table>

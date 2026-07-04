@@ -199,14 +199,6 @@
 <td style='text-align: right;'>27</td>
 <td style='text-align: right;'><strong>115.2</strong></td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 スイートポテトルーム</strong></td>
-<td style='text-align: right;'>+18.14</td>
-<td style='text-align: right;'>45.0%</td>
-<td style='text-align: right;'>26.9%</td>
-<td style='text-align: right;'>60</td>
-<td style='text-align: right;'><strong>114.6</strong></td>
-</tr>
 <tr>
 <td>かき氷の売り子、大妖精</td>
 <td style='text-align: right;'>+18.14</td>
@@ -214,6 +206,14 @@
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>60</td>
 <td style='text-align: right;'>91.9</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 スイートポテトルーム</strong></td>
+<td style='text-align: right;'>+18.14</td>
+<td style='text-align: right;'>45.0%</td>
+<td style='text-align: right;'>26.9%</td>
+<td style='text-align: right;'>60</td>
+<td style='text-align: right;'><strong>114.6</strong></td>
 </tr>
 <tr>
 <td>真冬の化身、レティ</td>
