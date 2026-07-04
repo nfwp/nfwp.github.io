@@ -61,7 +61,7 @@
 <td style='text-align: right;'>65.2%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>46</td>
-<td style='text-align: right;'>96.6</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>星落とし</td>
@@ -69,7 +69,7 @@
 <td style='text-align: right;'>54.5%</td>
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>44</td>
-<td style='text-align: right;'>90.4</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>厄祓い</td>
@@ -77,23 +77,23 @@
 <td style='text-align: right;'>51.4%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>109</td>
-<td style='text-align: right;'>102.3</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 水鉄砲</strong></td>
+<tr>
+<td>🧰 水鉄砲</td>
 <td style='text-align: right;'>+24.23</td>
 <td style='text-align: right;'>65.0%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>20</td>
-<td style='text-align: right;'><strong>117.9</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 缶詰</strong></td>
+<tr>
+<td>🧰 缶詰</td>
 <td style='text-align: right;'>+23.97</td>
 <td style='text-align: right;'>59.3%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>27</td>
-<td style='text-align: right;'><strong>125.1</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>逆転結界</td>
@@ -101,15 +101,15 @@
 <td style='text-align: right;'>56.2%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>32</td>
-<td style='text-align: right;'>86.5</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 均衡の玉</strong></td>
+<tr>
+<td>均衡の玉</td>
 <td style='text-align: right;'>+23.33</td>
 <td style='text-align: right;'>49.5%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>95</td>
-<td style='text-align: right;'><strong>114.6</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>常置陣</td>
@@ -117,7 +117,7 @@
 <td style='text-align: right;'>47.9%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>211</td>
-<td style='text-align: right;'>100.3</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>護身の霊符</td>
@@ -125,7 +125,7 @@
 <td style='text-align: right;'>47.7%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>218</td>
-<td style='text-align: right;'>95.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>龍殺陣</td>
@@ -133,7 +133,7 @@
 <td style='text-align: right;'>48.3%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>120</td>
-<td style='text-align: right;'>104.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>陰陽宝玉</td>
@@ -141,15 +141,15 @@
 <td style='text-align: right;'>46.4%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>274</td>
-<td style='text-align: right;'>102.8</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 作戦姿勢</strong></td>
+<tr>
+<td>作戦姿勢</td>
 <td style='text-align: right;'>+21.04</td>
 <td style='text-align: right;'>46.8%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>156</td>
-<td style='text-align: right;'><strong>119.9</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>宝塔の威光</td>
@@ -157,7 +157,7 @@
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>87</td>
-<td style='text-align: right;'>100.8</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>鬼気怒濤</td>
@@ -165,7 +165,7 @@
 <td style='text-align: right;'>47.3%</td>
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>55</td>
-<td style='text-align: right;'>91.1</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>明珠暗投</td>
@@ -173,7 +173,7 @@
 <td style='text-align: right;'>46.8%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>79</td>
-<td style='text-align: right;'>90.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>陰陽血印</td>
@@ -181,7 +181,7 @@
 <td style='text-align: right;'>46.9%</td>
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>64</td>
-<td style='text-align: right;'>101.3</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>緊縛陣</td>
@@ -189,15 +189,15 @@
 <td style='text-align: right;'>46.7%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>75</td>
-<td style='text-align: right;'>85.2</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 博麗縁日</strong></td>
+<tr>
+<td>博麗縁日</td>
 <td style='text-align: right;'>+19.87</td>
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>80</td>
-<td style='text-align: right;'><strong>117.7</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>御神酒</td>
@@ -205,7 +205,7 @@
 <td style='text-align: right;'>46.1%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>102</td>
-<td style='text-align: right;'>89.6</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>桜の舞</td>
@@ -213,15 +213,15 @@
 <td style='text-align: right;'>45.4%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>152</td>
-<td style='text-align: right;'>108.4</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🌀 嫉妬</strong></td>
+<tr>
+<td>🌀 嫉妬</td>
 <td style='text-align: right;'>+19.24</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>34</td>
-<td style='text-align: right;'><strong>125.6</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>紅内勁</td>
@@ -229,7 +229,7 @@
 <td style='text-align: right;'>45.0%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>160</td>
-<td style='text-align: right;'>100.8</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>自由自在</td>
@@ -237,23 +237,23 @@
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>126</td>
-<td style='text-align: right;'>96.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 満月の咆哮</strong></td>
+<tr>
+<td>満月の咆哮</td>
 <td style='text-align: right;'>+19.06</td>
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>225</td>
-<td style='text-align: right;'><strong>118.1</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 ホーミングアミュレット</strong></td>
+<tr>
+<td>ホーミングアミュレット</td>
 <td style='text-align: right;'>+19.05</td>
 <td style='text-align: right;'>45.0%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>149</td>
-<td style='text-align: right;'><strong>117.2</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>金剛身</td>
@@ -261,7 +261,7 @@
 <td style='text-align: right;'>45.1%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>82</td>
-<td style='text-align: right;'>86.6</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>魔浄閃結</td>
@@ -269,15 +269,15 @@
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>126</td>
-<td style='text-align: right;'>106.4</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 当たり判定・小</strong></td>
+<tr>
+<td>当たり判定・小</td>
 <td style='text-align: right;'>+18.08</td>
 <td style='text-align: right;'>44.3%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>106</td>
-<td style='text-align: right;'><strong>115.1</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>亜空点穴</td>
@@ -285,7 +285,7 @@
 <td style='text-align: right;'>43.1%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>262</td>
-<td style='text-align: right;'>103.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>天仙鳴動</td>
@@ -293,15 +293,15 @@
 <td style='text-align: right;'>52.0%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>25</td>
-<td style='text-align: right;'>80.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 瞑想</strong></td>
+<tr>
+<td>瞑想</td>
 <td style='text-align: right;'>+17.70</td>
 <td style='text-align: right;'>48.5%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>33</td>
-<td style='text-align: right;'><strong>115.5</strong></td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>🧰 今泉影狼の毛</td>
@@ -309,7 +309,7 @@
 <td style='text-align: right;'>43.1%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>216</td>
-<td style='text-align: right;'>91.9</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>昇天脚</td>
@@ -317,7 +317,7 @@
 <td style='text-align: right;'>42.1%</td>
 <td style='text-align: right;'>24.6%</td>
 <td style='text-align: right;'>361</td>
-<td style='text-align: right;'>101.0</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>鳳翼天翔</td>
@@ -325,7 +325,7 @@
 <td style='text-align: right;'>43.9%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>82</td>
-<td style='text-align: right;'>100.4</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>幻想一重</td>
@@ -333,7 +333,7 @@
 <td style='text-align: right;'>43.8%</td>
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>80</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>務光の雷弾</td>
@@ -341,7 +341,7 @@
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>127</td>
-<td style='text-align: right;'>83.7</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>弾幕対決</td>
@@ -349,7 +349,7 @@
 <td style='text-align: right;'>42.1%</td>
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>302</td>
-<td style='text-align: right;'>92.8</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>博麗神拳</td>
@@ -357,7 +357,7 @@
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>67</td>
-<td style='text-align: right;'>100.3</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>開運御札</td>
@@ -365,7 +365,7 @@
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>169</td>
-<td style='text-align: right;'>97.3</td>
+<td style='text-align: right;'>-</td>
 </tr>
 <tr>
 <td>二重大結界</td>
@@ -373,7 +373,7 @@
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>179</td>
-<td style='text-align: right;'>109.8</td>
+<td style='text-align: right;'>-</td>
 </tr>
 </tbody>
 </table>
