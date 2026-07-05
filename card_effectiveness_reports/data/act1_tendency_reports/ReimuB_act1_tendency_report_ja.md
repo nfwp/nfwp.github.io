@@ -48,13 +48,13 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> カード名</th>
-<th>影響度スコア</th>
-<th>挑戦率(所持)</th>
-<th>挑戦率(非所持)</th>
+<th>影響度</th>
+<th>(所持)</th>
+<th>(非所持)</th>
 <th>N(所持)</th>
-<th>攻撃</th>
-<th>防御</th>
-<th>合計 </th>
+<th>攻</th>
+<th>防</th>
+<th>合</th>
 </tr></thead>
 <tbody>
 <tr class="specialist-row">

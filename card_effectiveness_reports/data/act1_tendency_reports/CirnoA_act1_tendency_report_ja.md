@@ -48,13 +48,13 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> カード名</th>
-<th>影響度スコア</th>
-<th>挑戦率(所持)</th>
-<th>挑戦率(非所持)</th>
+<th>影響度</th>
+<th>(所持)</th>
+<th>(非所持)</th>
 <th>N(所持)</th>
-<th>攻撃</th>
-<th>防御</th>
-<th>合計 </th>
+<th>攻</th>
+<th>防</th>
+<th>合</th>
 </tr></thead>
 <tbody>
 <tr class="specialist-row">
@@ -297,16 +297,6 @@
 <td style='text-align: right;'>63.6</td>
 <td style='text-align: right;'><strong><span style='color: red;'>133.2</span></strong></td>
 </tr>
-<tr>
-<td>知性なる妖精</td>
-<td style='text-align: right;'>+17.32</td>
-<td style='text-align: right;'>44.1%</td>
-<td style='text-align: right;'>26.8%</td>
-<td style='text-align: right;'>68</td>
-<td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'>50.9</td>
-<td style='text-align: right;'>107.7</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 冷凍ビーム</strong></td>
 <td style='text-align: right;'>+17.32</td>
@@ -316,6 +306,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>60.9</span></strong></td>
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.3</span></strong></td>
+</tr>
+<tr>
+<td>知性なる妖精</td>
+<td style='text-align: right;'>+17.32</td>
+<td style='text-align: right;'>44.1%</td>
+<td style='text-align: right;'>26.8%</td>
+<td style='text-align: right;'>68</td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>50.9</td>
+<td style='text-align: right;'>107.7</td>
 </tr>
 <tr>
 <td>羽ばたく翼</td>

@@ -2054,3 +2054,37 @@ body {
     color: #2c3e50;   /* 濃いめの落ち着いた色に */
 }
 
+/* --- PC表示でフィルターボタンが消える問題の修正 --- */
+#filter-toggle-button {
+    display: block !important; /* 強制的に表示ブロックとして扱う */
+    visibility: visible !important; /* 強制的に見えるようにする */
+    opacity: 1 !important; /* 強制的に不透明にする */
+    position: static !important; /* 位置指定をリセットし、本来の位置に表示 */
+    width: auto; /* 幅を自動調整 */
+    height: auto; /* 高さを自動調整 */
+}
+
+/* --- Act1レポートのテーブルスクロール対応 --- */
+.table-scroll-wrapper {
+    overflow-x: auto; /* 横方向のオーバーフロー時にスクロールバーを表示 */
+    -webkit-overflow-scrolling: touch; /* iOSでの慣性スクロールを有効化 */
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.table-scroll-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 768px以下の画面幅（モバイル端末）に適用 */
+@media (max-width: 768px) {
+    /* Act1レポート内のテーブルのセルに適用 */
+    #act-trend-content-1 .table-scroll-wrapper table th,
+    #act-trend-content-1 .table-scroll-wrapper table td {
+        padding: 6px 8px; /* 余白を少し詰める */
+        font-size: 0.9em;  /* フォントを少し小さくする */
+        white-space: nowrap; /* セル内のテキストが折り返さないようにする */
+    }
+}

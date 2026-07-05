@@ -48,13 +48,13 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> カード名</th>
-<th>影響度スコア</th>
-<th>挑戦率(所持)</th>
-<th>挑戦率(非所持)</th>
+<th>影響度</th>
+<th>(所持)</th>
+<th>(非所持)</th>
 <th>N(所持)</th>
-<th>攻撃</th>
-<th>防御</th>
-<th>合計 </th>
+<th>攻</th>
+<th>防</th>
+<th>合</th>
 </tr></thead>
 <tbody>
 <tr class="specialist-row">
@@ -147,16 +147,6 @@
 <td style='text-align: right;'>66.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>131.4</span></strong></td>
 </tr>
-<tr>
-<td>クリーンエネルギー</td>
-<td style='text-align: right;'>+21.47</td>
-<td style='text-align: right;'>51.6%</td>
-<td style='text-align: right;'>24.3%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>36.3</td>
-<td style='text-align: right;'>77.6</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 戦車のタロット</strong></td>
 <td style='text-align: right;'>+21.47</td>
@@ -166,6 +156,16 @@
 <td style='text-align: right;'>59.1</td>
 <td style='text-align: right;'>59.5</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.7</span></strong></td>
+</tr>
+<tr>
+<td>クリーンエネルギー</td>
+<td style='text-align: right;'>+21.47</td>
+<td style='text-align: right;'>51.6%</td>
+<td style='text-align: right;'>24.3%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'>41.3</td>
+<td style='text-align: right;'>36.3</td>
+<td style='text-align: right;'>77.6</td>
 </tr>
 <tr>
 <td>春植えざれば秋実らず</td>
@@ -438,16 +438,6 @@
 <td style='text-align: right;'>85.3</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 🧰 缶詰</strong></td>
-<td style='text-align: right;'>+14.50</td>
-<td style='text-align: right;'>38.9%</td>
-<td style='text-align: right;'>24.4%</td>
-<td style='text-align: right;'>54</td>
-<td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>73.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 平静の追憶</strong></td>
 <td style='text-align: right;'>+14.50</td>
 <td style='text-align: right;'>38.9%</td>
@@ -456,6 +446,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>67.2</span></strong></td>
 <td style='text-align: right;'>47.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>114.5</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 缶詰</strong></td>
+<td style='text-align: right;'>+14.50</td>
+<td style='text-align: right;'>38.9%</td>
+<td style='text-align: right;'>24.4%</td>
+<td style='text-align: right;'>54</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>73.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
 </tr>
 </tbody>
 </table>

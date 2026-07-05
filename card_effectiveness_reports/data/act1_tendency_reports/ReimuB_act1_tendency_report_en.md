@@ -48,10 +48,8 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> Card Name</th>
-<th>Influence Score</th>
-<th>Rate (w/ Card)</th>
-<th>Rate (w/o Card)</th>
-<th>N (w/ Card)</th>
+<th>Influence| (w/ Card) |(w/o Card)</th>
+<th>N (w/Card)</th>
 <th>Atk</th>
 <th>Def</th>
 <th>Total </th>

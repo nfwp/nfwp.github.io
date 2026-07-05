@@ -286,15 +286,14 @@ function switchTab(tabId, autoSearch = false) {
 
 function setupNavigation() {
     const tabsConfig = [
-        { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
-        { id: 'exhibit-analysis-tab', label: UI_TEXT.exhibit_tab_title },
-        { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
-        { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title },
-        // ★追加: イベント分析タブの定義
-        { id: 'event-analysis-tab', label: UI_TEXT.event_analysis_tab_title || (LANG === 'ja' ? 'イベント分析' : 'Event Analysis') },
-        { id: 'act-trend-tab', label: (LANG === 'ja' ? 'Act別トレンド' : 'Act Trends') },
-        { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' },
-        { id: 'run-finder-tab', label: UI_TEXT.run_finder_tab_title || 'ラン検索' }
+        { id: 'card-performance-tab', label: `📊 ${UI_TEXT.card_perf_tab_title}` },
+        { id: 'exhibit-analysis-tab', label: `🏺 ${UI_TEXT.exhibit_tab_title}` },
+        { id: 'route-event-tab', label: `🗺️ ${UI_TEXT.route_tab_title}` },
+        { id: 'enemy-analysis-tab', label: `⚔️ ${UI_TEXT.enemy_analysis_title}` },
+        { id: 'event-analysis-tab', label: `❓ ${(UI_TEXT.event_analysis_tab_title || (LANG === 'ja' ? 'イベント分析' : 'Event Analysis'))}` },
+        { id: 'act-trend-tab', label: `📈 ${(LANG === 'ja' ? 'Act別トレンド' : 'Act Trends')}` },
+        { id: 'card-list-tab', label: `🎴 ${(UI_TEXT.card_list_tab_title || 'カード一覧')}` },
+        { id: 'run-finder-tab', label: `🔍 ${(UI_TEXT.run_finder_tab_title || 'ラン検索')}` }
     ];
 
     const tabButtonsContainer = document.getElementById('tab-buttons');
@@ -2175,6 +2174,8 @@ function createRemoveRankingHtml(rankingData, cardNameCol, lang) {
 
 }
 
+
+
 function renderActTrendTab(lang) {
     const container = document.getElementById('act-trend-tab');
     if (!container) return;
@@ -2189,6 +2190,8 @@ function renderActTrendTab(lang) {
         return;
     }
 
+
+    // ... (nodeTypeLabels, exhibitCategoryMap, acts, subTabsHtml の定義) ...
     const nodeTypeLabels = (lang === 'ja')
         ? { 'Enemy': '通常敵', 'EliteEnemy': 'エリート', 'Boss': 'ボス', 'Shop': 'ショップ', 'Gap': 'スキマ', 'Adventure': 'イベント', 'Trade': '交換', 'Supply': '補給', 'Entry': '入口' }
         : { 'Enemy': 'Enemy', 'EliteEnemy': 'Elite', 'Boss': 'Boss', 'Shop': 'Shop', 'Gap': 'Gap', 'Adventure': 'Event', 'Trade': 'Trade', 'Supply': 'Supply', 'Entry': 'Entry' };
@@ -2208,6 +2211,7 @@ function renderActTrendTab(lang) {
         subTabsHtml += `<button class="filter-btn ${activeClass}" onclick="switchActTrend('${act}')">${label}</button>`;
     });
     subTabsHtml += '</div>';
+
 
     let contentHtml = '';
     acts.forEach((act, index) => {
@@ -2319,7 +2323,6 @@ function renderActTrendTab(lang) {
                     categoryBlockHtml += `</tbody></table></div>`;
                 }
             } else if (cat.type === 'node') {
-
                 const breakdownRows = [
                     { label: nodeTypeLabels['Enemy'], key: 'Enemy', type: 'node' },
                     { label: nodeTypeLabels['EliteEnemy'], key: 'EliteEnemy', type: 'node' },
@@ -2359,7 +2362,6 @@ function renderActTrendTab(lang) {
         });
 
         if (act !== 'Total') {
-
             const stats = actData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const globalStats = globalActData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const perfStats = actData.Vs_Performance_Stats || {};
@@ -2425,8 +2427,27 @@ function renderActTrendTab(lang) {
     const desc = lang === 'ja'
         ? '各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>'
         : 'Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run. Changes caused by events are also included.<br><strong>Note: A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>';
+
     container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.act_trend_tab_title}</h3><p>${desc}</p>${subTabsHtml}${contentHtml}</div>`;
+
+
+    // Act1のレポート内のテーブルを探してラッパーで囲む
+    const act1ReportContainer = container.querySelector('#act-trend-content-1 div[style*="grid-column"]');
+    if (act1ReportContainer) {
+        const table = act1ReportContainer.querySelector('table');
+        if (table) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-scroll-wrapper';
+            // tableの親要素(act1ReportContainer)の子として、tableの前にwrapperを挿入
+            table.parentNode.insertBefore(wrapper, table);
+            // tableをwrapperの子要素に移動
+            wrapper.appendChild(table);
+        }
+    }
+
 }
+
+
 
 /**
  * Act別トレンドの表示を切り替える関数

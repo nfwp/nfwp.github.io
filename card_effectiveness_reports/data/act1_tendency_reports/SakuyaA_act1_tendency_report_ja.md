@@ -48,13 +48,13 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> カード名</th>
-<th>影響度スコア</th>
-<th>挑戦率(所持)</th>
-<th>挑戦率(非所持)</th>
+<th>影響度</th>
+<th>(所持)</th>
+<th>(非所持)</th>
 <th>N(所持)</th>
-<th>攻撃</th>
-<th>防御</th>
-<th>合計 </th>
+<th>攻</th>
+<th>防</th>
+<th>合</th>
 </tr></thead>
 <tbody>
 <tr>
@@ -337,16 +337,6 @@
 <td style='text-align: right;'>51.1</td>
 <td style='text-align: right;'>84.2</td>
 </tr>
-<tr>
-<td>月相</td>
-<td style='text-align: right;'>+17.76</td>
-<td style='text-align: right;'>41.4%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>58</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>104.1</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 弾幕手品</strong></td>
 <td style='text-align: right;'>+17.76</td>
@@ -356,6 +346,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>62.7</span></strong></td>
 <td style='text-align: right;'>61.0</td>
 <td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
+</tr>
+<tr>
+<td>月相</td>
+<td style='text-align: right;'>+17.76</td>
+<td style='text-align: right;'>41.4%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>58</td>
+<td style='text-align: right;'>50.0</td>
+<td style='text-align: right;'>54.1</td>
+<td style='text-align: right;'>104.1</td>
 </tr>
 <tr>
 <td>ジャック・ザ・ルドビレ</td>

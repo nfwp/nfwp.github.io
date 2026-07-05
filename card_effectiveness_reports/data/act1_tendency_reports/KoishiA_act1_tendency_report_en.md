@@ -48,10 +48,8 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> Card Name</th>
-<th>Influence Score</th>
-<th>Rate (w/ Card)</th>
-<th>Rate (w/o Card)</th>
-<th>N (w/ Card)</th>
+<th>Influence| (w/ Card) |(w/o Card)</th>
+<th>N (w/Card)</th>
 <th>Atk</th>
 <th>Def</th>
 <th>Total </th>
@@ -147,16 +145,6 @@
 <td style='text-align: right;'>66.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>131.4</span></strong></td>
 </tr>
-<tr>
-<td>Clean Energy</td>
-<td style='text-align: right;'>+21.47</td>
-<td style='text-align: right;'>51.6%</td>
-<td style='text-align: right;'>24.3%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>36.3</td>
-<td style='text-align: right;'>77.6</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Tarot: The Chariot</strong></td>
 <td style='text-align: right;'>+21.47</td>
@@ -166,6 +154,16 @@
 <td style='text-align: right;'>59.1</td>
 <td style='text-align: right;'>59.5</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.7</span></strong></td>
+</tr>
+<tr>
+<td>Clean Energy</td>
+<td style='text-align: right;'>+21.47</td>
+<td style='text-align: right;'>51.6%</td>
+<td style='text-align: right;'>24.3%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'>41.3</td>
+<td style='text-align: right;'>36.3</td>
+<td style='text-align: right;'>77.6</td>
 </tr>
 <tr>
 <td>Autumnal Harvest</td>
@@ -438,16 +436,6 @@
 <td style='text-align: right;'>85.3</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 🧰 Canned Food</strong></td>
-<td style='text-align: right;'>+14.50</td>
-<td style='text-align: right;'>38.9%</td>
-<td style='text-align: right;'>24.4%</td>
-<td style='text-align: right;'>54</td>
-<td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>73.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Serene Memories</strong></td>
 <td style='text-align: right;'>+14.50</td>
 <td style='text-align: right;'>38.9%</td>
@@ -456,6 +444,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>67.2</span></strong></td>
 <td style='text-align: right;'>47.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>114.5</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 Canned Food</strong></td>
+<td style='text-align: right;'>+14.50</td>
+<td style='text-align: right;'>38.9%</td>
+<td style='text-align: right;'>24.4%</td>
+<td style='text-align: right;'>54</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>73.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
 </tr>
 </tbody>
 </table>

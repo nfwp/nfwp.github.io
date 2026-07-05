@@ -48,10 +48,8 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> Card Name</th>
-<th>Influence Score</th>
-<th>Rate (w/ Card)</th>
-<th>Rate (w/o Card)</th>
-<th>N (w/ Card)</th>
+<th>Influence| (w/ Card) |(w/o Card)</th>
+<th>N (w/Card)</th>
 <th>Atk</th>
 <th>Def</th>
 <th>Total </th>
@@ -297,16 +295,6 @@
 <td style='text-align: right;'>46.9</td>
 <td style='text-align: right;'>94.9</td>
 </tr>
-<tr>
-<td>Heart Blossoms</td>
-<td style='text-align: right;'>+14.68</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>23.3%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>46.9</td>
-<td style='text-align: right;'>37.6</td>
-<td style='text-align: right;'>84.5</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Light the Furnace</strong></td>
 <td style='text-align: right;'>+14.68</td>
@@ -316,6 +304,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>61.7</span></strong></td>
 <td style='text-align: right;'>57.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>119.1</span></strong></td>
+</tr>
+<tr>
+<td>Heart Blossoms</td>
+<td style='text-align: right;'>+14.68</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>23.3%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>46.9</td>
+<td style='text-align: right;'>37.6</td>
+<td style='text-align: right;'>84.5</td>
 </tr>
 <tr>
 <td>Stardust Reverie</td>
@@ -407,16 +405,6 @@
 <td style='text-align: right;'>39.0</td>
 <td style='text-align: right;'>69.7</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 Charged Tambourine</strong></td>
-<td style='text-align: right;'>+10.46</td>
-<td style='text-align: right;'>40.0%</td>
-<td style='text-align: right;'>23.5%</td>
-<td style='text-align: right;'>20</td>
-<td style='text-align: right;'>55.3</td>
-<td style='text-align: right;'>59.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.2</span></strong></td>
-</tr>
 <tr>
 <td>Sin of the Black Pegasus</td>
 <td style='text-align: right;'>+10.46</td>
@@ -426,6 +414,16 @@
 <td style='text-align: right;'>57.4</td>
 <td style='text-align: right;'>32.6</td>
 <td style='text-align: right;'>90.0</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 Charged Tambourine</strong></td>
+<td style='text-align: right;'>+10.46</td>
+<td style='text-align: right;'>40.0%</td>
+<td style='text-align: right;'>23.5%</td>
+<td style='text-align: right;'>20</td>
+<td style='text-align: right;'>55.3</td>
+<td style='text-align: right;'>59.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.2</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Rainbow Star Blast</strong></td>

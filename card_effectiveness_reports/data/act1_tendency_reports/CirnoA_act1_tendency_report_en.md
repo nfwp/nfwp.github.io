@@ -48,10 +48,8 @@
 <table class="data-table specialist-table">
 <thead><tr>
 <th> Card Name</th>
-<th>Influence Score</th>
-<th>Rate (w/ Card)</th>
-<th>Rate (w/o Card)</th>
-<th>N (w/ Card)</th>
+<th>Influence| (w/ Card) |(w/o Card)</th>
+<th>N (w/Card)</th>
 <th>Atk</th>
 <th>Def</th>
 <th>Total </th>
@@ -297,16 +295,6 @@
 <td style='text-align: right;'>63.6</td>
 <td style='text-align: right;'><strong><span style='color: red;'>133.2</span></strong></td>
 </tr>
-<tr>
-<td>Fairy Intellect</td>
-<td style='text-align: right;'>+17.32</td>
-<td style='text-align: right;'>44.1%</td>
-<td style='text-align: right;'>26.8%</td>
-<td style='text-align: right;'>68</td>
-<td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'>50.9</td>
-<td style='text-align: right;'>107.7</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Freeze Beam</strong></td>
 <td style='text-align: right;'>+17.32</td>
@@ -316,6 +304,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>60.9</span></strong></td>
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.3</span></strong></td>
+</tr>
+<tr>
+<td>Fairy Intellect</td>
+<td style='text-align: right;'>+17.32</td>
+<td style='text-align: right;'>44.1%</td>
+<td style='text-align: right;'>26.8%</td>
+<td style='text-align: right;'>68</td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>50.9</td>
+<td style='text-align: right;'>107.7</td>
 </tr>
 <tr>
 <td>Wingbeats Flight</td>
