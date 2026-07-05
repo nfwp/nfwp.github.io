@@ -138,16 +138,6 @@
 <td style='text-align: right;'>95.0</td>
 </tr>
 <tr>
-<td>Youkai Study</td>
-<td style='text-align: right;'>+22.44</td>
-<td style='text-align: right;'>41.3%</td>
-<td style='text-align: right;'>17.9%</td>
-<td style='text-align: right;'>46</td>
-<td style='text-align: right;'>37.0</td>
-<td style='text-align: right;'>51.2</td>
-<td style='text-align: right;'>88.3</td>
-</tr>
-<tr>
 <td>Great Tengu's Decree</td>
 <td style='text-align: right;'>+22.44</td>
 <td style='text-align: right;'>41.3%</td>
@@ -156,6 +146,16 @@
 <td style='text-align: right;'>49.7</td>
 <td style='text-align: right;'>41.8</td>
 <td style='text-align: right;'>91.5</td>
+</tr>
+<tr>
+<td>Youkai Study</td>
+<td style='text-align: right;'>+22.44</td>
+<td style='text-align: right;'>41.3%</td>
+<td style='text-align: right;'>17.9%</td>
+<td style='text-align: right;'>46</td>
+<td style='text-align: right;'>37.0</td>
+<td style='text-align: right;'>51.2</td>
+<td style='text-align: right;'>88.3</td>
 </tr>
 <tr>
 <td>Déjà Vu</td>

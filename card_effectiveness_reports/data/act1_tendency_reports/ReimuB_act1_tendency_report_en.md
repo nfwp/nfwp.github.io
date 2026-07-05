@@ -147,16 +147,6 @@
 <td style='text-align: right;'>58.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.3</span></strong></td>
 </tr>
-<tr>
-<td>True Majesty</td>
-<td style='text-align: right;'>+21.58</td>
-<td style='text-align: right;'>47.6%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>42</td>
-<td style='text-align: right;'>48.1</td>
-<td style='text-align: right;'>46.2</td>
-<td style='text-align: right;'>94.3</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Hakurei Temple Fair</strong></td>
 <td style='text-align: right;'>+21.58</td>
@@ -166,6 +156,16 @@
 <td style='text-align: right;'>58.7</td>
 <td style='text-align: right;'>64.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>123.2</span></strong></td>
+</tr>
+<tr>
+<td>True Majesty</td>
+<td style='text-align: right;'>+21.58</td>
+<td style='text-align: right;'>47.6%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>42</td>
+<td style='text-align: right;'>48.1</td>
+<td style='text-align: right;'>46.2</td>
+<td style='text-align: right;'>94.3</td>
 </tr>
 <tr>
 <td>Orb of Duality</td>

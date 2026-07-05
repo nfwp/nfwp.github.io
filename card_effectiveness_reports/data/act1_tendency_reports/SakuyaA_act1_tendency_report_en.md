@@ -337,16 +337,6 @@
 <td style='text-align: right;'>51.1</td>
 <td style='text-align: right;'>84.2</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Trick Bullets</strong></td>
-<td style='text-align: right;'>+17.76</td>
-<td style='text-align: right;'>41.4%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>58</td>
-<td style='text-align: right;'><strong><span style='color: red;'>62.7</span></strong></td>
-<td style='text-align: right;'>61.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
-</tr>
 <tr>
 <td>Lunar Cycle</td>
 <td style='text-align: right;'>+17.76</td>
@@ -356,6 +346,16 @@
 <td style='text-align: right;'>50.0</td>
 <td style='text-align: right;'>54.1</td>
 <td style='text-align: right;'>104.1</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Trick Bullets</strong></td>
+<td style='text-align: right;'>+17.76</td>
+<td style='text-align: right;'>41.4%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>58</td>
+<td style='text-align: right;'><strong><span style='color: red;'>62.7</span></strong></td>
+<td style='text-align: right;'>61.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
 </tr>
 <tr>
 <td>Jack the Ludo Bile</td>
