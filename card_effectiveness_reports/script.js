@@ -404,11 +404,11 @@ function renderEventAnalysisTab() {
                     <h4>${choiceIndexLabel} (${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</h4>
                     <ul>
                         <li><strong>${UI_TEXT.avg_resource_label || '平均リソース変化'}:</strong> ${formatResourceChange(choice.avgResourceChange)}</li>
-                        <li><strong>${UI_TEXT.card_add_label || 'カード追加'} Top5:</strong> ${formatItemList(choice.cardsAdded, 'card')}</li>
-                        <li><strong>${UI_TEXT.card_rem_label || 'カード削除'} Top5:</strong> ${formatItemList(choice.cardsRemoved, 'card')}</li>
-                        <li><strong>${UI_TEXT.card_upg_label || 'カード強化'} Top5:</strong> ${formatItemList(choice.cardsUpgraded, 'card')}</li>
-                        <li><strong>${UI_TEXT.exh_add_label || '展示品追加'} Top5:</strong> ${formatItemList(choice.exhibitsAdded, 'exhibit')}</li>
-                        <li><strong>${UI_TEXT.exh_rem_label || '展示品削除'} Top5:</strong> ${formatItemList(choice.exhibitsRemoved, 'exhibit')}</li>
+                        <li><strong>${UI_TEXT.card_add_label || 'カード追加'} Top10:</strong> ${formatItemList(choice.cardsAdded, 'card')}</li>
+                        <li><strong>${UI_TEXT.card_rem_label || 'カード削除'} Top10:</strong> ${formatItemList(choice.cardsRemoved, 'card')}</li>
+                        <li><strong>${UI_TEXT.card_upg_label || 'カード強化'} Top10:</strong> ${formatItemList(choice.cardsUpgraded, 'card')}</li>
+                        <li><strong>${UI_TEXT.exh_add_label || '展示品追加'} Top10:</strong> ${formatItemList(choice.exhibitsAdded, 'exhibit')}</li>
+                        <li><strong>${UI_TEXT.exh_rem_label || '展示品削除'} Top10:</strong> ${formatItemList(choice.exhibitsRemoved, 'exhibit')}</li>
                     </ul>
                 </div>
             `;
