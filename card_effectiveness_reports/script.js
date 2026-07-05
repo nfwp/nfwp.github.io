@@ -42,8 +42,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     const requestedChar = params.get('char') || 'CirnoA';
     LANG = (params.get('lang') || 'ja').toLowerCase();
     const charToLoad = (requestedChar === 'All') ? 'CirnoA' : requestedChar;
-
+    // キャッシュを無効化するためのタイムスタンプを生成
     try {
+        const versionResponse = await fetch(`./data/data_version.json?t=${new Date().getTime()}`);
+        if (!versionResponse.ok) {
+            throw new Error('Failed to load data_version.json. Cannot determine data version.');
+        }
+        const versionData = await versionResponse.json();
+        const dataVersion = versionData.version;
+        console.log(`Using data version: ${dataVersion}`);
         // データを並行して読み込む
         const [
             itemMasterResponse,
@@ -52,11 +59,11 @@ window.addEventListener('DOMContentLoaded', async () => {
             charDataResponse,
             adventureEventsResponse // ★追加
         ] = await Promise.all([
-            fetch('./data/item_master.json'),
-            fetch('./data/run_details.json'),
-            fetch('./data/run_decks_by_station.json'),
-            fetch(`data/${charToLoad}_data.json`),
-            fetch('data/adventure_events_data.json') // ★追加
+            fetch(`./data/item_master.json?v=${dataVersion}`),
+            fetch(`./data/run_details.json?v=${dataVersion}`),
+            fetch(`./data/run_decks_by_station.json?v=${dataVersion}`),
+            fetch(`data/${charToLoad}_data.json?v=${dataVersion}`),
+            fetch(`data/adventure_events_data.json?v=${dataVersion}`)
         ]);
 
         // --- 各データの処理 ---
@@ -377,12 +384,14 @@ function renderEventAnalysisTab() {
         return items.map(item => {
             const name = getItemName(item.id, itemType);
             const countLabel = LANG === 'ja' ? '回' : (item.count === 1 ? ' time' : ' times');
+            const link = createWikiLink(name, itemType, LANG);
+            return `<span>${link} (${item.count}${countLabel})</span>`;
             // バッククォートを削除し、代わりにspanタグで囲む
             return `<span class="item-name-highlight">${name}</span> (${item.count}${countLabel})`;
         }).join(', ');
     };
 
-    // 3. HTMLの組み立て (★ここを修正★)
+    // 3. HTMLの組み立て
     const eventsHtml = charData.map(event => {
         const eventName = LANG === 'ja' ? event.eventNameJA : event.eventNameEN;
         const encounterCountLabel = LANG === 'ja' ? '回' : (event.encounterCount === 1 ? ' time' : ' times');
@@ -1221,17 +1230,35 @@ function updateVisuals(hoveredCardName, synergyPartners) {
     }
 }
 
+
+/**
+ * アイテム名からWikiへのリンクHTMLを生成する
+ * @param {string} itemName - カード名または展示品名
+ * @param {string} itemType - 'card' または 'exhibit' (現在は未使用)
+ * @param {string} lang - 'ja' または 'en'
+ * @returns {string} - aタグのHTML文字列
+ */
 function createWikiLink(itemName, itemType, lang) {
-    if (!itemName) return ""; // nullチェック
+    if (!itemName) {
+        return ""; // アイテム名がなければ空文字を返す
+    }
     const nameStr = String(itemName);
-    const encodedName = encodeURIComponent(nameStr.replace(/ /g, '_'));
 
-    const baseUrl = lang === 'ja'
-        ? `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`
-        : `https://lbol.miraheze.org/wiki/${encodedName}`;
+    let url;
 
-    return `<a href="${baseUrl}" target="_blank">${nameStr}</a>`;
+    if (lang === 'ja') {
+        // 日本語Wikiはページ名をそのままURLエンコードする
+        url = `https://wikiwiki.jp/tohokoyoya/${encodeURIComponent(nameStr)}`;
+    } else {
+        // 英語Wikiはスペースをアンダースコアに置換する（URLエンコードは不要）
+        const encodedName = nameStr.replace(/ /g, '_');
+        url = `https://lbol.miraheze.org/wiki/${encodedName}`;
+    }
+
+    // セキュリティ対策のrel属性と、スタイリング用のclassを追加
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="wiki-link">${nameStr}</a>`;
 }
+
 
 
 function createAttentionRankingHtml(aggData, cardNameCol, lang) {
@@ -2279,7 +2306,8 @@ function renderActTrendTab(lang) {
                         if (cat.type === 'card') {
                             const cardInfo = ALL_DATA.lookup_tables.cards[id];
                             let displayName = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
-                            name = createWikiLink(displayName, 'card', lang);
+
+                            name = createWikiLink(displayName, 'card', lang); // Wikiリンクに変換
                             const cardType = cardInfo ? cardInfo.Type : 'Unknown';
                             const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
                             bgColor = `${typeColor}33`;
@@ -2295,8 +2323,9 @@ function renderActTrendTab(lang) {
 
                         } else { // exhibit
                             const exInfo = ALL_DATA.lookup_tables.exhibits[id];
-                            let linkedName = exInfo ? (lang === 'ja' ? exInfo.JA : exInfo.EN) : id;
-                            linkedName = createWikiLink(linkedName, 'exhibit', lang);
+
+                            let linkedName = exInfo ? (lang === 'ja' ? exInfo.name : exInfo.name_en) : id;
+                            linkedName = createWikiLink(linkedName, 'exhibit', lang); // Wikiリンクに変換
                             const category = exhibitCategoryMap[id];
                             if (category === '光耀') {
                                 const manaType = ALL_DATA.lookup_tables.exhibit_mana_map[id];
@@ -2413,8 +2442,30 @@ function renderActTrendTab(lang) {
             if (act === '1') {
                 const report_ja = ALL_DATA.act1_tendency_report_ja;
                 const report_en = ALL_DATA.act1_tendency_report_en;
-                const reportToShow = (lang === 'ja' ? report_ja : report_en) || '';
+                let reportToShow = (lang === 'ja' ? report_ja : report_en) || '';
                 if (reportToShow) {
+
+                    // カード名の置換: [[カード名]] -> <a>...</a>
+                    reportToShow = reportToShow.replace(/\[\[(.*?)\]\]/g, (match, name) => {
+                        const cardData = Object.values(ALL_DATA.lookup_tables.cards).find(c => c.JA === name || c.EN === name);
+                        if (cardData) {
+                            const nameForLink = lang === 'ja' ? cardData.JA : cardData.EN;
+                            return createWikiLink(nameForLink, 'card', lang);
+                        }
+                        return name; // 見つからなければそのまま
+                    });
+
+                    // 展示品名の置換: {{展示品名}} -> <a>...</a>
+                    reportToShow = reportToShow.replace(/\{\{(.*?)\}\}/g, (match, name) => {
+                        const exhibitData = Object.values(ALL_DATA.lookup_tables.exhibits).find(e => e.name === name || e.name_en === name);
+                        if (exhibitData) {
+                            const nameForLink = lang === 'ja' ? exhibitData.name : exhibitData.name_en;
+                            return createWikiLink(nameForLink, 'exhibit', lang);
+                        }
+                        return name; // 見つからなければそのまま
+                    });
+
+
                     const reportHtml = `<div class="analysis-section" style="grid-column: 1 / -1; margin-top: 20px; padding: 20px;">${reportToShow}</div>`;
                     gridHtml += reportHtml;
                 }
@@ -2800,7 +2851,7 @@ function handleSortClick(sortKey) {
  * @param {string|null} actFilter
  * @param {string|null} levelFilter
  */
-function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
+function sortAndDisplayRuns() { // 引数 (actFilter, levelFilter) を削除
     // ★★★デバッグ★★★ ソート前の配列の状態を確認
     console.log(`[DEBUG] sortAndDisplayRuns started. lastFoundRuns.length:`, lastFoundRuns.length);
     if (lastFoundRuns.length > 0) {
@@ -2833,11 +2884,11 @@ function sortAndDisplayRuns(actFilter = null, levelFilter = null) {
         console.log('[DEBUG] sortedRuns (after sort):', sortedRuns);
     }
 
-
     // 並べ替えたデータでテーブルを表示
+    const actFilter = document.getElementById('act-filter').value;
+    const levelFilter = document.getElementById('level-filter').value;
     displayRunFinderResults(sortedRuns, actFilter, levelFilter);
 }
-
 
 /**
  * 検索結果のランをテーブル形式で表示する。
@@ -2991,32 +3042,6 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         </table>
     `;
 }
-
-/**
- * Act別トレンドの表示を切り替える関数
- */
-window.switchActTrend = function(act) {
-    const container = document.getElementById('act-trend-tab');
-    if (!container) return;
-
-    const buttons = container.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => {
-        if (btn.getAttribute('onclick').includes(`'${act}'`)) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-
-    const contents = container.querySelectorAll('div[id^="act-trend-content-"]');
-    contents.forEach(div => {
-        if (div.id === `act-trend-content-${act}`) {
-            div.style.display = 'block';
-        } else {
-            div.style.display = 'none';
-        }
-    });
-};
 
 
 /**

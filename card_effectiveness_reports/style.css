@@ -2088,3 +2088,20 @@ body {
         white-space: nowrap; /* セル内のテキストが折り返さないようにする */
     }
 }
+
+
+
+
+/* Wikiへのリンクのスタイル */
+a.wiki-link {
+  color: inherit; /* 周りの文字と同じ色（黒）にする */
+  text-decoration: none; /* 下線を常に非表示にする */
+}
+
+/* リンクにマウスを乗せたときのスタイル */
+a.wiki-link:hover {
+  color: #3498db; /* マウスを乗せると青色に変わる（リンクだと分かりやすくするため） */
+}
+
+
+
