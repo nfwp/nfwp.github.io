@@ -11,84 +11,97 @@ const TYPE_COLOR_MAP = {
 
 // --- グローバル変数 ---
 let ALL_DATA = {};
+let ADVENTURE_EVENTS_DATA = {}; // ★追加: イベント分析データを保持
 let UI_TEXT = {};
 let LANG = 'ja';
 let CURRENT_CHAR = 'CirnoA';
-let allRunsData = []; // 全てのランデータを保持するための配列
-let allCards = new Set();    // 全カード名を保持するためのセット
-let allExhibits = new Set(); // 全展示品名を保持するためのセット
+let allRunsData = [];
+let allCards = new Set();
+let allExhibits = new Set();
 
 
 // --- Run Finder の状態管理 ---
-let lastFoundRuns = []; // 最後に検索した結果を保持する配列
-let currentSortKey = 'run_id'; // 現在のソートキー
-let currentSortOrder = 'desc'; // 現在のソート順 ('asc' または 'desc')
+let lastFoundRuns = [];
+let currentSortKey = 'run_id';
+let currentSortOrder = 'desc';
 
 let attentionSlider = null;
 let AGG_MAP = new Map();
-let ALL_RUN_DETAILS = []; //  全てのランの検索用データを保持する配列
-let ALL_DECK_TIMELINES = {}; // 既存の変数を {} に変更
-let ITEM_MASTER_LOOKUP = {}; //
+let ALL_RUN_DETAILS = [];
+let ALL_DECK_TIMELINES = {};
+let ITEM_MASTER_LOOKUP = {};
+let STATION_MAP_GLOBAL = {}; // ★追加: グローバルスコープに移動
 
-let GRAPH_DIV = null; // グラフのDIV要素を格納する。初期値は null
-const ROUTE_NODE_HOVER_DELAY = 400; // ホバーの遅延時間 (ミリ秒)。この数値を調整してお好みの長さにできます。
-let routeNodeHoverTimer = null;    // タイマーIDを保存する変数
-
+let GRAPH_DIV = null;
+const ROUTE_NODE_HOVER_DELAY = 400;
+let routeNodeHoverTimer = null;
 
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // この 'params' 変数を関数全体で使い回します
     const params = new URLSearchParams(window.location.search);
     const requestedChar = params.get('char') || 'CirnoA';
     LANG = (params.get('lang') || 'ja').toLowerCase();
     const charToLoad = (requestedChar === 'All') ? 'CirnoA' : requestedChar;
+
     try {
-        const itemMasterResponse = await fetch('./data/item_master.json');
+        // データを並行して読み込む
+        const [
+            itemMasterResponse,
+            runsResponse,
+            timelineResponse,
+            charDataResponse,
+            adventureEventsResponse // ★追加
+        ] = await Promise.all([
+            fetch('./data/item_master.json'),
+            fetch('./data/run_details.json'),
+            fetch('./data/run_decks_by_station.json'),
+            fetch(`data/${charToLoad}_data.json`),
+            fetch('data/adventure_events_data.json') // ★追加
+        ]);
+
+        // --- 各データの処理 ---
         if (itemMasterResponse.ok) {
             ITEM_MASTER_LOOKUP = await itemMasterResponse.json();
             console.log(`Loaded item_master.json with ${Object.keys(ITEM_MASTER_LOOKUP).length} items.`);
         } else {
             console.error('item_master.json のロードに失敗しました。検索機能は無効になります。');
         }
-        // 最初に、キャラクターに依存しない検索用データをロード
-        const runsResponse = await fetch('./data/run_details.json');
-        if (runsResponse.ok) {
 
+        if (runsResponse.ok) {
             const runDetailsData = await runsResponse.json();
-            ALL_RUN_DETAILS = runDetailsData.runs; // .runs プロパティから配列を取得
+            ALL_RUN_DETAILS = runDetailsData.runs;
             console.log(`Loaded run_details.json generated at: ${runDetailsData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_details.json のロードに失敗しました。検索機能は無効になります。');
         }
 
-
-        const timelineResponse = await fetch('./data/run_decks_by_station.json');
         if (timelineResponse.ok) {
             const timelineData = await timelineResponse.json();
-            ALL_DECK_TIMELINES = timelineData.timelines; // .timelines プロパティからオブジェクトを取得
-            STATION_MAP_GLOBAL = timelineData.station_map; // station_mapをグローバル変数に格納
+            ALL_DECK_TIMELINES = timelineData.timelines;
+            STATION_MAP_GLOBAL = timelineData.station_map;
             console.log(`Loaded run_decks_by_station.json generated at: ${timelineData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_decks_by_station.json のロードに失敗しました。');
         }
 
-
-        console.log(`Requested character: '${requestedChar}'. Loading data for: '${charToLoad}' to initialize UI.`);
-        // 実際に読み込むのは charToLoad のデータ
-        const response = await fetch(`data/${charToLoad}_data.json`);
-        if (!response.ok) {
-            // 'All' の時にデフォルトキャラの読み込みに失敗した場合、より親切なエラーを出す
+        if (!charDataResponse.ok) {
             if (requestedChar === 'All') {
                  throw new Error(`Failed to load default data for '${charToLoad}' to handle 'All' characters view.`);
             }
             throw new Error(`Failed to load data for ${charToLoad}`);
         }
-        ALL_DATA = await response.json();
+        ALL_DATA = await charDataResponse.json();
 
-        // データを読み込んだ後、グローバルなキャラクター選択状態をURLで要求されたものに設定する
+        // ★追加: イベント分析データの処理
+        if (adventureEventsResponse.ok) {
+            ADVENTURE_EVENTS_DATA = await adventureEventsResponse.json();
+            console.log("Loaded adventure_events_data.json successfully.");
+        } else {
+            console.error("Failed to load adventure_events_data.json. Event Analysis tab may not work.");
+        }
+
         CURRENT_CHAR = requestedChar;
 
-        // 全カードのデータをMapに格納（ホバー時の情報参照を高速化）
         if (ALL_DATA.agg_data_full) {
             const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
             ALL_DATA.agg_data_full.forEach(d => {
@@ -104,26 +117,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     await setupUiText(LANG);
     renderGlobalHeader();
-    setupNavigation(); // ここでタブボタンが生成される
+    setupNavigation();
 
-
-    // URLに 'search' パラメータがあるかどうかをチェック
     if (params.has('search')) {
-        // 共有URLでアクセスされた場合、ラン検索タブを直接開いて自動検索
-        switchTab('run-finder-tab', true); // 第2引数に true を渡して自動検索を指示
+        switchTab('run-finder-tab', true);
     } else {
-        // 通常の読み込み時は、最初のタブを開く
         switchTab('card-performance-tab');
     }
-
-
-    // 各タブのコンテンツは switchTab が必要に応じて描画するため、以下の個別呼び出しは不要
-    // renderCardPerformanceTab(CURRENT_CHAR, LANG);
-    // renderExhibitAnalysisTab(LANG);
-    // renderRouteEventTab(LANG);
-    // renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
-    // renderActTrendTab(LANG);
-    // renderCardListTab(ALL_DATA);
 
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('dashboard-container').style.visibility = 'visible';
@@ -210,7 +210,6 @@ function switchTab(tabId, autoSearch = false) {
     const mobileTabSelector = document.getElementById('mobile-tab-selector');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    // すべてのタブコンテンツを非表示にし、ボタンのアクティブ状態を解除
     tabContents.forEach(content => {
         content.style.display = 'none';
     });
@@ -220,13 +219,10 @@ function switchTab(tabId, autoSearch = false) {
         });
     }
 
-    // 指定されたタブを表示
     const contentToShow = document.getElementById(tabId);
     if (contentToShow) {
         contentToShow.style.display = 'block';
 
-        // ★★★ ここが重要 ★★★
-        // タブの中身が空の場合のみ、対応する描画関数を呼び出す
         if (contentToShow.innerHTML.trim() === '') {
             console.log(`Rendering content for tab: ${tabId}`);
             switch (tabId) {
@@ -242,6 +238,10 @@ function switchTab(tabId, autoSearch = false) {
                 case 'enemy-analysis-tab':
                     renderEnemyAnalysisTab(CURRENT_CHAR, LANG);
                     break;
+                // ★追加: イベント分析タブの描画呼び出し
+                case 'event-analysis-tab':
+                    renderEventAnalysisTab();
+                    break;
                 case 'act-trend-tab':
                     renderActTrendTab(LANG);
                     break;
@@ -249,12 +249,11 @@ function switchTab(tabId, autoSearch = false) {
                     renderCardListTab(ALL_DATA);
                     break;
                 case 'run-finder-tab':
-                    renderRunFinderTab(); // ラン検索タブは常に再描画（または初回描画）
+                    renderRunFinderTab();
                     break;
             }
         }
 
-        // ラン検索タブの自動検索処理（URLパラメータがある場合）
         if (tabId === 'run-finder-tab') {
             const uiPopulated = populateUiFromUrlParams();
             if (autoSearch && uiPopulated) {
@@ -263,7 +262,6 @@ function switchTab(tabId, autoSearch = false) {
             }
         }
 
-        // タブ内のグラフがあればリサイズ
         const graphInTab = contentToShow.querySelector('.plotly-graph-div');
         if (graphInTab) {
             try {
@@ -274,7 +272,6 @@ function switchTab(tabId, autoSearch = false) {
         }
     }
 
-    // 対応するボタンをアクティブにする
     if (tabButtonsContainer) {
         const buttonToActivate = tabButtonsContainer.querySelector(`[data-tab-id="${tabId}"]`);
         if (buttonToActivate) {
@@ -282,19 +279,19 @@ function switchTab(tabId, autoSearch = false) {
         }
     }
 
-    // モバイル用セレクターの値を更新
     if (mobileTabSelector) {
         mobileTabSelector.value = tabId;
     }
 }
 
-// setupNavigation 関数は、switchTab を呼び出すだけのシンプルな形になる
 function setupNavigation() {
     const tabsConfig = [
         { id: 'card-performance-tab', label: UI_TEXT.card_perf_tab_title },
         { id: 'exhibit-analysis-tab', label: UI_TEXT.exhibit_tab_title },
         { id: 'route-event-tab', label: UI_TEXT.route_tab_title },
         { id: 'enemy-analysis-tab', label: UI_TEXT.enemy_analysis_title },
+        // ★追加: イベント分析タブの定義
+        { id: 'event-analysis-tab', label: UI_TEXT.event_analysis_tab_title || (LANG === 'ja' ? 'イベント分析' : 'Event Analysis') },
         { id: 'act-trend-tab', label: (LANG === 'ja' ? 'Act別トレンド' : 'Act Trends') },
         { id: 'card-list-tab', label: UI_TEXT.card_list_tab_title || 'カード一覧' },
         { id: 'run-finder-tab', label: UI_TEXT.run_finder_tab_title || 'ラン検索' }
@@ -316,7 +313,6 @@ function setupNavigation() {
             button.className = 'tab-button';
             button.textContent = tabConfig.label;
             button.dataset.tabId = tabConfig.id;
-            // グローバルになった switchTab を呼び出す
             button.addEventListener('click', () => switchTab(tabConfig.id));
             tabButtonsContainer.appendChild(button);
         }
@@ -330,14 +326,130 @@ function setupNavigation() {
     });
 
     if (mobileTabSelector) {
-        // グローバルになった switchTab を呼び出す
         mobileTabSelector.addEventListener('change', (e) => {
             switchTab(e.target.value);
         });
     }
-
-    // 初期タブの表示は DOMContentLoaded で制御するので、ここでは不要
 }
+
+
+function renderEventAnalysisTab() {
+    const container = document.getElementById('event-analysis-tab');
+    if (!container) return;
+
+    // 1. データの取得とチェック
+    const charData = ADVENTURE_EVENTS_DATA[CURRENT_CHAR];
+    const title = UI_TEXT.event_analysis_tab_title || (LANG === 'ja' ? 'イベント分析' : 'Event Analysis');
+    const description = UI_TEXT.event_analysis_desc || (LANG === 'ja' ? '「？」マスで発生するイベントの集計データです。イベントはゲームの進行順（序盤→終盤）に並んでいます。' : 'Aggregated data for events occurring on "?" nodes. Events are sorted chronologically (early game → late game).');
+
+    if (!charData || charData.length === 0) {
+        container.innerHTML = `<div class='analysis-section'><h3>${title}</h3><p>${UI_TEXT.no_data || 'データなし'}</p></div>`;
+        return;
+    }
+
+    // 2. ヘルパー関数定義
+    const getItemName = (itemId, itemType) => {
+        const nameKey = LANG === 'ja' ? 'JA' : 'EN';
+        const lookup = (itemType === 'card') ? ALL_DATA.lookup_tables.cards : ALL_DATA.lookup_tables.exhibits;
+        return lookup[itemId]?.[nameKey] || itemId;
+    };
+    const formatResourceChange = (res) => {
+        let parts = [];
+        const createHtml = (iconName, value, altText) => {
+            // 正の値には `+` を付ける
+            const sign = value > 0 ? '+' : '';
+            return `
+                <span class="resource-change-item">
+                    <img src="./img/station/${iconName}.avif" srcset="./img/station/${iconName}@2x.avif 2x" class="resource-icon" alt="${altText}">
+                    <span class="resource-value">${sign}${value.toFixed(1)}</span>
+                </span>
+            `;
+        };
+
+        if (Math.abs(res.hp) > 0.05) parts.push(createHtml('Hp1', res.hp, 'HP'));
+        if (Math.abs(res.power) > 0.05) parts.push(createHtml('Power', res.power, 'Power'));
+        if (Math.abs(res.money) > 0.05) parts.push(createHtml('Money', res.money, 'Money'));
+
+        // joinの区切り文字をなくす
+        return parts.length > 0 ? parts.join('') : (UI_TEXT.no_change_label || 'なし');
+    };
+    const formatItemList = (items, itemType) => {
+        if (!items || items.length === 0) return (UI_TEXT.no_change_label || 'なし');
+        return items.map(item => {
+            const name = getItemName(item.id, itemType);
+            const countLabel = LANG === 'ja' ? '回' : (item.count === 1 ? ' time' : ' times');
+            // バッククォートを削除し、代わりにspanタグで囲む
+            return `<span class="item-name-highlight">${name}</span> (${item.count}${countLabel})`;
+        }).join(', ');
+    };
+
+    // 3. HTMLの組み立て (★ここを修正★)
+    const eventsHtml = charData.map(event => {
+        const eventName = LANG === 'ja' ? event.eventNameJA : event.eventNameEN;
+        const encounterCountLabel = LANG === 'ja' ? '回' : (event.encounterCount === 1 ? ' time' : ' times');
+        const vsAllRunsLabel = LANG === 'ja' ? '対 全ラン' : 'vs. All Runs';
+
+        // ▼▼▼ 画像パスを生成 ▼▼▼
+        const imgSrc = `./img/events/${event.eventId}.avif`;
+        const imgSrcset = `./img/events/${event.eventId}@2x.avif 2x`;
+        // ▲▲▲ ここまで ▲▲▲
+
+        const choicesHtml = event.choices.map(choice => {
+            const choiceIndexLabel = choice.choiceIndex === 'N/A'
+                ? (UI_TEXT.no_choice_label || '選択肢なし')
+                : `${UI_TEXT.choice_label_prefix || '選択肢'}${choice.choiceIndex}`;
+            const choiceCountLabel = LANG === 'ja' ? '回' : (choice.count === 1 ? ' time' : ' times');
+
+            return `
+                <div class="event-choice-details">
+                    <h4>${choiceIndexLabel} (${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</h4>
+                    <ul>
+                        <li><strong>${UI_TEXT.avg_resource_label || '平均リソース変化'}:</strong> ${formatResourceChange(choice.avgResourceChange)}</li>
+                        <li><strong>${UI_TEXT.card_add_label || 'カード追加'} Top5:</strong> ${formatItemList(choice.cardsAdded, 'card')}</li>
+                        <li><strong>${UI_TEXT.card_rem_label || 'カード削除'} Top5:</strong> ${formatItemList(choice.cardsRemoved, 'card')}</li>
+                        <li><strong>${UI_TEXT.card_upg_label || 'カード強化'} Top5:</strong> ${formatItemList(choice.cardsUpgraded, 'card')}</li>
+                        <li><strong>${UI_TEXT.exh_add_label || '展示品追加'} Top5:</strong> ${formatItemList(choice.exhibitsAdded, 'exhibit')}</li>
+                        <li><strong>${UI_TEXT.exh_rem_label || '展示品削除'} Top5:</strong> ${formatItemList(choice.exhibitsRemoved, 'exhibit')}</li>
+                    </ul>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <!-- ▼▼▼ imgタグを追加 ▼▼▼ -->
+                    <img src="${imgSrc}" srcset="${imgSrcset}" class="event-icon" alt="" onerror="this.style.display='none'">
+                    <span class="accordion-title">${eventName}</span>
+                    <span class="accordion-stats">${event.encounterCount}${encounterCountLabel} (${vsAllRunsLabel} ${event.encounterRate.toFixed(1)}%)</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    ${choicesHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <div class='analysis-section'>
+            <h3>${title}</h3>
+            <p>${description}</p>
+            <div class="accordion-container">${eventsHtml}</div>
+        </div>
+    `;
+
+    // 4. イベントリスナーの設定
+    container.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const item = header.parentElement;
+            item.classList.toggle('active');
+        });
+    });
+}
+
+
+
 function renderCardListTab(data) {
     const container = document.getElementById('card-list-tab');
     if (!container) {
@@ -2207,7 +2319,7 @@ function renderActTrendTab(lang) {
                     categoryBlockHtml += `</tbody></table></div>`;
                 }
             } else if (cat.type === 'node') {
-                // ... (nodeタイプの処理は変更なし) ...
+
                 const breakdownRows = [
                     { label: nodeTypeLabels['Enemy'], key: 'Enemy', type: 'node' },
                     { label: nodeTypeLabels['EliteEnemy'], key: 'EliteEnemy', type: 'node' },
@@ -2247,7 +2359,7 @@ function renderActTrendTab(lang) {
         });
 
         if (act !== 'Total') {
-            // ... (パフォーマンス指標の処理は変更なし) ...
+
             const stats = actData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const globalStats = globalActData.Combat_Stats || { Total_Damage: 0, Gap_Recovery: 0 };
             const perfStats = actData.Vs_Performance_Stats || {};
@@ -2729,9 +2841,9 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         act2_header: "Act2",
         act3_header: "Act3"
     };
-    // ▼▼▼ 変更箇所: 表示するアイコンを限定する ▼▼▼
+
     const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
-    // ▲▲▲ 変更ここまで ▲▲▲
+
     const bossIconMap = {
         "Reimu": "./img/boss/Reimu.avif",
         "Marisa": "./img/boss/Marisa.avif",
@@ -2824,7 +2936,7 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         }
     }).join('');
 
-    // 3. テーブル全体のHTMLを生成 (変更なし)
+    // 3. テーブル全体のHTMLを生成
     const getSortIndicator = (key) => {
         if (currentSortKey === key) {
             return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -3106,7 +3218,7 @@ function performAdvancedSearch() {
 }
 
 /**
- * キーワードフィルターを適用するヘルパー関数 (この関数は変更なし)
+ * キーワードフィルターを適用するヘルパー関数
  */
 function applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic) {
     // --- 「含まない」アイテムのフィルター ---
