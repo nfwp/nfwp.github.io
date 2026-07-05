@@ -171,7 +171,7 @@
     "act_trend_analysis_title": "Act Trend Analysis",
     "act_trend_analysis_desc": "Trends in card/exhibit acquisition, removal, and upgrades per Act. Values represent average count per run. Changes caused by events are also included.<br><strong>Note: A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>",
     "event_analysis_tab_title": "Event Analysis",
-    "event_analysis_desc": "Aggregated data for events occurring on '?' nodes. Events are sorted chronologically (early game → late game).",
+    "event_analysis_desc": "Aggregated data for events occurring on '?' nodes. Events are sorted chronologically (early game → late game).Choice tracking is simplified for now due to complex logic.",
     "no_change_label": "None",
     "choice_label_prefix": "Choice ",
     "no_choice_label": "No Choice",

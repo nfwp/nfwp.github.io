@@ -155,7 +155,7 @@
     "act_trend_analysis_title": "Act別トレンド分析",
     "act_trend_analysis_desc": "各Actにおけるカードや展示品の取得・削除・強化の傾向です。数値は1ランあたりの平均回数です。イベントによる操作も含まれます。<br><strong>※Act 1のみ、より詳細な行動傾向レポートを別途生成します。</strong>",
      "event_analysis_tab_title": "イベント分析",
-    "event_analysis_desc": "「？」マスで発生するイベントの集計データです。イベントはゲームの進行順（序盤→終盤）に並んでいます。",
+    "event_analysis_desc": "「？」マスで発生するイベントの集計データです。イベントはゲームの進行順（序盤→終盤）に並んでいます。選択肢の取得は複雑なため簡易的なものになっています。",
     "no_change_label": "なし",
     "choice_label_prefix": "選択肢",
     "no_choice_label": "選択肢なし",
