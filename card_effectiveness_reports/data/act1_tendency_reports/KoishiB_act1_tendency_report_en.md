@@ -246,16 +246,6 @@
 <td style='text-align: right;'>52.8</td>
 <td style='text-align: right;'>108.2</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Sin of the Black Pegasus</strong></td>
-<td style='text-align: right;'>+19.33</td>
-<td style='text-align: right;'>45.3%</td>
-<td style='text-align: right;'>26.0%</td>
-<td style='text-align: right;'>53</td>
-<td style='text-align: right;'>59.8</td>
-<td style='text-align: right;'>56.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.2</span></strong></td>
-</tr>
 <tr>
 <td>True Full Moon</td>
 <td style='text-align: right;'>+19.33</td>
@@ -265,6 +255,16 @@
 <td style='text-align: right;'>48.4</td>
 <td style='text-align: right;'>48.1</td>
 <td style='text-align: right;'>96.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Sin of the Black Pegasus</strong></td>
+<td style='text-align: right;'>+19.33</td>
+<td style='text-align: right;'>45.3%</td>
+<td style='text-align: right;'>26.0%</td>
+<td style='text-align: right;'>53</td>
+<td style='text-align: right;'>59.8</td>
+<td style='text-align: right;'>56.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.2</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sakura-Colored Sea</strong></td>

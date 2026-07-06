@@ -307,16 +307,6 @@
 <td style='text-align: right;'>96.7</td>
 </tr>
 <tr>
-<td>Frozen Throne</td>
-<td style='text-align: right;'>+16.78</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>29</td>
-<td style='text-align: right;'>54.5</td>
-<td style='text-align: right;'>52.0</td>
-<td style='text-align: right;'>106.5</td>
-</tr>
-<tr>
 <td>Sculpture - Circle</td>
 <td style='text-align: right;'>+16.78</td>
 <td style='text-align: right;'>44.8%</td>
@@ -325,6 +315,16 @@
 <td style='text-align: right;'>48.0</td>
 <td style='text-align: right;'>35.4</td>
 <td style='text-align: right;'>83.4</td>
+</tr>
+<tr>
+<td>Frozen Throne</td>
+<td style='text-align: right;'>+16.78</td>
+<td style='text-align: right;'>44.8%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>29</td>
+<td style='text-align: right;'>54.5</td>
+<td style='text-align: right;'>52.0</td>
+<td style='text-align: right;'>106.5</td>
 </tr>
 <tr>
 <td>🧰 Ballistic Shield</td>
@@ -484,8 +484,8 @@
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">Exteeending Aaaarm</span>: 3</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 3</li>
-<li><span class="text-purchase">Wrath of Nature</span>: 2</li>
 <li><span class="text-purchase">Social Butterfly</span>: 2</li>
+<li><span class="text-purchase">Wrath of Nature</span>: 2</li>
 <li><span class="text-purchase">Play With Water</span>: 2</li>
 <li><span class="text-purchase">Princess Undine</span>: 2</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 1</li>

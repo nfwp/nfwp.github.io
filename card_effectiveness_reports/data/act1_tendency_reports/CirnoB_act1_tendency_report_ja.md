@@ -308,16 +308,6 @@
 <td style='text-align: right;'>96.7</td>
 </tr>
 <tr>
-<td>凍てつく玉座</td>
-<td style='text-align: right;'>+16.78</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>29</td>
-<td style='text-align: right;'>54.5</td>
-<td style='text-align: right;'>52.0</td>
-<td style='text-align: right;'>106.5</td>
-</tr>
-<tr>
 <td>真円造形術</td>
 <td style='text-align: right;'>+16.78</td>
 <td style='text-align: right;'>44.8%</td>
@@ -326,6 +316,16 @@
 <td style='text-align: right;'>48.0</td>
 <td style='text-align: right;'>35.4</td>
 <td style='text-align: right;'>83.4</td>
+</tr>
+<tr>
+<td>凍てつく玉座</td>
+<td style='text-align: right;'>+16.78</td>
+<td style='text-align: right;'>44.8%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>29</td>
+<td style='text-align: right;'>54.5</td>
+<td style='text-align: right;'>52.0</td>
+<td style='text-align: right;'>106.5</td>
 </tr>
 <tr>
 <td>🧰 ライオットシールド</td>
@@ -485,8 +485,8 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
 <li><span class="text-purchase">のびーるアーム</span>: 3回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 3回</li>
-<li><span class="text-purchase">自然の怒り</span>: 2回</li>
 <li><span class="text-purchase">社交的な妖精</span>: 2回</li>
+<li><span class="text-purchase">自然の怒り</span>: 2回</li>
 <li><span class="text-purchase">水遊び</span>: 2回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 2回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 1回</li>
