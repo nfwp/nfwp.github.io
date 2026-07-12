@@ -3152,21 +3152,27 @@ function performAdvancedSearch() {
         }
 
 
-        const runBosses = run.bosses ? Object.values(run.bosses) : [];
+        const runBossNames = run.bosses
+        ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : ''))
+        : [];
 
-        // Include Filter
-        if (includeBosses.length > 0) {
+        // 検索タグ側もすべて小文字に変換して比較する
+        const includeBossesLower = includeBosses.map(b => b.toLowerCase());
+        const excludeBossesLower = excludeBosses.map(b => b.toLowerCase());
+
+        // Include Filter (含むボス)
+        if (includeBossesLower.length > 0) {
             const includeMatch = (bossLogic === 'AND')
-                ? includeBosses.every(boss => runBosses.includes(boss))
-                : includeBosses.some(boss => runBosses.includes(boss));
+            ? includeBossesLower.every(boss => runBossNames.includes(boss))
+            : includeBossesLower.some(boss => runBossNames.includes(boss));
             if (!includeMatch) {
                 return false;
             }
         }
 
-        // Exclude Filter
-        if (excludeBosses.length > 0) {
-            const excludeMatch = excludeBosses.some(boss => runBosses.includes(boss));
+        // Exclude Filter (含まないボス)
+        if (excludeBossesLower.length > 0) {
+            const excludeMatch = excludeBossesLower.some(boss => runBossNames.includes(boss));
             if (excludeMatch) {
                 return false;
             }
