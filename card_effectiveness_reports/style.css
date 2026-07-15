@@ -659,24 +659,7 @@ body {
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     }
 
-    #info-box {
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        max-height: 45vh;
-        border-radius: 15px 15px 0 0;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-        transform: translateY(100%);
-        opacity: 1;
-        transition: transform 0.3s ease-in-out;
-        pointer-events: auto;
-    }
 
-    #info-box.visible {
-        transform: translateY(0);
-    }
 
     .route-analysis-wrapper {
         flex-direction: column;
@@ -2104,4 +2087,40 @@ a.wiki-link:hover {
 }
 
 
+
+/* ==========================================
+ *  スマホ・タブレット用のレスポンシブ対応
+ *  ========================================== */
+@media (max-width: 768px) {
+    #info-box {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 60vh; /* 画面の高さの最大60%まで */
+    overflow-y: auto; /* コンテンツが多い場合はスクロール可能に */
+    background: #ffffff;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 16px 16px 0 0; /* 上側の角を丸く */
+    padding: 16px;
+    box-sizing: border-box;
+    z-index: 10000;
+
+    /* 下に隠れた状態（初期状態・非表示時） */
+    transform: translateY(100%) !important;
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+    opacity: 0;
+    pointer-events: none;
+    }
+
+    /* JavaScriptによって表示状態になった時 */
+    #info-box.visible,
+    #info-box[style*="opacity: 1"] {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    }
+}
 

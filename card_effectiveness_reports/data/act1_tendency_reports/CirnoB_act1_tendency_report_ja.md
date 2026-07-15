@@ -34,8 +34,8 @@
 <li>羽ばたく翼: 15回</li>
 <li>逆鱗の荒波: 14回</li>
 <li>氷鏡反射: 13回</li>
-<li>捏造報道: 13回</li>
 <li>薄氷を踏む: 13回</li>
+<li>捏造報道: 13回</li>
 </ul></div>
 </div>
 <h3>2. エリートマスへの挑戦傾向</h3>
@@ -308,16 +308,6 @@
 <td style='text-align: right;'>96.7</td>
 </tr>
 <tr>
-<td>真円造形術</td>
-<td style='text-align: right;'>+16.78</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>29</td>
-<td style='text-align: right;'>48.0</td>
-<td style='text-align: right;'>35.4</td>
-<td style='text-align: right;'>83.4</td>
-</tr>
-<tr>
 <td>凍てつく玉座</td>
 <td style='text-align: right;'>+16.78</td>
 <td style='text-align: right;'>44.8%</td>
@@ -326,6 +316,16 @@
 <td style='text-align: right;'>54.5</td>
 <td style='text-align: right;'>52.0</td>
 <td style='text-align: right;'>106.5</td>
+</tr>
+<tr>
+<td>真円造形術</td>
+<td style='text-align: right;'>+16.78</td>
+<td style='text-align: right;'>44.8%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>29</td>
+<td style='text-align: right;'>48.0</td>
+<td style='text-align: right;'>35.4</td>
+<td style='text-align: right;'>83.4</td>
 </tr>
 <tr>
 <td>🧰 ライオットシールド</td>
@@ -485,10 +485,10 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
 <li><span class="text-purchase">のびーるアーム</span>: 3回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 3回</li>
-<li><span class="text-purchase">社交的な妖精</span>: 2回</li>
 <li><span class="text-purchase">自然の怒り</span>: 2回</li>
 <li><span class="text-purchase">水遊び</span>: 2回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 2回</li>
+<li><span class="text-purchase">社交的な妖精</span>: 2回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 1回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 1回</li>
 <li><span class="text-purchase">アイスシールド</span>: 1回</li>
@@ -593,9 +593,9 @@
 <li><span class="text-purchase">太陽の畑</span>: 1回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 1回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
-<li><span class="text-purchase">🧰 フロッピーディスク</span>: 1回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">🧰 フロッピーディスク</span>: 1回</li>
 <li><span class="text-purchase">アイスブロック</span>: 1回</li>
 <li><span class="text-purchase">最奥の森域</span>: 1回</li>
 <li><span class="text-purchase">竹取物語</span>: 1回</li>
@@ -611,8 +611,8 @@
 <li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
 <li><span class="text-exhibit">リボン</span>: 3回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 2回</li>
-<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
+<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">竹</span>: 1回</li>
 <li><span class="text-exhibit">底抜け柄杓</span>: 1回</li>
