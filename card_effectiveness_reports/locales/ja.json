@@ -4,6 +4,15 @@
     "total_runs_label": "総データ数",
     "run_count_label": "総ラン数: {count}",
     "card_perf_tab_title": "カード性能",
+    "highlights": "ハイライト",
+    "atk_short": "攻",
+    "def_short": "防",
+    "hidden_synergy_candidates": "隠れたシナジー候補",
+    "combat_types": {
+        "Enemy": "通常敵",
+        "EliteEnemy": "エリート",
+        "Boss": "ボス"
+    },
     "exhibit_tab_title": "展示品",
     "route_tab_title": "ルート選択",
     "enemy_analysis_title": "敵別戦績",

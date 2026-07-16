@@ -29,6 +29,7 @@ let attentionSlider = null;
 let AGG_MAP = new Map();
 let ALL_RUN_DETAILS = [];
 let ALL_DECK_TIMELINES = {};
+let DATA_VERSION = '';
 let ITEM_MASTER_LOOKUP = {};
 let STATION_MAP_GLOBAL = {}; // ★追加: グローバルスコープに移動
 
@@ -49,30 +50,23 @@ window.addEventListener('DOMContentLoaded', async () => {
             throw new Error('Failed to load data_version.json. Cannot determine data version.');
         }
         const versionData = await versionResponse.json();
-        const dataVersion = versionData.version;
-        console.log(`Using data version: ${dataVersion}`);
+        DATA_VERSION = versionData.version; // グローバル変数に設定
+        console.log(`Using data version: ${DATA_VERSION}`);
         // データを並行して読み込む
+
         const [
-            itemMasterResponse,
             runsResponse,
             timelineResponse,
             charDataResponse,
-            adventureEventsResponse // ★追加
+            adventureEventsResponse,
+            lookupDataResponse
         ] = await Promise.all([
-            fetch(`./data/item_master.json?v=${dataVersion}`),
-            fetch(`./data/run_details.json?v=${dataVersion}`),
-            fetch(`./data/run_decks_by_station.json?v=${dataVersion}`),
-            fetch(`data/${charToLoad}_data.json?v=${dataVersion}`),
-            fetch(`data/adventure_events_data.json?v=${dataVersion}`)
+            fetch(`./data/run_details.json?v=${DATA_VERSION}`),
+            fetch(`./data/run_decks_by_station.json?v=${DATA_VERSION}`),
+            fetch(`data/${charToLoad}_data.json?v=${DATA_VERSION}`),
+            fetch(`data/adventure_events_data.json?v=${DATA_VERSION}`),
+            fetch(`data/lookup_data.json?v=${DATA_VERSION}`)
         ]);
-
-        // --- 各データの処理 ---
-        if (itemMasterResponse.ok) {
-            ITEM_MASTER_LOOKUP = await itemMasterResponse.json();
-            console.log(`Loaded item_master.json with ${Object.keys(ITEM_MASTER_LOOKUP).length} items.`);
-        } else {
-            console.error('item_master.json のロードに失敗しました。検索機能は無効になります。');
-        }
 
         if (runsResponse.ok) {
             const runDetailsData = await runsResponse.json();
@@ -84,20 +78,46 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         if (timelineResponse.ok) {
             const timelineData = await timelineResponse.json();
-            ALL_DECK_TIMELINES = timelineData.timelines;
+            // ALL_DECK_TIMELINES はここでは読み込まない。キャッシュ用の空オブジェクトとして初期化。
+            ALL_DECK_TIMELINES = {};
+            // station_map のみ軽量化されたファイルから取得する
             STATION_MAP_GLOBAL = timelineData.station_map;
-            console.log(`Loaded run_decks_by_station.json generated at: ${timelineData.metadata?.generated_at || 'N/A'}`);
+            console.log(`Loaded lightweight run_decks_by_station.json generated at: ${timelineData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_decks_by_station.json のロードに失敗しました。');
         }
 
+        // キャラクターデータのチェック
         if (!charDataResponse.ok) {
             if (requestedChar === 'All') {
                  throw new Error(`Failed to load default data for '${charToLoad}' to handle 'All' characters view.`);
             }
             throw new Error(`Failed to load data for ${charToLoad}`);
         }
-        ALL_DATA = await charDataResponse.json();
+        // 共通ルックアップデータのチェック
+        if (!lookupDataResponse.ok) {
+            throw new Error(`Failed to load common lookup_data.json. Check if the file exists in the /data/ directory.`);
+        }
+
+        // JSONに変換
+        const charData = await charDataResponse.json();
+        const lookupData = await lookupDataResponse.json();
+
+        // データをマージしてグローバル変数に格納
+        ALL_DATA = {
+            ...charData,
+            lookup_tables: lookupData
+        };
+
+        // agg_data_full を復元する
+        if (ALL_DATA.agg_data_for_graph && ALL_DATA.agg_data_others) {
+            console.log("Reconstructing agg_data_full from partial data...");
+            ALL_DATA.agg_data_full = ALL_DATA.agg_data_for_graph.concat(ALL_DATA.agg_data_others);
+            delete ALL_DATA.agg_data_others;
+        } else {
+            console.warn("agg_data_others not found. Using existing agg_data_full or agg_data_for_graph.");
+            ALL_DATA.agg_data_full = ALL_DATA.agg_data_full || ALL_DATA.agg_data_for_graph;
+        }
 
         // ★追加: イベント分析データの処理
         if (adventureEventsResponse.ok) {
@@ -355,8 +375,11 @@ function renderEventAnalysisTab() {
 
     // 2. ヘルパー関数定義
     const getItemName = (itemId, itemType) => {
-        const nameKey = LANG === 'ja' ? 'JA' : 'EN';
         const lookup = (itemType === 'card') ? ALL_DATA.lookup_tables.cards : ALL_DATA.lookup_tables.exhibits;
+        // カードと展示品で名前のキーが異なるため分岐
+        const nameKey = (itemType === 'card')
+            ? (LANG === 'ja' ? 'JA' : 'EN')
+            : (LANG === 'ja' ? 'name' : 'name_en');
         return lookup[itemId]?.[nameKey] || itemId;
     };
     const formatResourceChange = (res) => {
@@ -840,7 +863,12 @@ function setupGraphFilters(lang) {
             infoBox.style.opacity = 1;
             infoBox.style.transform = 'translateX(0)';
             infoBox.style.pointerEvents = 'auto';
-            updateVisuals(point.customdata[(lang === 'ja' ? 'Card_Name' : 'Card_Name_EN')], point.customdata[(lang === 'ja' ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN')] || []);
+            const cardNameCol = (lang === 'ja') ? 'Card_Name' : 'Card_Name_EN';
+            const nameKey = (lang === 'ja') ? 'JA' : 'EN';
+            const cardLookup = ALL_DATA.lookup_tables.cards;
+            const partnerIds = point.customdata.Co_occurrence_Partners || [];
+            const partnerNames = partnerIds.map(id => cardLookup[id]?.[nameKey] || id);
+            updateVisuals(point.customdata[cardNameCol], partnerNames);
         });
 
         GRAPH_DIV.on('plotly_unhover', () => {
@@ -895,9 +923,13 @@ function setupGraphFilters(lang) {
                     infoBox.style.transform = 'translateX(0)';
                     infoBox.style.pointerEvents = 'auto';
                 }
+                const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
+                const nameKey = (LANG === 'ja') ? 'JA' : 'EN';
+                const cardLookup = ALL_DATA.lookup_tables.cards;
+                const partnerIds = pointData.Co_occurrence_Partners || [];
+                const partnerNames = partnerIds.map(id => cardLookup[id]?.[nameKey] || id);
+                updateVisuals(pointData[cardNameCol], partnerNames);
 
-                const partnersCol = (LANG === 'ja') ? 'Co_occurrence_Partners' : 'Co_occurrence_Partners_EN';
-                updateVisuals(pointData[(LANG === 'ja' ? 'Card_Name' : 'Card_Name_EN')], pointData[partnersCol] || []);
                 GRAPH_DIV.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
@@ -1009,17 +1041,47 @@ function createHoverText(d, lang) {
     const highlightCol = (lang === 'ja') ? 'Highlights_JA_Hover' : 'Highlights_EN_Hover';
     const highlightsHtml = sourceData[highlightCol] ? `<hr style='margin: 8px 0;'><b>${UI_TEXT.highlights}: ${sourceData.Medal || ''}</b><br>${sourceData[highlightCol]}` : "";
 
+// script.js (修正後)
+
+// ... (createHoverText 関数内) ...
     let coOccurrenceHtml = '';
+    const cardLookup = ALL_DATA.lookup_tables.cards;
+    const nameKey = (lang === 'ja') ? 'JA' : 'EN';
+
+    // IDベースの共起データからHTMLリストを生成するヘルパー関数
+    const createCoOccurrenceHtml = (list) => {
+        if (!list || list.length === 0) return '';
+        return list.map(item => {
+            const cardInfo = cardLookup[item.id] || {};
+            const cardName = cardInfo[nameKey] || item.id;
+            const synergyMark = item.synergy === true ? ' ★' : '';
+            const rate = item.rate != null ? item.rate.toFixed(1) : 'N/A';
+            return `${cardName} (${rate}%)${synergyMark}`;
+        }).join('<br>');
+    };
+
     if (isAggView) {
-        const topCol = (lang === 'ja') ? 'Top_20_Co_occurrence_JA' : 'Top_20_Co_occurrence_EN';
-        if (sourceData[topCol]) {
-            coOccurrenceHtml = `<b>${UI_TEXT.top_20 || '共起Top20'}:</b><br>${sourceData[topCol]}`;
+        // --- 総合ビュー ---
+        const top20List = sourceData.Top_20_Co_occurrence;
+        const hiddenSynergies = sourceData.Hidden_Synergies;
+
+        let htmlParts = [];
+        if (top20List && top20List.length > 0) {
+            htmlParts.push(`<b>${UI_TEXT.top_20 || '共起Top20'}:</b><br>${createCoOccurrenceHtml(top20List)}`);
         }
+
+        if (hiddenSynergies && hiddenSynergies.length > 0) {
+            const hiddenTitle = UI_TEXT.hidden_synergies || (lang === 'ja' ? '---<br>隠れたシナジー候補:' : '---<br>Hidden Synergy Candidates:');
+            htmlParts.push(`<br>${hiddenTitle}<br>${createCoOccurrenceHtml(hiddenSynergies)}`);
+        }
+
+        coOccurrenceHtml = htmlParts.join('');
+
     } else {
-        const sitTopCol = (lang === 'ja') ? 'Situational_Co_occurrence_JA' : 'Situational_Co_occurrence_EN';
-        const situationalCoOccurrence = d[sitTopCol];
-        if (situationalCoOccurrence) {
-            coOccurrenceHtml = `<b>${UI_TEXT.sit_top_20 || '共起Top20 (この状況)'}:</b><br>${situationalCoOccurrence}`;
+        // --- 状況別ビュー ---
+        const situationalCoOccurrence = d.Situational_Co_occurrence;
+        if (situationalCoOccurrence && situationalCoOccurrence.length > 0) {
+            coOccurrenceHtml = `<b>${UI_TEXT.sit_top_20 || '共起Top20 (この状況)'}:</b><br>${createCoOccurrenceHtml(situationalCoOccurrence)}`;
         } else {
             coOccurrenceHtml = `<b>${UI_TEXT.sit_top_20 || '共起Top20 (この状況)'}:</b><br><span style="font-size:11px; color:#999;">${UI_TEXT.no_data || 'データなし'}</span>`;
         }
@@ -2569,13 +2631,21 @@ function renderRunFinderTab() {
     };
 
     // 1. オートコンプリート用のデータリストを作成
+
     const allItems = new Set();
-    if (ITEM_MASTER_LOOKUP) {
-        const nameKey = (LANG === 'ja') ? 'ja' : 'en';
-        for (const itemId in ITEM_MASTER_LOOKUP) {
-            const itemData = ITEM_MASTER_LOOKUP[itemId];
-            if (itemData && itemData[nameKey]) {
-                allItems.add(itemData[nameKey]);
+    if (ALL_DATA.lookup_tables) {
+        const cardNameKey = (LANG === 'ja') ? 'JA' : 'EN';
+        for (const cardId in ALL_DATA.lookup_tables.cards) {
+            const cardData = ALL_DATA.lookup_tables.cards[cardId];
+            if (cardData && cardData[cardNameKey]) {
+                allItems.add(cardData[cardNameKey]);
+            }
+        }
+        const exhibitNameKey = (LANG === 'ja') ? 'name' : 'name_en';
+        for (const exhibitId in ALL_DATA.lookup_tables.exhibits) {
+            const exhibitData = ALL_DATA.lookup_tables.exhibits[exhibitId];
+            if (exhibitData && exhibitData[exhibitNameKey]) {
+                allItems.add(exhibitData[exhibitNameKey]);
             }
         }
     }
@@ -3049,7 +3119,91 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
  * [修正版] デッキを配列として扱い、重複を保持する
  * @param {object} runTimeline - 1ラン分のタイムラインデータ
  * @param {number} targetStationIndex - 復元したいステーションのインデックス
- * @returns {{cards: Array<number>, exhibits: Set<number>}} - 復元されたカード(配列)と展示品(Set)
+ * @returns {{cards: Array<string>, exhibits: Set<string>}} - 復元されたカード(配列)と展示品(Set)の内部ID
+ */
+function reconstructDeckAtStation(runTimeline, targetStationIndex) {
+    // 1. 初期デッキを配列としてコピーして開始
+    const currentDeck = [...(runTimeline.initial.c || [])];
+    const currentExhibits = new Set(runTimeline.initial.e || []);
+
+    // 2. ターゲットのマスまで、変更を順に適用
+    const sortedChangeKeys = Object.keys(runTimeline.changes)
+                                   .map(Number)
+                                   .sort((a, b) => a - b);
+
+    for (const stationIdx of sortedChangeKeys) {
+        if (stationIdx > targetStationIndex) {
+            break;
+        }
+
+        const changesAtStation = runTimeline.changes[String(stationIdx)];
+        if (changesAtStation) {
+            // カードの追加 (push)
+            if (changesAtStation.add_c) {
+                changesAtStation.add_c.forEach(id => currentDeck.push(id));
+            }
+            // カードの削除 (spliceで最初に見つかったものを1つ削除)
+            if (changesAtStation.rem_c) {
+                changesAtStation.rem_c.forEach(idToRemove => {
+                    const index = currentDeck.indexOf(idToRemove);
+                    if (index > -1) {
+                        currentDeck.splice(index, 1);
+                    }
+                });
+            }
+            // 展示品はSetのままでOK
+            if (changesAtStation.add_e) {
+                changesAtStation.add_e.forEach(id => currentExhibits.add(id));
+            }
+            if (changesAtStation.rem_e) {
+                changesAtStation.rem_e.forEach(id => currentExhibits.delete(id));
+            }
+        }
+    }
+
+    // カードは配列、展示品はSetとして返す
+    return { cards: currentDeck, exhibits: currentExhibits };
+}
+
+// script.js (修正後)
+
+/**
+ * IDの配列に基づいてフィルターを適用するヘルパー関数
+ * @param {string[]} itemIds - 検索対象のランが持つアイテムIDの配列
+ * @param {string[]} includeIds - 含まれるべきアイテムIDの配列
+ * @param {string[]} excludeIds - 含まれてはならないアイテムIDの配列
+ * @param {'AND'|'OR'} includeLogic - '含む'条件の論理演算子
+ * @returns {boolean} - フィルター条件に一致するかどうか
+ */
+function applyIdFilters(itemIds, includeIds, excludeIds, includeLogic) {
+    // 「含まない」アイテムのフィルター
+    if (excludeIds.length > 0) {
+        if (excludeIds.some(id => itemIds.includes(id))) {
+            return false;
+        }
+    }
+
+    // 「含む」アイテムのフィルター
+    if (includeIds.length > 0) {
+        if (includeLogic === 'AND') {
+            if (!includeIds.every(id => itemIds.includes(id))) {
+                return false;
+            }
+        } else { // OR
+            if (!includeIds.some(id => itemIds.includes(id))) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+/**
+ * 差分データから指定されたステーション時点のデッキ状態を復元する
+ * @param {object} runTimeline - 1ラン分のタイムラインデータ
+ * @param {number} targetStationIndex - 復元したいステーションのインデックス
+ * @returns {{cards: Array<string>, exhibits: Set<string>}} - 復元されたカード(配列)と展示品(Set)の内部ID
  */
 function reconstructDeckAtStation(runTimeline, targetStationIndex) {
     // 1. 初期デッキを配列としてコピーして開始
@@ -3096,28 +3250,21 @@ function reconstructDeckAtStation(runTimeline, targetStationIndex) {
 }
 
 /**
- * 高度な検索を実行し、結果を表示する
- * [修正版] ボスフィルター機能を追加
+ * 高度な検索を実行し、結果を表示する (非同期版)
  */
-function performAdvancedSearch() {
+async function performAdvancedSearch() {
     console.log(`[SEARCH DEBUG] Current language (LANG) is: '${LANG}'`);
 
-    if (!ALL_RUN_DETAILS || Object.keys(ALL_RUN_DETAILS).length === 0 ||
-        !ALL_DECK_TIMELINES || Object.keys(ALL_DECK_TIMELINES).length === 0 ||
-        !ITEM_MASTER_LOOKUP || Object.keys(ITEM_MASTER_LOOKUP).length === 0) {
-
+    // 必須データのチェック
+    if (!ALL_RUN_DETAILS || Object.keys(ALL_RUN_DETAILS).length === 0 || !ALL_DATA.lookup_tables) {
         const resultsContainer = document.getElementById('run-finder-results');
         const errorMessage = UI_TEXT.run_finder_data_error || "検索データの読み込みに失敗しました。ページを再読み込みしてください。";
-
-        console.error("検索を中止: 必須データ (ALL_RUN_DETAILS, ALL_DECK_TIMELINES, ITEM_MASTER_LOOKUP) が見つかりません。");
-
+        console.error("検索を中止: 必須データ (ALL_RUN_DETAILS, ALL_DATA.lookup_tables) が見つかりません。");
         if (resultsContainer) {
             resultsContainer.innerHTML = `<p style="color: red; font-weight: bold;">${errorMessage}</p>`;
         }
-        return; // ここで処理を中断
+        return;
     }
-
-    console.log(`[DEBUG] Starting filter. Total runs in ALL_RUN_DETAILS: ${ALL_RUN_DETAILS.length}`);
 
     // 1. UIから検索条件を取得
     const selectedChar = document.getElementById('character-select').value;
@@ -3128,175 +3275,124 @@ function performAdvancedSearch() {
     const deckSizeValueStr = document.getElementById('deck-size-value').value;
     const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
 
-    const getItemsFromList = (listId) => {
-        const list = document.getElementById(listId);
-        return Array.from(list.children).map(tag => tag.dataset.itemName);
-    };
-
-    const includeKeywords = getItemsFromList('include-items-list').map(k => k.toLowerCase());
-    const excludeKeywords = getItemsFromList('exclude-items-list').map(k => k.toLowerCase());
-
+    const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
+    const includeKeywords = getItemsFromList('include-items-list');
+    const excludeKeywords = getItemsFromList('exclude-items-list');
     const includeBosses = getItemsFromList('include-bosses-list');
     const excludeBosses = getItemsFromList('exclude-bosses-list');
     const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
 
+    // キーワードを内部IDに変換
+    const nameToIdMap = new Map();
+    const cardNameKey = LANG === 'en' ? 'EN' : 'JA';
+    const exhibitNameKey = LANG === 'en' ? 'name_en' : 'name';
+    for (const id in ALL_DATA.lookup_tables.cards) {
+        const data = ALL_DATA.lookup_tables.cards[id];
+        if (data[cardNameKey]) nameToIdMap.set(data[cardNameKey].toLowerCase(), id);
+    }
+    for (const id in ALL_DATA.lookup_tables.exhibits) {
+        const data = ALL_DATA.lookup_tables.exhibits[id];
+        if (data[exhibitNameKey]) nameToIdMap.set(data[exhibitNameKey].toLowerCase(), id);
+    }
+    const includeIds = includeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
+    const excludeIds = excludeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
 
-    const useTimelineSearch = !!actFilter || !!levelFilter;
+    const useTimelineSearch = !!actFilter || !!levelFilter || (deckSizeOperator !== 'any' && !isNaN(deckSizeValue));
 
-    // 2. ランデータをフィルタリング
     const runsToSearch = ALL_RUN_DETAILS.map(r => ({...r}));
-    const filteredRuns = runsToSearch.filter((run, index) => {
-        // --- 条件A: キャラクターでの絞り込み ---
+    const filteredRuns = [];
+
+    // 2. for...of ループで非同期フィルタリングを実行
+    for (const run of runsToSearch) {
+        // キャラクターフィルター
         if (selectedChar !== 'All' && run.character !== selectedChar) {
-            return false;
+            continue;
         }
 
-
-        const runBossNames = run.bosses
-        ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : ''))
-        : [];
-
-        // 検索タグ側もすべて小文字に変換して比較する
+        // ボスフィルター
+        const runBossNames = run.bosses ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : '')) : [];
         const includeBossesLower = includeBosses.map(b => b.toLowerCase());
         const excludeBossesLower = excludeBosses.map(b => b.toLowerCase());
-
-        // Include Filter (含むボス)
         if (includeBossesLower.length > 0) {
             const includeMatch = (bossLogic === 'AND')
-            ? includeBossesLower.every(boss => runBossNames.includes(boss))
-            : includeBossesLower.some(boss => runBossNames.includes(boss));
-            if (!includeMatch) {
-                return false;
-            }
+                ? includeBossesLower.every(boss => runBossNames.includes(boss))
+                : includeBossesLower.some(boss => runBossNames.includes(boss));
+            if (!includeMatch) continue;
+        }
+        if (excludeBossesLower.length > 0 && excludeBossesLower.some(boss => runBossNames.includes(boss))) {
+            continue;
         }
 
-        // Exclude Filter (含まないボス)
-        if (excludeBossesLower.length > 0) {
-            const excludeMatch = excludeBossesLower.some(boss => runBossNames.includes(boss));
-            if (excludeMatch) {
-                return false;
-            }
-        }
-
-
-        // --- 条件B: Act/Level とカード/展示品での絞り込み ---
+        // 3. 検索タイプに応じて処理を分岐
         if (useTimelineSearch) {
-            // --- タイムライン検索 (Act/Level指定あり) ---
-            const runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            if (!runTimeline || !STATION_MAP_GLOBAL) return false;
+            // --- タイムライン検索 ---
+            let runTimeline = ALL_DECK_TIMELINES[run.run_id]; // キャッシュを確認
+            if (!runTimeline) {
+                try {
+                    const response = await fetch(`./data/deck_timelines/${run.run_id}.json?v=${DATA_VERSION}`);
+                    if (response.ok) {
+                        runTimeline = await response.json();
+                        ALL_DECK_TIMELINES[run.run_id] = runTimeline; // キャッシュに保存
+                    } else {
+                        continue; // タイムラインが見つからなければスキップ
+                    }
+                } catch (error) {
+                    console.error(`Error fetching timeline for ${run.run_id}:`, error);
+                    continue;
+                }
+            }
 
             let stationIndicesToSearch = [];
             if (actFilter && levelFilter) {
-                const stationKey = `${actFilter}-${levelFilter}`;
-                const targetIndex = STATION_MAP_GLOBAL[stationKey];
+                const targetIndex = STATION_MAP_GLOBAL[`${actFilter}-${levelFilter}`];
                 if (targetIndex !== undefined) stationIndicesToSearch.push(targetIndex);
             } else if (actFilter) {
-                const actPrefix = `${actFilter}-`;
-                for (const stationKey in STATION_MAP_GLOBAL) {
-                    if (stationKey.startsWith(actPrefix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
-                }
+                for (const key in STATION_MAP_GLOBAL) if (key.startsWith(`${actFilter}-`)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
             } else if (levelFilter) {
-                const levelSuffix = `-${levelFilter}`;
-                 for (const stationKey in STATION_MAP_GLOBAL) {
-                    if (stationKey.endsWith(levelSuffix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[stationKey]);
-                }
+                for (const key in STATION_MAP_GLOBAL) if (key.endsWith(`-${levelFilter}`)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
+            } else {
+                // act/level指定がないが、デッキサイズ指定がある場合
+                stationIndicesToSearch = Object.values(STATION_MAP_GLOBAL);
             }
 
-            if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) return false;
+            if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) continue;
 
-            // Act/Level指定がない場合は全マスを対象にする（あまりないケースだが念のため）
-            if (stationIndicesToSearch.length === 0) {
-                 stationIndicesToSearch = Object.values(STATION_MAP_GLOBAL);
-            }
-
-            return stationIndicesToSearch.some(stationIndex => {
+            const matchInTimeline = stationIndicesToSearch.some(stationIndex => {
                 const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
-
                 if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
                     const deckSize = cards.length;
-                    if (deckSizeOperator === 'lte' && deckSize > deckSizeValue) return false;
-                    if (deckSizeOperator === 'gte' && deckSize < deckSizeValue) return false;
-                }
-
-                const allItemIds = [...cards, ...exhibits];
-                const searchableItems = [];
-                for (const itemId of allItemIds) {
-                    const itemData = ITEM_MASTER_LOOKUP[itemId];
-                    if (itemData) {
-                        if (itemData.ja) searchableItems.push(itemData.ja.toLowerCase());
-                        if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
+                    if ((deckSizeOperator === 'lte' && deckSize > deckSizeValue) || (deckSizeOperator === 'gte' && deckSize < deckSizeValue)) {
+                        return false;
                     }
                 }
-                const itemsMatch = applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
-
-                if (itemsMatch) {
+                const allItemIds = [...cards, ...Array.from(exhibits)];
+                if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
                     run.displayDeckSize = cards.length;
                     return true;
                 }
                 return false;
             });
 
+            if (matchInTimeline) {
+                filteredRuns.push(run);
+            }
         } else {
-            // --- 最終デッキ検索 (Act/Level指定なし) ---
+            // --- 最終デッキでの検索 ---
             const finalDeckSize = run.cards ? run.cards.length : 0;
-
-            if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
-                if (deckSizeOperator === 'lte' && finalDeckSize > deckSizeValue) return false;
-                if (deckSizeOperator === 'gte' && finalDeckSize < deckSizeValue) return false;
-            }
-
             run.displayDeckSize = finalDeckSize;
-
-            const searchableItems = [];
             const allItemIds = [...(run.cards || []), ...(run.exhibits || [])];
-            for (const itemId of allItemIds) {
-                const itemData = ITEM_MASTER_LOOKUP[itemId];
-                if (itemData) {
-                    if (itemData.ja) searchableItems.push(itemData.ja.toLowerCase());
-                    if (itemData.en) searchableItems.push(itemData.en.toLowerCase());
-                }
+            if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
+                filteredRuns.push(run);
             }
-            return applyKeywordFilters(searchableItems, includeKeywords, excludeKeywords, includeLogic);
         }
-    });
+    }
 
     console.log(`%c[DEBUG] Filtering complete. Filtered runs count: ${filteredRuns.length}`, 'color: green; font-weight: bold;');
-
-    // 3. 検索結果をグローバル変数に保存し、ソートして表示
     lastFoundRuns = filteredRuns;
     currentSortKey = 'run_id';
     currentSortOrder = 'asc';
-    sortAndDisplayRuns(actFilter, levelFilter);
+    sortAndDisplayRuns();
 }
-
-/**
- * キーワードフィルターを適用するヘルパー関数
- */
-function applyKeywordFilters(lowerCaseItems, includeKeywords, excludeKeywords, includeLogic) {
-    // --- 「含まない」アイテムのフィルター ---
-    if (excludeKeywords.length > 0) {
-        if (excludeKeywords.some(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
-            return false;
-        }
-    }
-
-    // --- 「含む」アイテムのフィルター ---
-    if (includeKeywords.length > 0) {
-        if (includeLogic === 'AND') {
-            if (!includeKeywords.every(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
-                return false;
-            }
-        } else { // OR検索
-            if (!includeKeywords.some(keyword => lowerCaseItems.some(item => item.includes(keyword.toLowerCase())))) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-
-// script.js に追加
 
 const bossIconMap = {
     "Reimu": "./img/boss/Reimu.avif",

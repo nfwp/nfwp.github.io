@@ -1,6 +1,17 @@
 {
     "main_title": "Overall Performance Analysis",
     "card_perf_tab_title": "Card Performance🃏",
+
+    "highlights": "Highlights",
+    "atk_short": "Atk",
+    "def_short": "Def",
+    "hidden_synergy_candidates": "Hidden Synergy Candidates",
+    "combat_types": {
+        "Enemy": "Enemy",
+        "EliteEnemy": "Elite",
+        "Boss": "Boss"
+    },
+
     "exhibit_tab_title": "Exhibit Analysis👑",
     "route_tab_title": "Route & Events🗺️",
     "enemy_analysis_title": "Enemy Combat Analysis️⚔️",
