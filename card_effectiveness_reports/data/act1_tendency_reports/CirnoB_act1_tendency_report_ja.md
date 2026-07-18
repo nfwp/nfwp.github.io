@@ -348,16 +348,6 @@
 <td style='text-align: right;'>109.8</td>
 </tr>
 <tr>
-<td>真円造形術</td>
-<td style='text-align: right;'>+16.50</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>23.2%</td>
-<td style='text-align: right;'>29</td>
-<td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>36.2</td>
-<td style='text-align: right;'>84.4</td>
-</tr>
-<tr>
 <td>凍てつく玉座</td>
 <td style='text-align: right;'>+16.50</td>
 <td style='text-align: right;'>44.8%</td>
@@ -366,6 +356,16 @@
 <td style='text-align: right;'>54.6</td>
 <td style='text-align: right;'>53.0</td>
 <td style='text-align: right;'>107.7</td>
+</tr>
+<tr>
+<td>真円造形術</td>
+<td style='text-align: right;'>+16.50</td>
+<td style='text-align: right;'>44.8%</td>
+<td style='text-align: right;'>23.2%</td>
+<td style='text-align: right;'>29</td>
+<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>36.2</td>
+<td style='text-align: right;'>84.4</td>
 </tr>
 <tr>
 <td>氷鏡反射</td>
@@ -483,13 +483,13 @@
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
 <li><span class="text-purchase">完璧な偽装</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
-<li><span class="text-purchase">自然の怒り</span>: 2回</li>
 <li><span class="text-purchase">社交的な妖精</span>: 2回</li>
+<li><span class="text-purchase">自然の怒り</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
 <li><span class="text-purchase">のびーるアーム</span>: 2回</li>
+<li><span class="text-purchase">アイスシールド</span>: 1回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 1回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 1回</li>
-<li><span class="text-purchase">アイスシールド</span>: 1回</li>
 <li><span class="text-purchase">船底の念縛霊</span>: 1回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 1回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 1回</li>
@@ -525,15 +525,15 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 23回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 18回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 14回</li>
-<li><span class="text-purchase">完璧な偽装</span>: 12回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 12回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 11回</li>
+<li><span class="text-purchase">完璧な偽装</span>: 12回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 11回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 11回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 10回</li>
 <li><span class="text-purchase">社交的な妖精</span>: 9回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 8回</li>
-<li><span class="text-purchase">プリンセスウンディネ</span>: 7回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 7回</li>
+<li><span class="text-purchase">プリンセスウンディネ</span>: 7回</li>
 <li><span class="text-purchase">水遊び</span>: 7回</li>
 <li><span class="text-purchase">アイスシールド</span>: 6回</li>
 <li><span class="text-purchase">異変調査助手、大妖精</span>: 6回</li>

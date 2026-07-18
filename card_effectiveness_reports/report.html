@@ -7,7 +7,7 @@
     
     <!-- 外部ライブラリと自作CSS/JSを読み込む -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=1784200754">
+    <link rel="stylesheet" href="style.css?v=1784335201">
 
     <script src="https://cdn.plot.ly/plotly-2.29.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
@@ -65,9 +65,25 @@
     <!-- ホバー時に使う情報ボックス -->
     <div id="info-box"></div>
 
-    <!-- メインのスクリプト -->
-    <script src="script.js?v=1784200754"></script>
 
+	<!-- 1. ユーティリティと状態管理（最初に読み込む） -->
+	<script src="js/constants.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/state.js"></script>
+
+	<!-- 2. 各コンポーネントの描画ロジック -->
+	<script src="js/components/header.js"></script>
+	<script src="js/components/card-perf.js"></script>
+	<script src="js/components/exhibit.js"></script>
+	<script src="js/components/route-event.js"></script>
+	<script src="js/components/enemy.js"></script>
+    <script src="js/components/event-analysis.js"></script>
+    <script src="js/components/act-trend.js"></script>
+    <script src="js/components/card-list.js"></script>
+	<script src="js/components/run-finder.js"></script>
+
+	<!-- 3. 全体の起動ロジック（最後に実行する） -->
+	<script src="js/script.dev.js"></script>
 
     <!-- 最終更新日時を取得して表示するスクリプト -->
     <script>

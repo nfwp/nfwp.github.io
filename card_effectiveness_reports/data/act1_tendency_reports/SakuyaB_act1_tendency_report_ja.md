@@ -620,8 +620,8 @@
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 2回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">タケコプター</span>: 1回</li>
-<li><span class="text-exhibit">ブロックアイス</span>: 1回</li>
 <li><span class="text-exhibit">リボン</span>: 1回</li>
+<li><span class="text-exhibit">ブロックアイス</span>: 1回</li>
 <li><span class="text-exhibit">バターロボット</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>

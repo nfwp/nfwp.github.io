@@ -347,16 +347,6 @@
 <td style='text-align: right;'>109.8</td>
 </tr>
 <tr>
-<td>Sculpture - Circle</td>
-<td style='text-align: right;'>+16.50</td>
-<td style='text-align: right;'>44.8%</td>
-<td style='text-align: right;'>23.2%</td>
-<td style='text-align: right;'>29</td>
-<td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>36.2</td>
-<td style='text-align: right;'>84.4</td>
-</tr>
-<tr>
 <td>Frozen Throne</td>
 <td style='text-align: right;'>+16.50</td>
 <td style='text-align: right;'>44.8%</td>
@@ -365,6 +355,16 @@
 <td style='text-align: right;'>54.6</td>
 <td style='text-align: right;'>53.0</td>
 <td style='text-align: right;'>107.7</td>
+</tr>
+<tr>
+<td>Sculpture - Circle</td>
+<td style='text-align: right;'>+16.50</td>
+<td style='text-align: right;'>44.8%</td>
+<td style='text-align: right;'>23.2%</td>
+<td style='text-align: right;'>29</td>
+<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>36.2</td>
+<td style='text-align: right;'>84.4</td>
 </tr>
 <tr>
 <td>Frost Refraction</td>
@@ -482,13 +482,13 @@
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
 <li><span class="text-purchase">In Plain Sight</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
-<li><span class="text-purchase">Wrath of Nature</span>: 2</li>
 <li><span class="text-purchase">Social Butterfly</span>: 2</li>
+<li><span class="text-purchase">Wrath of Nature</span>: 2</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
 <li><span class="text-purchase">Exteeending Aaaarm</span>: 2</li>
+<li><span class="text-purchase">Ice Barrier</span>: 1</li>
 <li><span class="text-purchase">Call on Friends</span>: 1</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 1</li>
-<li><span class="text-purchase">Ice Barrier</span>: 1</li>
 <li><span class="text-purchase">Ship's Phantom</span>: 1</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 1</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 1</li>
@@ -524,15 +524,15 @@
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 23</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 18</li>
 <li><span class="text-purchase">Call on Friends</span>: 14</li>
-<li><span class="text-purchase">In Plain Sight</span>: 12</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 12</li>
-<li><span class="text-purchase">Clean Energy</span>: 11</li>
+<li><span class="text-purchase">In Plain Sight</span>: 12</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 11</li>
+<li><span class="text-purchase">Clean Energy</span>: 11</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 10</li>
 <li><span class="text-purchase">Social Butterfly</span>: 9</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 8</li>
-<li><span class="text-purchase">Princess Undine</span>: 7</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 7</li>
+<li><span class="text-purchase">Princess Undine</span>: 7</li>
 <li><span class="text-purchase">Play With Water</span>: 7</li>
 <li><span class="text-purchase">Ice Barrier</span>: 6</li>
 <li><span class="text-purchase">Daiyousei, Lively Assistant</span>: 6</li>

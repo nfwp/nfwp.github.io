@@ -1,0 +1,81 @@
+.sub-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.sub-tab-buttons .filter-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sub-tab-buttons .filter-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.sub-tab-buttons .filter-btn.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+.act-trend-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.act-trend-table th, .act-trend-table td {
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: left;
+}
+
+.act-trend-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.act-trend-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.act-trend-table a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.act-trend-table a:hover {
+    text-decoration: underline;
+}
+
+.table-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.table-scroll-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+    #act-trend-content-1 .table-scroll-wrapper table th,
+    #act-trend-content-1 .table-scroll-wrapper table td {
+        padding: 6px 8px;
+        font-size: 0.9em;
+        white-space: nowrap;
+    }
+}

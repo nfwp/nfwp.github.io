@@ -448,14 +448,14 @@
 <td style='text-align: right;'>102.4</td>
 </tr>
 <tr>
-<td>祝宴</td>
+<td>クリーンエネルギー</td>
 <td style='text-align: right;'>+4.26</td>
 <td style='text-align: right;'>30.0%</td>
 <td style='text-align: right;'>23.3%</td>
 <td style='text-align: right;'>20</td>
-<td style='text-align: right;'>32.6</td>
-<td style='text-align: right;'>61.7</td>
-<td style='text-align: right;'>94.2</td>
+<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>63.1</td>
+<td style='text-align: right;'>106.8</td>
 </tr>
 </tbody>
 </table>

@@ -447,15 +447,15 @@
 <td style='text-align: right;'>49.3</td>
 <td style='text-align: right;'>100.4</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 一攫千金</strong></td>
+<tr>
+<td>一時の平穏</td>
 <td style='text-align: right;'>+15.09</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>20</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>61.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>112.3</span></strong></td>
+<td style='text-align: right;'>31.6</td>
+<td style='text-align: right;'>44.0</td>
+<td style='text-align: right;'>75.6</td>
 </tr>
 </tbody>
 </table>

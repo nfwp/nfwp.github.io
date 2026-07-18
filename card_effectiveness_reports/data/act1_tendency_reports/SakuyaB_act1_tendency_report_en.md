@@ -619,8 +619,8 @@
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 2</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
-<li><span class="text-exhibit">Ice Cube</span>: 1</li>
 <li><span class="text-exhibit">Ribbon</span>: 1</li>
+<li><span class="text-exhibit">Ice Cube</span>: 1</li>
 <li><span class="text-exhibit">Butter Robot</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
