@@ -1,6 +1,4 @@
-// run-finder.js (再構築版)
-
-
+// run-finder.js (最終・完全・確定版)
 
 // --- 定数 ---
 const bossIconMap = {
@@ -31,7 +29,7 @@ function renderRunFinderTab() {
     }
     if (tabContent.innerHTML.trim() !== '') return; // 描画済みなら中断
 
-    // UIテキストを定義 (フォールバックは英語に統一)
+    // UIテキストを定義
     const texts = {
         title: UI_TEXT.run_finder_title || "Run Finder",
         experimental_warning: UI_TEXT.run_finder_experimental_warning || "<strong>[Experimental Feature]</strong> This search function is under development.",
@@ -256,108 +254,74 @@ function setupBossSelectors() {
     });
 }
 
-async function performAdvancedSearch() {
-    if (!ALL_RUN_DETAILS || Object.keys(ALL_RUN_DETAILS).length === 0 || !ALL_DATA.lookup_tables) {
-        const resultsContainer = document.getElementById('run-finder-results');
-        const errorMessage = UI_TEXT.run_finder_data_error || "検索データの読み込みに失敗しました。ページを再読み込みしてください。";
-        if (resultsContainer) resultsContainer.innerHTML = `<p style="color: red; font-weight: bold;">${errorMessage}</p>`;
-        return;
+
+// ==================================================================================
+//  CORE SEARCH LOGIC - REBUILT FOR PERFORMANCE
+// ==================================================================================
+
+// --- NEW: Aggregated Timeline Cache and Fetcher ---
+const characterTimelineCache = new Map();
+
+async function loadCharacterTimeline(charKey) {
+    if (characterTimelineCache.has(charKey)) {
+        return characterTimelineCache.get(charKey);
     }
-    const selectedChar = document.getElementById('character-select').value;
-    const actFilter = document.getElementById('act-filter').value;
-    const levelFilter = document.getElementById('level-filter').value;
-    const includeLogic = document.getElementById('include-logic-and').checked ? 'AND' : 'OR';
-    const deckSizeOperator = document.getElementById('deck-size-operator').value;
-    const deckSizeValueStr = document.getElementById('deck-size-value').value;
-    const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
-    const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
-    const includeKeywords = getItemsFromList('include-items-list');
-    const excludeKeywords = getItemsFromList('exclude-items-list');
-    const includeBosses = getItemsFromList('include-bosses-list');
-    const excludeBosses = getItemsFromList('exclude-bosses-list');
-    const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
-    const nameToIdMap = new Map();
-    const cardNameKey = LANG === 'en' ? 'EN' : 'JA';
-    const exhibitNameKey = LANG === 'en' ? 'name_en' : 'name';
-    for (const id in ALL_DATA.lookup_tables.cards) {
-        const data = ALL_DATA.lookup_tables.cards[id];
-        if (data[cardNameKey]) nameToIdMap.set(data[cardNameKey].toLowerCase(), id);
-    }
-    for (const id in ALL_DATA.lookup_tables.exhibits) {
-        const data = ALL_DATA.lookup_tables.exhibits[id];
-        if (data[exhibitNameKey]) nameToIdMap.set(data[exhibitNameKey].toLowerCase(), id);
-    }
-    const includeIds = includeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
-    const excludeIds = excludeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
-    const useTimelineSearch = !!actFilter || !!levelFilter || (deckSizeOperator !== 'any' && !isNaN(deckSizeValue));
-    const runsToSearch = ALL_RUN_DETAILS.map(r => ({...r}));
-    const filteredRuns = [];
-    for (const run of runsToSearch) {
-        if (selectedChar !== 'All' && run.character !== selectedChar) continue;
-        const runBossNames = run.bosses ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : '')) : [];
-        const includeBossesLower = includeBosses.map(b => b.toLowerCase());
-        const excludeBossesLower = excludeBosses.map(b => b.toLowerCase());
-        if (includeBossesLower.length > 0) {
-            const includeMatch = (bossLogic === 'AND') ? includeBossesLower.every(boss => runBossNames.includes(boss)) : includeBossesLower.some(boss => runBossNames.includes(boss));
-            if (!includeMatch) continue;
+
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
+    const filePath = `${basePath}${charKey}_timelines.json`;
+
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+            console.warn(`[WARN] Timeline file not found for ${charKey} at ${filePath}. This may be normal if the file doesn't exist.`);
+            characterTimelineCache.set(charKey, null);
+            return null;
         }
-        if (excludeBossesLower.length > 0 && excludeBossesLower.some(boss => runBossNames.includes(boss))) continue;
-        if (useTimelineSearch) {
-            let runTimeline = ALL_DECK_TIMELINES[run.run_id];
-            if (!runTimeline) {
-                try {
-                    const response = await fetch(`./data/deck_timelines/${run.run_id}.json?v=${DATA_VERSION}`);
-                    if (response.ok) {
-                        runTimeline = await response.json();
-                        ALL_DECK_TIMELINES[run.run_id] = runTimeline;
-                    } else {
-                        continue;
-                    }
-                } catch (error) {
-                    console.error(`Error fetching timeline for ${run.run_id}:`, error);
-                    continue;
-                }
-            }
-            let stationIndicesToSearch = [];
-            if (actFilter && levelFilter) {
-                const targetIndex = STATION_MAP_GLOBAL[`${actFilter}-${levelFilter}`];
-                if (targetIndex !== undefined) stationIndicesToSearch.push(targetIndex);
-            } else if (actFilter) {
-                for (const key in STATION_MAP_GLOBAL) if (key.startsWith(`${actFilter}-`)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
-            } else if (levelFilter) {
-                for (const key in STATION_MAP_GLOBAL) if (key.endsWith(`-${levelFilter}`)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
-            } else {
-                stationIndicesToSearch = Object.values(STATION_MAP_GLOBAL);
-            }
-            if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) continue;
-            const matchInTimeline = stationIndicesToSearch.some(stationIndex => {
-                const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
-                if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
-                    const deckSize = cards.length;
-                    if ((deckSizeOperator === 'lte' && deckSize > deckSizeValue) || (deckSizeOperator === 'gte' && deckSize < deckSizeValue)) return false;
-                }
-                const allItemIds = [...cards, ...Array.from(exhibits)];
-                if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
-                    run.displayDeckSize = cards.length;
-                    return true;
-                }
-                return false;
-            });
-            if (matchInTimeline) filteredRuns.push(run);
-        } else {
-            const finalDeckSize = run.cards ? run.cards.length : 0;
-            run.displayDeckSize = finalDeckSize;
-            const allItemIds = [...(run.cards || []), ...(run.exhibits || [])];
-            if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
-                filteredRuns.push(run);
-            }
-        }
+        const data = await response.json();
+        characterTimelineCache.set(charKey, data);
+        return data;
+    } catch (error) {
+        console.error(`[ERROR] Failed to fetch or parse timeline for ${charKey}:`, error);
+        characterTimelineCache.set(charKey, null);
+        return null;
     }
-    lastFoundRuns = filteredRuns;
-    currentSortKey = 'run_id';
-    currentSortOrder = 'asc';
-    sortAndDisplayRuns();
 }
+
+
+// --- Deck Reconstruction Function (from previous version) ---
+function reconstructDeckAtStation(runTimeline, targetStationIndex) {
+    if (!runTimeline || !runTimeline.initial) {
+        return { cards: [], exhibits: new Set() };
+    }
+
+    const currentDeck = [...(runTimeline.initial.c || [])];
+    const currentExhibits = new Set(runTimeline.initial.e || []);
+
+    if (runTimeline.changes) {
+        const sortedChangeKeys = Object.keys(runTimeline.changes).map(Number).sort((a, b) => a - b);
+
+        for (const stationIdx of sortedChangeKeys) {
+            if (stationIdx > targetStationIndex) {
+                break;
+            }
+            const changesAtStation = runTimeline.changes[String(stationIdx)];
+            if (changesAtStation) {
+                if (changesAtStation.add_c) changesAtStation.add_c.forEach(id => currentDeck.push(id));
+                if (changesAtStation.rem_c) {
+                    changesAtStation.rem_c.forEach(idToRemove => {
+                        const index = currentDeck.indexOf(idToRemove);
+                        if (index > -1) currentDeck.splice(index, 1);
+                    });
+                }
+                if (changesAtStation.add_e) changesAtStation.add_e.forEach(id => currentExhibits.add(id));
+                if (changesAtStation.rem_e) changesAtStation.rem_e.forEach(id => currentExhibits.delete(id));
+            }
+        }
+    }
+    return { cards: currentDeck, exhibits: currentExhibits };
+}
+
 
 function applyIdFilters(itemIds, includeIds, excludeIds, includeLogic) {
     if (excludeIds.length > 0) {
@@ -373,26 +337,153 @@ function applyIdFilters(itemIds, includeIds, excludeIds, includeLogic) {
     return true;
 }
 
-function reconstructDeckAtStation(runTimeline, targetStationIndex) {
-    const currentDeck = [...(runTimeline.initial.c || [])];
-    const currentExhibits = new Set(runTimeline.initial.e || []);
-    const sortedChangeKeys = Object.keys(runTimeline.changes).map(Number).sort((a, b) => a - b);
-    for (const stationIdx of sortedChangeKeys) {
-        if (stationIdx > targetStationIndex) break;
-        const changesAtStation = runTimeline.changes[String(stationIdx)];
-        if (changesAtStation) {
-            if (changesAtStation.add_c) changesAtStation.add_c.forEach(id => currentDeck.push(id));
-            if (changesAtStation.rem_c) {
-                changesAtStation.rem_c.forEach(idToRemove => {
-                    const index = currentDeck.indexOf(idToRemove);
-                    if (index > -1) currentDeck.splice(index, 1);
-                });
-            }
-            if (changesAtStation.add_e) changesAtStation.add_e.forEach(id => currentExhibits.add(id));
-            if (changesAtStation.rem_e) changesAtStation.rem_e.forEach(id => currentExhibits.delete(id));
+
+async function performAdvancedSearch() {
+    console.log('[DEBUG] --- Starting Search (Final Performance Version) ---');
+    const searchButton = document.getElementById('run-search-button');
+    const originalButtonText = searchButton.textContent;
+    searchButton.disabled = true;
+    searchButton.textContent = '検索中...';
+
+    try {
+        // --- 1. Get all filter values from UI ---
+        const selectedChar = document.getElementById('character-select').value;
+        const actFilter = document.getElementById('act-filter').value;
+        const levelFilter = document.getElementById('level-filter').value;
+        const includeLogic = document.getElementById('include-logic-and').checked ? 'AND' : 'OR';
+        const deckSizeOperator = document.getElementById('deck-size-operator').value;
+        const deckSizeValueStr = document.getElementById('deck-size-value').value;
+        const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
+        const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
+        const includeKeywords = getItemsFromList('include-items-list');
+        const excludeKeywords = getItemsFromList('exclude-items-list');
+        const includeBosses = getItemsFromList('include-bosses-list');
+        const excludeBosses = getItemsFromList('exclude-bosses-list');
+        const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
+        const useTimelineSearch = !!actFilter || !!levelFilter || (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) || includeKeywords.length > 0 || excludeKeywords.length > 0;
+
+        // --- 2. Get base data from GLOBAL variables ---
+        if (!ALL_RUN_DETAILS || !STATION_MAP_GLOBAL) {
+            console.error('[FATAL] Global data (ALL_RUN_DETAILS or STATION_MAP_GLOBAL) not found! Aborting.');
+            return;
         }
+
+        // --- 3. Filter by character if specified ---
+        let runsToSearch = (selectedChar === 'All')
+            ? ALL_RUN_DETAILS
+            : ALL_RUN_DETAILS.filter(run => run.character === selectedChar);
+
+        console.log(`[DEBUG] Initial run count for character '${selectedChar}': ${runsToSearch.length}`);
+
+        // --- 4. Prepare for filtering ---
+        const nameToIdMap = new Map();
+        const cardNameKey = LANG === 'en' ? 'EN' : 'JA';
+        const exhibitNameKey = LANG === 'en' ? 'name_en' : 'name';
+        for (const id in ALL_DATA.lookup_tables.cards) {
+            const data = ALL_DATA.lookup_tables.cards[id];
+            if (data[cardNameKey]) nameToIdMap.set(data[cardNameKey].toLowerCase(), id);
+        }
+        for (const id in ALL_DATA.lookup_tables.exhibits) {
+            const data = ALL_DATA.lookup_tables.exhibits[id];
+            if (data[exhibitNameKey]) nameToIdMap.set(data[exhibitNameKey].toLowerCase(), id);
+        }
+        const includeIds = includeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
+        const excludeIds = excludeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
+
+        // --- 5. Perform the actual filtering loop ---
+        const filteredRuns = [];
+        const charactersToLoad = new Set(runsToSearch.map(r => r.character));
+
+        // Load all necessary character timelines in parallel
+        console.log(`[DEBUG] Needing timeline data for characters:`, Array.from(charactersToLoad));
+        const timelinePromises = Array.from(charactersToLoad).map(char => loadCharacterTimeline(char));
+        await Promise.all(timelinePromises);
+        console.log(`[DEBUG] All necessary timelines loaded and cached.`);
+
+        for (const run of runsToSearch) {
+            // Boss filter (can be done early)
+            const runBossNames = run.bosses ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : '')) : [];
+            const includeBossesLower = includeBosses.map(b => b.toLowerCase());
+            const excludeBossesLower = excludeBosses.map(b => b.toLowerCase());
+            if (includeBossesLower.length > 0) {
+                const includeMatch = (bossLogic === 'AND') ? includeBossesLower.every(boss => runBossNames.includes(boss)) : includeBossesLower.some(boss => runBossNames.includes(boss));
+                if (!includeMatch) continue;
+            }
+            if (excludeBossesLower.length > 0 && excludeBossesLower.some(boss => runBossNames.includes(boss))) continue;
+
+            const runWithDisplayData = { ...run };
+
+            if (useTimelineSearch) {
+                const charTimelines = characterTimelineCache.get(run.character);
+                if (!charTimelines) {
+                    continue; // Should not happen if pre-loading worked
+                }
+                const runTimeline = charTimelines[run.run_id];
+                if (!runTimeline) {
+                    continue; // This run doesn't have a timeline file, which is normal
+                }
+
+                let stationIndicesToSearch = [];
+                const act = actFilter;
+                const levelNum = levelFilter ? parseInt(levelFilter, 10) : 0;
+
+                if (act && levelNum > 0) {
+                    for (let level = levelNum; level <= 17; level++) { // Boss is 17
+                        const key = `${act}-${level}`;
+                        const targetIndex = STATION_MAP_GLOBAL[key];
+                        if (targetIndex !== undefined) stationIndicesToSearch.push(targetIndex);
+                    }
+                } else if (act) {
+                    const actPrefix = `${act}-`;
+                    for (const key in STATION_MAP_GLOBAL) {
+                        if (key.startsWith(actPrefix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
+                    }
+                } else if (levelNum > 0) {
+                    const levelSuffix = `-${levelNum}`;
+                    for (const key in STATION_MAP_GLOBAL) {
+                        if (key.endsWith(levelSuffix)) stationIndicesToSearch.push(STATION_MAP_GLOBAL[key]);
+                    }
+                } else {
+                    // If no act/level, but other timeline filters exist, search all stations
+                    stationIndicesToSearch = Object.values(STATION_MAP_GLOBAL);
+                }
+
+                if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) continue;
+
+                const matchInTimeline = stationIndicesToSearch.some(stationIndex => {
+                    const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
+                    if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
+                        const deckSize = cards.length;
+                        if ((deckSizeOperator === 'lte' && deckSize > deckSizeValue) || (deckSizeOperator === 'gte' && deckSize < deckSizeValue)) return false;
+                    }
+                    const allItemIds = [...cards, ...Array.from(exhibits)];
+                    if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
+                        runWithDisplayData.displayDeckSize = cards.length;
+                        return true;
+                    }
+                    return false;
+                });
+                if (matchInTimeline) filteredRuns.push(runWithDisplayData);
+
+            } else { // Final deck search (only boss filters were applied)
+                runWithDisplayData.displayDeckSize = run.cards ? run.cards.length : 0;
+                filteredRuns.push(runWithDisplayData);
+            }
+        }
+
+        // --- 6. Display results ---
+        console.log(`[DEBUG] --- Search Finished. Found ${filteredRuns.length} runs. ---`);
+        lastFoundRuns = filteredRuns;
+        currentSortKey = 'run_id';
+        currentSortOrder = 'asc';
+        sortAndDisplayRuns();
+
+    } catch (error) {
+        console.error("[FATAL] A critical error occurred during search:", error);
+    } finally {
+        searchButton.disabled = false;
+        searchButton.textContent = originalButtonText;
     }
-    return { cards: currentDeck, exhibits: currentExhibits };
 }
 
 function handleSortClick(sortKey) {

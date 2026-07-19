@@ -3,8 +3,8 @@
 <div class="tendency-container">
 <div class="tendency-text">
 <ul>
-<li><strong>Average HP when Resting</strong>: 27.0 (Median: 26.0, N=117)</li>
-<li><strong>Average HP when Upgrading</strong>: 48.0 (Median: 48.0, N=598)</li>
+<li><strong>Average HP when Resting</strong>: 27.1 (Median: 26.0, N=118)</li>
+<li><strong>Average HP when Upgrading</strong>: 48.0 (Median: 48.0, N=600)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -14,8 +14,8 @@
 <h4>Top 20 Priority Upgrade Cards at Gap/Shops</h4>
 <div class="two-column-container">
 <div class="column"><ul>
+<li>Instinctive Love: 103</li>
 <li>Air Kiss: 103</li>
-<li>Instinctive Love: 102</li>
 <li>Lonely Heart: 66</li>
 <li>Talk Through the Hat: 37</li>
 <li>Devil's Codex: 36</li>
@@ -40,8 +40,8 @@
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
 <ul>
-<li><strong>Average HP when challenging Elites</strong>: 45.2 (Median: 46.0, N=458)</li>
-<li><strong>Average HP when choosing normal combats</strong>: 54.3 (Median: 59.0, N=1276)</li>
+<li><strong>Average HP when challenging Elites</strong>: 45.1 (Median: 45.5, N=460)</li>
+<li><strong>Average HP when choosing normal combats</strong>: 54.3 (Median: 59.5, N=1280)</li>
 </ul>
 <h4>2.1 Act 1 Elite Challenge Influence Card Analysis (Top 40)</h4>
 <p>This score measures the influence of owning a card on the decision to challenge an elite. A higher score indicates that owning the card encourages challenging elites. The influence of cards with fewer samples is adjusted.<br>Cards with a performance score in Act 1 elite battles meeting the criteria (<strong>Attack ≥ 60<strong> or <strong>Total ≥ 110<strong>) are highlighted with a <strong>background color and a 🔥 icon<strong>.</p>
@@ -58,79 +58,79 @@
 <tbody>
 <tr>
 <td>Selflessness</td>
-<td style='text-align: right;'>+32.02</td>
+<td style='text-align: right;'>+31.99</td>
 <td style='text-align: right;'>57.1%</td>
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>70</td>
-<td style='text-align: right;'>44.0</td>
+<td style='text-align: right;'>43.7</td>
 <td style='text-align: right;'>53.5</td>
-<td style='text-align: right;'>97.5</td>
+<td style='text-align: right;'>97.2</td>
 </tr>
 <tr>
 <td>Luminescent Night</td>
-<td style='text-align: right;'>+26.64</td>
-<td style='text-align: right;'>51.4%</td>
+<td style='text-align: right;'>+27.09</td>
+<td style='text-align: right;'>51.8%</td>
 <td style='text-align: right;'>24.7%</td>
-<td style='text-align: right;'>109</td>
+<td style='text-align: right;'>110</td>
 <td style='text-align: right;'>32.9</td>
-<td style='text-align: right;'>56.0</td>
-<td style='text-align: right;'>88.9</td>
+<td style='text-align: right;'>57.4</td>
+<td style='text-align: right;'>90.3</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sweet Sweet Potato</strong></td>
-<td style='text-align: right;'>+25.93</td>
+<td style='text-align: right;'>+25.92</td>
 <td style='text-align: right;'>50.4%</td>
 <td style='text-align: right;'>24.5%</td>
-<td style='text-align: right;'>131</td>
+<td style='text-align: right;'>133</td>
 <td style='text-align: right;'>43.0</td>
 <td style='text-align: right;'>72.9</td>
 <td style='text-align: right;'><strong><span style='color: red;'>115.9</span></strong></td>
 </tr>
 <tr>
 <td>Claustrophobia</td>
-<td style='text-align: right;'>+24.91</td>
+<td style='text-align: right;'>+24.88</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>92</td>
 <td style='text-align: right;'>47.6</td>
-<td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'>98.0</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>97.8</td>
 </tr>
 <tr>
 <td>Passionate Memories</td>
-<td style='text-align: right;'>+24.39</td>
+<td style='text-align: right;'>+24.36</td>
 <td style='text-align: right;'>48.1%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>189</td>
 <td style='text-align: right;'>58.1</td>
-<td style='text-align: right;'>45.3</td>
-<td style='text-align: right;'>103.4</td>
+<td style='text-align: right;'>45.0</td>
+<td style='text-align: right;'>103.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Dubious Tea Party</strong></td>
-<td style='text-align: right;'>+24.17</td>
+<td style='text-align: right;'>+24.14</td>
 <td style='text-align: right;'>49.1%</td>
 <td style='text-align: right;'>24.9%</td>
 <td style='text-align: right;'>108</td>
 <td style='text-align: right;'>53.2</td>
-<td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.7</span></strong></td>
+<td style='text-align: right;'>58.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.3</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Ballistic Shield</strong></td>
-<td style='text-align: right;'>+23.48</td>
+<td style='text-align: right;'>+23.45</td>
 <td style='text-align: right;'>49.1%</td>
-<td style='text-align: right;'>25.6%</td>
+<td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>57</td>
 <td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>64.3</td>
-<td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
+<td style='text-align: right;'>63.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.7</span></strong></td>
 </tr>
 <tr>
 <td>Instinctive Action</td>
-<td style='text-align: right;'>+23.42</td>
+<td style='text-align: right;'>+23.39</td>
 <td style='text-align: right;'>48.8%</td>
-<td style='text-align: right;'>25.3%</td>
+<td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>80</td>
 <td style='text-align: right;'>53.8</td>
 <td style='text-align: right;'>32.9</td>
@@ -138,9 +138,9 @@
 </tr>
 <tr>
 <td>Ancestral Dreams</td>
-<td style='text-align: right;'>+23.28</td>
+<td style='text-align: right;'>+23.25</td>
 <td style='text-align: right;'>48.4%</td>
-<td style='text-align: right;'>25.1%</td>
+<td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>95</td>
 <td style='text-align: right;'>59.3</td>
 <td style='text-align: right;'>48.2</td>
@@ -148,17 +148,17 @@
 </tr>
 <tr>
 <td>DNA's Flaw</td>
-<td style='text-align: right;'>+22.62</td>
+<td style='text-align: right;'>+22.59</td>
 <td style='text-align: right;'>48.3%</td>
 <td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>58</td>
 <td style='text-align: right;'>45.3</td>
-<td style='text-align: right;'>47.9</td>
-<td style='text-align: right;'>93.2</td>
+<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>92.9</td>
 </tr>
 <tr>
 <td>Curiosity</td>
-<td style='text-align: right;'>+22.45</td>
+<td style='text-align: right;'>+22.42</td>
 <td style='text-align: right;'>48.9%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>47</td>
@@ -168,7 +168,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Wheel of Misfortune</strong></td>
-<td style='text-align: right;'>+22.28</td>
+<td style='text-align: right;'>+22.26</td>
 <td style='text-align: right;'>55.2%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>29</td>
@@ -178,117 +178,117 @@
 </tr>
 <tr>
 <td>Crazed Thorns</td>
-<td style='text-align: right;'>+22.09</td>
+<td style='text-align: right;'>+22.06</td>
 <td style='text-align: right;'>46.9%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>128</td>
 <td style='text-align: right;'>49.0</td>
-<td style='text-align: right;'>43.0</td>
-<td style='text-align: right;'>92.0</td>
+<td style='text-align: right;'>42.6</td>
+<td style='text-align: right;'>91.7</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Heart Blossoms</strong></td>
+<td style='text-align: right;'>+21.68</td>
+<td style='text-align: right;'>47.2%</td>
+<td style='text-align: right;'>25.5%</td>
+<td style='text-align: right;'>72</td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>62.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>120.6</span></strong></td>
 </tr>
 <tr>
 <td>Shade</td>
-<td style='text-align: right;'>+21.60</td>
+<td style='text-align: right;'>+21.57</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>40</td>
 <td style='text-align: right;'>39.3</td>
-<td style='text-align: right;'>60.7</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>59.3</td>
+<td style='text-align: right;'>98.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ageless Dream</strong></td>
-<td style='text-align: right;'>+20.83</td>
+<td style='text-align: right;'>+20.79</td>
 <td style='text-align: right;'>45.1%</td>
-<td style='text-align: right;'>24.2%</td>
+<td style='text-align: right;'>24.3%</td>
 <td style='text-align: right;'>182</td>
 <td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'>58.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>117.4</span></strong></td>
-</tr>
-<tr class="specialist-row">
-<td><strong>🔥 Heart Blossoms</strong></td>
-<td style='text-align: right;'>+20.79</td>
-<td style='text-align: right;'>46.4%</td>
-<td style='text-align: right;'>25.6%</td>
-<td style='text-align: right;'>69</td>
-<td style='text-align: right;'>57.7</td>
-<td style='text-align: right;'>58.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.8</span></strong></td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.0</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sin of the Black Pegasus</strong></td>
-<td style='text-align: right;'>+20.35</td>
+<td style='text-align: right;'>+20.32</td>
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>52</td>
 <td style='text-align: right;'><strong><span style='color: red;'>62.3</span></strong></td>
-<td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>118.9</span></strong></td>
+<td style='text-align: right;'>56.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
 </tr>
 <tr>
 <td>Mischievous Rose</td>
-<td style='text-align: right;'>+20.17</td>
+<td style='text-align: right;'>+20.14</td>
 <td style='text-align: right;'>46.0%</td>
-<td style='text-align: right;'>25.8%</td>
+<td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>50</td>
-<td style='text-align: right;'>44.3</td>
+<td style='text-align: right;'>44.0</td>
 <td style='text-align: right;'>53.2</td>
-<td style='text-align: right;'>97.6</td>
+<td style='text-align: right;'>97.2</td>
 </tr>
 <tr>
 <td>Embryo's Dream</td>
-<td style='text-align: right;'>+20.10</td>
+<td style='text-align: right;'>+20.07</td>
 <td style='text-align: right;'>45.3%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>106</td>
 <td style='text-align: right;'>40.7</td>
-<td style='text-align: right;'>41.5</td>
-<td style='text-align: right;'>82.2</td>
+<td style='text-align: right;'>40.7</td>
+<td style='text-align: right;'>81.4</td>
 </tr>
-<tr>
-<td>Sakura-Colored Sea</td>
-<td style='text-align: right;'>+19.67</td>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 Water Gun</strong></td>
+<td style='text-align: right;'>+19.77</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>25.7%</td>
+<td style='text-align: right;'>66</td>
+<td style='text-align: right;'><strong><span style='color: red;'>63.5</span></strong></td>
+<td style='text-align: right;'>67.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>130.6</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Sakura-Colored Sea</strong></td>
+<td style='text-align: right;'>+19.65</td>
 <td style='text-align: right;'>45.1%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>91</td>
-<td style='text-align: right;'>55.3</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>109.8</td>
+<td style='text-align: right;'>55.7</td>
+<td style='text-align: right;'>54.7</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.4</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Grudge Returning</strong></td>
-<td style='text-align: right;'>+19.57</td>
+<td style='text-align: right;'>+19.54</td>
 <td style='text-align: right;'>45.8%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>48</td>
 <td style='text-align: right;'><strong><span style='color: red;'>61.2</span></strong></td>
-<td style='text-align: right;'>42.3</td>
-<td style='text-align: right;'>103.5</td>
+<td style='text-align: right;'>41.9</td>
+<td style='text-align: right;'>103.1</td>
 </tr>
 <tr>
 <td>🌀 Jealous</td>
-<td style='text-align: right;'>+18.99</td>
+<td style='text-align: right;'>+18.97</td>
 <td style='text-align: right;'>51.9%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>27</td>
 <td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'>45.9</td>
-<td style='text-align: right;'>96.3</td>
-</tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 Water Gun</strong></td>
-<td style='text-align: right;'>+18.91</td>
-<td style='text-align: right;'>44.6%</td>
-<td style='text-align: right;'>25.7%</td>
-<td style='text-align: right;'>65</td>
-<td style='text-align: right;'><strong><span style='color: red;'>65.1</span></strong></td>
-<td style='text-align: right;'>67.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>132.1</span></strong></td>
+<td style='text-align: right;'>45.6</td>
+<td style='text-align: right;'>96.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Withering Dreams</strong></td>
-<td style='text-align: right;'>+18.84</td>
+<td style='text-align: right;'>+18.81</td>
 <td style='text-align: right;'>44.6%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>56</td>
@@ -298,7 +298,7 @@
 </tr>
 <tr>
 <td>True Full Moon</td>
-<td style='text-align: right;'>+18.37</td>
+<td style='text-align: right;'>+18.34</td>
 <td style='text-align: right;'>44.2%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>52</td>
@@ -308,17 +308,17 @@
 </tr>
 <tr>
 <td>Tarot: The Chariot</td>
-<td style='text-align: right;'>+18.36</td>
+<td style='text-align: right;'>+18.34</td>
 <td style='text-align: right;'>52.0%</td>
-<td style='text-align: right;'>26.0%</td>
+<td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>25</td>
-<td style='text-align: right;'>55.8</td>
-<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>56.1</td>
+<td style='text-align: right;'>43.3</td>
 <td style='text-align: right;'>99.5</td>
 </tr>
 <tr>
 <td>Persecutory Delusions</td>
-<td style='text-align: right;'>+18.21</td>
+<td style='text-align: right;'>+18.18</td>
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>25.0%</td>
 <td style='text-align: right;'>139</td>
@@ -328,27 +328,17 @@
 </tr>
 <tr>
 <td>Dance of the Heart</td>
-<td style='text-align: right;'>+18.05</td>
+<td style='text-align: right;'>+18.02</td>
 <td style='text-align: right;'>43.4%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>99</td>
 <td style='text-align: right;'>46.5</td>
-<td style='text-align: right;'>57.7</td>
-<td style='text-align: right;'>104.2</td>
-</tr>
-<tr>
-<td>Emotional Surge</td>
-<td style='text-align: right;'>+18.01</td>
-<td style='text-align: right;'>43.1%</td>
-<td style='text-align: right;'>25.1%</td>
-<td style='text-align: right;'>130</td>
-<td style='text-align: right;'>48.8</td>
-<td style='text-align: right;'>59.8</td>
-<td style='text-align: right;'>108.5</td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>103.2</td>
 </tr>
 <tr>
 <td>Transference Blade</td>
-<td style='text-align: right;'>+17.99</td>
+<td style='text-align: right;'>+17.96</td>
 <td style='text-align: right;'>43.7%</td>
 <td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>71</td>
@@ -356,19 +346,29 @@
 <td style='text-align: right;'>36.5</td>
 <td style='text-align: right;'>88.0</td>
 </tr>
+<tr class="specialist-row">
+<td><strong>🔥 Emotional Surge</strong></td>
+<td style='text-align: right;'>+17.92</td>
+<td style='text-align: right;'>43.0%</td>
+<td style='text-align: right;'>25.0%</td>
+<td style='text-align: right;'>135</td>
+<td style='text-align: right;'>48.8</td>
+<td style='text-align: right;'>62.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.0</span></strong></td>
+</tr>
 <tr>
 <td>Faith of Native God</td>
-<td style='text-align: right;'>+17.17</td>
+<td style='text-align: right;'>+17.15</td>
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>37</td>
 <td style='text-align: right;'>40.0</td>
-<td style='text-align: right;'>47.6</td>
-<td style='text-align: right;'>87.7</td>
+<td style='text-align: right;'>47.9</td>
+<td style='text-align: right;'>88.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Last Romantic Night Call</strong></td>
-<td style='text-align: right;'>+16.57</td>
+<td style='text-align: right;'>+16.55</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>24</td>
@@ -377,18 +377,8 @@
 <td style='text-align: right;'>101.1</td>
 </tr>
 <tr>
-<td>Closed Heart</td>
-<td style='text-align: right;'>+16.26</td>
-<td style='text-align: right;'>40.0%</td>
-<td style='text-align: right;'>23.7%</td>
-<td style='text-align: right;'>285</td>
-<td style='text-align: right;'>35.7</td>
-<td style='text-align: right;'>60.2</td>
-<td style='text-align: right;'>95.9</td>
-</tr>
-<tr>
 <td>Dark Dancer</td>
-<td style='text-align: right;'>+16.22</td>
+<td style='text-align: right;'>+16.20</td>
 <td style='text-align: right;'>43.9%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>41</td>
@@ -397,8 +387,18 @@
 <td style='text-align: right;'>101.9</td>
 </tr>
 <tr>
+<td>Closed Heart</td>
+<td style='text-align: right;'>+16.12</td>
+<td style='text-align: right;'>39.9%</td>
+<td style='text-align: right;'>23.7%</td>
+<td style='text-align: right;'>291</td>
+<td style='text-align: right;'>35.7</td>
+<td style='text-align: right;'>61.7</td>
+<td style='text-align: right;'>97.5</td>
+</tr>
+<tr>
 <td>🧰 Wolf Fur</td>
-<td style='text-align: right;'>+16.13</td>
+<td style='text-align: right;'>+16.10</td>
 <td style='text-align: right;'>40.9%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>176</td>
@@ -408,19 +408,19 @@
 </tr>
 <tr>
 <td>Grimoire Study</td>
-<td style='text-align: right;'>+15.77</td>
+<td style='text-align: right;'>+15.75</td>
 <td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>26.0%</td>
+<td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>33</td>
 <td style='text-align: right;'>49.3</td>
-<td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'>104.3</td>
+<td style='text-align: right;'>55.3</td>
+<td style='text-align: right;'>104.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Melancholic Garden</strong></td>
-<td style='text-align: right;'>+15.48</td>
+<td style='text-align: right;'>+15.44</td>
 <td style='text-align: right;'>40.5%</td>
-<td style='text-align: right;'>25.0%</td>
+<td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>153</td>
 <td style='text-align: right;'><strong><span style='color: red;'>70.2</span></strong></td>
 <td style='text-align: right;'>54.1</td>
@@ -428,33 +428,33 @@
 </tr>
 <tr>
 <td>Flash of Inspiration</td>
-<td style='text-align: right;'>+15.37</td>
+<td style='text-align: right;'>+15.35</td>
 <td style='text-align: right;'>41.7%</td>
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>48</td>
 <td style='text-align: right;'>37.1</td>
-<td style='text-align: right;'>41.9</td>
-<td style='text-align: right;'>79.0</td>
+<td style='text-align: right;'>41.5</td>
+<td style='text-align: right;'>78.6</td>
 </tr>
-<tr>
-<td>Low Profile</td>
-<td style='text-align: right;'>+15.09</td>
+<tr class="specialist-row">
+<td><strong>🔥 Money Shower</strong></td>
+<td style='text-align: right;'>+15.08</td>
 <td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.1%</td>
+<td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>20</td>
 <td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>49.3</td>
-<td style='text-align: right;'>100.4</td>
+<td style='text-align: right;'>59.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.8</span></strong></td>
 </tr>
 <tr>
 <td>Moment of Respite</td>
-<td style='text-align: right;'>+15.09</td>
+<td style='text-align: right;'>+15.08</td>
 <td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.1%</td>
+<td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>20</td>
 <td style='text-align: right;'>31.6</td>
-<td style='text-align: right;'>44.0</td>
-<td style='text-align: right;'>75.6</td>
+<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>75.3</td>
 </tr>
 </tbody>
 </table>
@@ -462,7 +462,7 @@
 <div class="tendency-container">
 <div class="tendency-text">
 <ul>
-<li><strong>Average money when visiting shops</strong>: 198.4 (Median: 203.5, N=330)</li>
+<li><strong>Average money when visiting shops</strong>: 198.8 (Median: 204.0, N=331)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -577,7 +577,7 @@
 </div>
 </div>
 <div class="shop-tendency-column">
-<h4>With money in range: 301～ Gold (N=43)</h4>
+<h4>With money in range: 301～ Gold (N=44)</h4>
 <div class="shop-item-grid">
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
@@ -585,8 +585,8 @@
 <li><span class="text-purchase">Unexplained Fever</span>: 6</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 6</li>
 <li><span class="text-purchase">Closed Heart</span>: 5</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 5</li>
 <li><span class="text-purchase">Talk Through the Hat</span>: 4</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 4</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 3</li>
 <li><span class="text-purchase">🧰 Disposable Amulet</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 3</li>
@@ -609,8 +609,8 @@
 <ul>
 <li><span class="text-exhibit">Ribbon</span>: 4</li>
 <li><span class="text-exhibit">Take-Copter</span>: 4</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 4</li>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 3</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 2</li>
 <li><span class="text-exhibit">Black Notebook</span>: 2</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
@@ -634,6 +634,7 @@
 <li><span class="text-remove">🌀 Misfortune</span>: 4</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 4</li>
 <li><span class="text-remove">Boundary</span>: 2</li>
+<li><span class="text-remove">Shoot</span>: 1</li>
 </ul>
 </div>
 </div>
