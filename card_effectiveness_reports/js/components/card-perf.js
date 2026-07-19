@@ -542,10 +542,12 @@ function createHoverText(d, lang) {
         if (top20List && top20List.length > 0) {
             htmlParts.push(`<b>${H.top_20}:</b><br>${createCoOccurrenceHtml(top20List)}`);
         }
-
         if (hiddenSynergies && hiddenSynergies.length > 0) {
-            htmlParts.push(`<br>${H.hidden_synergy_candidates}<br>${createCoOccurrenceHtml(hiddenSynergies)}`);
+            // <hr>で区切り線を追加し、タイトルを<b>で太字にする
+            htmlParts.push(`<hr><b>${H.hidden_synergy_candidates}</b><br>${createCoOccurrenceHtml(hiddenSynergies)}`);
         }
+
+
         coOccurrenceHtml = htmlParts.join('');
 
     } else {
