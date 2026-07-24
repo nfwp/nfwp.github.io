@@ -436,16 +436,6 @@
 <td style='text-align: right;'>41.5</td>
 <td style='text-align: right;'>78.6</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Money Shower</strong></td>
-<td style='text-align: right;'>+15.08</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.2%</td>
-<td style='text-align: right;'>20</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>59.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.8</span></strong></td>
-</tr>
 <tr>
 <td>Moment of Respite</td>
 <td style='text-align: right;'>+15.08</td>
@@ -455,6 +445,16 @@
 <td style='text-align: right;'>31.6</td>
 <td style='text-align: right;'>43.7</td>
 <td style='text-align: right;'>75.3</td>
+</tr>
+<tr>
+<td>Low Profile</td>
+<td style='text-align: right;'>+15.08</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>26.2%</td>
+<td style='text-align: right;'>20</td>
+<td style='text-align: right;'>51.1</td>
+<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>100.1</td>
 </tr>
 </tbody>
 </table>
