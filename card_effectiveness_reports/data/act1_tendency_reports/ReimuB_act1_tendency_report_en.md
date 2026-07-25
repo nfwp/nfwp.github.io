@@ -196,16 +196,6 @@
 <td style='text-align: right;'>50.8</td>
 <td style='text-align: right;'>85.6</td>
 </tr>
-<tr>
-<td>Tranquility</td>
-<td style='text-align: right;'>+20.31</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>23.8%</td>
-<td style='text-align: right;'>30</td>
-<td style='text-align: right;'>46.7</td>
-<td style='text-align: right;'>58.3</td>
-<td style='text-align: right;'>105.1</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Fleeting Fantasy</strong></td>
 <td style='text-align: right;'>+20.31</td>
@@ -215,6 +205,16 @@
 <td style='text-align: right;'>58.0</td>
 <td style='text-align: right;'>57.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>115.2</span></strong></td>
+</tr>
+<tr>
+<td>Tranquility</td>
+<td style='text-align: right;'>+20.31</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>23.8%</td>
+<td style='text-align: right;'>30</td>
+<td style='text-align: right;'>46.7</td>
+<td style='text-align: right;'>58.3</td>
+<td style='text-align: right;'>105.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Canned Food</strong></td>

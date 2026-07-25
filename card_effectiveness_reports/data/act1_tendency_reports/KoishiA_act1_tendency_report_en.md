@@ -277,16 +277,6 @@
 <td style='text-align: right;'>100.6</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Mental Reset</strong></td>
-<td style='text-align: right;'>+18.11</td>
-<td style='text-align: right;'>44.2%</td>
-<td style='text-align: right;'>24.7%</td>
-<td style='text-align: right;'>43</td>
-<td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>63.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>121.2</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Serene Memories</strong></td>
 <td style='text-align: right;'>+18.11</td>
 <td style='text-align: right;'>44.2%</td>
@@ -295,6 +285,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>63.8</span></strong></td>
 <td style='text-align: right;'>44.3</td>
 <td style='text-align: right;'>108.1</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Mental Reset</strong></td>
+<td style='text-align: right;'>+18.11</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>24.7%</td>
+<td style='text-align: right;'>43</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>63.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>121.2</span></strong></td>
 </tr>
 <tr>
 <td>Ancestral Dreams</td>
