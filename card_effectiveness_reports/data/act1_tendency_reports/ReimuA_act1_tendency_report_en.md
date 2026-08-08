@@ -4,7 +4,7 @@
 <div class="tendency-text">
 <ul>
 <li><strong>Average HP when Resting</strong>: 39.6 (Median: 40.0, N=129)</li>
-<li><strong>Average HP when Upgrading</strong>: 58.6 (Median: 61.0, N=1240)</li>
+<li><strong>Average HP when Upgrading</strong>: 58.6 (Median: 61.0, N=1244)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -16,21 +16,21 @@
 <div class="column"><ul>
 <li>Youkai Buster: 156</li>
 <li>Maiden's Waltz: 105</li>
-<li>Ascension Kick: 103</li>
+<li>Ascension Kick: 104</li>
 <li>Spell Card Duel: 88</li>
 <li>Wandering Heaven: 68</li>
 <li>Three Gods of Sumiyoshi: 55</li>
 <li>Crimson Energy Release: 49</li>
 <li>Orb of Duality: 47</li>
 <li>Full Moon Howl: 42</li>
-<li>Talisman Protection: 35</li>
+<li>Talisman Protection: 36</li>
 </ul></div>
 <div class="column"><ul>
 <li>Purify the Land: 31</li>
 <li>Freefly: 31</li>
 <li>Dragon-Slaying Circle: 29</li>
+<li>Permanent Border: 24</li>
 <li>Danmaku Protection: 23</li>
-<li>Permanent Border: 23</li>
 <li>Homing Amulet: 22</li>
 <li>Battle Stance: 18</li>
 <li>Dance of Sacred Sakura: 15</li>
@@ -40,8 +40,8 @@
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
 <ul>
-<li><strong>Average HP when challenging Elites</strong>: 56.2 (Median: 58.0, N=799)</li>
-<li><strong>Average HP when choosing normal combats</strong>: 63.0 (Median: 69.0, N=2133)</li>
+<li><strong>Average HP when challenging Elites</strong>: 56.2 (Median: 58.0, N=801)</li>
+<li><strong>Average HP when choosing normal combats</strong>: 63.0 (Median: 69.0, N=2138)</li>
 </ul>
 <h4>2.1 Act 1 Elite Challenge Influence Card Analysis (Top 40)</h4>
 <p>This score measures the influence of owning a card on the decision to challenge an elite. A higher score indicates that owning the card encourages challenging elites. The influence of cards with fewer samples is adjusted.<br>Cards with a performance score in Act 1 elite battles meeting the criteria (<strong>Attack ≥ 60<strong> or <strong>Total ≥ 110<strong>) are highlighted with a <strong>background color and a 🔥 icon<strong>.</p>
@@ -67,24 +67,24 @@
 <td style='text-align: right;'>99.0</td>
 </tr>
 <tr>
+<td>Cleansing Exorcism</td>
+<td style='text-align: right;'>+24.58</td>
+<td style='text-align: right;'>50.9%</td>
+<td style='text-align: right;'>26.3%</td>
+<td style='text-align: right;'>114</td>
+<td style='text-align: right;'>46.5</td>
+<td style='text-align: right;'>58.0</td>
+<td style='text-align: right;'>104.5</td>
+</tr>
+<tr>
 <td>Dreadful Raging Waves</td>
-<td style='text-align: right;'>+24.13</td>
+<td style='text-align: right;'>+24.12</td>
 <td style='text-align: right;'>50.9%</td>
 <td style='text-align: right;'>26.8%</td>
 <td style='text-align: right;'>53</td>
 <td style='text-align: right;'>55.4</td>
 <td style='text-align: right;'>40.9</td>
 <td style='text-align: right;'>96.4</td>
-</tr>
-<tr>
-<td>Cleansing Exorcism</td>
-<td style='text-align: right;'>+24.12</td>
-<td style='text-align: right;'>50.4%</td>
-<td style='text-align: right;'>26.3%</td>
-<td style='text-align: right;'>113</td>
-<td style='text-align: right;'>46.5</td>
-<td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>104.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Balanced Orbs</strong></td>
@@ -98,7 +98,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Hakurei Temple Fair</strong></td>
-<td style='text-align: right;'>+24.03</td>
+<td style='text-align: right;'>+24.02</td>
 <td style='text-align: right;'>50.6%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>79</td>
@@ -108,10 +108,10 @@
 </tr>
 <tr>
 <td>Permanent Border</td>
-<td style='text-align: right;'>+22.99</td>
-<td style='text-align: right;'>48.5%</td>
+<td style='text-align: right;'>+22.61</td>
+<td style='text-align: right;'>48.1%</td>
 <td style='text-align: right;'>25.5%</td>
-<td style='text-align: right;'>227</td>
+<td style='text-align: right;'>233</td>
 <td style='text-align: right;'>50.6</td>
 <td style='text-align: right;'>51.4</td>
 <td style='text-align: right;'>102.0</td>
@@ -128,7 +128,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🌀 Jealous</strong></td>
-<td style='text-align: right;'>+22.42</td>
+<td style='text-align: right;'>+22.41</td>
 <td style='text-align: right;'>52.6%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>38</td>
@@ -138,10 +138,10 @@
 </tr>
 <tr>
 <td>Talisman Protection</td>
-<td style='text-align: right;'>+22.41</td>
-<td style='text-align: right;'>47.8%</td>
-<td style='text-align: right;'>25.4%</td>
-<td style='text-align: right;'>247</td>
+<td style='text-align: right;'>+22.27</td>
+<td style='text-align: right;'>47.6%</td>
+<td style='text-align: right;'>25.3%</td>
+<td style='text-align: right;'>252</td>
 <td style='text-align: right;'>38.3</td>
 <td style='text-align: right;'>57.3</td>
 <td style='text-align: right;'>95.6</td>
@@ -168,7 +168,7 @@
 </tr>
 <tr>
 <td>Star Falling</td>
-<td style='text-align: right;'>+21.45</td>
+<td style='text-align: right;'>+21.44</td>
 <td style='text-align: right;'>48.3%</td>
 <td style='text-align: right;'>26.8%</td>
 <td style='text-align: right;'>58</td>
@@ -176,9 +176,19 @@
 <td style='text-align: right;'>36.6</td>
 <td style='text-align: right;'>83.4</td>
 </tr>
+<tr>
+<td>Binding Border</td>
+<td style='text-align: right;'>+21.17</td>
+<td style='text-align: right;'>47.8%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>90</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>38.3</td>
+<td style='text-align: right;'>87.9</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Battle Stance</strong></td>
-<td style='text-align: right;'>+21.01</td>
+<td style='text-align: right;'>+21.00</td>
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>157</td>
@@ -188,7 +198,7 @@
 </tr>
 <tr>
 <td>Secret Orbs</td>
-<td style='text-align: right;'>+20.97</td>
+<td style='text-align: right;'>+20.96</td>
 <td style='text-align: right;'>47.6%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>84</td>
@@ -208,7 +218,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Dance of Sacred Sakura</strong></td>
-<td style='text-align: right;'>+20.52</td>
+<td style='text-align: right;'>+20.51</td>
 <td style='text-align: right;'>46.6%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>163</td>
@@ -227,20 +237,10 @@
 <td style='text-align: right;'>101.1</td>
 </tr>
 <tr>
-<td>Binding Border</td>
-<td style='text-align: right;'>+20.48</td>
-<td style='text-align: right;'>47.1%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>87</td>
-<td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>38.3</td>
-<td style='text-align: right;'>87.9</td>
-</tr>
-<tr>
 <td>Yin-Yang Rune</td>
 <td style='text-align: right;'>+20.47</td>
 <td style='text-align: right;'>47.2%</td>
-<td style='text-align: right;'>26.7%</td>
+<td style='text-align: right;'>26.8%</td>
 <td style='text-align: right;'>72</td>
 <td style='text-align: right;'>51.7</td>
 <td style='text-align: right;'>46.5</td>
@@ -288,7 +288,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Above the Realm</strong></td>
-<td style='text-align: right;'>+19.42</td>
+<td style='text-align: right;'>+19.41</td>
 <td style='text-align: right;'>45.8%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>131</td>
@@ -298,7 +298,7 @@
 </tr>
 <tr>
 <td>Freefly</td>
-<td style='text-align: right;'>+19.34</td>
+<td style='text-align: right;'>+19.33</td>
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>129</td>
@@ -308,7 +308,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Full Moon Howl</strong></td>
-<td style='text-align: right;'>+19.09</td>
+<td style='text-align: right;'>+19.08</td>
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>232</td>
@@ -318,7 +318,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Homing Amulet</strong></td>
-<td style='text-align: right;'>+18.93</td>
+<td style='text-align: right;'>+18.92</td>
 <td style='text-align: right;'>45.1%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>164</td>
@@ -328,7 +328,7 @@
 </tr>
 <tr>
 <td>Lucky Break</td>
-<td style='text-align: right;'>+18.73</td>
+<td style='text-align: right;'>+18.72</td>
 <td style='text-align: right;'>44.9%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>167</td>
@@ -338,7 +338,7 @@
 </tr>
 <tr>
 <td>Great Duplex Barrier</td>
-<td style='text-align: right;'>+18.49</td>
+<td style='text-align: right;'>+18.48</td>
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>214</td>
@@ -348,13 +348,23 @@
 </tr>
 <tr>
 <td>Fleeting Fantasy</td>
-<td style='text-align: right;'>+18.39</td>
+<td style='text-align: right;'>+18.38</td>
 <td style='text-align: right;'>45.1%</td>
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>82</td>
 <td style='text-align: right;'>50.1</td>
 <td style='text-align: right;'>53.2</td>
 <td style='text-align: right;'>103.3</td>
+</tr>
+<tr>
+<td>🧰 Wolf Fur</td>
+<td style='text-align: right;'>+17.70</td>
+<td style='text-align: right;'>43.5%</td>
+<td style='text-align: right;'>25.8%</td>
+<td style='text-align: right;'>239</td>
+<td style='text-align: right;'>52.2</td>
+<td style='text-align: right;'>40.5</td>
+<td style='text-align: right;'>92.7</td>
 </tr>
 <tr>
 <td>Tianxian's Rumbling</td>
@@ -366,19 +376,9 @@
 <td style='text-align: right;'>49.6</td>
 <td style='text-align: right;'>80.9</td>
 </tr>
-<tr>
-<td>🧰 Wolf Fur</td>
-<td style='text-align: right;'>+17.63</td>
-<td style='text-align: right;'>43.5%</td>
-<td style='text-align: right;'>25.8%</td>
-<td style='text-align: right;'>237</td>
-<td style='text-align: right;'>52.2</td>
-<td style='text-align: right;'>40.5</td>
-<td style='text-align: right;'>92.7</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Meditation</strong></td>
-<td style='text-align: right;'>+17.45</td>
+<td style='text-align: right;'>+17.44</td>
 <td style='text-align: right;'>48.5%</td>
 <td style='text-align: right;'>27.0%</td>
 <td style='text-align: right;'>33</td>
@@ -388,7 +388,7 @@
 </tr>
 <tr>
 <td>Haniwa Front</td>
-<td style='text-align: right;'>+17.29</td>
+<td style='text-align: right;'>+17.28</td>
 <td style='text-align: right;'>44.2%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>52</td>
@@ -398,17 +398,17 @@
 </tr>
 <tr>
 <td>Exorcising Border</td>
-<td style='text-align: right;'>+17.17</td>
-<td style='text-align: right;'>43.5%</td>
+<td style='text-align: right;'>+17.26</td>
+<td style='text-align: right;'>43.6%</td>
 <td style='text-align: right;'>26.3%</td>
-<td style='text-align: right;'>161</td>
+<td style='text-align: right;'>163</td>
 <td style='text-align: right;'>37.2</td>
 <td style='text-align: right;'>59.9</td>
 <td style='text-align: right;'>97.1</td>
 </tr>
 <tr>
 <td>Dimensional Point Rift</td>
-<td style='text-align: right;'>+17.02</td>
+<td style='text-align: right;'>+17.01</td>
 <td style='text-align: right;'>42.7%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>279</td>
@@ -418,7 +418,7 @@
 </tr>
 <tr>
 <td>Servant Lightning Strike</td>
-<td style='text-align: right;'>+16.95</td>
+<td style='text-align: right;'>+16.94</td>
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>150</td>
@@ -428,7 +428,7 @@
 </tr>
 <tr>
 <td>The Birth of Yin-Yang</td>
-<td style='text-align: right;'>+16.73</td>
+<td style='text-align: right;'>+16.72</td>
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>27.0%</td>
 <td style='text-align: right;'>42</td>
@@ -448,7 +448,7 @@
 </tr>
 <tr>
 <td>Hakurei's Evilest Orbs</td>
-<td style='text-align: right;'>+16.53</td>
+<td style='text-align: right;'>+16.52</td>
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>27.0%</td>
 <td style='text-align: right;'>34</td>
@@ -555,8 +555,8 @@
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
-<li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
 <li><span class="text-exhibit">Karakasa</span>: 1</li>
+<li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
 <li><span class="text-exhibit">Wolf Tengu's Shield</span>: 1</li>
 <li><span class="text-exhibit">Beer</span>: 1</li>
 </ul>
@@ -594,14 +594,14 @@
 <li><span class="text-purchase">🧰 Floppy Disk</span>: 1</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 1</li>
 <li><span class="text-purchase">Dragon-Slaying Circle</span>: 1</li>
-<li><span class="text-purchase">Apotheosis</span>: 1</li>
 <li><span class="text-purchase">Secret Orbs</span>: 1</li>
 <li><span class="text-purchase">Fleeting Fantasy</span>: 1</li>
+<li><span class="text-purchase">Apotheosis</span>: 1</li>
 <li><span class="text-purchase">Orb of Duality</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 1</li>
+<li><span class="text-purchase">Entrench Body</span>: 1</li>
 <li><span class="text-purchase">Permanent Border</span>: 1</li>
-<li><span class="text-purchase">Purify the Land</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -609,14 +609,14 @@
 <ul>
 <li><span class="text-exhibit">Robot Model</span>: 4</li>
 <li><span class="text-exhibit">Ribbon</span>: 3</li>
-<li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Bottle</span>: 2</li>
+<li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
-<li><span class="text-exhibit">Potted Udonge</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
+<li><span class="text-exhibit">Potted Udonge</span>: 1</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

@@ -28,8 +28,8 @@
 <div class="column"><ul>
 <li>桜色の海: 13回</li>
 <li>幻想郷の開花: 12回</li>
-<li>春植えざれば秋実らず: 10回</li>
 <li>原因不明の熱病: 10回</li>
+<li>春植えざれば秋実らず: 10回</li>
 <li>仮想弾幕: 10回</li>
 <li>天啓: 10回</li>
 <li>丑の刻参り: 10回</li>
@@ -94,8 +94,8 @@
 <td style='text-align: right;'>23.3%</td>
 <td style='text-align: right;'>105</td>
 <td style='text-align: right;'>39.1</td>
-<td style='text-align: right;'>38.0</td>
-<td style='text-align: right;'>77.1</td>
+<td style='text-align: right;'>37.5</td>
+<td style='text-align: right;'>76.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 熱情の追憶</strong></td>
@@ -167,6 +167,16 @@
 <td style='text-align: right;'>59.2</td>
 <td style='text-align: right;'>107.2</td>
 </tr>
+<tr>
+<td>クリーンエネルギー</td>
+<td style='text-align: right;'>+20.14</td>
+<td style='text-align: right;'>48.6%</td>
+<td style='text-align: right;'>24.5%</td>
+<td style='text-align: right;'>35</td>
+<td style='text-align: right;'>40.0</td>
+<td style='text-align: right;'>36.9</td>
+<td style='text-align: right;'>76.8</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 ローズケージ</strong></td>
 <td style='text-align: right;'>+20.14</td>
@@ -174,18 +184,8 @@
 <td style='text-align: right;'>24.5%</td>
 <td style='text-align: right;'>35</td>
 <td style='text-align: right;'><strong><span style='color: red;'>73.1</span></strong></td>
-<td style='text-align: right;'>46.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>119.4</span></strong></td>
-</tr>
-<tr>
-<td>クリーンエネルギー</td>
-<td style='text-align: right;'>+20.14</td>
-<td style='text-align: right;'>48.6%</td>
-<td style='text-align: right;'>24.5%</td>
-<td style='text-align: right;'>35</td>
-<td style='text-align: right;'>40.4</td>
-<td style='text-align: right;'>37.5</td>
-<td style='text-align: right;'>77.9</td>
+<td style='text-align: right;'>46.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.1</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 平静の追憶</strong></td>
@@ -224,8 +224,8 @@
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>86</td>
 <td style='text-align: right;'>45.5</td>
-<td style='text-align: right;'>36.9</td>
-<td style='text-align: right;'>82.4</td>
+<td style='text-align: right;'>38.6</td>
+<td style='text-align: right;'>84.1</td>
 </tr>
 <tr>
 <td>A.T.フィールド</td>
@@ -243,9 +243,9 @@
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>101</td>
-<td style='text-align: right;'>53.9</td>
-<td style='text-align: right;'>48.8</td>
-<td style='text-align: right;'>102.7</td>
+<td style='text-align: right;'>53.6</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr>
 <td>夢枕にご先祖総立ち</td>
@@ -254,8 +254,8 @@
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>111</td>
 <td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>108.2</td>
+<td style='text-align: right;'>49.3</td>
+<td style='text-align: right;'>107.4</td>
 </tr>
 <tr>
 <td>天啓</td>
@@ -263,9 +263,9 @@
 <td style='text-align: right;'>52.2%</td>
 <td style='text-align: right;'>24.6%</td>
 <td style='text-align: right;'>23</td>
-<td style='text-align: right;'>40.0</td>
+<td style='text-align: right;'>39.5</td>
 <td style='text-align: right;'>31.4</td>
-<td style='text-align: right;'>71.4</td>
+<td style='text-align: right;'>70.9</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 无寿の夢</strong></td>
@@ -313,9 +313,9 @@
 <td style='text-align: right;'>52.4%</td>
 <td style='text-align: right;'>24.7%</td>
 <td style='text-align: right;'>21</td>
-<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>50.4</td>
 <td style='text-align: right;'>53.6</td>
-<td style='text-align: right;'>104.3</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ルナサ・ソロライブ</strong></td>
@@ -333,9 +333,9 @@
 <td style='text-align: right;'>40.6%</td>
 <td style='text-align: right;'>23.1%</td>
 <td style='text-align: right;'>165</td>
-<td style='text-align: right;'>39.5</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>90.2</td>
+<td style='text-align: right;'>40.4</td>
+<td style='text-align: right;'>50.9</td>
+<td style='text-align: right;'>91.3</td>
 </tr>
 <tr>
 <td>太陽の畑</td>
@@ -364,8 +364,8 @@
 <td style='text-align: right;'>23.6%</td>
 <td style='text-align: right;'>126</td>
 <td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'>49.9</td>
-<td style='text-align: right;'>104.1</td>
+<td style='text-align: right;'>49.1</td>
+<td style='text-align: right;'>103.3</td>
 </tr>
 <tr>
 <td>原因不明の熱病</td>
@@ -394,8 +394,8 @@
 <td style='text-align: right;'>24.5%</td>
 <td style='text-align: right;'>49</td>
 <td style='text-align: right;'>50.9</td>
-<td style='text-align: right;'>49.1</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>48.5</td>
+<td style='text-align: right;'>99.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 眠れぬ夜</strong></td>
@@ -413,9 +413,9 @@
 <td style='text-align: right;'>39.5%</td>
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>129</td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>47.7</td>
-<td style='text-align: right;'>103.4</td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>106.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 春色の閃光</strong></td>
@@ -423,9 +423,9 @@
 <td style='text-align: right;'>39.2%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>120</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>63.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>64.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.1</span></strong></td>
 </tr>
 <tr>
 <td>閉所恐怖症</td>
@@ -434,8 +434,8 @@
 <td style='text-align: right;'>24.3%</td>
 <td style='text-align: right;'>76</td>
 <td style='text-align: right;'>42.7</td>
-<td style='text-align: right;'>48.3</td>
-<td style='text-align: right;'>90.9</td>
+<td style='text-align: right;'>48.0</td>
+<td style='text-align: right;'>90.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 水鉄砲</strong></td>
@@ -480,8 +480,8 @@
 <ul>
 <li><span class="text-purchase">出まかせ</span>: 6回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
-<li><span class="text-purchase">色褪せた夢</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
+<li><span class="text-purchase">色褪せた夢</span>: 3回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 3回</li>
 <li><span class="text-purchase">両思いの恋煩い</span>: 3回</li>
@@ -490,12 +490,12 @@
 <li><span class="text-purchase">花鳥風月</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 1回</li>
 <li><span class="text-purchase">閉じた心</span>: 1回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">最奥の森域</span>: 1回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">隠者のタロット</span>: 1回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 <li><span class="text-purchase">フィルドミアズマ</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 1回</li>
 <li><span class="text-purchase">心変わりの刃</span>: 1回</li>
 </ul>
@@ -534,13 +534,13 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
 <li><span class="text-purchase">両思いの恋煩い</span>: 6回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 6回</li>
-<li><span class="text-purchase">ローズ地獄</span>: 5回</li>
 <li><span class="text-purchase">心変わりの刃</span>: 5回</li>
+<li><span class="text-purchase">ローズ地獄</span>: 5回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 5回</li>
+<li><span class="text-purchase">サブタレイニアンローズ</span>: 4回</li>
 <li><span class="text-purchase">DNAの瑕</span>: 4回</li>
 <li><span class="text-purchase">無の心</span>: 4回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 4回</li>
-<li><span class="text-purchase">春植えざれば秋実らず</span>: 4回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -553,12 +553,12 @@
 <li><span class="text-exhibit">葉っぱ</span>: 2回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
+<li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
-<li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
-<li><span class="text-exhibit">魔導書</span>: 1回</li>
 <li><span class="text-exhibit">雛人形</span>: 1回</li>
+<li><span class="text-exhibit">魔導書</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -585,21 +585,21 @@
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 2回</li>
 <li><span class="text-purchase">孤独な心</span>: 2回</li>
-<li><span class="text-purchase">色褪せた夢</span>: 2回</li>
-<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
+<li><span class="text-purchase">色褪せた夢</span>: 2回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 2回</li>
 <li><span class="text-purchase">いばらの舞</span>: 2回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
 <li><span class="text-purchase">A.T.フィールド</span>: 2回</li>
-<li><span class="text-purchase">ルナサ・ソロライブ</span>: 1回</li>
 <li><span class="text-purchase">亀甲地獄</span>: 1回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 1回</li>
+<li><span class="text-purchase">ルナサ・ソロライブ</span>: 1回</li>
+<li><span class="text-purchase">ブラックペガサスの罪</span>: 1回</li>
 <li><span class="text-purchase">花鳥風月</span>: 1回</li>
 <li><span class="text-purchase">鈴蘭の花園</span>: 1回</li>
 <li><span class="text-purchase">🧰 光学迷彩スーツ</span>: 1回</li>
-<li><span class="text-purchase">ブラックペガサスの罪</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -607,9 +607,9 @@
 <ul>
 <li><span class="text-exhibit">博麗アミュレット</span>: 3回</li>
 <li><span class="text-exhibit">リボン</span>: 2回</li>
+<li><span class="text-exhibit">ビール</span>: 1回</li>
 <li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">タケコプター</span>: 1回</li>
-<li><span class="text-exhibit">ビール</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>

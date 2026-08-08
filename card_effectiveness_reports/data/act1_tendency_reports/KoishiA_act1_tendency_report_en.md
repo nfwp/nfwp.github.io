@@ -28,8 +28,8 @@
 <div class="column"><ul>
 <li>Sakura-Colored Sea: 13</li>
 <li>Gensokyo's Blossoming: 12</li>
-<li>Autumnal Harvest: 10</li>
 <li>Unexplained Fever: 10</li>
+<li>Autumnal Harvest: 10</li>
 <li>Imaginary Danmaku: 10</li>
 <li>Flash of Inspiration: 10</li>
 <li>Grudge Returning: 10</li>
@@ -93,8 +93,8 @@
 <td style='text-align: right;'>23.3%</td>
 <td style='text-align: right;'>105</td>
 <td style='text-align: right;'>39.1</td>
-<td style='text-align: right;'>38.0</td>
-<td style='text-align: right;'>77.1</td>
+<td style='text-align: right;'>37.5</td>
+<td style='text-align: right;'>76.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Passionate Memories</strong></td>
@@ -166,6 +166,16 @@
 <td style='text-align: right;'>59.2</td>
 <td style='text-align: right;'>107.2</td>
 </tr>
+<tr>
+<td>Clean Energy</td>
+<td style='text-align: right;'>+20.14</td>
+<td style='text-align: right;'>48.6%</td>
+<td style='text-align: right;'>24.5%</td>
+<td style='text-align: right;'>35</td>
+<td style='text-align: right;'>40.0</td>
+<td style='text-align: right;'>36.9</td>
+<td style='text-align: right;'>76.8</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Cage of Roses</strong></td>
 <td style='text-align: right;'>+20.14</td>
@@ -173,18 +183,8 @@
 <td style='text-align: right;'>24.5%</td>
 <td style='text-align: right;'>35</td>
 <td style='text-align: right;'><strong><span style='color: red;'>73.1</span></strong></td>
-<td style='text-align: right;'>46.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>119.4</span></strong></td>
-</tr>
-<tr>
-<td>Clean Energy</td>
-<td style='text-align: right;'>+20.14</td>
-<td style='text-align: right;'>48.6%</td>
-<td style='text-align: right;'>24.5%</td>
-<td style='text-align: right;'>35</td>
-<td style='text-align: right;'>40.4</td>
-<td style='text-align: right;'>37.5</td>
-<td style='text-align: right;'>77.9</td>
+<td style='text-align: right;'>46.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.1</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Serene Memories</strong></td>
@@ -223,8 +223,8 @@
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>86</td>
 <td style='text-align: right;'>45.5</td>
-<td style='text-align: right;'>36.9</td>
-<td style='text-align: right;'>82.4</td>
+<td style='text-align: right;'>38.6</td>
+<td style='text-align: right;'>84.1</td>
 </tr>
 <tr>
 <td>A.T. Field</td>
@@ -242,9 +242,9 @@
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>101</td>
-<td style='text-align: right;'>53.9</td>
-<td style='text-align: right;'>48.8</td>
-<td style='text-align: right;'>102.7</td>
+<td style='text-align: right;'>53.6</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr>
 <td>Ancestral Dreams</td>
@@ -253,8 +253,8 @@
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>111</td>
 <td style='text-align: right;'>58.0</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>108.2</td>
+<td style='text-align: right;'>49.3</td>
+<td style='text-align: right;'>107.4</td>
 </tr>
 <tr>
 <td>Flash of Inspiration</td>
@@ -262,9 +262,9 @@
 <td style='text-align: right;'>52.2%</td>
 <td style='text-align: right;'>24.6%</td>
 <td style='text-align: right;'>23</td>
-<td style='text-align: right;'>40.0</td>
+<td style='text-align: right;'>39.5</td>
 <td style='text-align: right;'>31.4</td>
-<td style='text-align: right;'>71.4</td>
+<td style='text-align: right;'>70.9</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ageless Dream</strong></td>
@@ -312,9 +312,9 @@
 <td style='text-align: right;'>52.4%</td>
 <td style='text-align: right;'>24.7%</td>
 <td style='text-align: right;'>21</td>
-<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>50.4</td>
 <td style='text-align: right;'>53.6</td>
-<td style='text-align: right;'>104.3</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Violin Solo</strong></td>
@@ -332,9 +332,9 @@
 <td style='text-align: right;'>40.6%</td>
 <td style='text-align: right;'>23.1%</td>
 <td style='text-align: right;'>165</td>
-<td style='text-align: right;'>39.5</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>90.2</td>
+<td style='text-align: right;'>40.4</td>
+<td style='text-align: right;'>50.9</td>
+<td style='text-align: right;'>91.3</td>
 </tr>
 <tr>
 <td>Garden of the Sun</td>
@@ -363,8 +363,8 @@
 <td style='text-align: right;'>23.6%</td>
 <td style='text-align: right;'>126</td>
 <td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'>49.9</td>
-<td style='text-align: right;'>104.1</td>
+<td style='text-align: right;'>49.1</td>
+<td style='text-align: right;'>103.3</td>
 </tr>
 <tr>
 <td>Unexplained Fever</td>
@@ -393,8 +393,8 @@
 <td style='text-align: right;'>24.5%</td>
 <td style='text-align: right;'>49</td>
 <td style='text-align: right;'>50.9</td>
-<td style='text-align: right;'>49.1</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>48.5</td>
+<td style='text-align: right;'>99.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sleepless Night</strong></td>
@@ -412,9 +412,9 @@
 <td style='text-align: right;'>39.5%</td>
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>129</td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>47.7</td>
-<td style='text-align: right;'>103.4</td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>106.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Flash of Spring</strong></td>
@@ -422,9 +422,9 @@
 <td style='text-align: right;'>39.2%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>120</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>63.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>64.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.1</span></strong></td>
 </tr>
 <tr>
 <td>Claustrophobia</td>
@@ -433,8 +433,8 @@
 <td style='text-align: right;'>24.3%</td>
 <td style='text-align: right;'>76</td>
 <td style='text-align: right;'>42.7</td>
-<td style='text-align: right;'>48.3</td>
-<td style='text-align: right;'>90.9</td>
+<td style='text-align: right;'>48.0</td>
+<td style='text-align: right;'>90.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Water Gun</strong></td>
@@ -479,8 +479,8 @@
 <ul>
 <li><span class="text-purchase">Talk Through the Hat</span>: 6</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
-<li><span class="text-purchase">Withering Dreams</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
+<li><span class="text-purchase">Withering Dreams</span>: 3</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 3</li>
 <li><span class="text-purchase">Lovesickness</span>: 3</li>
@@ -489,12 +489,12 @@
 <li><span class="text-purchase">Beauties of Nature</span>: 2</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 1</li>
 <li><span class="text-purchase">Closed Heart</span>: 1</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">Forest Depths</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Tarot: The Hermit</span>: 1</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
 <li><span class="text-purchase">Seeping Miasma</span>: 1</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
 <li><span class="text-purchase">Luminescent Night</span>: 1</li>
 <li><span class="text-purchase">Transference Blade</span>: 1</li>
 </ul>
@@ -533,13 +533,13 @@
 <li><span class="text-purchase">Cucumber Missile</span>: 6</li>
 <li><span class="text-purchase">Lovesickness</span>: 6</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 6</li>
-<li><span class="text-purchase">Rose Hell</span>: 5</li>
 <li><span class="text-purchase">Transference Blade</span>: 5</li>
+<li><span class="text-purchase">Rose Hell</span>: 5</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 5</li>
+<li><span class="text-purchase">Subterranean Rose</span>: 4</li>
 <li><span class="text-purchase">DNA's Flaw</span>: 4</li>
 <li><span class="text-purchase">Calm Mind</span>: 4</li>
 <li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 4</li>
-<li><span class="text-purchase">Autumnal Harvest</span>: 4</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -552,12 +552,12 @@
 <li><span class="text-exhibit">Leaf</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
+<li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
-<li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
-<li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
+<li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -584,21 +584,21 @@
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 2</li>
 <li><span class="text-purchase">Lonely Heart</span>: 2</li>
-<li><span class="text-purchase">Withering Dreams</span>: 2</li>
-<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
+<li><span class="text-purchase">Withering Dreams</span>: 2</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
 <li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 2</li>
 <li><span class="text-purchase">Crazed Thorns</span>: 2</li>
-<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
 <li><span class="text-purchase">A.T. Field</span>: 2</li>
-<li><span class="text-purchase">Violin Solo</span>: 1</li>
 <li><span class="text-purchase">Tortoiseshell Hell</span>: 1</li>
 <li><span class="text-purchase">Luminescent Night</span>: 1</li>
+<li><span class="text-purchase">Violin Solo</span>: 1</li>
+<li><span class="text-purchase">Sin of the Black Pegasus</span>: 1</li>
 <li><span class="text-purchase">Beauties of Nature</span>: 1</li>
 <li><span class="text-purchase">Melancholic Garden</span>: 1</li>
 <li><span class="text-purchase">🧰 Optical Camouflage Clothing</span>: 1</li>
-<li><span class="text-purchase">Sin of the Black Pegasus</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -606,9 +606,9 @@
 <ul>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 3</li>
 <li><span class="text-exhibit">Ribbon</span>: 2</li>
+<li><span class="text-exhibit">Beer</span>: 1</li>
 <li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
-<li><span class="text-exhibit">Beer</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>

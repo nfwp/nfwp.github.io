@@ -1,3 +1,4 @@
+/* --- Card List Controls --- */
 .card-list-controls {
     background-color: #fff;
     padding: 15px;
@@ -7,4 +8,40 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    gap: 10px; /* 要素間のスペースを確保 */
+}
+
+.card-list-controls label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.card-list-controls .card-list-lang-label {
+    margin-left: 15px;
+}
+
+.card-list-controls select {
+    font-size: 14px;
+    padding: 5px;
+}
+
+.card-list-controls input[type="radio"] {
+    margin-left: 5px;
+}
+
+/* --- Iframe --- */
+#card-list-iframe {
+    width: 100%;
+    height: 85vh;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+/* --- Mobile View Adjustments --- */
+@media (max-width: 768px) {
+    .card-list-controls {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }

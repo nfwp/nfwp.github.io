@@ -20,18 +20,18 @@ function renderCardListTab(data) {
     ).join('');
 
     container.innerHTML = `
-        <div class="card-list-controls" style="background-color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd; display: flex; align-items: center; flex-wrap: wrap;">
-            <label for="card-list-char-select" style="margin-right: 10px; font-weight: bold;">${C.character}:</label>
-            <select id="card-list-char-select" onchange="showCardList()" style="margin-right: 20px; font-size: 14px; padding: 5px;">
+        <div class="card-list-controls">
+            <label for="card-list-char-select">${C.character}:</label>
+            <select id="card-list-char-select" onchange="showCardList()">
                 ${charOptionsHtml}
             </select>
-            <label style="margin-left: 20px; font-weight: bold;">${C.language}:</label>
-            <input type="radio" id="lang-ja" name="card-list-lang" value="ja" ${LANG === 'ja' ? 'checked' : ''} onchange="showCardList()" style="margin-left: 10px;">
+            <label class="card-list-lang-label">${C.language}:</label>
+            <input type="radio" id="lang-ja" name="card-list-lang" value="ja" ${LANG === 'ja' ? 'checked' : ''} onchange="showCardList()">
             <label for="lang-ja">${C.japanese}</label>
-            <input type="radio" id="lang-en" name="card-list-lang" value="en" ${LANG === 'en' ? 'checked' : ''} onchange="showCardList()" style="margin-left: 10px;">
+            <input type="radio" id="lang-en" name="card-list-lang" value="en" ${LANG === 'en' ? 'checked' : ''} onchange="showCardList()">
             <label for="lang-en">${C.english}</label>
         </div>
-        <iframe id="card-list-iframe" style="width: 100%; height: 85vh; border: 1px solid #ccc; border-radius: 8px;" frameborder="0"></iframe>
+        <iframe id="card-list-iframe" frameborder="0"></iframe>
     `;
 
     showCardList();

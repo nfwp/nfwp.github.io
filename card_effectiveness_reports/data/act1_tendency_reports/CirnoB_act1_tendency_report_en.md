@@ -316,16 +316,6 @@
 <td style='text-align: right;'>50.0</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
 </tr>
-<tr>
-<td>Frozen Throne</td>
-<td style='text-align: right;'>+17.17</td>
-<td style='text-align: right;'>45.2%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'>51.5</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>101.8</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Garden Gathering</strong></td>
 <td style='text-align: right;'>+17.17</td>
@@ -335,6 +325,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>69.8</span></strong></td>
 <td style='text-align: right;'>54.0</td>
 <td style='text-align: right;'><strong><span style='color: red;'>123.8</span></strong></td>
+</tr>
+<tr>
+<td>Frozen Throne</td>
+<td style='text-align: right;'>+17.17</td>
+<td style='text-align: right;'>45.2%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'>51.5</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>101.8</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Larva, God of Evernight</strong></td>
@@ -494,9 +494,9 @@
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 1</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 1</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
+<li><span class="text-purchase">Fairy On Ice</span>: 1</li>
 <li><span class="text-purchase">Blizzard</span>: 1</li>
 <li><span class="text-purchase">Lily White, Herald of Spring</span>: 1</li>
-<li><span class="text-purchase">Fairy On Ice</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -551,8 +551,8 @@
 <li><span class="text-exhibit">Delicious Cookie</span>: 3</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 2</li>
-<li><span class="text-exhibit">Membership Card</span>: 2</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 2</li>
+<li><span class="text-exhibit">Membership Card</span>: 2</li>
 <li><span class="text-exhibit">Black Notebook</span>: 2</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 2</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>
@@ -596,12 +596,12 @@
 <li><span class="text-purchase">Lily White, Herald of Spring</span>: 2</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
-<li><span class="text-purchase">Vivid Color Downpour</span>: 1</li>
 <li><span class="text-purchase">News Fabrication</span>: 1</li>
+<li><span class="text-purchase">Vivid Color Downpour</span>: 1</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 1</li>
+<li><span class="text-purchase">Wrath of Nature</span>: 1</li>
 <li><span class="text-purchase">Daiyousei, Lively Assistant</span>: 1</li>
 <li><span class="text-purchase">Flammable Ice</span>: 1</li>
-<li><span class="text-purchase">Wrath of Nature</span>: 1</li>
 <li><span class="text-purchase">Garden of the Sun</span>: 1</li>
 </ul>
 </div>
@@ -613,8 +613,8 @@
 <li><span class="text-exhibit">Ribbon</span>: 3</li>
 <li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 2</li>
 <li><span class="text-exhibit">Leaf</span>: 2</li>
-<li><span class="text-exhibit">Bamboo</span>: 1</li>
 <li><span class="text-exhibit">High Fidelity Headphones</span>: 1</li>
+<li><span class="text-exhibit">Bamboo</span>: 1</li>
 <li><span class="text-exhibit">Ice Cube</span>: 1</li>
 <li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Radio</span>: 1</li>

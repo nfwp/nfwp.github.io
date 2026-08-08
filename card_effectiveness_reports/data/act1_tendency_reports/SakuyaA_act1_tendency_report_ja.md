@@ -237,16 +237,6 @@
 <td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'>95.0</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 月相</strong></td>
-<td style='text-align: right;'>+21.00</td>
-<td style='text-align: right;'>44.6%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>56</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>62.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
-</tr>
 <tr>
 <td>ルミネスリコシェ</td>
 <td style='text-align: right;'>+21.00</td>
@@ -256,6 +246,16 @@
 <td style='text-align: right;'>52.0</td>
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'>101.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 月相</strong></td>
+<td style='text-align: right;'>+21.00</td>
+<td style='text-align: right;'>44.6%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>56</td>
+<td style='text-align: right;'>51.1</td>
+<td style='text-align: right;'>62.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ｃ．リコシェ</strong></td>
@@ -484,15 +484,15 @@
 <li><span class="text-purchase">水遊び</span>: 5回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 5回</li>
 <li><span class="text-purchase">歴史喰い</span>: 5回</li>
+<li><span class="text-purchase">部屋掃除</span>: 4回</li>
 <li><span class="text-purchase">降雪決行</span>: 4回</li>
 <li><span class="text-purchase">時間厳守</span>: 4回</li>
-<li><span class="text-purchase">部屋掃除</span>: 4回</li>
 <li><span class="text-purchase">一休み</span>: 3回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 2回</li>
-<li><span class="text-purchase">ディフレクション</span>: 2回</li>
 <li><span class="text-purchase">ダモクレスの刃</span>: 2回</li>
-<li><span class="text-purchase">心抄斬</span>: 2回</li>
+<li><span class="text-purchase">ディフレクション</span>: 2回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">心抄斬</span>: 2回</li>
 <li><span class="text-purchase">船底の念縛霊</span>: 2回</li>
 <li><span class="text-purchase">タオ胎動</span>: 2回</li>
 <li><span class="text-purchase">拘束時間</span>: 1回</li>
@@ -558,10 +558,10 @@
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">芍薬</span>: 1回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
-<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">守矢の御幣</span>: 1回</li>
-<li><span class="text-exhibit">魔導書</span>: 1回</li>
+<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 1回</li>
+<li><span class="text-exhibit">魔導書</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">重低音バスドラム</span>: 1回</li>
 </ul>
@@ -601,11 +601,11 @@
 <li><span class="text-purchase">歴史喰い</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">星剣の舞</span>: 3回</li>
-<li><span class="text-purchase">デジャヴ</span>: 3回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 3回</li>
+<li><span class="text-purchase">デジャヴ</span>: 3回</li>
 <li><span class="text-purchase">時間厳守</span>: 2回</li>
-<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 2回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">イマジナリバーチカルタイム</span>: 2回</li>
 </ul>
 </div>
@@ -614,8 +614,8 @@
 <ul>
 <li><span class="text-exhibit">実験器具</span>: 4回</li>
 <li><span class="text-exhibit">リボン</span>: 4回</li>
-<li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 3回</li>
+<li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
 <li><span class="text-exhibit">プラモデル</span>: 2回</li>
 <li><span class="text-exhibit">楼観剣</span>: 2回</li>
 <li><span class="text-exhibit">会員証</span>: 2回</li>

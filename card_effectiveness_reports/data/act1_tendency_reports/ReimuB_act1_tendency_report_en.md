@@ -186,16 +186,6 @@
 <td style='text-align: right;'>58.0</td>
 <td style='text-align: right;'>105.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Fleeting Fantasy</strong></td>
-<td style='text-align: right;'>+20.21</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>23.9%</td>
-<td style='text-align: right;'>30</td>
-<td style='text-align: right;'>58.3</td>
-<td style='text-align: right;'>57.3</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.6</span></strong></td>
-</tr>
 <tr>
 <td>Tranquility</td>
 <td style='text-align: right;'>+20.21</td>
@@ -205,6 +195,16 @@
 <td style='text-align: right;'>47.3</td>
 <td style='text-align: right;'>58.3</td>
 <td style='text-align: right;'>105.6</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Fleeting Fantasy</strong></td>
+<td style='text-align: right;'>+20.21</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>23.9%</td>
+<td style='text-align: right;'>30</td>
+<td style='text-align: right;'>58.3</td>
+<td style='text-align: right;'>57.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.6</span></strong></td>
 </tr>
 <tr>
 <td>Binding Border</td>
@@ -480,21 +480,21 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 4</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 4</li>
+<li><span class="text-purchase">Devour History</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 3</li>
-<li><span class="text-purchase">Devour History</span>: 3</li>
 <li><span class="text-purchase">Binding Border</span>: 3</li>
 <li><span class="text-purchase">Ascension Kick</span>: 3</li>
-<li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 2</li>
 <li><span class="text-purchase">Indiscriminate Ignition</span>: 2</li>
 <li><span class="text-purchase">Cleansing Exorcism</span>: 2</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
 <li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
-<li><span class="text-purchase">Freefly</span>: 1</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 1</li>
+<li><span class="text-purchase">Freefly</span>: 1</li>
 <li><span class="text-purchase">Purify the Land</span>: 1</li>
 <li><span class="text-purchase">Dimensional Point Rift</span>: 1</li>
 </ul>
@@ -529,8 +529,8 @@
 <li><span class="text-purchase">Spell Card Duel</span>: 5</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 5</li>
-<li><span class="text-purchase">Ascension Kick</span>: 4</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 4</li>
+<li><span class="text-purchase">Ascension Kick</span>: 4</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 4</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 4</li>
 <li><span class="text-purchase">Purify the Land</span>: 3</li>
@@ -555,8 +555,8 @@
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Soulgem</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
-<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
+<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Clog</span>: 1</li>
@@ -596,11 +596,11 @@
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 1</li>
 <li><span class="text-purchase">Crossing the Border</span>: 1</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Evil-Sealing Circle</span>: 1</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Freefly</span>: 1</li>
 <li><span class="text-purchase">The Birth of Yin-Yang</span>: 1</li>
-<li><span class="text-purchase">Purify the Land</span>: 1</li>
+<li><span class="text-purchase">Dimensional Point Rift</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

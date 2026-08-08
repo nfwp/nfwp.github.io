@@ -367,16 +367,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>114.8</span></strong></td>
 </tr>
 <tr>
-<td>Directional Laser</td>
-<td style='text-align: right;'>+12.78</td>
-<td style='text-align: right;'>36.4%</td>
-<td style='text-align: right;'>22.7%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'>49.1</td>
-<td style='text-align: right;'>39.7</td>
-<td style='text-align: right;'>88.8</td>
-</tr>
-<tr>
 <td>Red Star Explosion</td>
 <td style='text-align: right;'>+12.78</td>
 <td style='text-align: right;'>36.4%</td>
@@ -385,6 +375,16 @@
 <td style='text-align: right;'>54.1</td>
 <td style='text-align: right;'>51.9</td>
 <td style='text-align: right;'>106.0</td>
+</tr>
+<tr>
+<td>Directional Laser</td>
+<td style='text-align: right;'>+12.78</td>
+<td style='text-align: right;'>36.4%</td>
+<td style='text-align: right;'>22.7%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'>49.1</td>
+<td style='text-align: right;'>39.7</td>
+<td style='text-align: right;'>88.8</td>
 </tr>
 <tr>
 <td>Rocket Broom</td>
@@ -487,16 +487,16 @@
 <li><span class="text-purchase">Impatience</span>: 2</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 1</li>
 <li><span class="text-purchase">Serial Cleaver</span>: 1</li>
+<li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 1</li>
 <li><span class="text-purchase">🧰 Energy Drink</span>: 1</li>
-<li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
 <li><span class="text-purchase">Alioth</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 1</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 1</li>
-<li><span class="text-purchase">Ageless Dream</span>: 1</li>
 <li><span class="text-purchase">Bright Starry Sky</span>: 1</li>
+<li><span class="text-purchase">Ageless Dream</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -550,11 +550,11 @@
 <li><span class="text-exhibit">Hakurei Amulet</span>: 5</li>
 <li><span class="text-exhibit">Membership Card</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
-<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 1</li>
+<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>
-<li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
+<li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Ribbon</span>: 1</li>
@@ -581,23 +581,23 @@
 <ul>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 2</li>
-<li><span class="text-purchase">Emergency Defense</span>: 2</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 2</li>
+<li><span class="text-purchase">Emergency Defense</span>: 2</li>
 <li><span class="text-purchase">Magic Converter</span>: 2</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
-<li><span class="text-purchase">Rocket Broom</span>: 2</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 2</li>
+<li><span class="text-purchase">Rocket Broom</span>: 2</li>
 <li><span class="text-purchase">Indiscriminate Ignition</span>: 1</li>
 <li><span class="text-purchase">Grimoire Study</span>: 1</li>
 <li><span class="text-purchase">And Then Will There Be None?</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 1</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 1</li>
-<li><span class="text-purchase">Orrery's Sun</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">Red Star Explosion</span>: 1</li>
 <li><span class="text-purchase">Violin Solo</span>: 1</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
+<li><span class="text-purchase">Orrery's Sun</span>: 1</li>
 <li><span class="text-purchase">All Out</span>: 1</li>
 </ul>
 </div>
@@ -607,8 +607,8 @@
 <li><span class="text-exhibit">Dream Catcher</span>: 4</li>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
 <li><span class="text-exhibit">Peaked Cap</span>: 1</li>
-<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
+<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Keystone</span>: 1</li>

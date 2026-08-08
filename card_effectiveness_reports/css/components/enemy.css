@@ -42,11 +42,17 @@
     font-weight: bold;
 }
 
+/* 修正箇所: 横スクロールを追加し、iOSでのスクロールを滑らかにする */
 #enemy-analysis-table-wrapper {
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: auto; /* これを追加 */
+    -webkit-overflow-scrolling: touch; /* これを追加 */
 }
 
+/* 修正箇所: 各列の固定幅指定を削除 */
+/* 以下のルールはすべて削除します */
+/*
 .sortable-table th.col-act,
 .sortable-table td:nth-child(1) {
     width: 5%;
@@ -69,12 +75,11 @@
     width: 20%;
     vertical-align: top;
 }
+*/
 
 .sortable-table td .inline-boxplot {
     margin-top: 5px;
 }
-
-
 
 
 /* --- 敵分析：四分位数テキスト --- */
@@ -86,3 +91,9 @@
     font-family: monospace;    /* 数字が見やすいフォントに */
 }
 
+@media (max-width: 768px) {
+    .analysis-section {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

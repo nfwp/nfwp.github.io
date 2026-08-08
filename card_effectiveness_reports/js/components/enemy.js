@@ -90,7 +90,7 @@ function renderEnemyAnalysisTab(char, lang) {
 
         allTablesHtml += `
             <div id="enemy-table-${charOption}" class="enemy-analysis-char-table" style="display: ${displayStyle};">
-                <div id="enemy-analysis-table-wrapper-${charOption}">
+                <div id="enemy-analysis-table-wrapper-${charOption}"　class="enemy-table-wrapper">
                     <table id="${tableId}" class="sortable-table">
                         <thead><tr>${headers}</tr></thead>
                         <tbody>${rows}</tbody>
