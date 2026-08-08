@@ -367,16 +367,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>114.8</span></strong></td>
 </tr>
 <tr>
-<td>Directional Laser</td>
-<td style='text-align: right;'>+12.78</td>
-<td style='text-align: right;'>36.4%</td>
-<td style='text-align: right;'>22.7%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'>49.1</td>
-<td style='text-align: right;'>39.7</td>
-<td style='text-align: right;'>88.8</td>
-</tr>
-<tr>
 <td>Red Star Explosion</td>
 <td style='text-align: right;'>+12.78</td>
 <td style='text-align: right;'>36.4%</td>
@@ -385,6 +375,16 @@
 <td style='text-align: right;'>54.1</td>
 <td style='text-align: right;'>51.9</td>
 <td style='text-align: right;'>106.0</td>
+</tr>
+<tr>
+<td>Directional Laser</td>
+<td style='text-align: right;'>+12.78</td>
+<td style='text-align: right;'>36.4%</td>
+<td style='text-align: right;'>22.7%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'>49.1</td>
+<td style='text-align: right;'>39.7</td>
+<td style='text-align: right;'>88.8</td>
 </tr>
 <tr>
 <td>Rocket Broom</td>

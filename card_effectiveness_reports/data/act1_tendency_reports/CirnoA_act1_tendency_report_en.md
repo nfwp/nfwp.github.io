@@ -613,8 +613,8 @@
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
-<li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Potted Udonge</span>: 1</li>
+<li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Leaf</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
 </ul>

@@ -138,16 +138,6 @@
 <td style='text-align: right;'>101.2</td>
 </tr>
 <tr>
-<td>瞑想</td>
-<td style='text-align: right;'>+22.33</td>
-<td style='text-align: right;'>46.0%</td>
-<td style='text-align: right;'>23.7%</td>
-<td style='text-align: right;'>50</td>
-<td style='text-align: right;'>42.0</td>
-<td style='text-align: right;'>46.0</td>
-<td style='text-align: right;'>88.0</td>
-</tr>
-<tr>
 <td>メルラン・ソロライブ</td>
 <td style='text-align: right;'>+22.33</td>
 <td style='text-align: right;'>46.0%</td>
@@ -156,6 +146,16 @@
 <td style='text-align: right;'>59.7</td>
 <td style='text-align: right;'>40.3</td>
 <td style='text-align: right;'>100.0</td>
+</tr>
+<tr>
+<td>瞑想</td>
+<td style='text-align: right;'>+22.33</td>
+<td style='text-align: right;'>46.0%</td>
+<td style='text-align: right;'>23.7%</td>
+<td style='text-align: right;'>50</td>
+<td style='text-align: right;'>42.0</td>
+<td style='text-align: right;'>46.0</td>
+<td style='text-align: right;'>88.0</td>
 </tr>
 <tr>
 <td>危険な手品師</td>
@@ -237,16 +237,6 @@
 <td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'>95.0</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 月相</strong></td>
-<td style='text-align: right;'>+21.00</td>
-<td style='text-align: right;'>44.6%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>56</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>62.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
-</tr>
 <tr>
 <td>ルミネスリコシェ</td>
 <td style='text-align: right;'>+21.00</td>
@@ -256,6 +246,16 @@
 <td style='text-align: right;'>52.0</td>
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'>101.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 月相</strong></td>
+<td style='text-align: right;'>+21.00</td>
+<td style='text-align: right;'>44.6%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>56</td>
+<td style='text-align: right;'>51.1</td>
+<td style='text-align: right;'>62.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ｃ．リコシェ</strong></td>
@@ -378,16 +378,6 @@
 <td style='text-align: right;'>97.9</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 部屋掃除</strong></td>
-<td style='text-align: right;'>+17.43</td>
-<td style='text-align: right;'>39.3%</td>
-<td style='text-align: right;'>21.8%</td>
-<td style='text-align: right;'>298</td>
-<td style='text-align: right;'>59.2</td>
-<td style='text-align: right;'>57.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.9</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 チェンジリングマジック</strong></td>
 <td style='text-align: right;'>+17.43</td>
 <td style='text-align: right;'>39.3%</td>
@@ -396,6 +386,16 @@
 <td style='text-align: right;'>55.2</td>
 <td style='text-align: right;'>58.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 部屋掃除</strong></td>
+<td style='text-align: right;'>+17.43</td>
+<td style='text-align: right;'>39.3%</td>
+<td style='text-align: right;'>21.8%</td>
+<td style='text-align: right;'>298</td>
+<td style='text-align: right;'>59.2</td>
+<td style='text-align: right;'>57.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 弾幕手品</strong></td>

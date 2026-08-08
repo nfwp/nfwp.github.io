@@ -185,3 +185,68 @@
 @media (max-width: 768px) {
     .boss-filter-content { flex-direction: column; }
 }
+
+
+
+/* --- 列表示切り替え --- */
+.column-toggle-container {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.column-toggle-container h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.column-toggle-container .toggle-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.column-toggle-container .toggle-options label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* テーブル列を非表示にするルール */
+.run-finder-results-table.hide-col-version .col-version,
+.run-finder-results-table.hide-col-character .col-character,
+.run-finder-results-table.hide-col-deck_size .col-deck_size,
+.run-finder-results-table.hide-col-player_name .col-player_name,
+/* ▼▼▼ ここから3行を追加 ▼▼▼ */.run-finder-results-table.hide-col-act1 .col-act1,
+.run-finder-results-table.hide-col-act2 .col-act2,
+.run-finder-results-table.hide-col-act3 .col-act3 {
+    display: none;
+}
+
+
+
+/* --- 検索条件サマリー --- */
+.search-criteria-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    background-color: #eef7ff;
+    border: 1px solid #bde0ff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.search-criterion {
+    background-color: #d1eaff;
+    color: #004085;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.search-criterion strong {
+    color: #002752;
+}

@@ -54,7 +54,15 @@ function renderRunFinderTab() {
         include_bosses_label: UI_TEXT.run_finder_include_bosses_label || "Include Bosses",
         exclude_bosses_label: UI_TEXT.run_finder_exclude_bosses_label || "Exclude Bosses",
         boss_filter_toggle_expand: UI_TEXT.run_finder_boss_filter_expand || "Open Boss Filter ▼",
-        boss_filter_toggle_collapse: UI_TEXT.run_finder_boss_filter_collapse || "Close Boss Filter ▲"
+        boss_filter_toggle_collapse: UI_TEXT.run_finder_boss_filter_collapse || "Close Boss Filter ▲",
+        show_columns_label: UI_TEXT.run_finder_show_columns_label || "Show Columns:",
+        version: UI_TEXT.run_finder_header_version || "Ver",
+        character: UI_TEXT.run_finder_header_character || "Char",
+        deck_size: UI_TEXT.run_finder_header_deck_size || "Size",
+        player_name: UI_TEXT.run_finder_header_player_name || "Player",
+        act1_toggle: UI_TEXT.run_finder_toggle_act1 || "ACT 1",
+        act2_toggle: UI_TEXT.run_finder_toggle_act2 || "ACT 2",
+        act3_toggle: UI_TEXT.run_finder_toggle_act3 || "ACT 3"
     };
 
     // オートコンプリート用のデータリストを作成
@@ -129,9 +137,9 @@ function renderRunFinderTab() {
                             <input list="all-items-datalist" id="include-item-input" placeholder="${texts.item_placeholder}">
                             <button id="add-include-item-btn" class="add-btn">${texts.add_btn}</button>
                             <div class="search-logic">
-                                <input type="radio" id="include-logic-and" name="include-logic" value="AND">
+                                <input type="radio" id="include-logic-and" name="include-logic" value="AND" checked>
                                 <label for="include-logic-and">${texts.logic_and}</label>
-                                <input type="radio" id="include-logic-or" name="include-logic" value="OR" checked>
+                                <input type="radio" id="include-logic-or" name="include-logic" value="OR">
                                 <label for="include-logic-or">${texts.logic_or}</label>
                             </div>
                         </div>
@@ -153,8 +161,9 @@ function renderRunFinderTab() {
                             <h4>${texts.include_bosses_label}</h4>
                             <div id="include-boss-selector-container" class="boss-selector-grid"></div>
                             <div class="search-logic" style="margin-top: 10px;">
-                                <label><input type="radio" name="boss-logic" value="OR" checked> ${texts.logic_or}</label>
-                                <label><input type="radio" name="boss-logic" value="AND"> ${texts.logic_and}</label>
+                                <label><input type="radio" name="boss-logic" value="AND" checked> ${texts.logic_and}</label>
+                                <label><input type="radio" name="boss-logic" value="OR" > ${texts.logic_or}</label>
+
                             </div>
                             <div class="item-tag-list" id="include-bosses-list"></div>
                         </div>
@@ -166,6 +175,22 @@ function renderRunFinderTab() {
                     </div>
                 </div>
                 <button id="run-search-button" class="primary-search-btn">${texts.search_btn}</button>
+
+                <div id="column-toggle-container" class="column-toggle-container" style="display: none;">
+                    <h4>${texts.show_columns_label}</h4>
+                        <div class="toggle-options">
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="version" checked> ${texts.version}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="character" checked> ${texts.character}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="deck_size" checked> ${texts.deck_size}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="player_name" checked> ${texts.player_name}</label>
+                            <span style="border-left: 1px solid #ccc; margin: 0 5px;"></span>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act1" checked> ${texts.act1_toggle}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act2" checked> ${texts.act2_toggle}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act3" checked> ${texts.act3_toggle}</label>
+
+                        </div>
+                </div>
+
             </div>
             <div id="run-finder-results" style="margin-top: 20px;">
                 <p>${texts.initial_prompt}</p>
@@ -210,7 +235,191 @@ function renderRunFinderTab() {
             bossToggleBtn.textContent = isCollapsed ? texts.boss_filter_toggle_expand : texts.boss_filter_toggle_collapse;
         });
     }
+
+
+    // ツールチップ用のHTML要素をページに追加
+    const tooltipElement = document.createElement('div');
+    tooltipElement.id = 'deck-tooltip';
+    tooltipElement.className = 'deck-tooltip';
+    tooltipElement.style.display = 'none';
+    document.body.appendChild(tooltipElement);
+
+    // ツールチップ用のスタイルを追加
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .deck-tooltip {
+            position: absolute;
+            z-index: 1010; /* 他の要素より手前に表示 */
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            max-width: 450px;
+            pointer-events: none; /* ツールチップ自体がマウスイベントを邪魔しないように */
+            font-size: 0.9em;
+            transition: opacity 0.1s ease-in-out;
+        }
+        .deck-tooltip-title {
+            font-weight: bold;
+            color: #1abc9c;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 5px;
+        }
+        .deck-tooltip-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 350px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 15px; /* 縦の隙間は0, 横の隙間は15px */
+        }
+        .deck-tooltip-list li {
+            padding: 2px 0;
+            width: calc(50% - 15px); /* 2列表示 */
+        }
+    `;
+
+
+
+    document.head.appendChild(styleElement);
+
+
+
+    let tooltipDirection = 'right'; // ツールチップの表示方向を保持する変数
+
+    // ツールチップの位置を動的に調整するヘルパー関数
+    const updateTooltipPosition = (event) => {
+        if (tooltipElement.style.display !== 'block') return;
+
+        const tooltipWidth = tooltipElement.offsetWidth;
+        const tooltipHeight = tooltipElement.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const margin = 20; // カーソルからの余白
+
+        // --- 水平方向の位置を決定 (保持された方向に従う) ---
+        if (tooltipDirection === 'left') {
+            tooltipElement.style.left = `${event.pageX - tooltipWidth - margin}px`;
+        } else { // 'right'
+            tooltipElement.style.left = `${event.pageX + margin}px`;
+        }
+
+        // --- 垂直方向の位置を決定 ---
+        if (event.clientY + tooltipHeight + margin > windowHeight) {
+            tooltipElement.style.top = `${event.pageY - tooltipHeight - margin}px`;
+        } else {
+            tooltipElement.style.top = `${event.pageY + margin}px`;
+        }
+    };
+
+    // イベントリスナーを結果表示エリアに設定
+    const resultsContainerForTooltip = document.getElementById('run-finder-results');
+    let tooltipTimeout = null;
+
+    resultsContainerForTooltip.addEventListener('mouseover', (event) => {
+        const link = event.target.closest('a.path-icon-link, a.run-id-link');
+        if (!link) return;
+
+        clearTimeout(tooltipTimeout);
+
+        // 表示方向を決定する
+        const cell = link.closest('td');
+        if (cell) {
+            const cellIndex = cell.cellIndex;
+            // Act 3 (index 13-16) の列なら、常に左に表示
+            if (cellIndex >= 13) {
+                tooltipDirection = 'left';
+            }
+            // Act 1 (index 5-8) の列なら、常に右に表示
+            else if (cellIndex >= 5 && cellIndex <= 8) {
+                tooltipDirection = 'right';
+            }
+            // それ以外 (RunID, Act2など) は画面の左右どちらにいるかで判断
+            else {
+                if (event.pageX > window.innerWidth / 2) {
+                    tooltipDirection = 'left';
+                } else {
+                    tooltipDirection = 'right';
+                }
+            }
+        }
+
+        let { character, runId, stationIndex } = link.dataset;
+        if (!character || !runId || stationIndex === undefined) return;
+
+        const charTimelines = characterTimelineCache.get(character);
+        if (!charTimelines) return;
+        const runTimeline = charTimelines[runId];
+        if (!runTimeline) return;
+
+        const targetStationIndex = (stationIndex === "final") ? 999 : parseInt(stationIndex, 10);
+        if (isNaN(targetStationIndex)) return;
+
+        const { cards } = reconstructDeckAtStation(runTimeline, targetStationIndex);
+
+        const cardCounts = cards.reduce((acc, cardId) => {
+            acc[cardId] = (acc[cardId] || 0) + 1;
+            return acc;
+        }, {});
+
+        const cardNameKey = LANG === 'en' ? 'EN' : 'JA';
+        const cardLookup = ALL_DATA.lookup_tables.cards;
+
+        const deckList = Object.entries(cardCounts)
+            .map(([cardId, count]) => {
+                const cardData = cardLookup[cardId];
+                const cardName = (cardData && cardData[cardNameKey]) ? cardData[cardNameKey] : cardId;
+                return { name: cardName, count: count };
+            })
+            .sort((a, b) => a.name.localeCompare(b.name, LANG));
+
+        const deckHtml = deckList.map(item => `<li>${item.name} &times;${item.count}</li>`).join('');
+
+        tooltipElement.innerHTML = `
+            <div class="deck-tooltip-title">Deck (${cards.length} cards)</div>
+            <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
+        `;
+
+        // 先に表示して寸法を確定させる
+        tooltipElement.style.display = 'block';
+        // 新しい位置調整関数を呼び出す
+        updateTooltipPosition(event);
+    });
+
+    resultsContainerForTooltip.addEventListener('mouseout', (event) => {
+        const link = event.target.closest('a.path-icon-link, a.run-id-link');
+        if (!link) return;
+        tooltipTimeout = setTimeout(() => {
+            tooltipElement.style.display = 'none';
+        }, 200);
+    });
+
+    resultsContainerForTooltip.addEventListener('mousemove', (event) => {
+        // カーソル移動中も、決定された方向に基づいて位置を更新し続ける
+        updateTooltipPosition(event);
+    });
+
+    const toggleContainer = document.getElementById('column-toggle-container');
+    if (toggleContainer) {
+        toggleContainer.addEventListener('change', (event) => {
+            const checkbox = event.target;
+            if (checkbox.classList.contains('column-toggle-checkbox')) {
+                const colName = checkbox.dataset.col;
+                const table = document.querySelector('.run-finder-results-table');
+                if (table) {
+                    // チェックが外れたら hide-col-*** クラスを付与
+                    table.classList.toggle(`hide-col-${colName}`, !checkbox.checked);
+                }
+            }
+        });
+    }
+
 }
+
 
 function addItemToSelection(itemName, listId) {
     const list = document.getElementById(listId);
@@ -362,6 +571,19 @@ async function performAdvancedSearch() {
         const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
         const useTimelineSearch = !!actFilter || !!levelFilter || (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) || includeKeywords.length > 0 || excludeKeywords.length > 0;
 
+
+        const searchCriteria = {
+            character: selectedChar !== 'All' ? selectedChar : null,
+            act: actFilter ? actFilter : null,
+            level: levelFilter ? levelFilter : null,
+            deckSize: (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) ? { operator: deckSizeOperator, value: deckSizeValue } : null,
+            includeItems: includeKeywords.length > 0 ? { items: includeKeywords, logic: includeLogic } : null,
+            excludeItems: excludeKeywords.length > 0 ? excludeKeywords : null,
+            includeBosses: includeBosses.length > 0 ? { bosses: includeBosses, logic: bossLogic } : null,
+            excludeBosses: excludeBosses.length > 0 ? excludeBosses : null
+        };
+
+
         // --- 2. Get base data from GLOBAL variables ---
         if (!ALL_RUN_DETAILS || !STATION_MAP_GLOBAL) {
             console.error('[FATAL] Global data (ALL_RUN_DETAILS or STATION_MAP_GLOBAL) not found! Aborting.');
@@ -450,23 +672,32 @@ async function performAdvancedSearch() {
 
                 if (stationIndicesToSearch.length === 0 && (actFilter || levelFilter)) continue;
 
-                const matchInTimeline = stationIndicesToSearch.some(stationIndex => {
+                let matched = false;
+                for (const stationIndex of stationIndicesToSearch) {
                     const { cards, exhibits } = reconstructDeckAtStation(runTimeline, stationIndex);
+
                     if (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) {
                         const deckSize = cards.length;
-                        if ((deckSizeOperator === 'lte' && deckSize > deckSizeValue) || (deckSizeOperator === 'gte' && deckSize < deckSizeValue)) return false;
+                        if ((deckSizeOperator === 'lte' && deckSize > deckSizeValue) || (deckSizeOperator === 'gte' && deckSize < deckSizeValue)) {
+                            continue; // このステーションは条件に合わない
+                        }
                     }
+
                     const allItemIds = [...cards, ...Array.from(exhibits)];
                     if (applyIdFilters(allItemIds, includeIds, excludeIds, includeLogic)) {
+
                         runWithDisplayData.displayDeckSize = cards.length;
-                        return true;
+                        runWithDisplayData.matchingStationIndex = stationIndex; // 合致したインデックスを保存
+                        matched = true;
+                        break; // 一致が見つかったのでループを抜ける
+
                     }
-                    return false;
-                });
-                if (matchInTimeline) filteredRuns.push(runWithDisplayData);
+                }
+                if (matched) filteredRuns.push(runWithDisplayData);
 
             } else { // Final deck search (only boss filters were applied)
                 runWithDisplayData.displayDeckSize = run.cards ? run.cards.length : 0;
+                runWithDisplayData.matchingStationIndex = "final"; // 最終デッキを示す印
                 filteredRuns.push(runWithDisplayData);
             }
         }
@@ -476,7 +707,9 @@ async function performAdvancedSearch() {
         lastFoundRuns = filteredRuns;
         currentSortKey = 'run_id';
         currentSortOrder = 'asc';
-        sortAndDisplayRuns();
+
+        sortAndDisplayRuns(searchCriteria);
+
 
     } catch (error) {
         console.error("[FATAL] A critical error occurred during search:", error);
@@ -496,7 +729,7 @@ function handleSortClick(sortKey) {
     sortAndDisplayRuns();
 }
 
-function sortAndDisplayRuns() {
+function sortAndDisplayRuns(searchCriteria = {}) {
     const sortedRuns = [...lastFoundRuns].sort((a, b) => {
         const order = currentSortOrder === 'asc' ? 1 : -1;
         let valA = a[currentSortKey];
@@ -511,11 +744,19 @@ function sortAndDisplayRuns() {
     });
     const actFilter = document.getElementById('act-filter').value;
     const levelFilter = document.getElementById('level-filter').value;
-    displayRunFinderResults(sortedRuns, actFilter, levelFilter);
+    //displayRunFinderResults(sortedRuns, actFilter, levelFilter);
+    displayRunFinderResults(sortedRuns, searchCriteria, actFilter, levelFilter);
 }
 
-function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
+
+function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, levelFilter = null) {
+
+
     const resultsContainer = document.getElementById('run-finder-results');
+    const toggleContainer = document.getElementById('column-toggle-container');
+    if (toggleContainer) {
+        toggleContainer.style.display = (runs && runs.length > 0) ? 'block' : 'none';
+    }
     const texts = {
         title: UI_TEXT.search_results_title || "Found {count} runs",
         no_results: UI_TEXT.search_no_results || "No runs were found matching the criteria.",
@@ -524,15 +765,46 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
         character: UI_TEXT.run_finder_header_character || "Char",
         deck_size: UI_TEXT.run_finder_header_deck_size || "Size",
         player_name: UI_TEXT.run_finder_header_player_name || "Player",
-        act1_header: UI_TEXT.run_finder_header_act1 || "Act1",
-        act2_header: UI_TEXT.run_finder_header_act2 || "Act2",
-        act3_header: UI_TEXT.run_finder_header_act3 || "Act3"
+        act1_header: UI_TEXT.run_finder_header_act1 || "Act 1",
+        act2_header: UI_TEXT.run_finder_header_act2 || "Act 2",
+        act3_header: UI_TEXT.run_finder_header_act3 || "Act 3",
+        stage_early: UI_TEXT.run_finder_header_stage_early || "Early",
+        stage_mid: UI_TEXT.run_finder_header_stage_mid || "Mid",
+        stage_late: UI_TEXT.run_finder_header_stage_late || "Late",
+        stage_boss: UI_TEXT.run_finder_header_stage_boss || "Boss"
     };
     const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
     if (!runs || runs.length === 0) {
         resultsContainer.innerHTML = `<p>${texts.no_results}</p>`;
         return;
     }
+
+
+    let criteriaHtml = '';
+    if (searchCriteria && Object.values(searchCriteria).some(v => v !== null)) {
+        const criteriaList = [];
+        // 翻訳テキストを取得、なければフォールバック
+        const critLabel = (key, fallback) => UI_TEXT[`run_finder_crit_${key}`] || fallback;
+        const crit = (label, value) => `<span class="search-criterion"><strong>${label}:</strong> ${value}</span>`;
+
+        if (searchCriteria.character) criteriaList.push(crit(critLabel('char', 'Char'), searchCriteria.character));
+        if (searchCriteria.act) criteriaList.push(crit(critLabel('act', 'Act'), searchCriteria.act));
+        if (searchCriteria.level) criteriaList.push(crit(critLabel('level', 'Level'), searchCriteria.level));
+        if (searchCriteria.deckSize) {
+            const op = searchCriteria.deckSize.operator === 'lte' ? '<=' : '>=';
+            criteriaList.push(crit(critLabel('deck', 'Deck'), `${op} ${searchCriteria.deckSize.value}`));
+        }
+        if (searchCriteria.includeItems) criteriaList.push(crit(critLabel('include', 'Include'), `${searchCriteria.includeItems.items.join(', ')} (${searchCriteria.includeItems.logic})`));
+        if (searchCriteria.excludeItems) criteriaList.push(crit(critLabel('exclude', 'Exclude'), searchCriteria.excludeItems.join(', ')));
+        if (searchCriteria.includeBosses) criteriaList.push(crit(critLabel('bosses', 'Bosses'), `${searchCriteria.includeBosses.bosses.join(', ')} (${searchCriteria.includeBosses.logic})`));
+        if (searchCriteria.excludeBosses) criteriaList.push(crit(critLabel('ex_bosses', 'Exclude Bosses'), searchCriteria.excludeBosses.join(', ')));
+
+        if (criteriaList.length > 0) {
+            criteriaHtml = `<div class="search-criteria-summary">${criteriaList.join('')}</div>`;
+        }
+    }
+
+
     const runRows = runs.map(run => {
         try {
             const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
@@ -541,42 +813,109 @@ function displayRunFinderResults(runs, actFilter = null, levelFilter = null) {
             if (levelFilter) params.push(`l=${levelFilter}`);
             const queryParams = params.length > 0 ? '?' + params.join('&') : '';
             const finalUrl = baseUrl + queryParams;
-            const pathStrings = { act1: '', act2: '', act3: '' };
+
+            const pathCells = {
+                act1: { early: '&nbsp;', mid: '&nbsp;', late: '&nbsp;', boss: '&nbsp;' },
+                act2: { early: '&nbsp;', mid: '&nbsp;', late: '&nbsp;', boss: '&nbsp;' },
+                act3: { early: '&nbsp;', mid: '&nbsp;', late: '&nbsp;', boss: '&nbsp;' }
+            };
+
             if (run.path_summary) {
                 for (let actNum = 1; actNum <= 3; actNum++) {
-                    const stageHtmlParts = [];
                     for (const stage of ['Early', 'Mid', 'Late']) {
                         const key = `Act${actNum} ${stage}`;
                         const nodesInStage = run.path_summary[key] || [];
-                        const currentStageString = nodesInStage.map(node => {
+                        const stageHtml = nodesInStage.map(node => {
                             const icon = nodeIcons[node.type] || null;
                             if (!icon) return null;
                             const nodeUrl = `${baseUrl}?a=${actNum}&l=${node.level}`;
-                            return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" title="Act ${actNum}, Level ${node.level}: ${node.type}">${icon}</a>`;
+                            const stationMapKey = `${actNum}-${node.level}`;
+                            const stationIndex = STATION_MAP_GLOBAL[stationMapKey];
+                            const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}"`;
+                            return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" title="Act ${actNum}, Level ${node.level}: ${node.type}" ${dataAttributes}>${icon}</a>`;
                         }).filter(Boolean).join('');
-                        stageHtmlParts.push(`<span class="stage-summary-part">${currentStageString || '&nbsp;'}</span>`);
+
+                        if (stageHtml) {
+                            pathCells[`act${actNum}`][stage.toLowerCase()] = stageHtml;
+                        }
                     }
-                    pathStrings[`act${actNum}`] = stageHtmlParts.join('<span class="stage-separator">→</span>');
+
                     const actBossData = run.bosses ? run.bosses[String(actNum)] : null;
                     if (actBossData && bossIconMap[actBossData.name]) {
                         const bossIconUrl = bossIconMap[actBossData.name] || "./img/boss/Unknown.avif";
                         const bossUrl = `${baseUrl}?a=${actNum}&l=${actBossData.level}`;
-                        const bossIconHtml = `<span class="stage-separator">→</span><a href="${bossUrl}" target="_blank" class="path-icon-link boss-icon-container" title="${actBossData.name} (Lvl ${actBossData.level})"><img src="${bossIconUrl}" alt="${actBossData.name}"></a>`;
-                        pathStrings[`act${actNum}`] += bossIconHtml;
+                        const stationMapKey = `${actNum}-${actBossData.level}`;
+                        const stationIndex = STATION_MAP_GLOBAL[stationMapKey];
+                        const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}"`;
+                        const bossIconHtml = `<a href="${bossUrl}" target="_blank" class="path-icon-link boss-icon-container" title="${actBossData.name} (Lvl ${actBossData.level})" ${dataAttributes}><img src="${bossIconUrl}" alt="${actBossData.name}"></a>`;
+                        pathCells[`act${actNum}`].boss = bossIconHtml;
                     }
                 }
             }
-            return `<tr><td><a href="${finalUrl}" target="_blank" title="${run.run_id}">${run.run_id}</a></td><td>${run.version}</td><td>${run.character}</td><td>${run.displayDeckSize ?? 'N/A'}</td><td>${run.player_name}</td><td class="path-summary-cell-container"><div class="path-summary-grid">${pathStrings.act1}</div></td><td class="path-summary-cell-container"><div class="path-summary-grid">${pathStrings.act2}</div></td><td class="path-summary-cell-container"><div class="path-summary-grid">${pathStrings.act3}</div></td></tr>`;
+
+            return `<tr>
+                <td class="col-run_id"><a href="${finalUrl}" target="_blank" title="${run.run_id}" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
+                <td class="col-version">${run.version}</td>
+                <td class="col-character">${run.character}</td>
+                <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>
+                <td class="col-player_name">${run.player_name}</td>
+                <td class="path-summary-cell col-act1">${pathCells.act1.early}</td>
+                <td class="path-summary-cell col-act1">${pathCells.act1.mid}</td>
+                <td class="path-summary-cell col-act1">${pathCells.act1.late}</td>
+                <td class="path-summary-cell col-act1">${pathCells.act1.boss}</td>
+                <td class="path-summary-cell col-act2">${pathCells.act2.early}</td>
+                <td class="path-summary-cell col-act2">${pathCells.act2.mid}</td>
+                <td class="path-summary-cell col-act2">${pathCells.act2.late}</td>
+                <td class="path-summary-cell col-act2">${pathCells.act2.boss}</td>
+                <td class="path-summary-cell col-act3">${pathCells.act3.early}</td>
+                <td class="path-summary-cell col-act3">${pathCells.act3.mid}</td>
+                <td class="path-summary-cell col-act3">${pathCells.act3.late}</td>
+                <td class="path-summary-cell col-act3">${pathCells.act3.boss}</td>
+            </tr>`;
+
         } catch (error) {
             console.error(`[ERROR] Failed to process run HTML for run_id: ${run ? run.run_id : 'unknown'}.`, error, run);
             return '';
         }
     }).join('');
+
+
     const getSortIndicator = (key) => {
         if (currentSortKey === key) return currentSortOrder === 'asc' ? ' ▲' : ' ▼';
         return '';
     };
-    resultsContainer.innerHTML = `<div class="results-header"><h4>${texts.title.replace('{count}', runs.length)}</h4><button onclick="generateAndCopyShareLink()" class="copy-share-link">🔗 Copy Link</button></div><table class="run-finder-results-table"><thead><tr><th onclick="handleSortClick('run_id')">${texts.run_id}${getSortIndicator('run_id')}</th><th onclick="handleSortClick('version')">${texts.version}${getSortIndicator('version')}</th><th onclick="handleSortClick('character')">${texts.character}${getSortIndicator('character')}</th><th onclick="handleSortClick('displayDeckSize')">${texts.deck_size}${getSortIndicator('displayDeckSize')}</th><th onclick="handleSortClick('player_name')">${texts.player_name}${getSortIndicator('player_name')}</th><th>${texts.act1_header}</th><th>${texts.act2_header}</th><th>${texts.act3_header}</th></tr></thead><tbody>${runRows}</tbody></table>`;
+
+
+    resultsContainer.innerHTML = `
+        <div class="results-header">
+            <h4>${texts.title.replace('{count}', runs.length)}</h4>
+            <button onclick="generateAndCopyShareLink()" class="copy-share-link">🔗 Copy Link</button>
+        </div>
+        ${criteriaHtml}
+        <table class="run-finder-results-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="col-run_id"  onclick="handleSortClick('run_id')">${texts.run_id}${getSortIndicator('run_id')}</th>
+                    <th rowspan="2" class="col-version" onclick="handleSortClick('version')">${texts.version}${getSortIndicator('version')}</th>
+                    <th rowspan="2" class="col-character" onclick="handleSortClick('character')">${texts.character}${getSortIndicator('character')}</th>
+                    <th rowspan="2" class="col-deck_size" onclick="handleSortClick('displayDeckSize')">${texts.deck_size}${getSortIndicator('displayDeckSize')}</th>
+                    <th rowspan="2" class="col-player_name" onclick="handleSortClick('player_name')">${texts.player_name}${getSortIndicator('player_name')}</th>
+                    <th colspan="4" class="act-header col-act1">${texts.act1_header}</th>
+                    <th colspan="4" class="act-header col-act2">${texts.act2_header}</th>
+                    <th colspan="4" class="act-header col-act3">${texts.act3_header}</th>
+                </tr>
+                <tr class="stage-header-row">
+                    <th class="col-act1">${texts.stage_early}</th><th class="col-act1">${texts.stage_mid}</th><th class="col-act1">${texts.stage_late}</th><th class="col-act1">${texts.stage_boss}</th>
+                    <th class="col-act2">${texts.stage_early}</th><th class="col-act2">${texts.stage_mid}</th><th class="col-act2">${texts.stage_late}</th><th class="col-act2">${texts.stage_boss}</th>
+                    <th class="col-act3">${texts.stage_early}</th><th class="col-act3">${texts.stage_mid}</th><th class="col-act3">${texts.stage_late}</th><th class="col-act3">${texts.stage_boss}</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${runRows}
+            </tbody>
+        </table>
+    `;
+
 }
 
 function generateAndCopyShareLink() {

@@ -614,8 +614,8 @@
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
-<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">憂曇華の盆栽</span>: 1回</li>
+<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">葉っぱ</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
 </ul>

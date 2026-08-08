@@ -137,16 +137,6 @@
 <td style='text-align: right;'>101.2</td>
 </tr>
 <tr>
-<td>Meditation</td>
-<td style='text-align: right;'>+22.33</td>
-<td style='text-align: right;'>46.0%</td>
-<td style='text-align: right;'>23.7%</td>
-<td style='text-align: right;'>50</td>
-<td style='text-align: right;'>42.0</td>
-<td style='text-align: right;'>46.0</td>
-<td style='text-align: right;'>88.0</td>
-</tr>
-<tr>
 <td>Trumpet Solo</td>
 <td style='text-align: right;'>+22.33</td>
 <td style='text-align: right;'>46.0%</td>
@@ -155,6 +145,16 @@
 <td style='text-align: right;'>59.7</td>
 <td style='text-align: right;'>40.3</td>
 <td style='text-align: right;'>100.0</td>
+</tr>
+<tr>
+<td>Meditation</td>
+<td style='text-align: right;'>+22.33</td>
+<td style='text-align: right;'>46.0%</td>
+<td style='text-align: right;'>23.7%</td>
+<td style='text-align: right;'>50</td>
+<td style='text-align: right;'>42.0</td>
+<td style='text-align: right;'>46.0</td>
+<td style='text-align: right;'>88.0</td>
 </tr>
 <tr>
 <td>Dangerous Illusionist</td>
@@ -236,16 +236,6 @@
 <td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'>95.0</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Lunar Cycle</strong></td>
-<td style='text-align: right;'>+21.00</td>
-<td style='text-align: right;'>44.6%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>56</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>62.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
-</tr>
 <tr>
 <td>Luminous Ricochet</td>
 <td style='text-align: right;'>+21.00</td>
@@ -255,6 +245,16 @@
 <td style='text-align: right;'>52.0</td>
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'>101.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Lunar Cycle</strong></td>
+<td style='text-align: right;'>+21.00</td>
+<td style='text-align: right;'>44.6%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>56</td>
+<td style='text-align: right;'>51.1</td>
+<td style='text-align: right;'>62.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 C. Ricochet</strong></td>
@@ -377,16 +377,6 @@
 <td style='text-align: right;'>97.9</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Room Cleaning</strong></td>
-<td style='text-align: right;'>+17.43</td>
-<td style='text-align: right;'>39.3%</td>
-<td style='text-align: right;'>21.8%</td>
-<td style='text-align: right;'>298</td>
-<td style='text-align: right;'>59.2</td>
-<td style='text-align: right;'>57.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.9</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Changeling Magic</strong></td>
 <td style='text-align: right;'>+17.43</td>
 <td style='text-align: right;'>39.3%</td>
@@ -395,6 +385,16 @@
 <td style='text-align: right;'>55.2</td>
 <td style='text-align: right;'>58.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Room Cleaning</strong></td>
+<td style='text-align: right;'>+17.43</td>
+<td style='text-align: right;'>39.3%</td>
+<td style='text-align: right;'>21.8%</td>
+<td style='text-align: right;'>298</td>
+<td style='text-align: right;'>59.2</td>
+<td style='text-align: right;'>57.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Trick Bullets</strong></td>
