@@ -490,10 +490,10 @@
 <li><span class="text-purchase">臨機応変</span>: 2回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
-<li><span class="text-purchase">冬日和</span>: 2回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 1回</li>
+<li><span class="text-purchase">冬日和</span>: 2回</li>
 <li><span class="text-purchase">チャージ</span>: 1回</li>
+<li><span class="text-purchase">ピッチダークサテライト</span>: 1回</li>
 <li><span class="text-purchase">アリオト</span>: 1回</li>
 <li><span class="text-purchase">ダンマクノート</span>: 1回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 1回</li>
@@ -537,11 +537,11 @@
 <li><span class="text-purchase">チャージ</span>: 7回</li>
 <li><span class="text-purchase">ピッチダークサテライト</span>: 7回</li>
 <li><span class="text-purchase">冬日和</span>: 7回</li>
-<li><span class="text-purchase">无寿の夢</span>: 6回</li>
-<li><span class="text-purchase">スターダスト・シャワー</span>: 6回</li>
 <li><span class="text-purchase">サテライトイリュージョン</span>: 6回</li>
-<li><span class="text-purchase">ナビゲーションスター</span>: 6回</li>
+<li><span class="text-purchase">无寿の夢</span>: 6回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 6回</li>
+<li><span class="text-purchase">ナビゲーションスター</span>: 6回</li>
+<li><span class="text-purchase">スターダスト・シャワー</span>: 6回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -558,10 +558,10 @@
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">魔導書</span>: 1回</li>
-<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">ミシン</span>: 1回</li>
-<li><span class="text-exhibit">ビール</span>: 1回</li>
+<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
+<li><span class="text-exhibit">ビール</span>: 1回</li>
 <li><span class="text-exhibit">唐傘</span>: 1回</li>
 </ul>
 </div>
@@ -594,9 +594,9 @@
 <li><span class="text-purchase">悪魔の典籍</span>: 3回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 3回</li>
 <li><span class="text-purchase">蛍光の森</span>: 2回</li>
+<li><span class="text-purchase">无寿の夢</span>: 2回</li>
 <li><span class="text-purchase">元素放射</span>: 2回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
-<li><span class="text-purchase">无寿の夢</span>: 2回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 2回</li>
 <li><span class="text-purchase">逆張り</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
@@ -619,10 +619,10 @@
 <li><span class="text-exhibit">タケコプター</span>: 1回</li>
 <li><span class="text-exhibit">Blink Dagger</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
-<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
-<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 <li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">ソウルジェム</span>: 1回</li>
+<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
+<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

@@ -317,16 +317,6 @@
 <td style='text-align: right;'>50.0</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 花園での集い</strong></td>
-<td style='text-align: right;'>+17.17</td>
-<td style='text-align: right;'>45.2%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'><strong><span style='color: red;'>69.8</span></strong></td>
-<td style='text-align: right;'>54.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.8</span></strong></td>
-</tr>
 <tr>
 <td>凍てつく玉座</td>
 <td style='text-align: right;'>+17.17</td>
@@ -336,6 +326,16 @@
 <td style='text-align: right;'>51.5</td>
 <td style='text-align: right;'>50.3</td>
 <td style='text-align: right;'>101.8</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 花園での集い</strong></td>
+<td style='text-align: right;'>+17.17</td>
+<td style='text-align: right;'>45.2%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'><strong><span style='color: red;'>69.8</span></strong></td>
+<td style='text-align: right;'>54.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.8</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 真夏の妖精の夢、ラルバ</strong></td>
@@ -495,9 +495,9 @@
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 1回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
-<li><span class="text-purchase">氷上の妖精</span>: 1回</li>
 <li><span class="text-purchase">猛吹雪</span>: 1回</li>
 <li><span class="text-purchase">春告精、リリーホワイト</span>: 1回</li>
+<li><span class="text-purchase">氷上の妖精</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -552,8 +552,8 @@
 <li><span class="text-exhibit">おいしいクッキー</span>: 3回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 2回</li>
-<li><span class="text-exhibit">魔導書</span>: 2回</li>
 <li><span class="text-exhibit">会員証</span>: 2回</li>
+<li><span class="text-exhibit">魔導書</span>: 2回</li>
 <li><span class="text-exhibit">黒のノート</span>: 2回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 2回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
@@ -597,12 +597,12 @@
 <li><span class="text-purchase">春告精、リリーホワイト</span>: 2回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
-<li><span class="text-purchase">捏造報道</span>: 1回</li>
 <li><span class="text-purchase">極彩沛雨</span>: 1回</li>
+<li><span class="text-purchase">捏造報道</span>: 1回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 1回</li>
-<li><span class="text-purchase">自然の怒り</span>: 1回</li>
 <li><span class="text-purchase">異変調査助手、大妖精</span>: 1回</li>
 <li><span class="text-purchase">燃える氷</span>: 1回</li>
+<li><span class="text-purchase">自然の怒り</span>: 1回</li>
 <li><span class="text-purchase">太陽の畑</span>: 1回</li>
 </ul>
 </div>
@@ -614,8 +614,8 @@
 <li><span class="text-exhibit">リボン</span>: 3回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 2回</li>
 <li><span class="text-exhibit">葉っぱ</span>: 2回</li>
-<li><span class="text-exhibit">ヘッドフォン</span>: 1回</li>
 <li><span class="text-exhibit">竹</span>: 1回</li>
+<li><span class="text-exhibit">ヘッドフォン</span>: 1回</li>
 <li><span class="text-exhibit">ブロックアイス</span>: 1回</li>
 <li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">ラジオ</span>: 1回</li>

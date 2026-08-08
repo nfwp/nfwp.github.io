@@ -187,16 +187,6 @@
 <td style='text-align: right;'>58.0</td>
 <td style='text-align: right;'>105.5</td>
 </tr>
-<tr>
-<td>静穏</td>
-<td style='text-align: right;'>+20.21</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>23.9%</td>
-<td style='text-align: right;'>30</td>
-<td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>58.3</td>
-<td style='text-align: right;'>105.6</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 幻想一重</strong></td>
 <td style='text-align: right;'>+20.21</td>
@@ -206,6 +196,16 @@
 <td style='text-align: right;'>58.3</td>
 <td style='text-align: right;'>57.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>115.6</span></strong></td>
+</tr>
+<tr>
+<td>静穏</td>
+<td style='text-align: right;'>+20.21</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>23.9%</td>
+<td style='text-align: right;'>30</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>58.3</td>
+<td style='text-align: right;'>105.6</td>
 </tr>
 <tr>
 <td>緊縛陣</td>
@@ -481,21 +481,21 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 5回</li>
 <li><span class="text-purchase">長袖善舞</span>: 4回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 4回</li>
-<li><span class="text-purchase">歴史喰い</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">清めの儀式</span>: 3回</li>
+<li><span class="text-purchase">歴史喰い</span>: 3回</li>
 <li><span class="text-purchase">緊縛陣</span>: 3回</li>
 <li><span class="text-purchase">昇天脚</span>: 3回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 3回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">住吉三神</span>: 2回</li>
 <li><span class="text-purchase">無差別発火の符</span>: 2回</li>
 <li><span class="text-purchase">厄祓い</span>: 2回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
 <li><span class="text-purchase">博麗縁日</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
-<li><span class="text-purchase">心抄斬</span>: 1回</li>
 <li><span class="text-purchase">自由自在</span>: 1回</li>
+<li><span class="text-purchase">心抄斬</span>: 1回</li>
 <li><span class="text-purchase">浄化活動</span>: 1回</li>
 <li><span class="text-purchase">亜空点穴</span>: 1回</li>
 </ul>
@@ -530,8 +530,8 @@
 <li><span class="text-purchase">弾幕対決</span>: 5回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 5回</li>
-<li><span class="text-purchase">聖地巡礼</span>: 4回</li>
 <li><span class="text-purchase">昇天脚</span>: 4回</li>
+<li><span class="text-purchase">聖地巡礼</span>: 4回</li>
 <li><span class="text-purchase">心抄斬</span>: 4回</li>
 <li><span class="text-purchase">清めの儀式</span>: 4回</li>
 <li><span class="text-purchase">浄化活動</span>: 3回</li>
@@ -556,8 +556,8 @@
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">ソウルジェム</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
-<li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
+<li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 <li><span class="text-exhibit">天狗の下駄</span>: 1回</li>
@@ -597,11 +597,11 @@
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 1回</li>
 <li><span class="text-purchase">結界渡り</span>: 1回</li>
-<li><span class="text-purchase">封魔陣</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
+<li><span class="text-purchase">封魔陣</span>: 1回</li>
 <li><span class="text-purchase">自由自在</span>: 1回</li>
 <li><span class="text-purchase">太極から両儀に</span>: 1回</li>
-<li><span class="text-purchase">亜空点穴</span>: 1回</li>
+<li><span class="text-purchase">浄化活動</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

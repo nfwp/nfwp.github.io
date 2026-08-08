@@ -264,6 +264,7 @@
   },
   "event_analysis": {
       "desc": "Aggregated data for events on '?' nodes. Events are ordered chronologically. <br>⚠\uFE0FChoice tracking is simplified due to complexity.",
+      "avg_resource_label": "Avg. Resource Change",
       "actions": {
         "card_add": "Cards Added",
         "card_rem": "Cards Removed",

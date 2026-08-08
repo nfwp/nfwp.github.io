@@ -268,16 +268,6 @@
 <td style='text-align: right;'>99.3</td>
 </tr>
 <tr>
-<td>蛍光の森</td>
-<td style='text-align: right;'>+15.00</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>48.1</td>
-<td style='text-align: right;'>45.2</td>
-<td style='text-align: right;'>93.3</td>
-</tr>
-<tr>
 <td>咲いた心</td>
 <td style='text-align: right;'>+15.00</td>
 <td style='text-align: right;'>45.5%</td>
@@ -286,6 +276,16 @@
 <td style='text-align: right;'>46.7</td>
 <td style='text-align: right;'>35.1</td>
 <td style='text-align: right;'>81.8</td>
+</tr>
+<tr>
+<td>蛍光の森</td>
+<td style='text-align: right;'>+15.00</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>48.1</td>
+<td style='text-align: right;'>45.2</td>
+<td style='text-align: right;'>93.3</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 鬼気怒濤</strong></td>
@@ -368,16 +368,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>114.8</span></strong></td>
 </tr>
 <tr>
-<td>レッドドワーフ・エクスプロージョン</td>
-<td style='text-align: right;'>+12.78</td>
-<td style='text-align: right;'>36.4%</td>
-<td style='text-align: right;'>22.7%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>51.9</td>
-<td style='text-align: right;'>106.0</td>
-</tr>
-<tr>
 <td>ダイレクティドレイザー</td>
 <td style='text-align: right;'>+12.78</td>
 <td style='text-align: right;'>36.4%</td>
@@ -386,6 +376,16 @@
 <td style='text-align: right;'>49.1</td>
 <td style='text-align: right;'>39.7</td>
 <td style='text-align: right;'>88.8</td>
+</tr>
+<tr>
+<td>レッドドワーフ・エクスプロージョン</td>
+<td style='text-align: right;'>+12.78</td>
+<td style='text-align: right;'>36.4%</td>
+<td style='text-align: right;'>22.7%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'>54.1</td>
+<td style='text-align: right;'>51.9</td>
+<td style='text-align: right;'>106.0</td>
 </tr>
 <tr>
 <td>ロケットブルーム</td>
@@ -488,16 +488,16 @@
 <li><span class="text-purchase">焦燥</span>: 2回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 1回</li>
 <li><span class="text-purchase">浮世の関を超える山姥</span>: 1回</li>
-<li><span class="text-purchase">ヤコウタケ</span>: 1回</li>
 <li><span class="text-purchase">逆張り</span>: 1回</li>
 <li><span class="text-purchase">🧰 エナジードリンク</span>: 1回</li>
+<li><span class="text-purchase">ヤコウタケ</span>: 1回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">鳳翼天翔</span>: 1回</li>
 <li><span class="text-purchase">アリオト</span>: 1回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 1回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
-<li><span class="text-purchase">ブライトスターリースカイ</span>: 1回</li>
 <li><span class="text-purchase">无寿の夢</span>: 1回</li>
+<li><span class="text-purchase">ブライトスターリースカイ</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -551,11 +551,11 @@
 <li><span class="text-exhibit">博麗アミュレット</span>: 5回</li>
 <li><span class="text-exhibit">会員証</span>: 2回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
-<li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
+<li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
-<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
+<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">タケコプター</span>: 1回</li>
 <li><span class="text-exhibit">リボン</span>: 1回</li>
@@ -582,23 +582,23 @@
 <ul>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
-<li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
 <li><span class="text-purchase">エマージェンシーディフェンス</span>: 2回</li>
+<li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
 <li><span class="text-purchase">マジックコンバーター</span>: 2回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 2回</li>
-<li><span class="text-purchase">逆張り</span>: 2回</li>
 <li><span class="text-purchase">ロケットブルーム</span>: 2回</li>
+<li><span class="text-purchase">逆張り</span>: 2回</li>
 <li><span class="text-purchase">無差別発火の符</span>: 1回</li>
 <li><span class="text-purchase">魔導書読解</span>: 1回</li>
 <li><span class="text-purchase">そして誰もいなくなるか？</span>: 1回</li>
 <li><span class="text-purchase">冬日和</span>: 1回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 1回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">太陽系儀</span>: 1回</li>
 <li><span class="text-purchase">レッドドワーフ・エクスプロージョン</span>: 1回</li>
 <li><span class="text-purchase">ルナサ・ソロライブ</span>: 1回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
-<li><span class="text-purchase">太陽系儀</span>: 1回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">火力全開</span>: 1回</li>
 </ul>
 </div>
@@ -608,8 +608,8 @@
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 4回</li>
 <li><span class="text-exhibit">会員証</span>: 3回</li>
 <li><span class="text-exhibit">ハンチング帽</span>: 1回</li>
-<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
+<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">要石</span>: 1回</li>

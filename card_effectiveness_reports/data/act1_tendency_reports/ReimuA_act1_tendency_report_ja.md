@@ -29,8 +29,8 @@
 <li>浄化活動: 31回</li>
 <li>自由自在: 31回</li>
 <li>龍殺陣: 29回</li>
-<li>常置陣: 23回</li>
 <li>弾幕護符: 23回</li>
+<li>常置陣: 23回</li>
 <li>ホーミングアミュレット: 22回</li>
 <li>作戦姿勢: 18回</li>
 <li>桜の舞: 15回</li>
@@ -218,16 +218,6 @@
 <td style='text-align: right;'>103.6</td>
 </tr>
 <tr>
-<td>緊縛陣</td>
-<td style='text-align: right;'>+20.48</td>
-<td style='text-align: right;'>47.1%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>87</td>
-<td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>38.3</td>
-<td style='text-align: right;'>87.9</td>
-</tr>
-<tr>
 <td>宝塔の威光</td>
 <td style='text-align: right;'>+20.48</td>
 <td style='text-align: right;'>47.1%</td>
@@ -236,6 +226,16 @@
 <td style='text-align: right;'>54.0</td>
 <td style='text-align: right;'>47.0</td>
 <td style='text-align: right;'>101.1</td>
+</tr>
+<tr>
+<td>緊縛陣</td>
+<td style='text-align: right;'>+20.48</td>
+<td style='text-align: right;'>47.1%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>87</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>38.3</td>
+<td style='text-align: right;'>87.9</td>
 </tr>
 <tr>
 <td>陰陽血印</td>
@@ -556,8 +556,8 @@
 <li><span class="text-exhibit">タケコプター</span>: 1回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">ひらり布</span>: 1回</li>
-<li><span class="text-exhibit">唐傘</span>: 1回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 1回</li>
+<li><span class="text-exhibit">唐傘</span>: 1回</li>
 <li><span class="text-exhibit">白狼天狗の盾</span>: 1回</li>
 <li><span class="text-exhibit">ビール</span>: 1回</li>
 </ul>
@@ -595,14 +595,14 @@
 <li><span class="text-purchase">🧰 フロッピーディスク</span>: 1回</li>
 <li><span class="text-purchase">弾幕対決</span>: 1回</li>
 <li><span class="text-purchase">龍殺陣</span>: 1回</li>
+<li><span class="text-purchase">聖人化</span>: 1回</li>
 <li><span class="text-purchase">明珠暗投</span>: 1回</li>
 <li><span class="text-purchase">幻想一重</span>: 1回</li>
-<li><span class="text-purchase">聖人化</span>: 1回</li>
 <li><span class="text-purchase">陰陽宝玉</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 1回</li>
-<li><span class="text-purchase">金剛身</span>: 1回</li>
 <li><span class="text-purchase">常置陣</span>: 1回</li>
+<li><span class="text-purchase">浄化活動</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -610,14 +610,14 @@
 <ul>
 <li><span class="text-exhibit">プラモデル</span>: 4回</li>
 <li><span class="text-exhibit">リボン</span>: 3回</li>
-<li><span class="text-exhibit">空き瓶</span>: 2回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
+<li><span class="text-exhibit">空き瓶</span>: 2回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
-<li><span class="text-exhibit">黒のノート</span>: 1回</li>
-<li><span class="text-exhibit">憂曇華の盆栽</span>: 1回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
+<li><span class="text-exhibit">憂曇華の盆栽</span>: 1回</li>
+<li><span class="text-exhibit">黒のノート</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

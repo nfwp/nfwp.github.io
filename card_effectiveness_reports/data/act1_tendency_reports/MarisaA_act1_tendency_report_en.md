@@ -489,10 +489,10 @@
 <li><span class="text-purchase">Improvisation</span>: 2</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 2</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 2</li>
-<li><span class="text-purchase">Hand Warmer</span>: 2</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
-<li><span class="text-purchase">Dark Satellite</span>: 1</li>
+<li><span class="text-purchase">Hand Warmer</span>: 2</li>
 <li><span class="text-purchase">Ready For Burst</span>: 1</li>
+<li><span class="text-purchase">Dark Satellite</span>: 1</li>
 <li><span class="text-purchase">Alioth</span>: 1</li>
 <li><span class="text-purchase">Danmaku Notes</span>: 1</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 1</li>
@@ -536,11 +536,11 @@
 <li><span class="text-purchase">Ready For Burst</span>: 7</li>
 <li><span class="text-purchase">Dark Satellite</span>: 7</li>
 <li><span class="text-purchase">Hand Warmer</span>: 7</li>
-<li><span class="text-purchase">Ageless Dream</span>: 6</li>
-<li><span class="text-purchase">Bask in Stardust</span>: 6</li>
 <li><span class="text-purchase">Satellite Illusion</span>: 6</li>
-<li><span class="text-purchase">Navigation Star</span>: 6</li>
+<li><span class="text-purchase">Ageless Dream</span>: 6</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 6</li>
+<li><span class="text-purchase">Navigation Star</span>: 6</li>
+<li><span class="text-purchase">Bask in Stardust</span>: 6</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -557,10 +557,10 @@
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
-<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Sewing Machine</span>: 1</li>
-<li><span class="text-exhibit">Beer</span>: 1</li>
+<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
+<li><span class="text-exhibit">Beer</span>: 1</li>
 <li><span class="text-exhibit">Karakasa</span>: 1</li>
 </ul>
 </div>
@@ -593,9 +593,9 @@
 <li><span class="text-purchase">Devil's Codex</span>: 3</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 3</li>
 <li><span class="text-purchase">Fluorescent Forest</span>: 2</li>
+<li><span class="text-purchase">Ageless Dream</span>: 2</li>
 <li><span class="text-purchase">Radioactive Elements</span>: 2</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 2</li>
-<li><span class="text-purchase">Ageless Dream</span>: 2</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 2</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 2</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
@@ -618,10 +618,10 @@
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Blink Dagger</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
-<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
 <li><span class="text-exhibit">Soulgem</span>: 1</li>
+<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

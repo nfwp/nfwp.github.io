@@ -137,16 +137,6 @@
 <td style='text-align: right;'>101.2</td>
 </tr>
 <tr>
-<td>Trumpet Solo</td>
-<td style='text-align: right;'>+22.33</td>
-<td style='text-align: right;'>46.0%</td>
-<td style='text-align: right;'>23.7%</td>
-<td style='text-align: right;'>50</td>
-<td style='text-align: right;'>59.7</td>
-<td style='text-align: right;'>40.3</td>
-<td style='text-align: right;'>100.0</td>
-</tr>
-<tr>
 <td>Meditation</td>
 <td style='text-align: right;'>+22.33</td>
 <td style='text-align: right;'>46.0%</td>
@@ -155,6 +145,16 @@
 <td style='text-align: right;'>42.0</td>
 <td style='text-align: right;'>46.0</td>
 <td style='text-align: right;'>88.0</td>
+</tr>
+<tr>
+<td>Trumpet Solo</td>
+<td style='text-align: right;'>+22.33</td>
+<td style='text-align: right;'>46.0%</td>
+<td style='text-align: right;'>23.7%</td>
+<td style='text-align: right;'>50</td>
+<td style='text-align: right;'>59.7</td>
+<td style='text-align: right;'>40.3</td>
+<td style='text-align: right;'>100.0</td>
 </tr>
 <tr>
 <td>Dangerous Illusionist</td>
@@ -236,16 +236,6 @@
 <td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'>95.0</td>
 </tr>
-<tr>
-<td>Luminous Ricochet</td>
-<td style='text-align: right;'>+21.00</td>
-<td style='text-align: right;'>44.6%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>56</td>
-<td style='text-align: right;'>52.0</td>
-<td style='text-align: right;'>49.4</td>
-<td style='text-align: right;'>101.4</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Lunar Cycle</strong></td>
 <td style='text-align: right;'>+21.00</td>
@@ -255,6 +245,16 @@
 <td style='text-align: right;'>51.1</td>
 <td style='text-align: right;'>62.8</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.9</span></strong></td>
+</tr>
+<tr>
+<td>Luminous Ricochet</td>
+<td style='text-align: right;'>+21.00</td>
+<td style='text-align: right;'>44.6%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>56</td>
+<td style='text-align: right;'>52.0</td>
+<td style='text-align: right;'>49.4</td>
+<td style='text-align: right;'>101.4</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 C. Ricochet</strong></td>
@@ -296,16 +296,6 @@
 <td style='text-align: right;'>59.2</td>
 <td style='text-align: right;'>97.6</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Princess Undine</strong></td>
-<td style='text-align: right;'>+19.66</td>
-<td style='text-align: right;'>43.0%</td>
-<td style='text-align: right;'>23.4%</td>
-<td style='text-align: right;'>93</td>
-<td style='text-align: right;'>48.9</td>
-<td style='text-align: right;'>67.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.9</span></strong></td>
-</tr>
 <tr>
 <td>Silver Loom</td>
 <td style='text-align: right;'>+19.66</td>
@@ -315,6 +305,16 @@
 <td style='text-align: right;'>49.4</td>
 <td style='text-align: right;'>49.7</td>
 <td style='text-align: right;'>99.2</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Princess Undine</strong></td>
+<td style='text-align: right;'>+19.66</td>
+<td style='text-align: right;'>43.0%</td>
+<td style='text-align: right;'>23.4%</td>
+<td style='text-align: right;'>93</td>
+<td style='text-align: right;'>48.9</td>
+<td style='text-align: right;'>67.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.9</span></strong></td>
 </tr>
 <tr>
 <td>Short Break</td>
@@ -483,15 +483,15 @@
 <li><span class="text-purchase">Play With Water</span>: 5</li>
 <li><span class="text-purchase">Elegant Maid</span>: 5</li>
 <li><span class="text-purchase">Devour History</span>: 5</li>
-<li><span class="text-purchase">Room Cleaning</span>: 4</li>
 <li><span class="text-purchase">Winter Resolution</span>: 4</li>
 <li><span class="text-purchase">Guard Up</span>: 4</li>
+<li><span class="text-purchase">Room Cleaning</span>: 4</li>
 <li><span class="text-purchase">Short Break</span>: 3</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 2</li>
-<li><span class="text-purchase">Knife of Damocles</span>: 2</li>
 <li><span class="text-purchase">Danmaku Deflection</span>: 2</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
+<li><span class="text-purchase">Knife of Damocles</span>: 2</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 2</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
 <li><span class="text-purchase">Ship's Phantom</span>: 2</li>
 <li><span class="text-purchase">Tao Fetal Movement</span>: 2</li>
 <li><span class="text-purchase">Time Suppression</span>: 1</li>
@@ -557,10 +557,10 @@
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Peony</span>: 1</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
-<li><span class="text-exhibit">Moriya Purification Rod</span>: 1</li>
 <li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
-<li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
+<li><span class="text-exhibit">Moriya Purification Rod</span>: 1</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
+<li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Heavy Bass Drum</span>: 1</li>
 </ul>
@@ -600,11 +600,11 @@
 <li><span class="text-purchase">Devour History</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Starry Sword Dance</span>: 3</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 3</li>
 <li><span class="text-purchase">Déjà Vu</span>: 3</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 3</li>
 <li><span class="text-purchase">Guard Up</span>: 2</li>
-<li><span class="text-purchase">Wandering Heaven</span>: 2</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
+<li><span class="text-purchase">Wandering Heaven</span>: 2</li>
 <li><span class="text-purchase">Imaginary Timeline</span>: 2</li>
 </ul>
 </div>
@@ -613,8 +613,8 @@
 <ul>
 <li><span class="text-exhibit">Lab Apparatus</span>: 4</li>
 <li><span class="text-exhibit">Ribbon</span>: 4</li>
-<li><span class="text-exhibit">Delicious Cookie</span>: 3</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
+<li><span class="text-exhibit">Delicious Cookie</span>: 3</li>
 <li><span class="text-exhibit">Robot Model</span>: 2</li>
 <li><span class="text-exhibit">Roukanken</span>: 2</li>
 <li><span class="text-exhibit">Membership Card</span>: 2</li>
@@ -628,8 +628,8 @@
 <li><span class="text-exhibit">Smart Speaker</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

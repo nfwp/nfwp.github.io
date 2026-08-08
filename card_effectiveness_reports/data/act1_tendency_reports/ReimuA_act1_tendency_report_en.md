@@ -29,8 +29,8 @@
 <li>Purify the Land: 31</li>
 <li>Freefly: 31</li>
 <li>Dragon-Slaying Circle: 29</li>
-<li>Permanent Border: 23</li>
 <li>Danmaku Protection: 23</li>
+<li>Permanent Border: 23</li>
 <li>Homing Amulet: 22</li>
 <li>Battle Stance: 18</li>
 <li>Dance of Sacred Sakura: 15</li>
@@ -217,16 +217,6 @@
 <td style='text-align: right;'>103.6</td>
 </tr>
 <tr>
-<td>Binding Border</td>
-<td style='text-align: right;'>+20.48</td>
-<td style='text-align: right;'>47.1%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>87</td>
-<td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>38.3</td>
-<td style='text-align: right;'>87.9</td>
-</tr>
-<tr>
 <td>Pagoda's Glare</td>
 <td style='text-align: right;'>+20.48</td>
 <td style='text-align: right;'>47.1%</td>
@@ -235,6 +225,16 @@
 <td style='text-align: right;'>54.0</td>
 <td style='text-align: right;'>47.0</td>
 <td style='text-align: right;'>101.1</td>
+</tr>
+<tr>
+<td>Binding Border</td>
+<td style='text-align: right;'>+20.48</td>
+<td style='text-align: right;'>47.1%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>87</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>38.3</td>
+<td style='text-align: right;'>87.9</td>
 </tr>
 <tr>
 <td>Yin-Yang Rune</td>
@@ -555,8 +555,8 @@
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
-<li><span class="text-exhibit">Karakasa</span>: 1</li>
 <li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
+<li><span class="text-exhibit">Karakasa</span>: 1</li>
 <li><span class="text-exhibit">Wolf Tengu's Shield</span>: 1</li>
 <li><span class="text-exhibit">Beer</span>: 1</li>
 </ul>
@@ -594,14 +594,14 @@
 <li><span class="text-purchase">🧰 Floppy Disk</span>: 1</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 1</li>
 <li><span class="text-purchase">Dragon-Slaying Circle</span>: 1</li>
+<li><span class="text-purchase">Apotheosis</span>: 1</li>
 <li><span class="text-purchase">Secret Orbs</span>: 1</li>
 <li><span class="text-purchase">Fleeting Fantasy</span>: 1</li>
-<li><span class="text-purchase">Apotheosis</span>: 1</li>
 <li><span class="text-purchase">Orb of Duality</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 1</li>
-<li><span class="text-purchase">Entrench Body</span>: 1</li>
 <li><span class="text-purchase">Permanent Border</span>: 1</li>
+<li><span class="text-purchase">Purify the Land</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -609,14 +609,14 @@
 <ul>
 <li><span class="text-exhibit">Robot Model</span>: 4</li>
 <li><span class="text-exhibit">Ribbon</span>: 3</li>
-<li><span class="text-exhibit">Bottle</span>: 2</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
+<li><span class="text-exhibit">Bottle</span>: 2</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
-<li><span class="text-exhibit">Black Notebook</span>: 1</li>
-<li><span class="text-exhibit">Potted Udonge</span>: 1</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 1</li>
+<li><span class="text-exhibit">Potted Udonge</span>: 1</li>
+<li><span class="text-exhibit">Black Notebook</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

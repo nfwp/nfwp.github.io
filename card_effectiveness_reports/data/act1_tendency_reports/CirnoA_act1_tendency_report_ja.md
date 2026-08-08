@@ -485,19 +485,19 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">異変調査助手、大妖精</span>: 3回</li>
 <li><span class="text-purchase">猛吹雪</span>: 2回</li>
-<li><span class="text-purchase">真冬の化身、レティ</span>: 2回</li>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
-<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
+<li><span class="text-purchase">真冬の化身、レティ</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
-<li><span class="text-purchase">水遊び</span>: 2回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 2回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
+<li><span class="text-purchase">水遊び</span>: 2回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
 <li><span class="text-purchase">のびーるアーム</span>: 1回</li>
-<li><span class="text-purchase">タオ胎動</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">タオ胎動</span>: 1回</li>
 <li><span class="text-purchase">極彩沛雨</span>: 1回</li>
-<li><span class="text-purchase">絶対零度</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -531,8 +531,8 @@
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 8回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 8回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 7回</li>
-<li><span class="text-purchase">ウォーターカーペット</span>: 7回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 7回</li>
+<li><span class="text-purchase">ウォーターカーペット</span>: 7回</li>
 <li><span class="text-purchase">タオ胎動</span>: 6回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
 <li><span class="text-purchase">水遊び</span>: 5回</li>
@@ -588,15 +588,15 @@
 <li><span class="text-purchase">ウォーターカーペット</span>: 2回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 2回</li>
 <li><span class="text-purchase">水遊び</span>: 1回</li>
+<li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
-<li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 1回</li>
 <li><span class="text-purchase">羽ばたく翼</span>: 1回</li>
 <li><span class="text-purchase">🧰 ロボット掃除機</span>: 1回</li>
-<li><span class="text-purchase">妖精の起床</span>: 1回</li>
 <li><span class="text-purchase">氷鏡反射</span>: 1回</li>
+<li><span class="text-purchase">花鳥風月</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

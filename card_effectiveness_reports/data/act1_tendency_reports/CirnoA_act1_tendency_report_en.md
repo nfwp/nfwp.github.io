@@ -484,19 +484,19 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Daiyousei, Lively Assistant</span>: 3</li>
 <li><span class="text-purchase">Blizzard</span>: 2</li>
-<li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
-<li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
 <li><span class="text-purchase">Clean Energy</span>: 2</li>
-<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
+<li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 2</li>
-<li><span class="text-purchase">Play With Water</span>: 2</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 2</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
+<li><span class="text-purchase">Play With Water</span>: 2</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
 <li><span class="text-purchase">Exteeending Aaaarm</span>: 1</li>
-<li><span class="text-purchase">Tao Fetal Movement</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
+<li><span class="text-purchase">Tao Fetal Movement</span>: 1</li>
 <li><span class="text-purchase">Vivid Color Downpour</span>: 1</li>
-<li><span class="text-purchase">Absolute Zero</span>: 1</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -530,8 +530,8 @@
 <li><span class="text-purchase">Larva, God of Evernight</span>: 8</li>
 <li><span class="text-purchase">Clean Energy</span>: 8</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 7</li>
-<li><span class="text-purchase">Water Blanket</span>: 7</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 7</li>
+<li><span class="text-purchase">Water Blanket</span>: 7</li>
 <li><span class="text-purchase">Tao Fetal Movement</span>: 6</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
 <li><span class="text-purchase">Play With Water</span>: 5</li>
@@ -587,15 +587,15 @@
 <li><span class="text-purchase">Water Blanket</span>: 2</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 2</li>
 <li><span class="text-purchase">Play With Water</span>: 1</li>
+<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
 <li><span class="text-purchase">Princess Undine</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
-<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
 <li><span class="text-purchase">Call on Friends</span>: 1</li>
 <li><span class="text-purchase">Wingbeats Flight</span>: 1</li>
 <li><span class="text-purchase">🧰 Intelligent Sweeping Robot</span>: 1</li>
-<li><span class="text-purchase">Fairy's Wake-Up</span>: 1</li>
 <li><span class="text-purchase">Frost Refraction</span>: 1</li>
+<li><span class="text-purchase">Beauties of Nature</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
