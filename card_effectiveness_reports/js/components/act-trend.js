@@ -214,7 +214,7 @@ function renderActTrendTab(lang) {
             };
             let resourceHtml = `<div class="analysis-section" style="margin: 0;"><h4 style="margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">${i18n.title}</h4><table class="act-trend-table" style="width: 100%; border-collapse: collapse; font-size: 0.95em;"><thead><tr style="text-align: left; background: #f8f8f8; border-bottom: 2px solid #eee;"><th style="padding: 8px;">${i18n.headerItem}</th><th style="padding: 8px; text-align: right;">${i18n.headerValue}</th></tr></thead><tbody><tr><td style="padding: 8px; font-weight: bold;">${i18n.sustainability}</td><td style="padding: 8px; text-align: right; font-weight: bold;"><span style="color: ${getGradationColor(mySustain, glSustain)}; font-size: 1.1em;">${mySustain}</span><span style="color: #888; font-weight: normal; margin-left: 5px;">(${glSustain})</span></td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.dmgLoss}</td><td style="text-align: right;">${myAvgDmg.toFixed(1)} (${glAvgDmg.toFixed(1)})</td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.gapRec}</td><td style="text-align: right;">${myAvgRec.toFixed(1)} (${glAvgRec.toFixed(1)})</td></tr><tr style="color: #27ae60; font-size: 0.85em; border-bottom: 1px solid #eee;"><td style="padding-left: 15px;">${i18n.cmbRec}</td><td style="text-align: right;">+${myAvgCmbRec.toFixed(1)} (+${glAvgCmbRec.toFixed(1)})</td></tr>${['Enemy', 'EliteEnemy', 'Boss'].map(type => { const s = perfStats[type]; const meta = devMeta[type]; if (!s || s.Count === 0 || !meta) return ''; const atkScore = calcTScore(s.Turn_Sum / s.Count, meta.turn_mean, meta.turn_sd); const defScore = calcTScore(s.HP_Loss_Sum / s.Count, meta.hp_mean, meta.hp_sd); const encountersPerRun = s.Count / totalRuns; const perfIndex = ((parseFloat(atkScore) + parseFloat(defScore)) / 2 * encountersPerRun).toFixed(1); const globalEncounters = (globalActData.Node_Visits?.[type] || 0) / totalRunsAll; const globalPerfIndex = (50 * globalEncounters).toFixed(1); const label = nodeTypeLabels[type] || type; const vsPrefix = lang === 'ja' ? '対' : 'Vs. '; const vsSuffix = lang === 'ja' ? '性能' : ' Perf.'; const indexLabel = lang === 'ja' ? '└ 指数 (性能×踏破数)' : '└ Efficiency Index'; return `<tr style="background: #fafafa;"><td colspan="2" style="padding: 4px 8px; font-weight: bold;">${vsPrefix}${label}${vsSuffix}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 攻撃 (ターン)' : '└ Attack (Turns)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(atkScore, 50)}">${atkScore}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 防御 (被弾)' : '└ Defense (Damage)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(defScore, 50)}">${defScore}</td></tr><tr style="border-bottom: 1px solid #eee;"><td style="padding-left: 20px; color: #333; font-weight: bold;">${indexLabel}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(perfIndex, globalPerfIndex)}"><span style="font-size: 1.1em;">${perfIndex}</span><span style="color: #888; font-weight: normal; margin-left: 5px; font-size: 0.9em;">(${globalPerfIndex})</span></td></tr>`; }).join('')}</tbody></table></div>`;
             gridHtml += resourceHtml;
-            
+
             if (act === '1') {
                 const report_ja = ALL_DATA.act1_tendency_report_ja;
                 const report_en = ALL_DATA.act1_tendency_report_en;
@@ -242,10 +242,10 @@ function renderActTrendTab(lang) {
                         if (tableWrapper && tableWrapper.classList.contains('table-scroll-wrapper')) {
                             const sectionWrapper = document.createElement('div');
                             sectionWrapper.className = 'elite-analysis-section';
-                            
+
                             // h4の前にsectionWrapperを挿入
                             eliteHeader.parentNode.insertBefore(sectionWrapper, eliteHeader);
-                            
+
                             // h4とtableWrapperをsectionWrapperの中に移動
                             sectionWrapper.appendChild(eliteHeader);
                             sectionWrapper.appendChild(tableWrapper);
@@ -267,7 +267,7 @@ function renderActTrendTab(lang) {
                             }
                         }
                     });
-                    
+
                     // 変更を反映したHTMLをgridHtmlに追加
                     const reportHtml = `<div class="analysis-section" style="grid-column: 1 / -1; margin-top: 20px; padding: 20px;">${tempDiv.innerHTML}</div>`;
                     gridHtml += reportHtml;
@@ -278,7 +278,7 @@ function renderActTrendTab(lang) {
         contentHtml += `<div id="act-trend-content-${act}" style="display: ${displayStyle};">${gridHtml}</div>`;
     });
 
-    container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.tabs.act_trend}</h3><p>${T.desc}</p>${subTabsHtml}${contentHtml}</div>`;
+    container.innerHTML = `<div class='analysis-section'><h3>${UI_TEXT.tabs.act_trend}</h3><p class="analysis-note">${T.desc}</p>${subTabsHtml}${contentHtml}</div>`;
 
     const act1ReportContainer = container.querySelector('#act-trend-content-1 div[style*="grid-column"]');
     if (act1ReportContainer) {

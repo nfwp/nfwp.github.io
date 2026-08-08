@@ -14,3 +14,14 @@ a.wiki-link {
 a.wiki-link:hover {
   color: #3498db; /* マウスを乗せると青色に変わる（リンクだと分かりやすくするため） */
 }
+
+/* --- 分析セクションの共通スタイル --- */
+.analysis-section .analysis-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #0d6efd;
+}

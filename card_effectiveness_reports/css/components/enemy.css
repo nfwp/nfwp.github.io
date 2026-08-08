@@ -73,3 +73,16 @@
 .sortable-table td .inline-boxplot {
     margin-top: 5px;
 }
+
+
+
+
+/* --- 敵分析：四分位数テキスト --- */
+.quartile-text {
+    font-size: 0.8em;          /* 平均値より少し小さく */
+    color: #555;               /* 少し薄い色で */
+    margin-left: 6px;          /* 平均値との間に少しスペースを */
+    white-space: nowrap;       /* 折り返さないように */
+    font-family: monospace;    /* 数字が見やすいフォントに */
+}
+

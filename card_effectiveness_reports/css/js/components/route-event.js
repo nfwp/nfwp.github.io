@@ -261,7 +261,7 @@ function renderRouteEventTab(lang) {
 
     container.innerHTML = `<div class='analysis-section'>
         <h3>${T.title}</h3>
-        <p>${T.desc}</p>
+        <p class="analysis-note">${T.desc}</p>
         <div class='route-analysis-wrapper'>${flowChartHtml}${detailsPanelHtml}</div>
     </div>`;
 }

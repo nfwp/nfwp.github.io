@@ -37,10 +37,8 @@ function renderEnemyAnalysisTab(char, lang) {
         const typeOrderMap = { 'Enemy': 0, 'EliteEnemy': 1, 'Boss': 2 };
         const sortedData = enemyDfChar.sort((a, b) => a.Act - b.Act || (typeOrderMap[a.Type] - typeOrderMap[b.Type]) || a.MinLevel - b.MinLevel);
 
-        const actScales = {};
         const actStats = {};
         const acts = [...new Set(sortedData.map(d => d.Act))];
-
         acts.forEach(act => {
             const actData = sortedData.filter(d => d.Act === act);
             actStats[act] = {
@@ -49,37 +47,44 @@ function renderEnemyAnalysisTab(char, lang) {
                 p_change_min: Math.min(...actData.map(d => d.Avg_P_Change)),
                 p_change_max: Math.max(...actData.map(d => d.Avg_P_Change)),
             };
-            actScales[act] = {
-                turns_min: Math.min(...actData.map(d => d.TurnsBoxplot?.min ?? Infinity)),
-                turns_max: Math.max(...actData.map(d => d.TurnsBoxplot?.max ?? -Infinity)),
-                hp_loss_min: Math.min(...actData.map(d => d.HpLossBoxplot?.min ?? Infinity)),
-                hp_loss_max: Math.max(...actData.map(d => d.HpLossBoxplot?.max ?? -Infinity)),
-                p_change_min: Math.min(...actData.map(d => d.PChangeBoxplot?.min ?? Infinity)),
-                p_change_max: Math.max(...actData.map(d => d.PChangeBoxplot?.max ?? -Infinity)),
-            };
         });
 
         const rows = sortedData.map(row => {
             const nameCol = (lang === 'ja') ? 'EnemyName_JA' : 'EnemyName_EN';
             const trClass = row.Type === 'EliteEnemy' ? 'elite-enemy' : row.Type === 'Boss' ? 'boss-enemy' : '';
 
-            const scales = actScales[row.Act] || {};
-            const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, scales.turns_min, scales.turns_max);
-            const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, scales.hp_loss_min, scales.hp_loss_max, true);
-            const pChangeBoxplotHtml = createInlineBoxplotHtml(row.PChangeBoxplot, scales.p_change_min, scales.p_change_max);
+            // --- 1. 四分位数テキストを生成 ---
+            const createQuartileText = (boxplotData, isHpLoss = false) => {
+                if (!boxplotData || boxplotData.q1 == null || boxplotData.median == null || boxplotData.q3 == null) return '';
+                let q1 = boxplotData.q1, median = boxplotData.median, q3 = boxplotData.q3;
+                if (isHpLoss) {
+                    [q1, median, q3] = [-boxplotData.q3, -boxplotData.median, -boxplotData.q1];
+                }
+                return ` <span class="quartile-text">[${q1.toFixed(1)} , ${median.toFixed(1)} , ${q3.toFixed(1)}]</span>`;
+            };
+            const turnsQuartileText = createQuartileText(row.TurnsBoxplot);
+            const hpQuartileText = createQuartileText(row.HpLossBoxplot, true);
+            const pChangeQuartileText = createQuartileText(row.PChangeBoxplot);
 
+            // --- 2. 箱ひげ図を「相対スケール」で生成 ---
+            const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, row.TurnsBoxplot?.min, row.TurnsBoxplot?.max);
+            const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, row.HpLossBoxplot?.min, row.HpLossBoxplot?.max, true);
+            const pChangeBoxplotHtml = createInlineBoxplotHtml(row.PChangeBoxplot, row.PChangeBoxplot?.min, row.PChangeBoxplot?.max);
+
+            // --- 3. 背景色を元のロジックで決定 ---
             const statsForAct = actStats[row.Act] || {};
             const hpColor = getColorForValue(row.Avg_HP_Loss, statsForAct.hp_loss_min, statsForAct.hp_loss_max, false);
             const pColor = getColorForValue(row.Avg_P_Change, statsForAct.p_change_min, statsForAct.p_change_max, true);
 
+            // --- 4. 全要素を結合して最終的な行HTMLを生成 ---
             return `
                 <tr class="${trClass}">
                     <td>${row.Act}</td>
                     <td>${row[nameCol]}</td>
                     <td>${row.Encounters}</td>
-                    <td>${(row.Avg_Turns || 0).toFixed(1)}${turnsBoxplotHtml}</td>
-                    <td style="background-color: ${hpColor};">${(-(row.Avg_HP_Loss || 0)).toFixed(1)}${hpLossBoxplotHtml}</td>
-                    <td style="background-color: ${pColor};">${(row.Avg_P_Change || 0).toFixed(1)}${pChangeBoxplotHtml}</td>
+                    <td>${(row.Avg_Turns || 0).toFixed(1)}${turnsQuartileText}${turnsBoxplotHtml}</td>
+                    <td style="background-color: ${hpColor};">${(-(row.Avg_HP_Loss || 0)).toFixed(1)}${hpQuartileText}${hpLossBoxplotHtml}</td>
+                    <td style="background-color: ${pColor};">${(row.Avg_P_Change || 0).toFixed(1)}${pChangeQuartileText}${pChangeBoxplotHtml}</td>
                 </tr>`;
         }).join('');
 
@@ -93,12 +98,6 @@ function renderEnemyAnalysisTab(char, lang) {
                 </div>
             </div>`;
     });
-
-    container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3>${dropdownHtml}${allTablesHtml}</div>`;
-}
-
-function switchEnemyAnalysisCharacter(selectedChar) {
-    document.querySelectorAll('.enemy-analysis-char-table').forEach(table => table.style.display = 'none');
-    const tableToShow = document.getElementById(`enemy-table-${selectedChar}`);
-    if (tableToShow) tableToShow.style.display = 'block';
+    container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3><p class="analysis-note">${T.note || ''}</p>${dropdownHtml}${allTablesHtml}</div>`;
+    //container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3>${dropdownHtml}${allTablesHtml}</div>`;
 }

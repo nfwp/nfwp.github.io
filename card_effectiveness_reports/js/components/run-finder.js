@@ -30,40 +30,7 @@ function renderRunFinderTab() {
     if (tabContent.innerHTML.trim() !== '') return; // 描画済みなら中断
 
     // UIテキストを定義
-    const texts = {
-        title: UI_TEXT.run_finder_title || "Run Finder",
-        experimental_warning: UI_TEXT.run_finder_experimental_warning || "<strong>[Experimental Feature]</strong> This search function is under development.",
-        data_scope_warning: UI_TEXT.run_finder_data_scope_warning || "※This search can only be performed within the data range used for creating statistics.",
-        act_label: UI_TEXT.run_finder_act_label || "Act:",
-        level_label: UI_TEXT.run_finder_level_label || "Level:",
-        char_label: UI_TEXT.run_finder_char_label || "Character:",
-        no_specify: UI_TEXT.run_finder_no_specify || "None",
-        include_items_label: UI_TEXT.run_finder_include_items_label || "Items to Include",
-        item_placeholder: UI_TEXT.run_finder_item_placeholder || "Enter card/exhibit name...",
-        add_btn: UI_TEXT.run_finder_add_btn || "Add",
-        logic_and: UI_TEXT.run_finder_logic_and || "AND (All)",
-        logic_or: UI_TEXT.run_finder_logic_or || "OR (Any)",
-        exclude_items_label: UI_TEXT.run_finder_exclude_items_label || "Items to Exclude",
-        search_btn: UI_TEXT.run_finder_search_btn || "Search Runs",
-        initial_prompt: UI_TEXT.run_finder_initial_prompt || "Enter search criteria and press the 'Search Runs' button.",
-        deck_size_label: UI_TEXT.run_finder_deck_size_label || "Deck Size (at station / final):",
-        deck_size_any: UI_TEXT.run_finder_deck_size_any || "Any",
-        deck_size_lte: UI_TEXT.run_finder_deck_size_lte || "<=",
-        deck_size_gte: UI_TEXT.run_finder_deck_size_gte || ">=",
-        deck_size_placeholder: UI_TEXT.run_finder_deck_size_placeholder || "e.g., 10",
-        include_bosses_label: UI_TEXT.run_finder_include_bosses_label || "Include Bosses",
-        exclude_bosses_label: UI_TEXT.run_finder_exclude_bosses_label || "Exclude Bosses",
-        boss_filter_toggle_expand: UI_TEXT.run_finder_boss_filter_expand || "Open Boss Filter ▼",
-        boss_filter_toggle_collapse: UI_TEXT.run_finder_boss_filter_collapse || "Close Boss Filter ▲",
-        show_columns_label: UI_TEXT.run_finder_show_columns_label || "Show Columns:",
-        version: UI_TEXT.run_finder_header_version || "Ver",
-        character: UI_TEXT.run_finder_header_character || "Char",
-        deck_size: UI_TEXT.run_finder_header_deck_size || "Size",
-        player_name: UI_TEXT.run_finder_header_player_name || "Player",
-        act1_toggle: UI_TEXT.run_finder_toggle_act1 || "ACT 1",
-        act2_toggle: UI_TEXT.run_finder_toggle_act2 || "ACT 2",
-        act3_toggle: UI_TEXT.run_finder_toggle_act3 || "ACT 3"
-    };
+    const texts = UI_TEXT.run_finder;
 
     // オートコンプリート用のデータリストを作成
     const allItems = new Set();
@@ -94,12 +61,7 @@ function renderRunFinderTab() {
     const finderHtml = `
         <div class="run-finder-container">
             <h3>${texts.title}</h3>
-            <p style="font-style: italic; color: #e67e22; border: 1px solid #f39c12; padding: 8px; border-radius: 4px; background-color: #fef9e7; margin-top: 0;">
-                ${texts.experimental_warning}
-            </p>
-            <p style="font-size: 0.9em; color: #555;">
-                ${texts.data_scope_warning}
-            </p>
+            <p class="analysis-note">${texts.data_scope_warning}</p>
             <div class="finder-controls">
                 <div class="control-group-row">
                     <div class="control-group">
@@ -179,14 +141,14 @@ function renderRunFinderTab() {
                 <div id="column-toggle-container" class="column-toggle-container" style="display: none;">
                     <h4>${texts.show_columns_label}</h4>
                         <div class="toggle-options">
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="version" checked> ${texts.version}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="character" checked> ${texts.character}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="deck_size" checked> ${texts.deck_size}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="player_name" checked> ${texts.player_name}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="version" checked> ${texts.header_version}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="character" checked> ${texts.header_character}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="deck_size" checked> ${texts.header_deck_size}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="player_name" checked> ${texts.header_player_name}</label>
                             <span style="border-left: 1px solid #ccc; margin: 0 5px;"></span>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act1" checked> ${texts.act1_toggle}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act2" checked> ${texts.act2_toggle}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act3" checked> ${texts.act3_toggle}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act1" checked> ${texts.toggle_act1}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act2" checked> ${texts.toggle_act2}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="act3" checked> ${texts.toggle_act3}</label>
 
                         </div>
                 </div>
@@ -199,7 +161,7 @@ function renderRunFinderTab() {
         <datalist id="all-items-datalist">${datalistOptions}</datalist>
     `;
 
-    tabContent.innerHTML = finderHtml;
+    tabContent.innerHTML = `<div class="analysis-section">${finderHtml}</div>`;
 
     // UIのイベントリスナーを設定
     document.getElementById('run-search-button').addEventListener('click', performAdvancedSearch);
@@ -750,41 +712,23 @@ function sortAndDisplayRuns(searchCriteria = {}) {
 
 
 function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, levelFilter = null) {
-
-
     const resultsContainer = document.getElementById('run-finder-results');
     const toggleContainer = document.getElementById('column-toggle-container');
     if (toggleContainer) {
         toggleContainer.style.display = (runs && runs.length > 0) ? 'block' : 'none';
     }
-    const texts = {
-        title: UI_TEXT.search_results_title || "Found {count} runs",
-        no_results: UI_TEXT.search_no_results || "No runs were found matching the criteria.",
-        run_id: UI_TEXT.run_finder_header_run_id || "Run ID",
-        version: UI_TEXT.run_finder_header_version || "Ver",
-        character: UI_TEXT.run_finder_header_character || "Char",
-        deck_size: UI_TEXT.run_finder_header_deck_size || "Size",
-        player_name: UI_TEXT.run_finder_header_player_name || "Player",
-        act1_header: UI_TEXT.run_finder_header_act1 || "Act 1",
-        act2_header: UI_TEXT.run_finder_header_act2 || "Act 2",
-        act3_header: UI_TEXT.run_finder_header_act3 || "Act 3",
-        stage_early: UI_TEXT.run_finder_header_stage_early || "Early",
-        stage_mid: UI_TEXT.run_finder_header_stage_mid || "Mid",
-        stage_late: UI_TEXT.run_finder_header_stage_late || "Late",
-        stage_boss: UI_TEXT.run_finder_header_stage_boss || "Boss"
-    };
+    const texts = UI_TEXT.run_finder;
     const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
+
     if (!runs || runs.length === 0) {
-        resultsContainer.innerHTML = `<p>${texts.no_results}</p>`;
+        resultsContainer.innerHTML = `<p>${texts.search_no_results}</p>`;
         return;
     }
-
 
     let criteriaHtml = '';
     if (searchCriteria && Object.values(searchCriteria).some(v => v !== null)) {
         const criteriaList = [];
-        // 翻訳テキストを取得、なければフォールバック
-        const critLabel = (key, fallback) => UI_TEXT[`run_finder_crit_${key}`] || fallback;
+        const critLabel = (key, fallback) => UI_TEXT.run_finder[`crit_${key}`] || fallback;
         const crit = (label, value) => `<span class="search-criterion"><strong>${label}:</strong> ${value}</span>`;
 
         if (searchCriteria.character) criteriaList.push(crit(critLabel('char', 'Char'), searchCriteria.character));
@@ -803,7 +747,6 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
             criteriaHtml = `<div class="search-criteria-summary">${criteriaList.join('')}</div>`;
         }
     }
-
 
     const runRows = runs.map(run => {
         try {
@@ -888,26 +831,26 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
 
     resultsContainer.innerHTML = `
         <div class="results-header">
-            <h4>${texts.title.replace('{count}', runs.length)}</h4>
-            <button onclick="generateAndCopyShareLink()" class="copy-share-link">🔗 Copy Link</button>
+            <h4>${texts.search_results_title.replace('{count}', runs.length)}</h4>
+            <button onclick="generateAndCopyShareLink()" class="copy-share-link">${texts.share_link_button}</button>
         </div>
         ${criteriaHtml}
         <table class="run-finder-results-table">
             <thead>
                 <tr>
-                    <th rowspan="2" class="col-run_id"  onclick="handleSortClick('run_id')">${texts.run_id}${getSortIndicator('run_id')}</th>
-                    <th rowspan="2" class="col-version" onclick="handleSortClick('version')">${texts.version}${getSortIndicator('version')}</th>
-                    <th rowspan="2" class="col-character" onclick="handleSortClick('character')">${texts.character}${getSortIndicator('character')}</th>
-                    <th rowspan="2" class="col-deck_size" onclick="handleSortClick('displayDeckSize')">${texts.deck_size}${getSortIndicator('displayDeckSize')}</th>
-                    <th rowspan="2" class="col-player_name" onclick="handleSortClick('player_name')">${texts.player_name}${getSortIndicator('player_name')}</th>
-                    <th colspan="4" class="act-header col-act1">${texts.act1_header}</th>
-                    <th colspan="4" class="act-header col-act2">${texts.act2_header}</th>
-                    <th colspan="4" class="act-header col-act3">${texts.act3_header}</th>
+                    <th rowspan="2" class="col-run_id"  onclick="handleSortClick('run_id')">${texts.header_run_id}${getSortIndicator('run_id')}</th>
+                    <th rowspan="2" class="col-version" onclick="handleSortClick('version')">${texts.header_version}${getSortIndicator('version')}</th>
+                    <th rowspan="2" class="col-character" onclick="handleSortClick('character')">${texts.header_character}${getSortIndicator('character')}</th>
+                    <th rowspan="2" class="col-deck_size" onclick="handleSortClick('displayDeckSize')">${texts.header_deck_size}${getSortIndicator('displayDeckSize')}</th>
+                    <th rowspan="2" class="col-player_name" onclick="handleSortClick('player_name')">${texts.header_player_name}${getSortIndicator('player_name')}</th>
+                    <th colspan="4" class="act-header col-act1">${texts.header_act1}</th>
+                    <th colspan="4" class="act-header col-act2">${texts.header_act2}</th>
+                    <th colspan="4" class="act-header col-act3">${texts.header_act3}</th>
                 </tr>
                 <tr class="stage-header-row">
-                    <th class="col-act1">${texts.stage_early}</th><th class="col-act1">${texts.stage_mid}</th><th class="col-act1">${texts.stage_late}</th><th class="col-act1">${texts.stage_boss}</th>
-                    <th class="col-act2">${texts.stage_early}</th><th class="col-act2">${texts.stage_mid}</th><th class="col-act2">${texts.stage_late}</th><th class="col-act2">${texts.stage_boss}</th>
-                    <th class="col-act3">${texts.stage_early}</th><th class="col-act3">${texts.stage_mid}</th><th class="col-act3">${texts.stage_late}</th><th class="col-act3">${texts.stage_boss}</th>
+                    <th class="col-act1">${texts.header_stage_early}</th><th class="col-act1">${texts.header_stage_mid}</th><th class="col-act1">${texts.header_stage_late}</th><th class="col-act1">${texts.header_stage_boss}</th>
+                    <th class="col-act2">${texts.header_stage_early}</th><th class="col-act2">${texts.header_stage_mid}</th><th class="col-act2">${texts.header_stage_late}</th><th class="col-act2">${texts.header_stage_boss}</th>
+                    <th class="col-act3">${texts.header_stage_early}</th><th class="col-act3">${texts.header_stage_mid}</th><th class="col-act3">${texts.header_stage_late}</th><th class="col-act3">${texts.header_stage_boss}</th>
                 </tr>
             </thead>
             <tbody>
@@ -949,10 +892,10 @@ function generateAndCopyShareLink() {
     const baseUrl = window.location.origin + window.location.pathname;
     const finalUrl = `${baseUrl}?${params.toString()}`;
     navigator.clipboard.writeText(finalUrl).then(() => {
-        alert('検索条件のリンクをクリップボードにコピーしました！');
+        alert(UI_TEXT.run_finder.copy_link_success);
     }).catch(err => {
         console.error('リンクのコピーに失敗しました: ', err);
-        alert('リンクのコピーに失敗しました。');
+        alert(UI_TEXT.run_finder.copy_link_fail);
     });
 }
 

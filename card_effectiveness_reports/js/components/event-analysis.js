@@ -87,7 +87,7 @@ function renderEventAnalysisTab() {
     container.innerHTML = `
         <div class='analysis-section'>
             <h3>${title}</h3>
-            <p>${description}</p>
+            <p class="analysis-note">${description}</p>
             <div class="accordion-container">${eventsHtml}</div>
         </div>`;
 
