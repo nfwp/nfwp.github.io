@@ -163,9 +163,9 @@
       "p": "平均P変化"
     },
     "combat_types": {
-        "Enemy": "通常敵",
-        "EliteEnemy": "エリート",
-        "Boss": "ボス"
+      "Enemy": "通常敵",
+      "EliteEnemy": "エリート",
+      "Boss": "ボス"
     }
   },
   "run_finder": {
@@ -222,6 +222,11 @@
     "crit_exclude": "除外",
     "crit_bosses": "ボス",
     "crit_ex_bosses": "除外ボス",
+    "tooltip_final_deck": "最終デッキ",
+    "node_type_eliteenemy": "エリート",
+    "node_type_shop": "ショップ",
+    "node_type_gap": "スキマ",
+    "tooltip_state_prefix": "状態: ",
     "results": {
       "title": "検索結果 ({count}件)",
       "no_results": "該当するランが見つかりませんでした。",
@@ -231,12 +236,12 @@
       "sample_decks_title": "サンプルデッキ"
     },
     "boxplot": {
-        "min": "最小",
-        "q1": "25%",
-        "median": "中央",
-        "q3": "75%",
-        "max": "最大",
-        "mean": "平均"
+      "min": "最小",
+      "q1": "25%",
+      "median": "中央",
+      "q3": "75%",
+      "max": "最大",
+      "mean": "平均"
     }
   },
   "act_trend": {
@@ -258,13 +263,13 @@
     "boss_organized_card_note": "注意: ボスマスにおいては削除と変化を区別できないため整頓対象は厳密な整頓ではないです。"
   },
   "event_analysis": {
-      "desc": "「？」マスで発生するイベントの集計データです。イベントはゲームの進行順（序盤→終盤）に並んでいます。<br>⚠\uFE0F選択肢の取得は複雑なため簡易的なものになっています。",
-      "actions": {
-        "card_add": "カード追加",
-        "card_rem": "カード削除",
-        "card_upg": "カード強化",
-        "exh_add": "展示品追加",
-        "exh_rem": "展示品削除"
-      }
+    "desc": "「？」マスで発生するイベントの集計データです。イベントはゲームの進行順（序盤→終盤）に並んでいます。<br>⚠\uFE0F選択肢の取得は複雑なため簡易的なものになっています。",
+    "actions": {
+      "card_add": "カード追加",
+      "card_rem": "カード削除",
+      "card_upg": "カード強化",
+      "exh_add": "展示品追加",
+      "exh_rem": "展示品削除"
+    }
   }
 }

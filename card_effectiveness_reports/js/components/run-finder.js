@@ -32,6 +32,15 @@ function renderRunFinderTab() {
     // UIテキストを定義
     const texts = UI_TEXT.run_finder;
 
+    // ステーションインデックスからAct-Level文字列への逆引きマップを作成
+    const stationIndexToActLevel = {};
+    if (STATION_MAP_GLOBAL) {
+        for (const key in STATION_MAP_GLOBAL) {
+            const index = STATION_MAP_GLOBAL[key];
+            stationIndexToActLevel[index] = key.replace('-', ', Lvl '); // '1-12' -> '1, Lvl 12'
+        }
+    }
+
     // オートコンプリート用のデータリストを作成
     const allItems = new Set();
     if (ALL_DATA.lookup_tables) {
@@ -310,7 +319,7 @@ function renderRunFinderTab() {
             }
         }
 
-        let { character, runId, stationIndex } = link.dataset;
+        let { character, runId, stationIndex, act, level, nodeType } = link.dataset;
         if (!character || !runId || stationIndex === undefined) return;
 
         const charTimelines = characterTimelineCache.get(character);
@@ -341,8 +350,30 @@ function renderRunFinderTab() {
 
         const deckHtml = deckList.map(item => `<li>${item.name} &times;${item.count}</li>`).join('');
 
+        // --- REVISED TOOLTIP TITLE LOGIC ---
+        let locationInfo = '';
+        if (stationIndex === 'final') {
+            locationInfo = ` (${texts.tooltip_final_deck})`;
+        } else {
+            let stateDetails = '';
+            if (act && level && nodeType) {
+                // For path/boss icons with full data
+                const translationKey = `node_type_${nodeType.toLowerCase()}`;
+                const translatedNodeType = texts[translationKey];
+                const nodeTypeName = translatedNodeType || nodeType; // Fallback to original name (for bosses)
+                stateDetails = `Act ${act}, Lvl ${level}: ${nodeTypeName}`;
+            } else if (stationIndexToActLevel[stationIndex]) {
+                // For run-id links pointing to a specific station
+                const actLevelString = stationIndexToActLevel[stationIndex];
+                stateDetails = `Act ${actLevelString}`;
+            }
+            if (stateDetails) {
+                locationInfo = ` (${texts.tooltip_state_prefix}${stateDetails})`;
+            }
+        }
+
         tooltipElement.innerHTML = `
-            <div class="deck-tooltip-title">Deck (${cards.length} cards)</div>
+            <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}</div>
             <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
         `;
 
@@ -774,8 +805,8 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                             const nodeUrl = `${baseUrl}?a=${actNum}&l=${node.level}`;
                             const stationMapKey = `${actNum}-${node.level}`;
                             const stationIndex = STATION_MAP_GLOBAL[stationMapKey];
-                            const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}"`;
-                            return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" title="Act ${actNum}, Level ${node.level}: ${node.type}" ${dataAttributes}>${icon}</a>`;
+                            const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}" data-act="${actNum}" data-level="${node.level}" data-node-type="${node.type}"`;
+                            return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" ${dataAttributes}>${icon}</a>`;
                         }).filter(Boolean).join('');
 
                         if (stageHtml) {
@@ -789,15 +820,15 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                         const bossUrl = `${baseUrl}?a=${actNum}&l=${actBossData.level}`;
                         const stationMapKey = `${actNum}-${actBossData.level}`;
                         const stationIndex = STATION_MAP_GLOBAL[stationMapKey];
-                        const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}"`;
-                        const bossIconHtml = `<a href="${bossUrl}" target="_blank" class="path-icon-link boss-icon-container" title="${actBossData.name} (Lvl ${actBossData.level})" ${dataAttributes}><img src="${bossIconUrl}" alt="${actBossData.name}"></a>`;
+                        const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}" data-act="${actNum}" data-level="${actBossData.level}" data-node-type="${actBossData.name}"`;
+                        const bossIconHtml = `<a href="${bossUrl}" target="_blank" class="path-icon-link boss-icon-container" ${dataAttributes}><img src="${bossIconUrl}" alt="${actBossData.name}"></a>`;
                         pathCells[`act${actNum}`].boss = bossIconHtml;
                     }
                 }
             }
 
             return `<tr>
-                <td class="col-run_id"><a href="${finalUrl}" target="_blank" title="${run.run_id}" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
+                <td class="col-run_id"><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
                 <td class="col-version">${run.version}</td>
                 <td class="col-character">${run.character}</td>
                 <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>
