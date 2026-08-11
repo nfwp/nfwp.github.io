@@ -1,4 +1,4 @@
-// run-finder.js
+// run-finder.js 
 // --- 定数 ---
 const bossIconMap = {
     "Reimu": "./img/boss/Reimu.avif",
@@ -149,10 +149,10 @@ function renderRunFinderTab() {
                 <div id="column-toggle-container" class="column-toggle-container" style="display: none;">
                     <h4>${texts.show_columns_label}</h4>
                         <div class="toggle-options">
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="version"　checked> ${texts.header_version}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="version" checked> ${texts.header_version}</label>
                             <label><input type="checkbox" class="column-toggle-checkbox" data-col="character" checked> ${texts.header_character}</label>
                             <label><input type="checkbox" class="column-toggle-checkbox" data-col="deck_size" checked> ${texts.header_deck_size}</label>
-                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="player_name"　checked> ${texts.header_player_name}</label>
+                            <label><input type="checkbox" class="column-toggle-checkbox" data-col="player_name" checked> ${texts.header_player_name}</label>
                             <span style="border-left: 1px solid #ccc; margin: 0 5px;"></span>
                             <label><input type="checkbox" class="column-toggle-checkbox" data-col="act1" checked> ${texts.toggle_act1}</label>
                             <label><input type="checkbox" class="column-toggle-checkbox" data-col="act2" checked> ${texts.toggle_act2}</label>

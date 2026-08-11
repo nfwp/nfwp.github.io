@@ -133,7 +133,7 @@
     border: 1px solid #ddd;
     padding: 8px 10px;
     text-align: left;
-    vertical-align: middle; /* 中央揃えのために top から変更 */
+    vertical-align: top;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -144,28 +144,14 @@
     font-weight: bold;
 }
 
-/* 左側の情報列の幅を固定値として定義 */
-.run-finder-results-table .col-run_id { width: 5%; }
-.run-finder-results-table .col-version { width: 3%; }
-.run-finder-results-table .col-character { width: 5%; }
-.run-finder-results-table .col-deck_size { width: 3%; }
-.run-finder-results-table .col-player_name { width: 5%; }
-
-
-.run-finder-results-table .path-summary-cell {
-    /* 全体(100%)から固定列の合計(25%)を引き、それを12分割する */
-    width: calc((100% - 25%) / 12);
-    white-space: normal; /* 折り返しを許可 */
-    overflow: visible;   /* はみ出しを許可 */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    padding: 4px;
-}
-
-
+.run-finder-results-table th:nth-child(1) { width: 12%; min-width: 120px; }
+.run-finder-results-table th:nth-child(2) { width: 4%; min-width: 45px; }
+.run-finder-results-table th:nth-child(3) { width: 5%; min-width: 60px; }
+.run-finder-results-table th:nth-child(4) { width: 4%; min-width: 50px; }
+.run-finder-results-table th:nth-child(5) { width: 10%; min-width: 80px; }
+.run-finder-results-table th:nth-child(6),
+.run-finder-results-table th:nth-child(7),
+.run-finder-results-table th:nth-child(8) { width: 21.6%; min-width: 180px; }
 
 .run-finder-results-table tr:nth-child(even) { background-color: #f9f9f9; }
 .run-finder-results-table tr:hover { background-color: #f1f1f1; }
