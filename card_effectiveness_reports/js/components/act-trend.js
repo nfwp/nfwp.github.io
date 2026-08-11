@@ -66,12 +66,8 @@ function renderActTrendTab(lang) {
 
             if (cat.type === 'card' || cat.type === 'exhibit') {
                 const sortedItems = Object.entries(items).sort(([, a], [, b]) => b - a).slice(0, 100);
-                let removeRankMap = {};
-                if (cat.key === 'Organize_Card') {
-                    const removeItems = actData['Remove_Card'] || {};
-                    const sortedRemoveIds = Object.entries(removeItems).sort(([, a], [, b]) => b - a).map(([id]) => id);
-                    sortedRemoveIds.forEach((id, idx) => { removeRankMap[id] = idx + 1; });
-                }
+
+                const addCardItems = actData['Add_Card'] || {};
 
                 if (sortedItems.length === 0) {
                     categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${C.no_data}</p>`;
@@ -79,27 +75,66 @@ function renderActTrendTab(lang) {
                     const headerRank = '#';
                     const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
                     const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
-                    categoryBlockHtml += `<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;"><thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px; width: 40px;">${headerRank}</th><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 80px;">${headerAvg}</th></tr></thead><tbody>`;
+                    categoryBlockHtml += `<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;"><thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px; width: 40px;">${headerRank}</th><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 100px;">${headerAvg}</th></tr></thead><tbody>`;
 
                     sortedItems.forEach(([id, count], index) => {
                         const currentRank = index + 1;
                         const perRun = (count / totalRuns).toFixed(2);
                         let name = id;
                         let bgColor = '#FFFFFF';
+
                         let isBold = false;
-                        if (cat.key === 'Organize_Card') {
-                            const removeRank = removeRankMap[id] || 999;
-                            if (removeRank - currentRank >= 3) {
-                                isBold = true;
+                        let ratioText = '';
+
+                        // Robust card info lookup
+                        let cardInfo = null;
+                        if (cat.type === 'card') {
+                            cardInfo = ALL_DATA.lookup_tables.cards[id]; // First, search by ID
+                            if (!cardInfo) { // If not found, search by name
+                                cardInfo = Object.values(ALL_DATA.lookup_tables.cards).find(c => c.JA === id || c.EN === id);
                             }
                         }
-                        const nameStyle = isBold ? 'font-weight: 900 !important; color: #000 !important;' : '';
+                        const cardType = cardInfo ? cardInfo.Type : 'Unknown';
+
+                        if (cat.key === 'Organize_Card') {
+                            const organizeAvg = count / totalRuns;
+                            const addCount = addCardItems[id] || 0;
+                            const addAvg = addCount / totalRuns;
+
+                            let shouldBeBold = false;
+                            let isLikelyInitial = false;
+
+                            if (addAvg > 0) {
+                                const ratio = organizeAvg / addAvg;
+                                if (ratio > 1.0) {
+                                    isLikelyInitial = true;
+                                } else {
+                                    ratioText = `(${(ratio * 100).toFixed(0)}%)`;
+                                    if (ratio >= 0.25) {
+                                        shouldBeBold = true;
+                                    }
+                                }
+                            } else if (organizeAvg > 0) {
+                                isLikelyInitial = true;
+                            }
+
+                            if (isLikelyInitial) {
+                                ratioText = lang === 'ja' ? '(初期?)' : '(Initial?)';
+                                shouldBeBold = true;
+                            }
+
+                            isBold = shouldBeBold;
+
+                            if (isBold && cardType === 'Tool') {
+                                isBold = false;
+                            }
+                        }
+
+                        const rowStyle = isBold ? 'font-weight: 900; color: #000;' : '';
 
                         if (cat.type === 'card') {
-                            const cardInfo = ALL_DATA.lookup_tables.cards[id];
                             let displayName = cardInfo ? (lang === 'ja' ? cardInfo.JA : cardInfo.EN) : id;
                             name = createWikiLink(displayName, 'card', lang);
-                            const cardType = cardInfo ? cardInfo.Type : 'Unknown';
                             const typeColor = TYPE_COLOR_MAP[cardType] || TYPE_COLOR_MAP['Unknown'];
                             bgColor = `${typeColor}33`;
                             if (cardType === 'Tool') name = '🧰 ' + name;
@@ -122,7 +157,26 @@ function renderActTrendTab(lang) {
                             else if (category === 'イベント') name = `✨ ${linkedName}`;
                             else name = linkedName;
                         }
-                        categoryBlockHtml += `<tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee;"><td style="padding: 6px 8px; text-align: center; ${nameStyle}">${currentRank}</td><td style="padding: 6px 8px; ${nameStyle}">${name}</td><td style="padding: 6px 8px; text-align: right; font-weight: bold; ${nameStyle}">${perRun}</td></tr>`;
+
+                        let avgCellContent;
+                        if (cat.key === 'Organize_Card') {
+                            avgCellContent = `
+                                <div style="display: flex; justify-content: flex-end; align-items: baseline;">
+                                    <span>${perRun}</span>
+                                    <span style="width: 55px; text-align: left; padding-left: 4px; color: #666; font-weight: normal;">${ratioText}</span>
+                                </div>
+                            `;
+                        } else {
+                            avgCellContent = `<span style="font-weight: bold;">${perRun}</span>`;
+                        }
+
+                        const lastCellStyle = (cat.key === 'Organize_Card') ? '' : 'text-align: right;';
+
+                        categoryBlockHtml += `<tr style="background-color: ${bgColor}; border-bottom: 1px solid #eee; ${rowStyle}">
+                                                <td style="padding: 6px 8px; text-align: center;">${currentRank}</td>
+                                                <td style="padding: 6px 8px;">${name}</td>
+                                                <td style="padding: 6px 8px; ${lastCellStyle}">${avgCellContent}</td>
+                                              </tr>`;
                     });
                     categoryBlockHtml += `</tbody></table></div>`;
                 }

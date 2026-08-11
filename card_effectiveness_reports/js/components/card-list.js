@@ -1,3 +1,7 @@
+/**
+ * "カード一覧"タブが最初にクリックされたときに呼び出される。
+ * コンテンツを非同期で読み込み、ページに直接挿入する。
+ */
 function renderCardListTab(data) {
     const container = document.getElementById('card-list-tab');
     if (!container) {
@@ -5,48 +9,54 @@ function renderCardListTab(data) {
         return;
     }
 
-    if (!data || !data.all_available_characters || !data.metadata) {
+    if (!data || !data.metadata) {
         console.error("renderCardListTab: Invalid data object received.", data);
         container.innerHTML = "<p>カード一覧のデータの読み込みに失敗しました。</p>";
         return;
     }
 
-    const allCharacters = data.all_available_characters;
+    // iframeとコントロールを廃止し、コンテンツを挿入するためのラッパーdivだけを設置
+    container.innerHTML = `<div id="card-list-content-wrapper"></div>`;
+
+    // 現在のキャラクターとグローバル言語設定を元に、表示するカードリストを決定
     const currentCharacter = data.metadata.character;
-    const C = UI_TEXT.common;
+    const currentLang = LANG; // グローバル変数LANGを想定
 
-    const charOptionsHtml = allCharacters.map(char =>
-        `<option value="${char}" ${char === currentCharacter ? 'selected' : ''}>${char}</option>`
-    ).join('');
-
-    container.innerHTML = `
-        <div class="card-list-controls">
-            <label for="card-list-char-select">${C.character}:</label>
-            <select id="card-list-char-select" onchange="showCardList()">
-                ${charOptionsHtml}
-            </select>
-            <label class="card-list-lang-label">${C.language}:</label>
-            <input type="radio" id="lang-ja" name="card-list-lang" value="ja" ${LANG === 'ja' ? 'checked' : ''} onchange="showCardList()">
-            <label for="lang-ja">${C.japanese}</label>
-            <input type="radio" id="lang-en" name="card-list-lang" value="en" ${LANG === 'en' ? 'checked' : ''} onchange="showCardList()">
-            <label for="lang-en">${C.english}</label>
-        </div>
-        <iframe id="card-list-iframe" frameborder="0"></iframe>
-    `;
-
-    showCardList();
+    // 非同期でコンテンツを読み込んで表示する関数を呼び出す
+    loadAndShowCardList(currentCharacter, currentLang);
 }
 
-function showCardList() {
-    const charSelect = document.getElementById('card-list-char-select');
-    const langSelect = document.querySelector('input[name="card-list-lang"]:checked');
-    const iframe = document.getElementById('card-list-iframe');
+/**
+ * 指定されたキャラクターと言語のカードリストHTMLを非同期で取得し、
+ * ページに直接挿入する。
+ * @param {string} character - 表示するキャラクター名
+ * @param {string} language - 表示する言語 ('ja' or 'en')
+ */
+async function loadAndShowCardList(character, language) {
+    const contentWrapper = document.getElementById('card-list-content-wrapper');
+    if (!contentWrapper) {
+        console.error("Card list content wrapper not found!");
+        return;
+    }
 
-    if (charSelect && langSelect && iframe) {
-        const selectedChar = charSelect.value;
-        const selectedLang = langSelect.value;
-        const filePath = `card_lists/${selectedChar}_card_list_${selectedLang}.html`;
+    // 読み込み中のメッセージを表示
+    contentWrapper.innerHTML = `<p>読み込み中...</p>`;
 
-        iframe.src = `${filePath}?_=${new Date().getTime()}`;
+    const filePath = `card_lists/${character}_card_list_${language}.html`;
+
+    try {
+        // fetch APIを使用してHTMLファイルの内容を取得
+        const response = await fetch(`${filePath}?_=${new Date().getTime()}`);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const htmlContent = await response.text();
+
+        // 取得したHTMLをラッパーdivに直接挿入
+        contentWrapper.innerHTML = htmlContent;
+
+    } catch (error) {
+        console.error("Error loading and displaying card list:", error);
+        contentWrapper.innerHTML = `<p>カード一覧の読み込みに失敗しました。ファイルが見つからないか、読み込み中にエラーが発生しました。</p>`;
     }
 }

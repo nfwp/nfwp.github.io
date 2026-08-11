@@ -38,62 +38,95 @@
     background-color: #ffe8e8;
 }
 
+/* PC表示でエリート/ボスの名前を太字にする */
 .sortable-table tr.elite-enemy td:nth-child(2), .sortable-table tr.boss-enemy td:nth-child(2) {
     font-weight: bold;
 }
 
-/* 修正箇所: 横スクロールを追加し、iOSでのスクロールを滑らかにする */
-#enemy-analysis-table-wrapper {
+/* PC表示では横スクロールを有効にする */
+.enemy-table-wrapper {
     max-height: 80vh;
     overflow-y: auto;
-    overflow-x: auto; /* これを追加 */
-    -webkit-overflow-scrolling: touch; /* これを追加 */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
-
-/* 修正箇所: 各列の固定幅指定を削除 */
-/* 以下のルールはすべて削除します */
-/*
-.sortable-table th.col-act,
-.sortable-table td:nth-child(1) {
-    width: 5%;
-}
-
-.sortable-table th.col-name,
-.sortable-table td:nth-child(2) {
-    width: 25%;
-}
-
-.sortable-table th.col-encounters,
-.sortable-table td:nth-child(3) {
-    width: 8%;
-}
-
-.sortable-table th.col-stats,
-.sortable-table td:nth-child(4),
-.sortable-table td:nth-child(5),
-.sortable-table td:nth-child(6) {
-    width: 20%;
-    vertical-align: top;
-}
-*/
 
 .sortable-table td .inline-boxplot {
     margin-top: 5px;
 }
 
-
 /* --- 敵分析：四分位数テキスト --- */
 .quartile-text {
-    font-size: 0.8em;          /* 平均値より少し小さく */
-    color: #555;               /* 少し薄い色で */
-    margin-left: 6px;          /* 平均値との間に少しスペースを */
-    white-space: nowrap;       /* 折り返さないように */
-    font-family: monospace;    /* 数字が見やすいフォントに */
+    font-size: 0.8em;
+    color: #555;
+    margin-left: 6px;
+    white-space: nowrap;
+    font-family: monospace;
 }
 
+/* =============================================================== */
+/* --- NEW: チェックボックスによる列/行の表示・非表示ルール --- */
+/* =============================================================== */
+
+/* PC用: 列を非表示にする */
+.enemy-analysis-char-table.hide-avg-turns .col-avg-turns,
+.enemy-analysis-char-table.hide-hp-loss .col-hp-loss,
+.enemy-analysis-char-table.hide-p-change .col-p-change {
+    display: none;
+}
+
+/* =============================================================== */
+/* --- モバイル表示用のスタイル (@mediaブロック) --- */
+/* =============================================================== */
 @media (max-width: 768px) {
     .analysis-section {
         padding-left: 0;
         padding-right: 0;
     }
+
+    /* モバイルでは横スクロールを不要にする */
+    .enemy-table-wrapper {
+        overflow-x: hidden;
+    }
+
+    /* --- NEW: モバイル用の行非表示ルール --- */
+    .enemy-analysis-char-table.hide-avg-turns .row-avg-turns,
+    .enemy-analysis-char-table.hide-hp-loss .row-hp-loss,
+    .enemy-analysis-char-table.hide-p-change .row-p-change {
+        display: none;
+    }
+
+    /* --- MODIFIED: 新しい区切り線のスタイル --- */
+    /* 各敵グループの最初の行の上に太い線を入れる */
+    .sortable-table tr.row-avg-turns {
+        border-top: 2px solid #a9a9a9;
+    }
+    /* テーブル全体の最初の行だけは上の線を消す */
+    .sortable-table tbody tr:first-child {
+        border-top: none;
+    }
+    /* グループ内の行の区切りは細い点線にする */
+    .sortable-table tr.row-hp-loss,
+    .sortable-table tr.row-p-change {
+        border-bottom: 1px dotted #ccc;
+    }
+    /* 最後の行の下線を元に戻す */
+    .sortable-table tr.row-p-change {
+        border-bottom: 1px solid #ddd;
+    }
+
+
+    /* モバイル用の列幅を定義 */
+    .sortable-table th:nth-child(1), .sortable-table td:nth-child(1) { width: 10%; } /* Act */
+    .sortable-table th:nth-child(2), .sortable-table td:nth-child(2) { width: 30%; } /* 敵名 */
+    .sortable-table th:nth-child(3), .sortable-table td:nth-child(3) { width: 12%; text-align: center;} /* 遭遇数 */
+    .sortable-table th:nth-child(4), .sortable-table td:nth-child(4) { width: 20%; } /* 項目 */
+    .sortable-table th:nth-child(5), .sortable-table td:nth-child(5) { width: 28%; } /* 各種変化 */
+
+    /* --- MODIFIED: モバイル表示でエリート/ボスの名前を太字にするルール --- */
+    .sortable-table tr.elite-enemy.row-avg-turns td:nth-child(2),
+    .sortable-table tr.boss-enemy.row-avg-turns td:nth-child(2) {
+        font-weight: bold;
+    }
 }
+

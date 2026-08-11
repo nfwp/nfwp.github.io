@@ -38,10 +38,36 @@
 }
 
 
+
 /* --- Mobile View Adjustments --- */
 @media (max-width: 768px) {
-    .card-list-controls {
-        padding-left: 5px;
-        padding-right: 5px;
+    /*
+     * モバイル表示の際に、カード一覧タブの親コンテナが持つ
+     * 左右の余白（padding）をなくし、コンテンツが画面幅いっぱいに
+     * 表示されるようにします。
+     */
+    #card-list-tab {
+        padding-left: 0;
+        padding-right: 0;
     }
+}
+
+/*
+ * カード一覧タブの親コンテナ（外側）の余白をなくす
+ */
+#card-list-tab {
+    padding: 0;
+}
+
+/*
+ * 読み込まれたHTML内のコンテナ（内側）の
+ * 余白、幅制限、背景、影をすべてリセットし、
+ * 親コンテナと一体化させる。
+ */
+#card-list-content-wrapper .container {
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    background: none;
+    box-shadow: none;
 }

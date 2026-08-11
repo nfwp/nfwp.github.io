@@ -25,18 +25,3 @@ a.wiki-link:hover {
     background-color: #f8f9fa;
     border-left: 4px solid #0d6efd;
 }
-
-/* --- モバイル表示用のスタイル調整 --- */
-@media (max-width: 768px) {
-    /*
-     * .dashboard-container, .tab-content, .analysis-section には
-     * layout.css で padding が設定されているため、モバイル表示で左右の余白が生まれてしまう。
-     * これを上書きして、画面幅いっぱいにコンテンツを表示させる。
-     */
-    .dashboard-container,
-    .tab-content,
-    .analysis-section {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}

@@ -2,6 +2,8 @@ function renderEnemyAnalysisTab(char, lang) {
     const container = document.getElementById('enemy-analysis-tab');
     if (!container) return;
 
+    const isMobile = window.innerWidth <= 768;
+
     const T = UI_TEXT.enemy;
     const C = UI_TEXT.common;
 
@@ -20,19 +22,43 @@ function renderEnemyAnalysisTab(char, lang) {
             </select>
         </div>`;
 
+    // --- NEW: チェックボックスのHTMLを追加 ---
+    const columnToggleHtml = `
+        <div class="column-toggle-container" style="margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+            <h4 style="margin-top: 0; margin-bottom: 8px;">${T.toggle_title || '表示項目'}</h4>
+            <div class="toggle-options" style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <label><input type="checkbox" class="enemy-column-toggle" data-col="avg-turns" checked> ${T.table.avg_t}</label>
+                <label><input type="checkbox" class="enemy-column-toggle" data-col="hp-loss" checked> ${T.table.hp}</label>
+                <label><input type="checkbox" class="enemy-column-toggle" data-col="p-change" checked> ${T.table.p}</label>
+            </div>
+        </div>
+    `;
+
     let allTablesHtml = '';
     allChars.forEach(charOption => {
         const enemyDfChar = enemyData.filter(d => d.Character === charOption);
         const displayStyle = charOption === char ? 'block' : 'none';
         const tableId = `enemy-analysis-table-${charOption}`;
 
-        const headers = `
-            <th class="col-act" onclick="sortTable('${tableId}', 0, 'numeric')">${T.table.act}</th>
-            <th class="col-name" onclick="sortTable('${tableId}', 1, 'string')">${T.table.name}</th>
-            <th class="col-encounters" onclick="sortTable('${tableId}', 2, 'numeric')">${T.table.encounters}</th>
-            <th class="col-stats" onclick="sortTable('${tableId}', 3, 'numeric')">${T.table.avg_t}</th>
-            <th class="col-stats" onclick="sortTable('${tableId}', 4, 'numeric')">${T.table.hp}</th>
-            <th class="col-stats" onclick="sortTable('${tableId}', 5, 'numeric')">${T.table.p}</th>`;
+        let headers;
+        if (isMobile) {
+            headers = `
+                <th class="col-act">${T.table.act}</th>
+                <th class="col-name">${T.table.name}</th>
+                <th class="col-encounters">${T.table.encounters}</th>
+                <th>${T.table.item_header || '項目'}</th>
+                <th>${T.table.value_header || '各種変化'}</th>
+            `;
+        } else {
+            // PC版: ヘッダーにクラスを追加
+            headers = `
+                <th class="col-act" onclick="sortTable('${tableId}', 0, 'numeric')">${T.table.act}</th>
+                <th class="col-name" onclick="sortTable('${tableId}', 1, 'string')">${T.table.name}</th>
+                <th class="col-encounters" onclick="sortTable('${tableId}', 2, 'numeric')">${T.table.encounters}</th>
+                <th class="col-stats col-avg-turns" onclick="sortTable('${tableId}', 3, 'numeric')">${T.table.avg_t}</th>
+                <th class="col-stats col-hp-loss" onclick="sortTable('${tableId}', 4, 'numeric')">${T.table.hp}</th>
+                <th class="col-stats col-p-change" onclick="sortTable('${tableId}', 5, 'numeric')">${T.table.p}</th>`;
+        }
 
         const typeOrderMap = { 'Enemy': 0, 'EliteEnemy': 1, 'Boss': 2 };
         const sortedData = enemyDfChar.sort((a, b) => a.Act - b.Act || (typeOrderMap[a.Type] - typeOrderMap[b.Type]) || a.MinLevel - b.MinLevel);
@@ -53,7 +79,6 @@ function renderEnemyAnalysisTab(char, lang) {
             const nameCol = (lang === 'ja') ? 'EnemyName_JA' : 'EnemyName_EN';
             const trClass = row.Type === 'EliteEnemy' ? 'elite-enemy' : row.Type === 'Boss' ? 'boss-enemy' : '';
 
-            // --- 1. 四分位数テキストを生成 ---
             const createQuartileText = (boxplotData, isHpLoss = false) => {
                 if (!boxplotData || boxplotData.q1 == null || boxplotData.median == null || boxplotData.q3 == null) return '';
                 let q1 = boxplotData.q1, median = boxplotData.median, q3 = boxplotData.q3;
@@ -66,31 +91,54 @@ function renderEnemyAnalysisTab(char, lang) {
             const hpQuartileText = createQuartileText(row.HpLossBoxplot, true);
             const pChangeQuartileText = createQuartileText(row.PChangeBoxplot);
 
-            // --- 2. 箱ひげ図を「相対スケール」で生成 ---
             const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, row.TurnsBoxplot?.min, row.TurnsBoxplot?.max);
             const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, row.HpLossBoxplot?.min, row.HpLossBoxplot?.max, true);
             const pChangeBoxplotHtml = createInlineBoxplotHtml(row.PChangeBoxplot, row.PChangeBoxplot?.min, row.PChangeBoxplot?.max);
 
-            // --- 3. 背景色を元のロジックで決定 ---
             const statsForAct = actStats[row.Act] || {};
             const hpColor = getColorForValue(row.Avg_HP_Loss, statsForAct.hp_loss_min, statsForAct.hp_loss_max, false);
             const pColor = getColorForValue(row.Avg_P_Change, statsForAct.p_change_min, statsForAct.p_change_max, true);
 
-            // --- 4. 全要素を結合して最終的な行HTMLを生成 ---
-            return `
-                <tr class="${trClass}">
-                    <td>${row.Act}</td>
-                    <td>${row[nameCol]}</td>
-                    <td>${row.Encounters}</td>
-                    <td>${(row.Avg_Turns || 0).toFixed(1)}${turnsQuartileText}${turnsBoxplotHtml}</td>
-                    <td style="background-color: ${hpColor};">${(-(row.Avg_HP_Loss || 0)).toFixed(1)}${hpQuartileText}${hpLossBoxplotHtml}</td>
-                    <td style="background-color: ${pColor};">${(row.Avg_P_Change || 0).toFixed(1)}${pChangeQuartileText}${pChangeBoxplotHtml}</td>
-                </tr>`;
+            if (isMobile) {
+                // モバイル版: rowspanを廃止し、各行にクラスを付与
+                const row1 = `
+                    <tr class="${trClass} row-avg-turns">
+                        <td>${row.Act}</td>
+                        <td>${row[nameCol]}</td>
+                        <td>${row.Encounters}</td>
+                        <td>${T.table.avg_t}</td>
+                        <td>${(row.Avg_Turns || 0).toFixed(1)}${turnsQuartileText}${turnsBoxplotHtml}</td>
+                    </tr>`;
+                const row2 = `
+                    <tr class="${trClass} row-hp-loss">
+                        <td></td><td></td><td></td>
+                        <td>${T.table.hp}</td>
+                        <td style="background-color: ${hpColor};">${(-(row.Avg_HP_Loss || 0)).toFixed(1)}${hpQuartileText}${hpLossBoxplotHtml}</td>
+                    </tr>`;
+                const row3 = `
+                    <tr class="${trClass} row-p-change">
+                        <td></td><td></td><td></td>
+                        <td>${T.table.p}</td>
+                        <td style="background-color: ${pColor};">${(row.Avg_P_Change || 0).toFixed(1)}${pChangeQuartileText}${pChangeBoxplotHtml}</td>
+                    </tr>`;
+                return row1 + row2 + row3;
+            } else {
+                // PC版: 各セルにクラスを付与
+                return `
+                    <tr class="${trClass}">
+                        <td>${row.Act}</td>
+                        <td>${row[nameCol]}</td>
+                        <td>${row.Encounters}</td>
+                        <td class="col-avg-turns">${(row.Avg_Turns || 0).toFixed(1)}${turnsQuartileText}${turnsBoxplotHtml}</td>
+                        <td class="col-hp-loss" style="background-color: ${hpColor};">${(-(row.Avg_HP_Loss || 0)).toFixed(1)}${hpQuartileText}${hpLossBoxplotHtml}</td>
+                        <td class="col-p-change" style="background-color: ${pColor};">${(row.Avg_P_Change || 0).toFixed(1)}${pChangeQuartileText}${pChangeBoxplotHtml}</td>
+                    </tr>`;
+            }
         }).join('');
 
         allTablesHtml += `
             <div id="enemy-table-${charOption}" class="enemy-analysis-char-table" style="display: ${displayStyle};">
-                <div id="enemy-analysis-table-wrapper-${charOption}"　class="enemy-table-wrapper">
+                <div id="enemy-analysis-table-wrapper-${charOption}" class="enemy-table-wrapper">
                     <table id="${tableId}" class="sortable-table">
                         <thead><tr>${headers}</tr></thead>
                         <tbody>${rows}</tbody>
@@ -98,6 +146,22 @@ function renderEnemyAnalysisTab(char, lang) {
                 </div>
             </div>`;
     });
-    container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3><p class="analysis-note">${T.note || ''}</p>${dropdownHtml}${allTablesHtml}</div>`;
-    //container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3>${dropdownHtml}${allTablesHtml}</div>`;
+
+    // --- MODIFIED: チェックボックスのHTMLを挿入 ---
+    container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3><p class="analysis-note">${T.note || ''}</p>${dropdownHtml}${columnToggleHtml}${allTablesHtml}</div>`;
+
+    // --- NEW: イベントリスナーを設定 ---
+    const analysisSection = container.querySelector('.analysis-section');
+    if (analysisSection) {
+        analysisSection.addEventListener('change', (event) => {
+            const checkbox = event.target;
+            if (checkbox.classList.contains('enemy-column-toggle')) {
+                const colName = checkbox.dataset.col;
+                const charTable = checkbox.closest('.analysis-section').querySelector('.enemy-analysis-char-table');
+                if (charTable) {
+                    charTable.classList.toggle(`hide-${colName}`, !checkbox.checked);
+                }
+            }
+        });
+    }
 }
