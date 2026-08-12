@@ -1,4 +1,4 @@
-// run-finder.js 
+// run-finder.js
 // --- 定数 ---
 const bossIconMap = {
     "Reimu": "./img/boss/Reimu.avif",
@@ -242,7 +242,7 @@ function renderRunFinderTab() {
             list-style-type: none;
             padding: 0;
             margin: 0;
-            max-height: 350px;
+            max-height: 500px;
             overflow-y: auto;
             display: flex;
             flex-wrap: wrap;
@@ -410,6 +410,32 @@ function renderRunFinderTab() {
         });
     }
 
+    // ★修正箇所: モバイルビューのデバッグ表示を追加
+    if (!document.getElementById('mobile-debug-indicator')) {
+        const debugIndicator = document.createElement('div');
+        debugIndicator.id = 'mobile-debug-indicator';
+        debugIndicator.style.position = 'fixed';
+        debugIndicator.style.bottom = '0';
+        debugIndicator.style.right = '0';
+        debugIndicator.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        debugIndicator.style.color = 'white';
+        debugIndicator.style.padding = '2px 8px';
+        debugIndicator.style.fontSize = '10px';
+        debugIndicator.style.zIndex = '9999';
+        debugIndicator.style.pointerEvents = 'none';
+        document.body.appendChild(debugIndicator);
+
+        const updateDebugView = () => {
+            if (window.innerWidth <= 768) {
+                debugIndicator.textContent = `Mobile View Active (width: ${window.innerWidth}px)`;
+            } else {
+                debugIndicator.textContent = `Desktop View (width: ${window.innerWidth}px)`;
+            }
+        };
+
+        window.addEventListener('resize', updateDebugView);
+        updateDebugView(); // 初回実行
+    }
 }
 
 
@@ -858,40 +884,45 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         return '';
     };
 
-
+    // ★修正箇所: テーブル全体を <div class="table-wrapper"> で囲む
     resultsContainer.innerHTML = `
         <div class="results-header">
             <h4>${texts.search_results_title.replace('{count}', runs.length)}</h4>
             <button onclick="generateAndCopyShareLink()" class="copy-share-link">${texts.share_link_button}</button>
         </div>
         ${criteriaHtml}
-        <table class="run-finder-results-table">
-            <thead>
-                <tr>
-                    <th rowspan="2" class="col-run_id"  onclick="handleSortClick('run_id')">${texts.header_run_id}${getSortIndicator('run_id')}</th>
-                    <th rowspan="2" class="col-version" onclick="handleSortClick('version')">${texts.header_version}${getSortIndicator('version')}</th>
-                    <th rowspan="2" class="col-character" onclick="handleSortClick('character')">${texts.header_character}${getSortIndicator('character')}</th>
-                    <th rowspan="2" class="col-deck_size" onclick="handleSortClick('displayDeckSize')">${texts.header_deck_size}${getSortIndicator('displayDeckSize')}</th>
-                    <th rowspan="2" class="col-player_name" onclick="handleSortClick('player_name')">${texts.header_player_name}${getSortIndicator('player_name')}</th>
-                    <th colspan="4" class="act-header col-act1">${texts.header_act1}</th>
-                    <th colspan="4" class="act-header col-act2">${texts.header_act2}</th>
-                    <th colspan="4" class="act-header col-act3">${texts.header_act3}</th>
-                </tr>
-                <tr class="stage-header-row">
-                    <th class="col-act1">${texts.header_stage_early}</th><th class="col-act1">${texts.header_stage_mid}</th><th class="col-act1">${texts.header_stage_late}</th><th class="col-act1">${texts.header_stage_boss}</th>
-                    <th class="col-act2">${texts.header_stage_early}</th><th class="col-act2">${texts.header_stage_mid}</th><th class="col-act2">${texts.header_stage_late}</th><th class="col-act2">${texts.header_stage_boss}</th>
-                    <th class="col-act3">${texts.header_stage_early}</th><th class="col-act3">${texts.header_stage_mid}</th><th class="col-act3">${texts.header_stage_late}</th><th class="col-act3">${texts.header_stage_boss}</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${runRows}
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table class="run-finder-results-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-run_id"  onclick="handleSortClick('run_id')">${texts.header_run_id}${getSortIndicator('run_id')}</th>
+                        <th rowspan="2" class="col-version" onclick="handleSortClick('version')">${texts.header_version}${getSortIndicator('version')}</th>
+                        <th rowspan="2" class="col-character" onclick="handleSortClick('character')">${texts.header_character}${getSortIndicator('character')}</th>
+                        <th rowspan="2" class="col-deck_size" onclick="handleSortClick('displayDeckSize')">${texts.header_deck_size}${getSortIndicator('displayDeckSize')}</th>
+                        <th rowspan="2" class="col-player_name" onclick="handleSortClick('player_name')">${texts.header_player_name}${getSortIndicator('player_name')}</th>
+                        <th colspan="4" class="act-header col-act1">${texts.header_act1}</th>
+                        <th colspan="4" class="act-header col-act2">${texts.header_act2}</th>
+                        <th colspan="4" class="act-header col-act3">${texts.header_act3}</th>
+                    </tr>
+                    <tr class="stage-header-row">
+                        <th class="col-act1">${texts.header_stage_early}</th><th class="col-act1">${texts.header_stage_mid}</th><th class="col-act1">${texts.header_stage_late}</th><th class="col-act1">${texts.header_stage_boss}</th>
+                        <th class="col-act2">${texts.header_stage_early}</th><th class="col-act2">${texts.header_stage_mid}</th><th class="col-act2">${texts.header_stage_late}</th><th class="col-act2">${texts.header_stage_boss}</th>
+                        <th class="col-act3">${texts.header_stage_early}</th><th class="col-act3">${texts.header_stage_mid}</th><th class="col-act3">${texts.header_stage_late}</th><th class="col-act3">${texts.header_stage_boss}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${runRows}
+                </tbody>
+            </table>
+        </div>
     `;
 
 }
 
-function generateAndCopyShareLink() {
+async function generateAndCopyShareLink() {
+    const button = document.querySelector('.copy-share-link');
+    const originalButtonText = button.textContent;
+
     const params = new URLSearchParams();
     const char = document.getElementById('character-select').value;
     if (char) params.set('char', char);
@@ -919,15 +950,38 @@ function generateAndCopyShareLink() {
     const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
     if (bossLogic !== 'OR') params.set('bossLogic', bossLogic);
     params.set('search', 'true');
+
     const baseUrl = window.location.origin + window.location.pathname;
-    const finalUrl = `${baseUrl}?${params.toString()}`;
-    navigator.clipboard.writeText(finalUrl).then(() => {
-        alert(UI_TEXT.run_finder.copy_link_success);
-    }).catch(err => {
-        console.error('リンクのコピーに失敗しました: ', err);
-        alert(UI_TEXT.run_finder.copy_link_fail);
-    });
+    const longUrl = `${baseUrl}?${params.toString()}`;
+
+    button.disabled = true;
+    button.textContent = '短縮中...';
+
+    try {
+        const apiUrl = `https://api.shrtco.de/v2/shorten?url=${encodeURIComponent(longUrl)}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+        const data = await response.json();
+        if (!data.ok) {
+            throw new Error(`API returned an error: ${data.error}`);
+        }
+        const shortUrl = data.result.full_short_link;
+        await navigator.clipboard.writeText(shortUrl);
+        alert(UI_TEXT.run_finder.copy_link_success_short); // 新しい成功メッセージ
+
+    } catch (err) {
+        console.error('URLの短縮に失敗しました。元のURLをコピーします。', err);
+        // フォールバック: 短縮に失敗したら元の長いURLをコピーする
+        await navigator.clipboard.writeText(longUrl);
+        alert(UI_TEXT.run_finder.copy_link_fail_fallback); // 新しい失敗メッセージ
+    } finally {
+        button.disabled = false;
+        button.textContent = originalButtonText;
+    }
 }
+
 
 /**
  * データがロードされるのを待ってから自動検索を実行する

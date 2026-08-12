@@ -144,14 +144,14 @@
     font-weight: bold;
 }
 
-.run-finder-results-table th:nth-child(1) { width: 12%; min-width: 120px; }
-.run-finder-results-table th:nth-child(2) { width: 4%; min-width: 45px; }
-.run-finder-results-table th:nth-child(3) { width: 5%; min-width: 60px; }
-.run-finder-results-table th:nth-child(4) { width: 4%; min-width: 50px; }
-.run-finder-results-table th:nth-child(5) { width: 10%; min-width: 80px; }
-.run-finder-results-table th:nth-child(6),
-.run-finder-results-table th:nth-child(7),
-.run-finder-results-table th:nth-child(8) { width: 21.6%; min-width: 180px; }
+/* --- ★修正箇所: PC用の列幅指定をクラスベースに変更 --- */
+.run-finder-results-table .col-run_id { width: 12%; }
+.run-finder-results-table .col-version { width: 4%; }
+.run-finder-results-table .col-character { width: 5%; }
+.run-finder-results-table .col-deck_size { width: 4%; }
+.run-finder-results-table .col-player_name { width: 10%; }
+.run-finder-results-table .act-header { width: 21.6%; }
+
 
 .run-finder-results-table tr:nth-child(even) { background-color: #f9f9f9; }
 .run-finder-results-table tr:hover { background-color: #f1f1f1; }
@@ -182,8 +182,87 @@
 .path-icon-link { text-decoration: none; color: inherit; display: inline-block; }
 .path-icon-link:hover { transform: scale(1.2); transition: transform 0.1s ease-in-out; }
 
-@media (max-width: 768px) {
+/* 固定ヘッダー・固定列のスタイルを追加 --- */
+.run-finder-results-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10; /* ヘッダーがスクロールコンテンツの上に表示されるように */
+    background-color: #f2f2f2; /* ヘッダーの背景色と合わせる */
+}
+
+.run-finder-results-table th.col-run_id,
+.run-finder-results-table td.col-run_id {
+    position: sticky;
+    left: 0;
+    z-index: 9; /* 固定列が通常のセルより上に表示されるように */
+    background-color: white; /* デフォルトの背景色 */
+}
+
+/* 偶数行の固定列の背景色を調整 */
+.run-finder-results-table tr:nth-child(even) td.col-run_id {
+    background-color: #f9f9f9;
+}
+
+/* 左上の角のセル（固定ヘッダーかつ固定列）は最も高いz-index */
+.run-finder-results-table thead th.col-run_id {
+    z-index: 11;
+}
+
+
+
+@media (max-width: 1024px) {
     .boss-filter-content { flex-direction: column; }
+
+    .table-wrapper {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .run-finder-results-table {
+        table-layout: auto;
+        width: auto;
+    }
+
+    /* --- モバイル用の列幅を最終調整 --- */
+    .run-finder-results-table th,
+    .run-finder-results-table td {
+        padding: 8px 5px;
+        width: auto !important; /* PC用のwidthをリセット */
+    }
+
+    /* PC用の大きな最小幅を!importantで確実にリセット */
+    .run-finder-results-table th:nth-child(6),
+    .run-finder-results-table th:nth-child(7),
+    .run-finder-results-table th:nth-child(8) {
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+
+    /* Group 1: 最も狭い列 */
+    .run-finder-results-table .col-version,
+    .run-finder-results-table .col-deck_size {
+        min-width: 40px;
+    }
+
+    /* プレイIDは最大幅も指定して、はみ出させる */
+    .run-finder-results-table .col-run_id {
+        min-width: 40px;
+        max-width: 60px;
+    }
+
+    /* Group 2: 少し広い列 */
+    .run-finder-results-table .col-character,
+    .run-finder-results-table .col-player_name {
+        min-width: 50px;
+    }
+
+    /* Group 3: Actの各列の幅を固定 */
+    .run-finder-results-table .path-summary-cell {
+        width: 40px;
+        min-width: 40px;
+        max-width: 55px;
+    }
 }
 
 
