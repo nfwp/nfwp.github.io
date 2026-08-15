@@ -22,7 +22,6 @@ function renderEnemyAnalysisTab(char, lang) {
             </select>
         </div>`;
 
-    // --- NEW: チェックボックスのHTMLを追加 ---
     const columnToggleHtml = `
         <div class="column-toggle-container" style="margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
             <h4 style="margin-top: 0; margin-bottom: 8px;">${T.toggle_title || '表示項目'}</h4>
@@ -50,7 +49,6 @@ function renderEnemyAnalysisTab(char, lang) {
                 <th>${T.table.value_header || '各種変化'}</th>
             `;
         } else {
-            // PC版: ヘッダーにクラスを追加
             headers = `
                 <th class="col-act" onclick="sortTable('${tableId}', 0, 'numeric')">${T.table.act}</th>
                 <th class="col-name" onclick="sortTable('${tableId}', 1, 'string')">${T.table.name}</th>
@@ -63,6 +61,34 @@ function renderEnemyAnalysisTab(char, lang) {
         const typeOrderMap = { 'Enemy': 0, 'EliteEnemy': 1, 'Boss': 2 };
         const sortedData = enemyDfChar.sort((a, b) => a.Act - b.Act || (typeOrderMap[a.Type] - typeOrderMap[b.Type]) || a.MinLevel - b.MinLevel);
 
+
+        const sectionBoxplotRanges = {};
+        sortedData.forEach(row => {
+            const sectionKey = `${row.Act}-${row.Type}`;
+            if (!sectionBoxplotRanges[sectionKey]) {
+                sectionBoxplotRanges[sectionKey] = {
+                    turns_min: Infinity, turns_max: -Infinity,
+                    hp_loss_min: Infinity, hp_loss_max: -Infinity,
+                    p_change_min: Infinity, p_change_max: -Infinity,
+                };
+            }
+            if (row.TurnsBoxplot) {
+                sectionBoxplotRanges[sectionKey].turns_min = Math.min(sectionBoxplotRanges[sectionKey].turns_min, row.TurnsBoxplot.min);
+                sectionBoxplotRanges[sectionKey].turns_max = Math.max(sectionBoxplotRanges[sectionKey].turns_max, row.TurnsBoxplot.max);
+            }
+            if (row.HpLossBoxplot) {
+                sectionBoxplotRanges[sectionKey].hp_loss_min = Math.min(sectionBoxplotRanges[sectionKey].hp_loss_min, row.HpLossBoxplot.min);
+                sectionBoxplotRanges[sectionKey].hp_loss_max = Math.max(sectionBoxplotRanges[sectionKey].hp_loss_max, row.HpLossBoxplot.max);
+            }
+            if (row.PChangeBoxplot) {
+                sectionBoxplotRanges[sectionKey].p_change_min = Math.min(sectionBoxplotRanges[sectionKey].p_change_min, row.PChangeBoxplot.min);
+                sectionBoxplotRanges[sectionKey].p_change_max = Math.max(sectionBoxplotRanges[sectionKey].p_change_max, row.PChangeBoxplot.max);
+            }
+        });
+
+
+        // Note: actStats is used for getColorForValue, which uses Avg_HP_Loss/Avg_P_Change, not boxplot min/max.
+        // This part remains unchanged as per the specific request about boxplot scaling.
         const actStats = {};
         const acts = [...new Set(sortedData.map(d => d.Act))];
         acts.forEach(act => {
@@ -75,32 +101,57 @@ function renderEnemyAnalysisTab(char, lang) {
             };
         });
 
+
         const rows = sortedData.map(row => {
             const nameCol = (lang === 'ja') ? 'EnemyName_JA' : 'EnemyName_EN';
             const trClass = row.Type === 'EliteEnemy' ? 'elite-enemy' : row.Type === 'Boss' ? 'boss-enemy' : '';
 
+
             const createQuartileText = (boxplotData, isHpLoss = false) => {
-                if (!boxplotData || boxplotData.q1 == null || boxplotData.median == null || boxplotData.q3 == null) return '';
-                let q1 = boxplotData.q1, median = boxplotData.median, q3 = boxplotData.q3;
+                // 最小値と最大値も存在するかチェックに追加
+                if (!boxplotData || boxplotData.q1 == null || boxplotData.median == null || boxplotData.q3 == null || boxplotData.min == null || boxplotData.max == null) return '';
+
+                let min = boxplotData.min, q1 = boxplotData.q1, median = boxplotData.median, q3 = boxplotData.q3, max = boxplotData.max;
+
                 if (isHpLoss) {
-                    [q1, median, q3] = [-boxplotData.q3, -boxplotData.median, -boxplotData.q1];
+                    // HPロスの場合、表示を反転させるため、minは元のmaxの負、maxは元のminの負になる
+                    [min, q1, median, q3, max] = [-boxplotData.max, -boxplotData.q3, -boxplotData.median, -boxplotData.q1, -boxplotData.min];
                 }
-                return ` <span class="quartile-text">[${q1.toFixed(1)} , ${median.toFixed(1)} , ${q3.toFixed(1)}]</span>`;
+                // 最小値と最大値も表示に含める
+                return ` <span class="quartile-text">${min.toFixed(1)} ~ [${q1.toFixed(1)} ~ ${median.toFixed(1)} ~ ${q3.toFixed(1)}] ~ ${max.toFixed(1)}</span>`;
             };
+
             const turnsQuartileText = createQuartileText(row.TurnsBoxplot);
             const hpQuartileText = createQuartileText(row.HpLossBoxplot, true);
             const pChangeQuartileText = createQuartileText(row.PChangeBoxplot);
 
-            const turnsBoxplotHtml = createInlineBoxplotHtml(row.TurnsBoxplot, row.TurnsBoxplot?.min, row.TurnsBoxplot?.max);
-            const hpLossBoxplotHtml = createInlineBoxplotHtml(row.HpLossBoxplot, row.HpLossBoxplot?.min, row.HpLossBoxplot?.max, true);
-            const pChangeBoxplotHtml = createInlineBoxplotHtml(row.PChangeBoxplot, row.PChangeBoxplot?.min, row.PChangeBoxplot?.max);
+
+            const sectionKey = `${row.Act}-${row.Type}`;
+            const currentSectionBoxplotRanges = sectionBoxplotRanges[sectionKey] || {};
+
+            const turnsBoxplotHtml = createInlineBoxplotHtml(
+                row.TurnsBoxplot,
+                currentSectionBoxplotRanges.turns_min,
+                currentSectionBoxplotRanges.turns_max
+            );
+            const hpLossBoxplotHtml = createInlineBoxplotHtml(
+                row.HpLossBoxplot,
+                currentSectionBoxplotRanges.hp_loss_min,
+                currentSectionBoxplotRanges.hp_loss_max,
+                true
+            );
+            const pChangeBoxplotHtml = createInlineBoxplotHtml(
+                row.PChangeBoxplot,
+                currentSectionBoxplotRanges.p_change_min,
+                currentSectionBoxplotRanges.p_change_max
+            );
+
 
             const statsForAct = actStats[row.Act] || {};
             const hpColor = getColorForValue(row.Avg_HP_Loss, statsForAct.hp_loss_min, statsForAct.hp_loss_max, false);
             const pColor = getColorForValue(row.Avg_P_Change, statsForAct.p_change_min, statsForAct.p_change_max, true);
 
             if (isMobile) {
-                // モバイル版: rowspanを廃止し、各行にクラスを付与
                 const row1 = `
                     <tr class="${trClass} row-avg-turns">
                         <td>${row.Act}</td>
@@ -123,7 +174,6 @@ function renderEnemyAnalysisTab(char, lang) {
                     </tr>`;
                 return row1 + row2 + row3;
             } else {
-                // PC版: 各セルにクラスを付与
                 return `
                     <tr class="${trClass}">
                         <td>${row.Act}</td>
@@ -147,10 +197,8 @@ function renderEnemyAnalysisTab(char, lang) {
             </div>`;
     });
 
-    // --- MODIFIED: チェックボックスのHTMLを挿入 ---
     container.innerHTML = `<div class='analysis-section'><h3>${T.title}</h3><p class="analysis-note">${T.note || ''}</p>${dropdownHtml}${columnToggleHtml}${allTablesHtml}</div>`;
 
-    // --- NEW: イベントリスナーを設定 ---
     const analysisSection = container.querySelector('.analysis-section');
     if (analysisSection) {
         analysisSection.addEventListener('change', (event) => {
