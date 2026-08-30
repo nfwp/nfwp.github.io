@@ -79,7 +79,7 @@ function renderActTrendTab(lang) {
 
                     sortedItems.forEach(([id, count], index) => {
                         const currentRank = index + 1;
-                        const perRun = (count / totalRuns).toFixed(2);
+                        const perRun = (count / totalRuns).toFixed(3);
                         let name = id;
                         let bgColor = '#FFFFFF';
 
