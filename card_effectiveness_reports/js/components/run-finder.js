@@ -410,7 +410,7 @@ function renderRunFinderTab() {
         });
     }
 
-    // ★修正箇所: モバイルビューのデバッグ表示を追加
+    /*  // モバイルビューのデバッグ表示を追加
     if (!document.getElementById('mobile-debug-indicator')) {
         const debugIndicator = document.createElement('div');
         debugIndicator.id = 'mobile-debug-indicator';
@@ -436,7 +436,9 @@ function renderRunFinderTab() {
         window.addEventListener('resize', updateDebugView);
         updateDebugView(); // 初回実行
     }
+    */
 }
+
 
 
 function addItemToSelection(itemName, listId) {

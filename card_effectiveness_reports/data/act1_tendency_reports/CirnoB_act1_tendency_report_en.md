@@ -493,8 +493,8 @@
 <li><span class="text-purchase">Cool Rose</span>: 1</li>
 <li><span class="text-purchase">Blizzard</span>: 1</li>
 <li><span class="text-purchase">Lily White, Herald of Spring</span>: 1</li>
-<li><span class="text-purchase">Larva, God of Evernight</span>: 1</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
+<li><span class="text-purchase">Larva, God of Evernight</span>: 1</li>
 <li><span class="text-purchase">Wrath of Nature</span>: 1</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 1</li>
 </ul>
@@ -529,17 +529,17 @@
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 9</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 7</li>
 <li><span class="text-purchase">Social Butterfly</span>: 6</li>
-<li><span class="text-purchase">Princess Undine</span>: 5</li>
 <li><span class="text-purchase">Clean Energy</span>: 5</li>
+<li><span class="text-purchase">Princess Undine</span>: 5</li>
 <li><span class="text-purchase">In Plain Sight</span>: 5</li>
+<li><span class="text-purchase">Tao Fetal Movement</span>: 4</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 4</li>
 <li><span class="text-purchase">Play With Water</span>: 4</li>
-<li><span class="text-purchase">Tao Fetal Movement</span>: 4</li>
 <li><span class="text-purchase">Ice Barrier</span>: 4</li>
 <li><span class="text-purchase">Frozen Specimen</span>: 3</li>
 <li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 3</li>
 <li><span class="text-purchase">Frost Refraction</span>: 3</li>
-<li><span class="text-purchase">Wrath of Nature</span>: 3</li>
+<li><span class="text-purchase">Sakura-Colored Sea</span>: 3</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -555,9 +555,9 @@
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Plushie</span>: 1</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
-<li><span class="text-exhibit">Ribbon</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
+<li><span class="text-exhibit">Ribbon</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -597,8 +597,8 @@
 <li><span class="text-purchase">Call on Friends</span>: 1</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 1</li>
 <li><span class="text-purchase">Wrath of Nature</span>: 1</li>
+<li><span class="text-purchase">Frozen Orb</span>: 1</li>
 <li><span class="text-purchase">Tale of the Bamboo Cutter</span>: 1</li>
-<li><span class="text-purchase">Careful Deliberation</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

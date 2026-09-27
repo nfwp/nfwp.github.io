@@ -494,8 +494,8 @@
 <li><span class="text-purchase">清涼なる薔薇</span>: 1回</li>
 <li><span class="text-purchase">猛吹雪</span>: 1回</li>
 <li><span class="text-purchase">春告精、リリーホワイト</span>: 1回</li>
-<li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
+<li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
 <li><span class="text-purchase">自然の怒り</span>: 1回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 1回</li>
 </ul>
@@ -530,17 +530,17 @@
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 9回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 7回</li>
 <li><span class="text-purchase">社交的な妖精</span>: 6回</li>
-<li><span class="text-purchase">プリンセスウンディネ</span>: 5回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 5回</li>
+<li><span class="text-purchase">プリンセスウンディネ</span>: 5回</li>
 <li><span class="text-purchase">完璧な偽装</span>: 5回</li>
+<li><span class="text-purchase">タオ胎動</span>: 4回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 4回</li>
 <li><span class="text-purchase">水遊び</span>: 4回</li>
-<li><span class="text-purchase">タオ胎動</span>: 4回</li>
 <li><span class="text-purchase">アイスシールド</span>: 4回</li>
 <li><span class="text-purchase">氷漬けの標本</span>: 3回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 3回</li>
 <li><span class="text-purchase">氷鏡反射</span>: 3回</li>
-<li><span class="text-purchase">自然の怒り</span>: 3回</li>
+<li><span class="text-purchase">桜色の海</span>: 3回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -556,9 +556,9 @@
 <li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">ぬいぐるみ</span>: 1回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
-<li><span class="text-exhibit">リボン</span>: 1回</li>
-<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
+<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
+<li><span class="text-exhibit">リボン</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -598,8 +598,8 @@
 <li><span class="text-purchase">友を呼ぶ</span>: 1回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 1回</li>
 <li><span class="text-purchase">自然の怒り</span>: 1回</li>
+<li><span class="text-purchase">フローズンオーブ</span>: 1回</li>
 <li><span class="text-purchase">竹取物語</span>: 1回</li>
-<li><span class="text-purchase">審念熟慮</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
