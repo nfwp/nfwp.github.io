@@ -136,7 +136,6 @@ function sortTable(table, colIndex) {
     const lastCol = table.getAttribute('data-sort-col');
     const lastDir = table.getAttribute('data-sort-dir') || 'asc';
 
-    // 同じ列をもう一度クリックした場合は方向を反転、違う列ならデフォルトで 'asc'
     let currentDirection = 'asc';
     if (lastCol == colIndex) {
         currentDirection = (lastDir === 'asc') ? 'desc' : 'asc';
@@ -273,6 +272,9 @@ function setupCardFilters() {
                     <option value="${isJa ? '道具' : 'Tool'}">${isJa ? '道具' : 'Tool'}</option>
                 </select>
             </div>
+        </div>
+        <div style="width: 100%; font-size: 0.85em; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 6px; margin-top: 2px;">
+            ${isJa ? '※採用ギャップは初期カードに対しては正しく機能しません。' : '※Adoption Gap does not function correctly for starting cards.'}
         </div>
     `;
 
@@ -440,9 +442,8 @@ async function toggleCardDetail(btnElement) {
     const cardId = btnElement.getAttribute('data-card-id');
     const isJa = (LANG === 'ja');
 
-    // テーブルの行から最終採用率（adoption）を取得
     const iconSpan = tr.querySelector('.card-pick-icon');
-    const finalAdoption = parseFloat(iconSpan?.getAttribute('data-adoption') || '0'); // 0.0〜1.0
+    const finalAdoption = parseFloat(iconSpan?.getAttribute('data-adoption') || '0');
 
     let nextTr = tr.nextElementSibling;
     if (nextTr && nextTr.classList.contains('detail-row')) {
@@ -515,15 +516,14 @@ async function toggleCardDetail(btnElement) {
         const countA = totalN > 0 ? Math.round((runAppRatio / 100) * totalN) : '?';
         const countB = (typeof countA === 'number') ? Math.round((firstPickRatio / 100) * countA) : '?';
 
-        // 採用ギャップ係数の算出 (最終採用率 / 初回ピック実績率)
         const pFirst = (runAppRatio / 100) * (firstPickRatio / 100);
         let gapFactorText = '-';
         let gapColor = '#333';
         if (pFirst > 0.001) {
             const gapVal = finalAdoption / pFirst;
             gapFactorText = `${gapVal.toFixed(2)}x`;
-            if (gapVal >= 1.2) gapColor = '#2563eb'; // 青（後伸び）
-            else if (gapVal < 0.8) gapColor = '#dc2626'; // 赤（減衰）
+            if (gapVal >= 1.2) gapColor = '#2563eb';
+            else if (gapVal < 0.8) gapColor = '#dc2626';
         }
 
         const appLabel = isJa ? `提示のあったラン(対全ラン N=${totalN}): ${runAppRatio}% (${countA}/${totalN})` : `Run Appearance (vs All N=${totalN}): ${runAppRatio}% (${countA}/${totalN})`;
