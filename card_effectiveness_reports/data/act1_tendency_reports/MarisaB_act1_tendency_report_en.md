@@ -446,15 +446,15 @@
 <td style='text-align: right;'>72.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.1</span></strong></td>
 </tr>
-<tr>
-<td>Devour Desires</td>
+<tr class="specialist-row">
+<td><strong>🔥 Rainbow Star Blast</strong></td>
 <td style='text-align: right;'>+10.86</td>
 <td style='text-align: right;'>38.5%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>26</td>
-<td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>37.9</td>
-<td style='text-align: right;'>85.2</td>
+<td style='text-align: right;'><strong><span style='color: red;'>64.3</span></strong></td>
+<td style='text-align: right;'>51.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.8</span></strong></td>
 </tr>
 </tbody>
 </table>

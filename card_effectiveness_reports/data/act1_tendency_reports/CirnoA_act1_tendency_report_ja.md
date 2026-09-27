@@ -27,8 +27,8 @@
 </ul></div>
 <div class="column"><ul>
 <li>プリンセスウンディネ: 18回</li>
-<li>激流: 18回</li>
 <li>春植えざれば秋実らず: 18回</li>
+<li>激流: 18回</li>
 <li>冬の忘れ物、レティ: 17回</li>
 <li>凍結弾幕: 16回</li>
 <li>薄氷を踏む: 14回</li>
@@ -479,8 +479,8 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 4回</li>
-<li><span class="text-purchase">水遊び</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
+<li><span class="text-purchase">水遊び</span>: 3回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 3回</li>
 <li><span class="text-purchase">猛吹雪</span>: 3回</li>
@@ -594,9 +594,9 @@
 <li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">クールな登場</span>: 1回</li>
+<li><span class="text-purchase">銀氷の血筋</span>: 1回</li>
 <li><span class="text-purchase">清涼なるパーティー</span>: 1回</li>
 <li><span class="text-purchase">かき氷の売り子、大妖精</span>: 1回</li>
-<li><span class="text-purchase">銀氷の血筋</span>: 1回</li>
 <li><span class="text-purchase">妖精の目覚め</span>: 1回</li>
 <li><span class="text-purchase">氷鏡反射</span>: 1回</li>
 </ul>

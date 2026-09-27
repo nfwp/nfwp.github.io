@@ -138,16 +138,6 @@
 <td style='text-align: right;'>100.4</td>
 </tr>
 <tr>
-<td>吸血鬼ハンター</td>
-<td style='text-align: right;'>+22.61</td>
-<td style='text-align: right;'>46.7%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>60</td>
-<td style='text-align: right;'>45.5</td>
-<td style='text-align: right;'>46.7</td>
-<td style='text-align: right;'>92.2</td>
-</tr>
-<tr>
 <td>プライベートヴィジョン</td>
 <td style='text-align: right;'>+22.61</td>
 <td style='text-align: right;'>46.7%</td>
@@ -156,6 +146,16 @@
 <td style='text-align: right;'>44.5</td>
 <td style='text-align: right;'>53.3</td>
 <td style='text-align: right;'>97.8</td>
+</tr>
+<tr>
+<td>吸血鬼ハンター</td>
+<td style='text-align: right;'>+22.61</td>
+<td style='text-align: right;'>46.7%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>60</td>
+<td style='text-align: right;'>45.5</td>
+<td style='text-align: right;'>46.7</td>
+<td style='text-align: right;'>92.2</td>
 </tr>
 <tr>
 <td>拘束時間</td>
