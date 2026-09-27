@@ -64,8 +64,10 @@ function applyCardIcons() {
         const finalAdoption = parseFloat(span.getAttribute('data-adoption') || '0');
 
         const tr = span.closest('tr');
-        const typeCellText = tr ? tr.children[5]?.textContent.trim() : '';
-        const isTool = (typeCellText === 'Tool' || typeCellText === '道具' || typeCellText === '道具(Tool)');
+
+        const typeCellText = tr ? tr.children[6]?.textContent.trim() : '';
+        const cleanType = (typeCellText || "").trim();
+        const isTool = (cleanType === 'Tool' || cleanType === '道具' || cleanType === '道具(Tool)' || cleanType.includes('Tool') || cleanType.includes('道具'));
 
         const cData = charData[cardId];
         if (!cData) return;
@@ -365,8 +367,10 @@ function applyFilterLogic() {
         const upgradeRateText = row.children[3]?.textContent.trim().replace('%', '') || '0';
         const upgradeRateVal = parseFloat(upgradeRateText) || 0;
 
-        const rarityText = row.children[4]?.textContent.trim() || '';
-        const typeText = row.children[5]?.textContent.trim() || '';
+
+        const rarityText = row.children[5]?.textContent.trim() || '';
+        const typeText = row.children[6]?.textContent.trim() || '';
+
 
         if (selectedRarity !== 'all' && !rarityText.includes(selectedRarity)) matchRarity = false;
         if (selectedType !== 'all' && !typeText.includes(selectedType)) matchType = false;
@@ -396,7 +400,7 @@ function applyFilterLogic() {
             } else if (gapSelectVal === 'lt0.8') {
                 matchGap = (gapRatio < 0.8 && pFirst > 0.001);
             }
-
+            console.log("DEBUG typeText:", JSON.stringify(typeText));
             const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
 
             // フィルター側と完全に同じ条件に統一
