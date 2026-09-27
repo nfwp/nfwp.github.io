@@ -27,6 +27,7 @@ async function loadAndShowCardList(character, language) {
         await ensurePickDetailsCache();
         applyCardIcons();
         setupCardFilters();
+        setupTableSorting(); // テーブルヘッダーのソート機能＆アイコン設定
 
         contentWrapper.addEventListener('click', (event) => {
             const btn = event.target.closest('.detail-toggle-btn');
@@ -98,6 +99,85 @@ function applyCardIcons() {
         }
 
         span.innerHTML = iconHtml;
+    });
+}
+
+// --- テーブルヘッダーのソート機能（矢印アイコン付き）設定 ---
+function setupTableSorting() {
+    const table = document.querySelector('#card-list-content-wrapper table');
+    if (!table) return;
+
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th, index) => {
+        // すでにアイコンが追加されていなければ付与
+        if (!th.querySelector('.sort-indicator')) {
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.style.cssText = 'margin-left: 5px; font-size: 0.85em; color: #64748b; font-weight: normal;';
+            indicator.textContent = ' ↕';
+            th.appendChild(indicator);
+        }
+
+        th.style.cursor = 'pointer';
+        th.style.userSelect = 'none';
+        th.title = LANG === 'ja' ? 'クリックして並び替え' : 'Click to sort';
+
+        // ホバー時の見た目変化
+        th.addEventListener('mouseenter', () => { th.style.backgroundColor = '#f1f5f9'; });
+        th.addEventListener('mouseleave', () => { th.style.backgroundColor = ''; });
+
+        th.addEventListener('click', () => {
+            sortTable(table, index);
+        });
+    });
+}
+
+function sortTable(table, colIndex) {
+    const rows = Array.from(table.querySelectorAll('tr[data-card-id]'));
+
+    const currentDirection = table.getAttribute('data-sort-dir') === 'asc' && table.getAttribute('data-sort-col') == colIndex ? 'desc' : 'asc';
+    table.setAttribute('data-sort-dir', currentDirection);
+    table.setAttribute('data-sort-col', colIndex);
+
+    // ヘッダーの矢印アイコンを更新
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th, idx) => {
+        const indicator = th.querySelector('.sort-indicator');
+        if (indicator) {
+            if (idx === colIndex) {
+                indicator.textContent = currentDirection === 'asc' ? ' ▲' : ' ▼';
+                indicator.style.color = '#2563eb';
+                indicator.style.fontWeight = 'bold';
+            } else {
+                indicator.textContent = ' ↕';
+                indicator.style.color = '#64748b';
+                indicator.style.fontWeight = 'normal';
+            }
+        }
+    });
+
+    rows.sort((rowA, rowB) => {
+        const cellA = rowA.children[colIndex]?.textContent.trim() || '';
+        const cellB = rowB.children[colIndex]?.textContent.trim() || '';
+
+        const valA = parseFloat(cellA.replace('%', ''));
+        const valB = parseFloat(cellB.replace('%', ''));
+
+        if (!isNaN(valA) && !isNaN(valB)) {
+            return currentDirection === 'asc' ? valA - valB : valB - valA;
+        } else {
+            return currentDirection === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
+    });
+
+    rows.forEach(row => {
+        const nextRow = row.nextElementSibling;
+        const hasDetail = nextRow && nextRow.classList.contains('detail-row');
+
+        table.appendChild(row);
+        if (hasDetail) {
+            table.appendChild(nextRow);
+        }
     });
 }
 
@@ -236,7 +316,7 @@ function setupCardFilters() {
     filterBar.querySelector('#type-select')?.addEventListener('change', applyFilterLogic);
 }
 
-// 拡張版絞り込みロジック（数値＋アイコン＋強化率＜20%対応＋レアリティ/タイプ）
+// 拡張版絞り込みロジック
 function applyFilterLogic() {
     const activeButtons = document.querySelectorAll('#card-filter-bar .filter-btn.active');
     const selectedFilters = Array.from(activeButtons).map(b => b.getAttribute('data-filter'));
@@ -269,11 +349,9 @@ function applyFilterLogic() {
         const rarityText = row.children[4]?.textContent.trim() || '';
         const typeText = row.children[5]?.textContent.trim() || '';
 
-        // レアリティ・タイプのテキスト一致判定
         if (selectedRarity !== 'all' && !rarityText.includes(selectedRarity)) matchRarity = false;
         if (selectedType !== 'all' && !typeText.includes(selectedType)) matchType = false;
 
-        // 強化率の条件判定（20%未満 または 各種以上）
         if (upgradeSelectVal === 'lt20') {
             matchUpgrade = (upgradeRateVal < 20);
         } else if (parseFloat(upgradeSelectVal) > 0) {
