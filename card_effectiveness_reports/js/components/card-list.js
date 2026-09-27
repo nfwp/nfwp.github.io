@@ -133,7 +133,15 @@ function setupTableSorting() {
 function sortTable(table, colIndex) {
     const rows = Array.from(table.querySelectorAll('tr[data-card-id]'));
 
-    const currentDirection = table.getAttribute('data-sort-dir') === 'asc' && table.getAttribute('data-sort-col') == colIndex ? 'desc' : 'asc';
+    const lastCol = table.getAttribute('data-sort-col');
+    const lastDir = table.getAttribute('data-sort-dir') || 'asc';
+
+    // 同じ列をもう一度クリックした場合は方向を反転、違う列ならデフォルトで 'asc'
+    let currentDirection = 'asc';
+    if (lastCol == colIndex) {
+        currentDirection = (lastDir === 'asc') ? 'desc' : 'asc';
+    }
+
     table.setAttribute('data-sort-dir', currentDirection);
     table.setAttribute('data-sort-col', colIndex);
 
@@ -228,9 +236,9 @@ function setupCardFilters() {
                 <span>${isJa ? '採用ギャップ:' : 'Adoption Gap:'}</span>
                 <select id="gap-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
                     <option value="all">${isJa ? '指定なし' : 'Any'}</option>
-                    <option value="ge1.2">${isJa ? '1.2倍以上 (後伸び)' : '>= 1.2x (Situational)'}</option>
+                    <option value="ge1.2">${isJa ? '1.2倍以上 (後から採用)' : '>= 1.2x (Late-picked)'}</option>
                     <option value="mid">${isJa ? '0.8倍 〜 1.2倍 (安定)' : '0.8x - 1.2x (Stable)'}</option>
-                    <option value="lt0.8">${isJa ? '0.8倍 未満 (減衰)' : '< 0.8x (Declining)'}</option>
+                    <option value="lt0.8">${isJa ? '0.8倍 未満 (減少)' : '< 0.8x (Declining)'}</option>
                 </select>
             </div>
             <div style="display: flex; gap: 4px; align-items: center;">
@@ -432,6 +440,10 @@ async function toggleCardDetail(btnElement) {
     const cardId = btnElement.getAttribute('data-card-id');
     const isJa = (LANG === 'ja');
 
+    // テーブルの行から最終採用率（adoption）を取得
+    const iconSpan = tr.querySelector('.card-pick-icon');
+    const finalAdoption = parseFloat(iconSpan?.getAttribute('data-adoption') || '0'); // 0.0〜1.0
+
     let nextTr = tr.nextElementSibling;
     if (nextTr && nextTr.classList.contains('detail-row')) {
         if (nextTr.style.display === 'none') {
@@ -503,9 +515,21 @@ async function toggleCardDetail(btnElement) {
         const countA = totalN > 0 ? Math.round((runAppRatio / 100) * totalN) : '?';
         const countB = (typeof countA === 'number') ? Math.round((firstPickRatio / 100) * countA) : '?';
 
+        // 採用ギャップ係数の算出 (最終採用率 / 初回ピック実績率)
+        const pFirst = (runAppRatio / 100) * (firstPickRatio / 100);
+        let gapFactorText = '-';
+        let gapColor = '#333';
+        if (pFirst > 0.001) {
+            const gapVal = finalAdoption / pFirst;
+            gapFactorText = `${gapVal.toFixed(2)}x`;
+            if (gapVal >= 1.2) gapColor = '#2563eb'; // 青（後伸び）
+            else if (gapVal < 0.8) gapColor = '#dc2626'; // 赤（減衰）
+        }
+
         const appLabel = isJa ? `提示のあったラン(対全ラン N=${totalN}): ${runAppRatio}% (${countA}/${totalN})` : `Run Appearance (vs All N=${totalN}): ${runAppRatio}% (${countA}/${totalN})`;
         const fpkLabel = isJa ? `初回ピック率: ${firstPickRatio}% (${countB}/${countA})` : `First Pick Rate: ${firstPickRatio}% (${countB}/${countA})`;
         const avgLabel = isJa ? `平均提示数: ${avgOffered}回` : `Avg. Offered/Run: ${avgOffered}`;
+        const gapLabel = isJa ? `採用ギャップ係数: <span style="color: ${gapColor}; font-weight: bold;">${gapFactorText}</span>` : `Adoption Gap: <span style="color: ${gapColor}; font-weight: bold;">${gapFactorText}</span>`;
 
         const stationTotalMap = {};
         if (cardData.st) {
@@ -587,6 +611,7 @@ async function toggleCardDetail(btnElement) {
                         <div><strong>${appLabel}</strong></div>
                         <div><strong>${fpkLabel}</strong></div>
                         <div><strong>${avgLabel}</strong></div>
+                        <div><strong>${gapLabel}</strong></div>
                     </div>
                     <div style="margin-bottom: 10px;">
                         <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${isJa ? '提示マス内訳' : 'Station Breakdown'}:</strong>
