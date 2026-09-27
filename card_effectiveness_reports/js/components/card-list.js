@@ -27,7 +27,7 @@ async function loadAndShowCardList(character, language) {
         await ensurePickDetailsCache();
         applyCardIcons();
         setupCardFilters();
-        setupTableSorting(); // テーブルヘッダーのソート機能＆アイコン設定
+        setupTableSorting();
 
         contentWrapper.addEventListener('click', (event) => {
             const btn = event.target.closest('.detail-toggle-btn');
@@ -53,7 +53,7 @@ async function ensurePickDetailsCache() {
     }
 }
 
-// アイコン動的付与ロジック
+// アイコン動付与ロジック
 function applyCardIcons() {
     if (!pickDetailsAllCache) return;
     const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
@@ -102,14 +102,13 @@ function applyCardIcons() {
     });
 }
 
-// --- テーブルヘッダーのソート機能（矢印アイコン付き）設定 ---
+// --- テーブルヘッダーのソート機能（矢印アイコン付き） ---
 function setupTableSorting() {
     const table = document.querySelector('#card-list-content-wrapper table');
     if (!table) return;
 
     const headers = table.querySelectorAll('th');
     headers.forEach((th, index) => {
-        // すでにアイコンが追加されていなければ付与
         if (!th.querySelector('.sort-indicator')) {
             const indicator = document.createElement('span');
             indicator.className = 'sort-indicator';
@@ -122,7 +121,6 @@ function setupTableSorting() {
         th.style.userSelect = 'none';
         th.title = LANG === 'ja' ? 'クリックして並び替え' : 'Click to sort';
 
-        // ホバー時の見た目変化
         th.addEventListener('mouseenter', () => { th.style.backgroundColor = '#f1f5f9'; });
         th.addEventListener('mouseleave', () => { th.style.backgroundColor = ''; });
 
@@ -139,7 +137,6 @@ function sortTable(table, colIndex) {
     table.setAttribute('data-sort-dir', currentDirection);
     table.setAttribute('data-sort-col', colIndex);
 
-    // ヘッダーの矢印アイコンを更新
     const headers = table.querySelectorAll('th');
     headers.forEach((th, idx) => {
         const indicator = th.querySelector('.sort-indicator');
@@ -228,6 +225,15 @@ function setupCardFilters() {
                 </select>
             </div>
             <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? '採用ギャップ:' : 'Gap:'}</span>
+                <select id="gap-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="all">${isJa ? '指定なし' : 'Any'}</option>
+                    <option value="ge1.2">${isJa ? '1.2倍以上 (後伸び)' : '>= 1.2x'}</option>
+                    <option value="mid">0.8倍 〜 1.2倍 (安定)</option>
+                    <option value="lt0.8">${isJa ? '0.8倍 未満 (減衰)' : '< 0.8x'}</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
                 <span>${isJa ? '強化率:' : 'Upgrade:'}</span>
                 <select id="upgrade-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
                     <option value="0">${isJa ? '指定なし' : 'Any'}</option>
@@ -311,12 +317,13 @@ function setupCardFilters() {
     // 各種セレクトボックスの変更イベント
     filterBar.querySelector('#min-fpk-select')?.addEventListener('change', applyFilterLogic);
     filterBar.querySelector('#min-final-select')?.addEventListener('change', applyFilterLogic);
+    filterBar.querySelector('#gap-select')?.addEventListener('change', applyFilterLogic);
     filterBar.querySelector('#upgrade-select')?.addEventListener('change', applyFilterLogic);
     filterBar.querySelector('#rarity-select')?.addEventListener('change', applyFilterLogic);
     filterBar.querySelector('#type-select')?.addEventListener('change', applyFilterLogic);
 }
 
-// 拡張版絞り込みロジック
+// 拡張版絞り込みロジック（採用ギャップ対応）
 function applyFilterLogic() {
     const activeButtons = document.querySelectorAll('#card-filter-bar .filter-btn.active');
     const selectedFilters = Array.from(activeButtons).map(b => b.getAttribute('data-filter'));
@@ -324,6 +331,7 @@ function applyFilterLogic() {
 
     const minFpk = parseFloat(document.querySelector('#card-filter-bar #min-fpk-select')?.value || '0');
     const finalSelectVal = document.querySelector('#card-filter-bar #min-final-select')?.value || '0';
+    const gapSelectVal = document.querySelector('#card-filter-bar #gap-select')?.value || 'all';
     const upgradeSelectVal = document.querySelector('#card-filter-bar #upgrade-select')?.value || '0';
     const selectedRarity = document.querySelector('#card-filter-bar #rarity-select')?.value || 'all';
     const selectedType = document.querySelector('#card-filter-bar #type-select')?.value || 'all';
@@ -338,11 +346,12 @@ function applyFilterLogic() {
         let matchIcon = true;
         let matchFpk = true;
         let matchFinal = true;
+        let matchGap = true;
         let matchUpgrade = true;
         let matchRarity = true;
         let matchType = true;
 
-        const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0');
+        const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0'); // 0.0〜1.0
         const upgradeRateText = row.children[3]?.textContent.trim().replace('%', '') || '0';
         const upgradeRateVal = parseFloat(upgradeRateText) || 0;
 
@@ -361,7 +370,22 @@ function applyFilterLogic() {
         if (cData) {
             const appRatio = (cData.app || 0) / 100;
             const fpkRatio = (cData.fpk || 0) / 100;
-            const pFirst = appRatio * fpkRatio;
+            const pFirst = appRatio * fpkRatio; // 初回ピック実績率 (0.0〜1.0)
+
+            // 採用ギャップの計算 (最終採用率 / 初回ピック実績率)
+            // 初回ピック実績率が0に近い場合のゼロ除算を防ぐ
+            let gapRatio = 0;
+            if (pFirst > 0.001) {
+                gapRatio = finalAdoption / pFirst;
+            }
+
+            if (gapSelectVal === 'ge1.2') {
+                matchGap = (gapRatio >= 1.2);
+            } else if (gapSelectVal === 'mid') {
+                matchGap = (gapRatio >= 0.8 && gapRatio < 1.2);
+            } else if (gapSelectVal === 'lt0.8') {
+                matchGap = (gapRatio < 0.8 && pFirst > 0.01);
+            }
 
             const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
 
@@ -386,14 +410,15 @@ function applyFilterLogic() {
                 matchFinal = (finalAdoption * 100) >= parseFloat(finalSelectVal);
             }
         } else {
-            if (!isAllSelected || minFpk > 0 || finalSelectVal !== '0') {
+            if (!isAllSelected || minFpk > 0 || finalSelectVal !== '0' || gapSelectVal !== 'all') {
                 matchIcon = false;
                 matchFpk = false;
                 matchFinal = false;
+                matchGap = false;
             }
         }
 
-        if (matchIcon && matchFpk && matchFinal && matchUpgrade && matchRarity && matchType) {
+        if (matchIcon && matchFpk && matchFinal && matchGap && matchUpgrade && matchRarity && matchType) {
             row.style.display = '';
         } else {
             row.style.display = 'none';
