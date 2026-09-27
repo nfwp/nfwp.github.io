@@ -486,18 +486,18 @@
 <li><span class="text-purchase">悪魔の典籍</span>: 5回</li>
 <li><span class="text-purchase">ロケットブルーム</span>: 4回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">アリオト</span>: 3回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 3回</li>
+<li><span class="text-purchase">アリオト</span>: 3回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 3回</li>
 <li><span class="text-purchase">无寿の夢</span>: 2回</li>
-<li><span class="text-purchase">冬日和</span>: 2回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">冬日和</span>: 2回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
 <li><span class="text-purchase">ブラックペガサスの罪</span>: 2回</li>
 <li><span class="text-purchase">勿体無い</span>: 1回</li>
+<li><span class="text-purchase">エマージェンシーディフェンス</span>: 1回</li>
+<li><span class="text-purchase">チャージ</span>: 1回</li>
 <li><span class="text-purchase">サテライトイリュージョン</span>: 1回</li>
-<li><span class="text-purchase">蛍光の森</span>: 1回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -548,8 +548,8 @@
 <h5> よく購入される展示品 Top 20
 <ul>
 <li><span class="text-exhibit">博麗アミュレット</span>: 3回</li>
-<li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 3回</li>
+<li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 3回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 3回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 3回</li>
@@ -564,8 +564,8 @@
 <li><span class="text-exhibit">ビール</span>: 1回</li>
 <li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">魔導書</span>: 1回</li>
-<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">ミシン</span>: 1回</li>
+<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -593,8 +593,8 @@
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 3回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 3回</li>
+<li><span class="text-purchase">ピッチダークサテライト</span>: 3回</li>
 <li><span class="text-purchase">ヤコウタケ</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">无寿の夢</span>: 2回</li>

@@ -485,18 +485,18 @@
 <li><span class="text-purchase">Devil's Codex</span>: 5</li>
 <li><span class="text-purchase">Rocket Broom</span>: 4</li>
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
-<li><span class="text-purchase">Alioth</span>: 3</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 3</li>
+<li><span class="text-purchase">Alioth</span>: 3</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 2</li>
-<li><span class="text-purchase">Hand Warmer</span>: 2</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
+<li><span class="text-purchase">Hand Warmer</span>: 2</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
 <li><span class="text-purchase">Sin of the Black Pegasus</span>: 2</li>
 <li><span class="text-purchase">Parting Woes</span>: 1</li>
+<li><span class="text-purchase">Emergency Defense</span>: 1</li>
+<li><span class="text-purchase">Ready For Burst</span>: 1</li>
 <li><span class="text-purchase">Satellite Illusion</span>: 1</li>
-<li><span class="text-purchase">Fluorescent Forest</span>: 1</li>
-<li><span class="text-purchase">Dark Satellite</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -547,8 +547,8 @@
 <h5> Top 20 Most Purchased Exhibits
 <ul>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 3</li>
-<li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 3</li>
+<li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 3</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 3</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 3</li>
@@ -563,8 +563,8 @@
 <li><span class="text-exhibit">Beer</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
-<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Sewing Machine</span>: 1</li>
+<li><span class="text-exhibit">Omikuji</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -592,8 +592,8 @@
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
-<li><span class="text-purchase">Dark Satellite</span>: 3</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 3</li>
+<li><span class="text-purchase">Dark Satellite</span>: 3</li>
 <li><span class="text-purchase">Luminous Mushroom</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 2</li>

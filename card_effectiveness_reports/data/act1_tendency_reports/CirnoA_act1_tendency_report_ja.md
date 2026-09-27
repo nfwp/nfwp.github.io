@@ -27,8 +27,8 @@
 </ul></div>
 <div class="column"><ul>
 <li>プリンセスウンディネ: 18回</li>
-<li>春植えざれば秋実らず: 18回</li>
 <li>激流: 18回</li>
+<li>春植えざれば秋実らず: 18回</li>
 <li>冬の忘れ物、レティ: 17回</li>
 <li>凍結弾幕: 16回</li>
 <li>薄氷を踏む: 14回</li>
@@ -489,8 +489,8 @@
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 2回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
-<li><span class="text-purchase">氷上の妖精</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
+<li><span class="text-purchase">氷上の妖精</span>: 2回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
 <li><span class="text-purchase">タオ胎動</span>: 1回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 1回</li>
@@ -553,8 +553,8 @@
 <li><span class="text-exhibit">実験器具</span>: 1回</li>
 <li><span class="text-exhibit">葉っぱ</span>: 1回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
-<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
+<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">レコード</span>: 1回</li>
 <li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
@@ -586,8 +586,8 @@
 <li><span class="text-purchase">タイニーグレイシャー</span>: 3回</li>
 <li><span class="text-purchase">水遊び</span>: 2回</li>
 <li><span class="text-purchase">猛吹雪</span>: 2回</li>
-<li><span class="text-purchase">絶対零度</span>: 2回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
+<li><span class="text-purchase">絶対零度</span>: 2回</li>
 <li><span class="text-purchase">冬の忘れ物、レティ</span>: 2回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>

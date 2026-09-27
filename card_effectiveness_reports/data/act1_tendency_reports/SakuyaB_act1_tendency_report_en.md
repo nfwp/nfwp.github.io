@@ -34,8 +34,8 @@
 <li>Time Domination: 16</li>
 <li>C. Ricochet: 16</li>
 <li>Short Break: 15</li>
-<li>Apotheosis: 12</li>
 <li>Ship's Phantom: 12</li>
+<li>Apotheosis: 12</li>
 </ul></div>
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
@@ -557,8 +557,8 @@
 <li><span class="text-exhibit">Bottle</span>: 2</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
-<li><span class="text-exhibit">Vinyl</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
+<li><span class="text-exhibit">Vinyl</span>: 1</li>
 <li><span class="text-exhibit">Ice Cube</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Wooden Fish</span>: 1</li>

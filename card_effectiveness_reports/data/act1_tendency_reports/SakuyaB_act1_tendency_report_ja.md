@@ -34,8 +34,8 @@
 <li>時間支配: 16回</li>
 <li>Ｃ．リコシェ: 16回</li>
 <li>一休み: 15回</li>
-<li>聖人化: 12回</li>
 <li>船底の念縛霊: 12回</li>
+<li>聖人化: 12回</li>
 </ul></div>
 </div>
 <h3>2. エリートマスへの挑戦傾向</h3>
@@ -558,8 +558,8 @@
 <li><span class="text-exhibit">空き瓶</span>: 2回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
-<li><span class="text-exhibit">レコード</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
+<li><span class="text-exhibit">レコード</span>: 1回</li>
 <li><span class="text-exhibit">ブロックアイス</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">木魚</span>: 1回</li>

@@ -317,16 +317,6 @@
 <td style='text-align: right;'>60.6</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.1</span></strong></td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 ライオットシールド</strong></td>
-<td style='text-align: right;'>+18.86</td>
-<td style='text-align: right;'>44.7%</td>
-<td style='text-align: right;'>25.9%</td>
-<td style='text-align: right;'>76</td>
-<td style='text-align: right;'>48.0</td>
-<td style='text-align: right;'>62.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
-</tr>
 <tr>
 <td>DNAの瑕</td>
 <td style='text-align: right;'>+18.86</td>
@@ -336,6 +326,16 @@
 <td style='text-align: right;'>44.1</td>
 <td style='text-align: right;'>38.9</td>
 <td style='text-align: right;'>83.0</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 ライオットシールド</strong></td>
+<td style='text-align: right;'>+18.86</td>
+<td style='text-align: right;'>44.7%</td>
+<td style='text-align: right;'>25.9%</td>
+<td style='text-align: right;'>76</td>
+<td style='text-align: right;'>48.0</td>
+<td style='text-align: right;'>62.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
 </tr>
 <tr>
 <td>高鳴る鼓動</td>
@@ -534,8 +534,8 @@
 <li><span class="text-purchase">孤独な心</span>: 11回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 10回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 10回</li>
-<li><span class="text-purchase">鈴蘭の花園</span>: 8回</li>
 <li><span class="text-purchase">真実の満月</span>: 8回</li>
+<li><span class="text-purchase">鈴蘭の花園</span>: 8回</li>
 <li><span class="text-purchase">出まかせ</span>: 8回</li>
 <li><span class="text-purchase">高鳴る鼓動</span>: 7回</li>
 <li><span class="text-purchase">熱情の追憶</span>: 7回</li>
@@ -561,8 +561,8 @@
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
-<li><span class="text-exhibit">腕時計</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
+<li><span class="text-exhibit">腕時計</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -601,8 +601,8 @@
 <li><span class="text-purchase">色褪せた夢</span>: 3回</li>
 <li><span class="text-purchase">サバイバル本能</span>: 3回</li>
 <li><span class="text-purchase">🧰 使い捨ての護符</span>: 3回</li>
-<li><span class="text-purchase">春の野遊び</span>: 2回</li>
 <li><span class="text-purchase">夢枕にご先祖総立ち</span>: 2回</li>
+<li><span class="text-purchase">春の野遊び</span>: 2回</li>
 <li><span class="text-purchase">いばらの舞</span>: 2回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
 </ul>

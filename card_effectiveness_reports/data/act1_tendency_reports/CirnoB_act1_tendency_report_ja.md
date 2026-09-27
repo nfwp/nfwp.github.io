@@ -257,16 +257,6 @@
 <td style='text-align: right;'>53.0</td>
 <td style='text-align: right;'>102.1</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 花園での集い</strong></td>
-<td style='text-align: right;'>+18.07</td>
-<td style='text-align: right;'>45.2%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'><strong><span style='color: red;'>68.0</span></strong></td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
-</tr>
 <tr>
 <td>凍てつく玉座</td>
 <td style='text-align: right;'>+18.07</td>
@@ -276,6 +266,16 @@
 <td style='text-align: right;'>50.6</td>
 <td style='text-align: right;'>50.6</td>
 <td style='text-align: right;'>101.2</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 花園での集い</strong></td>
+<td style='text-align: right;'>+18.07</td>
+<td style='text-align: right;'>45.2%</td>
+<td style='text-align: right;'>22.2%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.0</span></strong></td>
+<td style='text-align: right;'>55.7</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 ライオットシールド</strong></td>
@@ -494,8 +494,8 @@
 <li><span class="text-purchase">清涼なる薔薇</span>: 1回</li>
 <li><span class="text-purchase">猛吹雪</span>: 1回</li>
 <li><span class="text-purchase">春告精、リリーホワイト</span>: 1回</li>
-<li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
+<li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 1回</li>
 <li><span class="text-purchase">自然の怒り</span>: 1回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 1回</li>
 </ul>
