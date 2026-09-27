@@ -317,16 +317,6 @@
 <td style='text-align: right;'>60.6</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.1</span></strong></td>
 </tr>
-<tr>
-<td>DNAの瑕</td>
-<td style='text-align: right;'>+18.86</td>
-<td style='text-align: right;'>44.7%</td>
-<td style='text-align: right;'>25.9%</td>
-<td style='text-align: right;'>76</td>
-<td style='text-align: right;'>44.1</td>
-<td style='text-align: right;'>38.9</td>
-<td style='text-align: right;'>83.0</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 ライオットシールド</strong></td>
 <td style='text-align: right;'>+18.86</td>
@@ -336,6 +326,16 @@
 <td style='text-align: right;'>48.0</td>
 <td style='text-align: right;'>62.6</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
+</tr>
+<tr>
+<td>DNAの瑕</td>
+<td style='text-align: right;'>+18.86</td>
+<td style='text-align: right;'>44.7%</td>
+<td style='text-align: right;'>25.9%</td>
+<td style='text-align: right;'>76</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>38.9</td>
+<td style='text-align: right;'>83.0</td>
 </tr>
 <tr>
 <td>高鳴る鼓動</td>

@@ -27,8 +27,8 @@
 </ul></div>
 <div class="column"><ul>
 <li>Princess Undine: 18</li>
-<li>Riptide: 18</li>
 <li>Autumnal Harvest: 18</li>
+<li>Riptide: 18</li>
 <li>Letty, Winter Embodied: 17</li>
 <li>Freeze Shot: 16</li>
 <li>On Thin Ice: 14</li>

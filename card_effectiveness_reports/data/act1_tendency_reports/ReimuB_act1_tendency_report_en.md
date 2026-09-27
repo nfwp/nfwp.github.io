@@ -481,10 +481,10 @@
 <li><span class="text-purchase">Maiden's Waltz</span>: 5</li>
 <li><span class="text-purchase">Ascension Kick</span>: 5</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
+<li><span class="text-purchase">Binding Border</span>: 3</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 3</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
 <li><span class="text-purchase">Devour History</span>: 3</li>
-<li><span class="text-purchase">Binding Border</span>: 3</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 2</li>
@@ -494,9 +494,9 @@
 <li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 1</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 1</li>
+<li><span class="text-purchase">Barrier Slam</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Servant Lightning Strike</span>: 1</li>
-<li><span class="text-purchase">Barrier Slam</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

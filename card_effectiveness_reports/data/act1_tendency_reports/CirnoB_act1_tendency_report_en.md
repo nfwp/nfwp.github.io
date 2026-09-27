@@ -256,16 +256,6 @@
 <td style='text-align: right;'>53.0</td>
 <td style='text-align: right;'>102.1</td>
 </tr>
-<tr>
-<td>Frozen Throne</td>
-<td style='text-align: right;'>+18.07</td>
-<td style='text-align: right;'>45.2%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>31</td>
-<td style='text-align: right;'>50.6</td>
-<td style='text-align: right;'>50.6</td>
-<td style='text-align: right;'>101.2</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Garden Gathering</strong></td>
 <td style='text-align: right;'>+18.07</td>
@@ -275,6 +265,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>68.0</span></strong></td>
 <td style='text-align: right;'>55.7</td>
 <td style='text-align: right;'><strong><span style='color: red;'>123.7</span></strong></td>
+</tr>
+<tr>
+<td>Frozen Throne</td>
+<td style='text-align: right;'>+18.07</td>
+<td style='text-align: right;'>45.2%</td>
+<td style='text-align: right;'>22.2%</td>
+<td style='text-align: right;'>31</td>
+<td style='text-align: right;'>50.6</td>
+<td style='text-align: right;'>50.6</td>
+<td style='text-align: right;'>101.2</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Ballistic Shield</strong></td>

@@ -268,16 +268,6 @@
 <td style='text-align: right;'>89.0</td>
 </tr>
 <tr>
-<td>A.T.フィールド</td>
-<td style='text-align: right;'>+19.00</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.6%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>48.5</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>99.2</td>
-</tr>
-<tr>
 <td>太陽の畑</td>
 <td style='text-align: right;'>+19.00</td>
 <td style='text-align: right;'>50.0%</td>
@@ -286,6 +276,16 @@
 <td style='text-align: right;'>36.9</td>
 <td style='text-align: right;'>58.8</td>
 <td style='text-align: right;'>95.7</td>
+</tr>
+<tr>
+<td>A.T.フィールド</td>
+<td style='text-align: right;'>+19.00</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.6%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>48.5</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>99.2</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 无寿の夢</strong></td>

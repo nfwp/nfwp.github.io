@@ -1,9 +1,6 @@
 // --- ピック詳細データ関連のグローバル変数 ---
 let pickDetailsAllCache = null;
 
-/**
- * "カード一覧" タブの描画関数 (非同期 fetch & 直挿入方式)
- */
 function renderCardListTab(data) {
     console.log("[card-list.js] renderCardListTab called");
     const container = document.getElementById('card-list-tab');
@@ -13,9 +10,6 @@ function renderCardListTab(data) {
     loadAndShowCardList(CURRENT_CHAR, LANG);
 }
 
-/**
- * 指定キャラクター・言語のカードリストHTMLを非同期ロードして挿入する
- */
 async function loadAndShowCardList(character, language) {
     const contentWrapper = document.getElementById('card-list-content-wrapper');
     if (!contentWrapper) return;
@@ -40,9 +34,6 @@ async function loadAndShowCardList(character, language) {
     }
 }
 
-/**
- * ▼詳細 ボタンクリック時にカードピック詳細情報を展開/折りたたむ
- */
 async function toggleCardDetail(btnElement) {
     const tr = btnElement.closest('tr');
     if (!tr) return;
@@ -50,7 +41,6 @@ async function toggleCardDetail(btnElement) {
     const cardId = btnElement.getAttribute('data-card-id');
     const isJa = (LANG === 'ja');
 
-    // 1. 既に詳細行が存在する場合はトグル表示
     let nextTr = tr.nextElementSibling;
     if (nextTr && nextTr.classList.contains('detail-row')) {
         if (nextTr.style.display === 'none') {
@@ -63,7 +53,6 @@ async function toggleCardDetail(btnElement) {
         return;
     }
 
-    // 2. 初回クリック時: pick_details_all.json を読み込み
     if (!pickDetailsAllCache) {
         btnElement.textContent = isJa ? '読込中...' : 'Loading...';
         const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
@@ -80,7 +69,6 @@ async function toggleCardDetail(btnElement) {
         }
     }
 
-    // 3. データ参照
     const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
     const cardData = charData[cardId];
 
@@ -91,10 +79,20 @@ async function toggleCardDetail(btnElement) {
         'Shop': isJa ? 'ショップ' : 'Shop',
         'Adventure': isJa ? 'イベント' : 'Event',
         'Entry': isJa ? '初期/入口' : 'Entry',
-        'Gap': isJa ? 'スキマ' : 'Gap',
+        'Gap': isJa ? '隙間' : 'Gap',
         'Trade': isJa ? '交易' : 'Trade',
         'Unknown': isJa ? 'その他' : 'Other'
     };
+
+    // 6つのカテゴリ定義
+    const categories = [
+        { key: 'enemy_elite', name: isJa ? '1回目の選択 (通常敵・エリート)' : '1st Pick Choice (Enemy/Elite)' },
+        { key: 'boss', name: isJa ? '1回目の選択 (ボス)' : '1st Pick Choice (Boss)' },
+        { key: 'shop', name: isJa ? '1回目の選択 (ショップ)' : '1st Pick Choice (Shop)' },
+        { key: 'adventure', name: isJa ? '1回目の選択 (通常イベント)' : '1st Pick Choice (Event)' },
+        { key: 'trade', name: isJa ? '1回目の選択 (交易)' : '1st Pick Choice (Trade)' },
+        { key: 'other', name: isJa ? '1回目の選択 (その他)' : '1st Pick Choice (Other)' }
+    ];
 
     const detailTr = document.createElement('tr');
     detailTr.className = 'detail-row';
@@ -106,7 +104,6 @@ async function toggleCardDetail(btnElement) {
             </td>
         `;
     } else {
-        // メトリクス数値
         let totalN = 0;
         if (typeof ALL_RUN_DETAILS !== 'undefined' && Array.isArray(ALL_RUN_DETAILS)) {
             const charSearchTag = CURRENT_CHAR ? `${CURRENT_CHAR.slice(0, -1)}_${CURRENT_CHAR.slice(-1)}` : '';
@@ -120,41 +117,81 @@ async function toggleCardDetail(btnElement) {
 
         const countA = totalN > 0 ? Math.round((runAppRatio / 100) * totalN) : '?';
         const countB = (typeof countA === 'number') ? Math.round((firstPickRatio / 100) * countA) : '?';
-        const totalSkips = (typeof countA === 'number' && typeof countB === 'number') ? (countA - countB) : 0;
 
         const appLabel = isJa ? `提示のあったラン(対全ラン N=${totalN}): ${runAppRatio}% (${countA}/${totalN})` : `Run Appearance (vs All N=${totalN}): ${runAppRatio}% (${countA}/${totalN})`;
         const fpkLabel = isJa ? `初回ピック率: ${firstPickRatio}% (${countB}/${countA})` : `First Pick Rate: ${firstPickRatio}% (${countB}/${countA})`;
         const avgLabel = isJa ? `平均提示数: ${avgOffered}回` : `Avg. Offered/Run: ${avgOffered}`;
 
-        // 代替カードHTML生成関数
-        const buildInsteadListHtml = (instList) => {
-            if (!instList || instList.length === 0) {
-                return `<li style="font-size: 0.88em; color: #777;">${isJa ? 'なし' : 'None'}</li>`;
-            }
+        // マス内訳(st)から各マスの全提示数をマップ化
+        const stationTotalMap = {};
+        if (cardData.st) {
+            cardData.st.forEach(item => {
+                stationTotalMap[item[0]] = item[1];
+            });
+        }
 
-            // 合計出現数を算出し割合計算
-            const subTotal = instList.reduce((acc, item) => acc + item[3], 0);
+        // カテゴリ名に対応する全提示数の算出関数
+        const getCatTotalOffer = (catKey) => {
+            if (catKey === 'enemy_elite') return (stationTotalMap['Enemy'] || 0) + (stationTotalMap['EliteEnemy'] || 0);
+            if (catKey === 'boss') return stationTotalMap['Boss'] || 0;
+            if (catKey === 'shop') return stationTotalMap['Shop'] || 0;
+            if (catKey === 'adventure') return (stationTotalMap['Adventure'] || 0) + (stationTotalMap['Event'] || 0);
+            if (catKey === 'trade') return stationTotalMap['Trade'] || 0;
+            return stationTotalMap['Unknown'] || 0;
+        };
 
-            return instList.map(item => {
+        // 各カテゴリごとのリスト表示HTML構築
+        let choicesHtmlSections = '';
+        const choicesData = cardData.choices || {};
+
+        categories.forEach(cat => {
+            const catObj = choicesData[cat.key];
+            if (!catObj) return;
+
+            // 新旧データの構造差分吸収（オブジェクト形式 {items: [...], first_count: X} / 配列形式 [...]）
+            const itemList = Array.isArray(catObj) ? catObj : catObj.items;
+            if (!itemList || itemList.length === 0) return;
+
+            const firstCount = Array.isArray(catObj) ? itemList.reduce((acc, item) => acc + item[3], 0) : (catObj.first_count || 0);
+            const totalOffer = getCatTotalOffer(cat.key);
+
+            const itemsHtml = itemList.map(item => {
+                const choiceId = item[0];
                 let cardName = isJa ? item[1] : item[2];
                 const count = item[3];
 
-                if (item[0] === "(スキップ/選択なし)") cardName = isJa ? "(スキップ/選択なし)" : "(Skip/None)";
-                if (item[0] === "(ショップ他行動/見送り)") cardName = isJa ? "(ショップ他行動/見送り)" : "(Shop Action/Skip)";
+                if (choiceId === "(スキップ/選択なし)") cardName = isJa ? "(スキップ/選択なし)" : "(Skip/None)";
+                if (choiceId === "(ショップ他行動/見送り)") cardName = isJa ? "(ショップ他行動/見送り)" : "(Shop Action/Skip)";
 
-                let ratioStr = '';
-                if (subTotal > 0) {
-                    ratioStr = ` (${((count / subTotal) * 100).toFixed(1)}%)`;
-                }
+                const ratioStr = firstCount > 0 ? ` (${((count / firstCount) * 100).toFixed(1)}%)` : '';
 
-                return `<li style="font-size: 0.88em; color: #333;">${cardName} (${count}${isJa ? '回' : ' times'}${ratioStr})</li>`;
+                // 対象カード自体の場合は太字＋下線で強調
+                const isTargetCard = (choiceId === cardId);
+                const displayName = isTargetCard ? `<strong style="color: #000; font-weight: bold; text-decoration: underline;">${cardName}</strong>` : cardName;
+
+                return `<li style="font-size: 0.88em; color: #333;">${displayName} (${count}${isJa ? '回' : ' times'}${ratioStr})</li>`;
             }).join('');
-        };
 
-        const insteadNonShopHtml = buildInsteadListHtml(cardData.inst_non_shop || cardData.inst);
-        const insteadShopHtml = buildInsteadListHtml(cardData.inst_shop);
+            // 見出し横に [初回提示: XX回 / 全提示: YY回] を追加
+            const headerCountStr = isJa
+                ? `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[初回提示: ${firstCount}回 / 全提示: ${totalOffer}回]</span>`
+                : `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[1st: ${firstCount} / Total: ${totalOffer}]</span>`;
 
-        // マス内訳
+            choicesHtmlSections += `
+                <div style="margin-bottom: 10px;">
+                    <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${cat.name}${headerCountStr}:</strong>
+                    <ul style="margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px 16px;">
+                        ${itemsHtml}
+                    </ul>
+                </div>
+            `;
+        });
+
+        if (!choicesHtmlSections) {
+            choicesHtmlSections = `<p style="font-size: 0.88em; color: #777;">${isJa ? '選択データなし' : 'No choice data available.'}</p>`;
+        }
+
+        // マス内訳バッジ
         let stationHtml = '';
         if (cardData.st && cardData.st.length > 0) {
             stationHtml = cardData.st.map(item => {
@@ -183,21 +220,8 @@ async function toggleCardDetail(btnElement) {
                         <div>${stationHtml}</div>
                     </div>
 
-                    <!-- 下段: 代替ピック（ショップ以外TOP10） -->
-                    <div style="margin-bottom: 10px;">
-                        <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${isJa ? '1回目に見送られた際に代わりに選ばれたカード (ショップ以外 TOP10)' : 'Cards picked instead on 1st skip (Non-Shop TOP10)'}:</strong>
-                        <ul style="margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px 16px;">
-                            ${insteadNonShopHtml}
-                        </ul>
-                    </div>
-
-                    <!-- 下段: 代替ピック（ショップTOP10） -->
-                    <div>
-                        <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${isJa ? '1回目に見送られた際に代わりに選ばれたカード (ショップ TOP10)' : 'Cards picked instead on 1st skip (Shop TOP10)'}:</strong>
-                        <ul style="margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px 16px;">
-                            ${insteadShopHtml}
-                        </ul>
-                    </div>
+                    <!-- 下段: マス別 1回目の選択 -->
+                    ${choicesHtmlSections}
 
                 </div>
             </td>
