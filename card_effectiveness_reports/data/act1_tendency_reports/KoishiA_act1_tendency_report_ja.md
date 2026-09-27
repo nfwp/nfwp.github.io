@@ -147,16 +147,6 @@
 <td style='text-align: right;'>54.2</td>
 <td style='text-align: right;'><strong><span style='color: red;'>112.3</span></strong></td>
 </tr>
-<tr>
-<td>クリーンエネルギー</td>
-<td style='text-align: right;'>+21.86</td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>24.4%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>29.7</td>
-<td style='text-align: right;'>74.0</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 ローズケージ</strong></td>
 <td style='text-align: right;'>+21.86</td>
@@ -166,6 +156,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>70.3</span></strong></td>
 <td style='text-align: right;'>52.5</td>
 <td style='text-align: right;'><strong><span style='color: red;'>122.9</span></strong></td>
+</tr>
+<tr>
+<td>クリーンエネルギー</td>
+<td style='text-align: right;'>+21.86</td>
+<td style='text-align: right;'>47.7%</td>
+<td style='text-align: right;'>24.4%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'>44.3</td>
+<td style='text-align: right;'>29.7</td>
+<td style='text-align: right;'>74.0</td>
 </tr>
 <tr>
 <td>高鳴る鼓動</td>
@@ -377,16 +377,6 @@
 <td style='text-align: right;'>61.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 投げキッス</strong></td>
-<td style='text-align: right;'>+16.92</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>24.6%</td>
-<td style='text-align: right;'>33</td>
-<td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'>63.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
-</tr>
 <tr>
 <td>暗闇演舞</td>
 <td style='text-align: right;'>+16.92</td>
@@ -396,6 +386,16 @@
 <td style='text-align: right;'>32.7</td>
 <td style='text-align: right;'>44.3</td>
 <td style='text-align: right;'>77.0</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 投げキッス</strong></td>
+<td style='text-align: right;'>+16.92</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>24.6%</td>
+<td style='text-align: right;'>33</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>63.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 平静の追憶</strong></td>

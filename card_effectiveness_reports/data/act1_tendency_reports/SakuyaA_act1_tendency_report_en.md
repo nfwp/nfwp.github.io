@@ -137,16 +137,6 @@
 <td style='text-align: right;'>100.4</td>
 </tr>
 <tr>
-<td>Private Vision</td>
-<td style='text-align: right;'>+22.61</td>
-<td style='text-align: right;'>46.7%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>60</td>
-<td style='text-align: right;'>44.5</td>
-<td style='text-align: right;'>53.3</td>
-<td style='text-align: right;'>97.8</td>
-</tr>
-<tr>
 <td>Vampire Huntress</td>
 <td style='text-align: right;'>+22.61</td>
 <td style='text-align: right;'>46.7%</td>
@@ -155,6 +145,16 @@
 <td style='text-align: right;'>45.5</td>
 <td style='text-align: right;'>46.7</td>
 <td style='text-align: right;'>92.2</td>
+</tr>
+<tr>
+<td>Private Vision</td>
+<td style='text-align: right;'>+22.61</td>
+<td style='text-align: right;'>46.7%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>60</td>
+<td style='text-align: right;'>44.5</td>
+<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>97.8</td>
 </tr>
 <tr>
 <td>Time Suppression</td>
@@ -257,16 +257,6 @@
 <td style='text-align: right;'>102.8</td>
 </tr>
 <tr>
-<td>Youkai Study</td>
-<td style='text-align: right;'>+21.12</td>
-<td style='text-align: right;'>44.9%</td>
-<td style='text-align: right;'>23.8%</td>
-<td style='text-align: right;'>98</td>
-<td style='text-align: right;'>39.9</td>
-<td style='text-align: right;'>46.1</td>
-<td style='text-align: right;'>86.0</td>
-</tr>
-<tr>
 <td>Silver Loom</td>
 <td style='text-align: right;'>+21.12</td>
 <td style='text-align: right;'>44.9%</td>
@@ -275,6 +265,16 @@
 <td style='text-align: right;'>52.7</td>
 <td style='text-align: right;'>49.6</td>
 <td style='text-align: right;'>102.3</td>
+</tr>
+<tr>
+<td>Youkai Study</td>
+<td style='text-align: right;'>+21.12</td>
+<td style='text-align: right;'>44.9%</td>
+<td style='text-align: right;'>23.8%</td>
+<td style='text-align: right;'>98</td>
+<td style='text-align: right;'>39.9</td>
+<td style='text-align: right;'>46.1</td>
+<td style='text-align: right;'>86.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Knife of Damocles</strong></td>

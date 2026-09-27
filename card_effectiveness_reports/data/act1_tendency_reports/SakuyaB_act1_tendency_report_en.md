@@ -337,16 +337,6 @@
 <td style='text-align: right;'>93.7</td>
 </tr>
 <tr>
-<td>Winter Resolution</td>
-<td style='text-align: right;'>+16.82</td>
-<td style='text-align: right;'>36.6%</td>
-<td style='text-align: right;'>19.8%</td>
-<td style='text-align: right;'>82</td>
-<td style='text-align: right;'>34.2</td>
-<td style='text-align: right;'>49.4</td>
-<td style='text-align: right;'>83.6</td>
-</tr>
-<tr>
 <td>Entrench Body</td>
 <td style='text-align: right;'>+16.82</td>
 <td style='text-align: right;'>36.6%</td>
@@ -355,6 +345,16 @@
 <td style='text-align: right;'>41.3</td>
 <td style='text-align: right;'>37.3</td>
 <td style='text-align: right;'>78.7</td>
+</tr>
+<tr>
+<td>Winter Resolution</td>
+<td style='text-align: right;'>+16.82</td>
+<td style='text-align: right;'>36.6%</td>
+<td style='text-align: right;'>19.8%</td>
+<td style='text-align: right;'>82</td>
+<td style='text-align: right;'>34.2</td>
+<td style='text-align: right;'>49.4</td>
+<td style='text-align: right;'>83.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Play With Water</strong></td>

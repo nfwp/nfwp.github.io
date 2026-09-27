@@ -356,16 +356,6 @@
 <td style='text-align: right;'>37.3</td>
 <td style='text-align: right;'>96.5</td>
 </tr>
-<tr>
-<td>Phoenix Wings Rise</td>
-<td style='text-align: right;'>+12.79</td>
-<td style='text-align: right;'>40.7%</td>
-<td style='text-align: right;'>23.3%</td>
-<td style='text-align: right;'>27</td>
-<td style='text-align: right;'>44.1</td>
-<td style='text-align: right;'>39.2</td>
-<td style='text-align: right;'>83.3</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Dreadful Raging Waves</strong></td>
 <td style='text-align: right;'>+12.79</td>
@@ -375,6 +365,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>67.7</span></strong></td>
 <td style='text-align: right;'>66.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>134.1</span></strong></td>
+</tr>
+<tr>
+<td>Phoenix Wings Rise</td>
+<td style='text-align: right;'>+12.79</td>
+<td style='text-align: right;'>40.7%</td>
+<td style='text-align: right;'>23.3%</td>
+<td style='text-align: right;'>27</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>39.2</td>
+<td style='text-align: right;'>83.3</td>
 </tr>
 <tr>
 <td>Crimson Energy Release</td>
@@ -447,14 +447,14 @@
 <td style='text-align: right;'><strong><span style='color: red;'>116.1</span></strong></td>
 </tr>
 <tr>
-<td>Devour Desires</td>
+<td>Shade</td>
 <td style='text-align: right;'>+10.86</td>
 <td style='text-align: right;'>38.5%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>26</td>
-<td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>37.9</td>
-<td style='text-align: right;'>85.2</td>
+<td style='text-align: right;'>45.2</td>
+<td style='text-align: right;'>52.4</td>
+<td style='text-align: right;'>97.6</td>
 </tr>
 </tbody>
 </table>
@@ -489,8 +489,8 @@
 <li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
 <li><span class="text-purchase">Danmaku Notes</span>: 1</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 1</li>
-<li><span class="text-purchase">Orthodox Rebellion</span>: 1</li>
 <li><span class="text-purchase">Serial Cleaver</span>: 1</li>
+<li><span class="text-purchase">Orthodox Rebellion</span>: 1</li>
 <li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>

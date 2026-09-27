@@ -138,16 +138,6 @@
 <td style='text-align: right;'>100.4</td>
 </tr>
 <tr>
-<td>プライベートヴィジョン</td>
-<td style='text-align: right;'>+22.61</td>
-<td style='text-align: right;'>46.7%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>60</td>
-<td style='text-align: right;'>44.5</td>
-<td style='text-align: right;'>53.3</td>
-<td style='text-align: right;'>97.8</td>
-</tr>
-<tr>
 <td>吸血鬼ハンター</td>
 <td style='text-align: right;'>+22.61</td>
 <td style='text-align: right;'>46.7%</td>
@@ -156,6 +146,16 @@
 <td style='text-align: right;'>45.5</td>
 <td style='text-align: right;'>46.7</td>
 <td style='text-align: right;'>92.2</td>
+</tr>
+<tr>
+<td>プライベートヴィジョン</td>
+<td style='text-align: right;'>+22.61</td>
+<td style='text-align: right;'>46.7%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>60</td>
+<td style='text-align: right;'>44.5</td>
+<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>97.8</td>
 </tr>
 <tr>
 <td>拘束時間</td>
@@ -258,16 +258,6 @@
 <td style='text-align: right;'>102.8</td>
 </tr>
 <tr>
-<td>本読み</td>
-<td style='text-align: right;'>+21.12</td>
-<td style='text-align: right;'>44.9%</td>
-<td style='text-align: right;'>23.8%</td>
-<td style='text-align: right;'>98</td>
-<td style='text-align: right;'>39.9</td>
-<td style='text-align: right;'>46.1</td>
-<td style='text-align: right;'>86.0</td>
-</tr>
-<tr>
 <td>銀糸織り</td>
 <td style='text-align: right;'>+21.12</td>
 <td style='text-align: right;'>44.9%</td>
@@ -276,6 +266,16 @@
 <td style='text-align: right;'>52.7</td>
 <td style='text-align: right;'>49.6</td>
 <td style='text-align: right;'>102.3</td>
+</tr>
+<tr>
+<td>本読み</td>
+<td style='text-align: right;'>+21.12</td>
+<td style='text-align: right;'>44.9%</td>
+<td style='text-align: right;'>23.8%</td>
+<td style='text-align: right;'>98</td>
+<td style='text-align: right;'>39.9</td>
+<td style='text-align: right;'>46.1</td>
+<td style='text-align: right;'>86.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ダモクレスの刃</strong></td>
