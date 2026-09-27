@@ -478,8 +478,8 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 4</li>
-<li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Play With Water</span>: 3</li>
+<li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 3</li>
 <li><span class="text-purchase">Blizzard</span>: 3</li>
@@ -593,9 +593,9 @@
 <li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Cool Entrance</span>: 1</li>
-<li><span class="text-purchase">Ice-Blooded</span>: 1</li>
 <li><span class="text-purchase">Cool Party</span>: 1</li>
 <li><span class="text-purchase">Daiyousei, Snowcone Assistant</span>: 1</li>
+<li><span class="text-purchase">Ice-Blooded</span>: 1</li>
 <li><span class="text-purchase">Fairy's Wake-Up</span>: 1</li>
 <li><span class="text-purchase">Frost Refraction</span>: 1</li>
 </ul>

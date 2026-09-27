@@ -524,7 +524,7 @@ async function toggleCardDetail(btnElement) {
         let gapColor = '#333';
         if (pFirst > 0.001) {
             const gapVal = finalAdoption / pFirst;
-            gapFactorText = `${gapVal.toFixed(2)}x`;
+            gapFactorText = `${gapVal.toFixed(2)}`;
             if (gapVal >= 1.2) gapColor = '#2563eb';
             else if (gapVal < 0.8) gapColor = '#dc2626';
         }

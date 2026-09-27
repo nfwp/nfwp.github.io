@@ -357,16 +357,6 @@
 <td style='text-align: right;'>37.3</td>
 <td style='text-align: right;'>96.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 鬼気怒濤</strong></td>
-<td style='text-align: right;'>+12.79</td>
-<td style='text-align: right;'>40.7%</td>
-<td style='text-align: right;'>23.3%</td>
-<td style='text-align: right;'>27</td>
-<td style='text-align: right;'><strong><span style='color: red;'>67.7</span></strong></td>
-<td style='text-align: right;'>66.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>134.1</span></strong></td>
-</tr>
 <tr>
 <td>鳳翼天翔</td>
 <td style='text-align: right;'>+12.79</td>
@@ -376,6 +366,16 @@
 <td style='text-align: right;'>44.1</td>
 <td style='text-align: right;'>39.2</td>
 <td style='text-align: right;'>83.3</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 鬼気怒濤</strong></td>
+<td style='text-align: right;'>+12.79</td>
+<td style='text-align: right;'>40.7%</td>
+<td style='text-align: right;'>23.3%</td>
+<td style='text-align: right;'>27</td>
+<td style='text-align: right;'><strong><span style='color: red;'>67.7</span></strong></td>
+<td style='text-align: right;'>66.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>134.1</span></strong></td>
 </tr>
 <tr>
 <td>紅内勁</td>
@@ -448,14 +448,14 @@
 <td style='text-align: right;'><strong><span style='color: red;'>116.1</span></strong></td>
 </tr>
 <tr>
-<td>遮光</td>
+<td>スコアデザイアイーター</td>
 <td style='text-align: right;'>+10.86</td>
 <td style='text-align: right;'>38.5%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>26</td>
-<td style='text-align: right;'>45.2</td>
-<td style='text-align: right;'>52.4</td>
-<td style='text-align: right;'>97.6</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>37.9</td>
+<td style='text-align: right;'>85.2</td>
 </tr>
 </tbody>
 </table>
@@ -490,8 +490,8 @@
 <li><span class="text-purchase">ヤコウタケ</span>: 1回</li>
 <li><span class="text-purchase">ダンマクノート</span>: 1回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 1回</li>
-<li><span class="text-purchase">浮世の関を超える山姥</span>: 1回</li>
 <li><span class="text-purchase">逆張り</span>: 1回</li>
+<li><span class="text-purchase">浮世の関を超える山姥</span>: 1回</li>
 <li><span class="text-purchase">鳳翼天翔</span>: 1回</li>
 <li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
