@@ -24,6 +24,10 @@ async function loadAndShowCardList(character, language) {
         const htmlContent = await response.text();
         contentWrapper.innerHTML = htmlContent;
 
+        await ensurePickDetailsCache();
+        applyCardIcons();
+        setupCardFilters();
+
         contentWrapper.addEventListener('click', (event) => {
             const btn = event.target.closest('.detail-toggle-btn');
             if (btn) toggleCardDetail(btn);
@@ -33,6 +37,292 @@ async function loadAndShowCardList(character, language) {
         contentWrapper.innerHTML = `<p style="padding: 20px;">${LANG === 'ja' ? 'カード一覧の読み込みに失敗しました。' : 'Failed to load card list.'}</p>`;
     }
 }
+
+async function ensurePickDetailsCache() {
+    if (pickDetailsAllCache) return;
+    const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
+    const jsonPath = `card_lists/pick_details_all.json${vParam}`;
+    try {
+        const response = await fetch(jsonPath);
+        if (response.ok) {
+            pickDetailsAllCache = await response.json();
+        }
+    } catch (err) {
+        console.error("Failed to pre-fetch pick_details_all.json:", err);
+    }
+}
+
+// アイコン動的付与ロジック
+function applyCardIcons() {
+    if (!pickDetailsAllCache) return;
+    const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
+    const iconSpans = document.querySelectorAll('.card-pick-icon');
+
+    iconSpans.forEach(span => {
+        const cardId = span.getAttribute('data-card-id');
+        const finalAdoption = parseFloat(span.getAttribute('data-adoption') || '0');
+
+        const tr = span.closest('tr');
+        const typeCellText = tr ? tr.children[5]?.textContent.trim() : '';
+        const isTool = (typeCellText === 'Tool' || typeCellText === '道具' || typeCellText === '道具(Tool)');
+
+        const cData = charData[cardId];
+        if (!cData) return;
+
+        const appRatio = (cData.app || 0) / 100;
+        const fpkRatio = (cData.fpk || 0) / 100;
+        const pFirst = appRatio * fpkRatio;
+
+        const isJa = (LANG === 'ja');
+        let iconHtml = '';
+
+        const isBroom = !isTool && (pFirst > 0.02 && (finalAdoption / pFirst) <= 0.50);
+        const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
+        const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
+
+        if (isBroom) {
+            const titleText = isJa
+                ? `🧹 整頓・削除対象 (序盤ピック実績 ${(pFirst*100).toFixed(1)}% -> 最終残存 ${(finalAdoption*100).toFixed(1)}%)`
+                : `🧹 Removable/Transient (Early Pick ${(pFirst*100).toFixed(1)}% -> Final ${(finalAdoption*100).toFixed(1)}%)`;
+            iconHtml = `<span title="${titleText}" style="cursor:help; margin: 0 4px; font-size: 1.1em;">🧹</span>`;
+        } else if (isCrown) {
+            const titleText = isJa
+                ? `👑 必須級 (初回ピック率 ${(fpkRatio*100).toFixed(1)}% / 最終採用 ${(finalAdoption*100).toFixed(1)}%)`
+                : `👑 Must Pick (First Pick Rate ${(fpkRatio*100).toFixed(1)}%)`;
+            iconHtml = `<span title="${titleText}" style="cursor:help; margin: 0 4px; font-size: 1.1em;">👑</span>`;
+        } else if (isStar) {
+            const titleText = isJa
+                ? `⭐ 推奨 (初回ピック率 ${(fpkRatio*100).toFixed(1)}% / 最終採用 ${(finalAdoption*100).toFixed(1)}%)`
+                : `⭐ High Priority (First Pick Rate ${(fpkRatio*100).toFixed(1)}%)`;
+            iconHtml = `<span title="${titleText}" style="cursor:help; margin: 0 4px; font-size: 1.1em;">⭐</span>`;
+        }
+
+        span.innerHTML = iconHtml;
+    });
+}
+
+// --- 拡張版フィルターUIの挿入とイベント設定 ---
+function setupCardFilters() {
+    const contentWrapper = document.getElementById('card-list-content-wrapper');
+    if (!contentWrapper || document.getElementById('card-filter-bar')) return;
+
+    const filterBar = document.createElement('div');
+    filterBar.id = 'card-filter-bar';
+    filterBar.style.cssText = 'margin: 15px 0; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-size: 0.9em;';
+
+    const isJa = (LANG === 'ja');
+    filterBar.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px; width: 100%; flex-wrap: wrap;">
+            <strong>${isJa ? '表示フィルター:' : 'Filter:'}</strong>
+            <div style="display: flex; gap: 4px; flex-wrap: wrap;" id="filter-btn-group">
+                <button class="filter-btn active" data-filter="all" style="padding: 3px 8px; cursor: pointer; border: 1px solid #cbd5e1; background: #3b82f6; color: #fff; border-radius: 4px;">${isJa ? 'すべて' : 'All'}</button>
+                <button class="filter-btn" data-filter="crown" style="padding: 3px 8px; cursor: pointer; border: 1px solid #cbd5e1; background: #fff; border-radius: 4px; color: #334155;">👑 ${isJa ? '必須級' : 'Must Pick'}</button>
+                <button class="filter-btn" data-filter="star" style="padding: 3px 8px; cursor: pointer; border: 1px solid #cbd5e1; background: #fff; border-radius: 4px; color: #334155;">⭐ ${isJa ? '推奨' : 'Priority'}</button>
+                <button class="filter-btn" data-filter="broom" style="padding: 3px 8px; cursor: pointer; border: 1px solid #cbd5e1; background: #fff; border-radius: 4px; color: #334155;">🧹 ${isJa ? '整頓対象' : 'Removable'}</button>
+            </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; width: 100%; border-top: 1px dashed #e2e8f0; padding-top: 8px; margin-top: 2px;">
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? '初回ピック率:' : '1st Pick:'}</span>
+                <select id="min-fpk-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="0">${isJa ? '指定なし' : 'Any'}</option>
+                    <option value="10">10% ${isJa ? '以上' : '+'}</option>
+                    <option value="20">20% ${isJa ? '以上' : '+'}</option>
+                    <option value="30">30% ${isJa ? '以上' : '+'}</option>
+                    <option value="40">40% ${isJa ? '以上' : '+'}</option>
+                    <option value="50">50% ${isJa ? '以上' : '+'}</option>
+                    <option value="60">60% ${isJa ? '以上' : '+'}</option>
+                    <option value="70">70% ${isJa ? '以上' : '+'}</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? '最終採用率:' : 'Final Adop:'}</span>
+                <select id="min-final-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="0">${isJa ? '指定なし' : 'Any'}</option>
+                    <option value="lt10">${isJa ? '10% 未満' : '< 10%'}</option>
+                    <option value="10">10% ${isJa ? '以上' : '+'}</option>
+                    <option value="20">20% ${isJa ? '以上' : '+'}</option>
+                    <option value="30">30% ${isJa ? '以上' : '+'}</option>
+                    <option value="40">40% ${isJa ? '以上' : '+'}</option>
+                    <option value="50">50% ${isJa ? '以上' : '+'}</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? '強化率:' : 'Upgrade:'}</span>
+                <select id="upgrade-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="0">${isJa ? '指定なし' : 'Any'}</option>
+                    <option value="lt20">${isJa ? '20% 未満' : '< 20%'}</option>
+                    <option value="20">20% ${isJa ? '以上' : '+'}</option>
+                    <option value="40">40% ${isJa ? '以上' : '+'}</option>
+                    <option value="60">60% ${isJa ? '以上' : '+'}</option>
+                    <option value="80">80% ${isJa ? '以上' : '+'}</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? 'レアリティ:' : 'Rarity:'}</span>
+                <select id="rarity-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="all">${isJa ? 'すべて' : 'All'}</option>
+                    <option value="${isJa ? 'コモン' : 'Com'}">${isJa ? 'コモン' : 'Common'}</option>
+                    <option value="${isJa ? 'アンコ' : 'Unco'}">${isJa ? 'アンコモン' : 'Uncommon'}</option>
+                    <option value="${isJa ? 'レア' : 'Rare'}">${isJa ? 'レア' : 'Rare'}</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+                <span>${isJa ? 'タイプ:' : 'Type:'}</span>
+                <select id="type-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <option value="all">${isJa ? 'すべて' : 'All'}</option>
+                    <option value="${isJa ? '攻撃' : 'Atk'}">${isJa ? '攻撃' : 'Attack'}</option>
+                    <option value="${isJa ? '防御' : 'Def'}">${isJa ? '防御' : 'Defense'}</option>
+                    <option value="${isJa ? 'スキル' : 'Skl'}">${isJa ? 'スキル' : 'Skill'}</option>
+                    <option value="${isJa ? '能力' : 'Abl'}">${isJa ? '能力' : 'Ability'}</option>
+                    <option value="${isJa ? 'パートナー' : 'Frd'}">${isJa ? 'パートナー' : 'Friend'}</option>
+                    <option value="${isJa ? '道具' : 'Tool'}">${isJa ? '道具' : 'Tool'}</option>
+                </select>
+            </div>
+        </div>
+    `;
+
+    const table = contentWrapper.querySelector('table');
+    if (table) {
+        table.parentNode.insertBefore(filterBar, table);
+    }
+
+    // 複数選択ボタンのイベント
+    filterBar.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('filter-btn')) return;
+        const btn = e.target;
+        const filterVal = btn.getAttribute('data-filter');
+        const allBtn = filterBar.querySelector('.filter-btn[data-filter="all"]');
+
+        if (filterVal === 'all') {
+            filterBar.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.background = '#fff';
+                b.style.color = '#334155';
+                b.classList.remove('active');
+            });
+            allBtn.style.background = '#3b82f6';
+            allBtn.style.color = '#fff';
+            allBtn.classList.add('active');
+        } else {
+            allBtn.style.background = '#fff';
+            allBtn.style.color = '#334155';
+            allBtn.classList.remove('active');
+
+            if (btn.classList.contains('active')) {
+                btn.style.background = '#fff';
+                btn.style.color = '#334155';
+                btn.classList.remove('active');
+
+                const activeCount = filterBar.querySelectorAll('.filter-btn.active').length;
+                if (activeCount === 0) {
+                    allBtn.style.background = '#3b82f6';
+                    allBtn.style.color = '#fff';
+                    allBtn.classList.add('active');
+                }
+            } else {
+                btn.style.background = '#3b82f6';
+                btn.style.color = '#fff';
+                btn.classList.add('active');
+            }
+        }
+        applyFilterLogic();
+    });
+
+    // 各種セレクトボックスの変更イベント
+    filterBar.querySelector('#min-fpk-select')?.addEventListener('change', applyFilterLogic);
+    filterBar.querySelector('#min-final-select')?.addEventListener('change', applyFilterLogic);
+    filterBar.querySelector('#upgrade-select')?.addEventListener('change', applyFilterLogic);
+    filterBar.querySelector('#rarity-select')?.addEventListener('change', applyFilterLogic);
+    filterBar.querySelector('#type-select')?.addEventListener('change', applyFilterLogic);
+}
+
+// 拡張版絞り込みロジック（数値＋アイコン＋強化率＜20%対応＋レアリティ/タイプ）
+function applyFilterLogic() {
+    const activeButtons = document.querySelectorAll('#card-filter-bar .filter-btn.active');
+    const selectedFilters = Array.from(activeButtons).map(b => b.getAttribute('data-filter'));
+    const isAllSelected = selectedFilters.includes('all');
+
+    const minFpk = parseFloat(document.querySelector('#card-filter-bar #min-fpk-select')?.value || '0');
+    const finalSelectVal = document.querySelector('#card-filter-bar #min-final-select')?.value || '0';
+    const upgradeSelectVal = document.querySelector('#card-filter-bar #upgrade-select')?.value || '0';
+    const selectedRarity = document.querySelector('#card-filter-bar #rarity-select')?.value || 'all';
+    const selectedType = document.querySelector('#card-filter-bar #type-select')?.value || 'all';
+
+    const rows = document.querySelectorAll('tr[data-card-id]');
+    const charData = (pickDetailsAllCache && pickDetailsAllCache[CURRENT_CHAR]) || {};
+
+    rows.forEach(row => {
+        const cardId = row.getAttribute('data-card-id');
+        const cData = charData[cardId];
+
+        let matchIcon = true;
+        let matchFpk = true;
+        let matchFinal = true;
+        let matchUpgrade = true;
+        let matchRarity = true;
+        let matchType = true;
+
+        const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0');
+        const upgradeRateText = row.children[3]?.textContent.trim().replace('%', '') || '0';
+        const upgradeRateVal = parseFloat(upgradeRateText) || 0;
+
+        const rarityText = row.children[4]?.textContent.trim() || '';
+        const typeText = row.children[5]?.textContent.trim() || '';
+
+        // レアリティ・タイプのテキスト一致判定
+        if (selectedRarity !== 'all' && !rarityText.includes(selectedRarity)) matchRarity = false;
+        if (selectedType !== 'all' && !typeText.includes(selectedType)) matchType = false;
+
+        // 強化率の条件判定（20%未満 または 各種以上）
+        if (upgradeSelectVal === 'lt20') {
+            matchUpgrade = (upgradeRateVal < 20);
+        } else if (parseFloat(upgradeSelectVal) > 0) {
+            matchUpgrade = (upgradeRateVal >= parseFloat(upgradeSelectVal));
+        }
+
+        if (cData) {
+            const appRatio = (cData.app || 0) / 100;
+            const fpkRatio = (cData.fpk || 0) / 100;
+            const pFirst = appRatio * fpkRatio;
+
+            const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
+
+            const isBroom = !isTool && (pFirst > 0.02 && (finalAdoption / pFirst) <= 0.50);
+            const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
+            const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
+
+            if (!isAllSelected) {
+                let matchedOne = false;
+                if (selectedFilters.includes('crown') && isCrown) matchedOne = true;
+                if (selectedFilters.includes('star') && isStar) matchedOne = true;
+                if (selectedFilters.includes('broom') && isBroom) matchedOne = true;
+                matchIcon = matchedOne;
+            }
+
+            if (minFpk > 0) {
+                matchFpk = (fpkRatio * 100) >= minFpk;
+            }
+            if (finalSelectVal === 'lt10') {
+                matchFinal = (finalAdoption * 100) < 10;
+            } else if (parseFloat(finalSelectVal) > 0) {
+                matchFinal = (finalAdoption * 100) >= parseFloat(finalSelectVal);
+            }
+        } else {
+            if (!isAllSelected || minFpk > 0 || finalSelectVal !== '0') {
+                matchIcon = false;
+                matchFpk = false;
+                matchFinal = false;
+            }
+        }
+
+        if (matchIcon && matchFpk && matchFinal && matchUpgrade && matchRarity && matchType) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
 
 async function toggleCardDetail(btnElement) {
     const tr = btnElement.closest('tr');
@@ -55,18 +345,13 @@ async function toggleCardDetail(btnElement) {
 
     if (!pickDetailsAllCache) {
         btnElement.textContent = isJa ? '読込中...' : 'Loading...';
-        const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
-        const jsonPath = `card_lists/pick_details_all.json${vParam}`;
-        try {
-            const response = await fetch(jsonPath);
-            if (!response.ok) throw new Error(`Fetch failed status: ${response.status}`);
-            pickDetailsAllCache = await response.json();
-        } catch (err) {
-            console.error("詳細データの読み込みエラー:", err);
+        await ensurePickDetailsCache();
+        if (!pickDetailsAllCache) {
             btnElement.textContent = isJa ? '▼詳細' : '▼Details';
             alert(isJa ? '詳細データの読み込みに失敗しました。' : 'Failed to load detail data.');
             return;
         }
+        applyCardIcons();
     }
 
     const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
@@ -84,7 +369,6 @@ async function toggleCardDetail(btnElement) {
         'Unknown': isJa ? 'その他' : 'Other'
     };
 
-    // 6つのカテゴリ定義
     const categories = [
         { key: 'enemy_elite', name: isJa ? '1回目の選択 (通常敵・エリート)' : '1st Pick Choice (Enemy/Elite)' },
         { key: 'boss', name: isJa ? '1回目の選択 (ボス)' : '1st Pick Choice (Boss)' },
@@ -122,7 +406,6 @@ async function toggleCardDetail(btnElement) {
         const fpkLabel = isJa ? `初回ピック率: ${firstPickRatio}% (${countB}/${countA})` : `First Pick Rate: ${firstPickRatio}% (${countB}/${countA})`;
         const avgLabel = isJa ? `平均提示数: ${avgOffered}回` : `Avg. Offered/Run: ${avgOffered}`;
 
-        // マス内訳(st)から各マスの全提示数をマップ化
         const stationTotalMap = {};
         if (cardData.st) {
             cardData.st.forEach(item => {
@@ -130,7 +413,6 @@ async function toggleCardDetail(btnElement) {
             });
         }
 
-        // カテゴリ名に対応する全提示数の算出関数
         const getCatTotalOffer = (catKey) => {
             if (catKey === 'enemy_elite') return (stationTotalMap['Enemy'] || 0) + (stationTotalMap['EliteEnemy'] || 0);
             if (catKey === 'boss') return stationTotalMap['Boss'] || 0;
@@ -140,7 +422,6 @@ async function toggleCardDetail(btnElement) {
             return stationTotalMap['Unknown'] || 0;
         };
 
-        // 各カテゴリごとのリスト表示HTML構築
         let choicesHtmlSections = '';
         const choicesData = cardData.choices || {};
 
@@ -148,7 +429,6 @@ async function toggleCardDetail(btnElement) {
             const catObj = choicesData[cat.key];
             if (!catObj) return;
 
-            // 新旧データの構造差分吸収（オブジェクト形式 {items: [...], first_count: X} / 配列形式 [...]）
             const itemList = Array.isArray(catObj) ? catObj : catObj.items;
             if (!itemList || itemList.length === 0) return;
 
@@ -164,18 +444,15 @@ async function toggleCardDetail(btnElement) {
                 if (choiceId === "(ショップ他行動/見送り)") cardName = isJa ? "(ショップ他行動/見送り)" : "(Shop Action/Skip)";
 
                 const ratioStr = firstCount > 0 ? ` (${((count / firstCount) * 100).toFixed(1)}%)` : '';
-
-                // 対象カード自体の場合は太字＋下線で強調
                 const isTargetCard = (choiceId === cardId);
                 const displayName = isTargetCard ? `<strong style="color: #000; font-weight: bold; text-decoration: underline;">${cardName}</strong>` : cardName;
 
                 return `<li style="font-size: 0.88em; color: #333;">${displayName} (${count}${isJa ? '回' : ' times'}${ratioStr})</li>`;
             }).join('');
 
-            // 見出し横に [初回提示: XX回 / 全提示: YY回] を追加
             const headerCountStr = isJa
-                ? `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[初回提示: ${firstCount}回 / 全提示: ${totalOffer}回]</span>`
-                : `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[1st: ${firstCount} / Total: ${totalOffer}]</span>`;
+                ? `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[初回遭遇マス: ${firstCount}回 / 提示マス数: ${totalOffer}回]</span>`
+                : `<span style="font-size: 0.85em; color: #777; font-weight: normal; margin-left: 6px;">[1st Encounter: ${firstCount} / Total Stations: ${totalOffer}]</span>`;
 
             choicesHtmlSections += `
                 <div style="margin-bottom: 10px;">
@@ -191,7 +468,6 @@ async function toggleCardDetail(btnElement) {
             choicesHtmlSections = `<p style="font-size: 0.88em; color: #777;">${isJa ? '選択データなし' : 'No choice data available.'}</p>`;
         }
 
-        // マス内訳バッジ
         let stationHtml = '';
         if (cardData.st && cardData.st.length > 0) {
             stationHtml = cardData.st.map(item => {
@@ -206,23 +482,16 @@ async function toggleCardDetail(btnElement) {
         detailTr.innerHTML = `
             <td colspan="8" class="detail-container" style="padding: 0;">
                 <div style="padding: 12px 16px; background-color: #fafafa; border-top: 1px solid #eaeaea; border-bottom: 2px solid #e0e0e0; text-align: left;">
-
-                    <!-- 上段: 主要メトリクス -->
                     <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; font-size: 0.92em;">
                         <div><strong>${appLabel}</strong></div>
                         <div><strong>${fpkLabel}</strong></div>
                         <div><strong>${avgLabel}</strong></div>
                     </div>
-
-                    <!-- 中段: 提示マス内訳 -->
                     <div style="margin-bottom: 10px;">
                         <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${isJa ? '提示マス内訳' : 'Station Breakdown'}:</strong>
                         <div>${stationHtml}</div>
                     </div>
-
-                    <!-- 下段: マス別 1回目の選択 -->
                     ${choicesHtmlSections}
-
                 </div>
             </td>
         `;

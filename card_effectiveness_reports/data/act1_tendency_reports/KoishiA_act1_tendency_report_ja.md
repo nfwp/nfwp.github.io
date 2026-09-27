@@ -147,16 +147,6 @@
 <td style='text-align: right;'>54.2</td>
 <td style='text-align: right;'><strong><span style='color: red;'>112.3</span></strong></td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 ローズケージ</strong></td>
-<td style='text-align: right;'>+21.86</td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>24.4%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'><strong><span style='color: red;'>70.3</span></strong></td>
-<td style='text-align: right;'>52.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>122.9</span></strong></td>
-</tr>
 <tr>
 <td>クリーンエネルギー</td>
 <td style='text-align: right;'>+21.86</td>
@@ -166,6 +156,16 @@
 <td style='text-align: right;'>44.3</td>
 <td style='text-align: right;'>29.7</td>
 <td style='text-align: right;'>74.0</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 ローズケージ</strong></td>
+<td style='text-align: right;'>+21.86</td>
+<td style='text-align: right;'>47.7%</td>
+<td style='text-align: right;'>24.4%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'><strong><span style='color: red;'>70.3</span></strong></td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>122.9</span></strong></td>
 </tr>
 <tr>
 <td>高鳴る鼓動</td>
@@ -268,16 +268,6 @@
 <td style='text-align: right;'>89.0</td>
 </tr>
 <tr>
-<td>太陽の畑</td>
-<td style='text-align: right;'>+19.00</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.6%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>36.9</td>
-<td style='text-align: right;'>58.8</td>
-<td style='text-align: right;'>95.7</td>
-</tr>
-<tr>
 <td>A.T.フィールド</td>
 <td style='text-align: right;'>+19.00</td>
 <td style='text-align: right;'>50.0%</td>
@@ -286,6 +276,16 @@
 <td style='text-align: right;'>48.5</td>
 <td style='text-align: right;'>50.7</td>
 <td style='text-align: right;'>99.2</td>
+</tr>
+<tr>
+<td>太陽の畑</td>
+<td style='text-align: right;'>+19.00</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.6%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>36.9</td>
+<td style='text-align: right;'>58.8</td>
+<td style='text-align: right;'>95.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 无寿の夢</strong></td>

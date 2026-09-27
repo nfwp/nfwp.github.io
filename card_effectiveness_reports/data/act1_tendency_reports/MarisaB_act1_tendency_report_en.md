@@ -356,16 +356,6 @@
 <td style='text-align: right;'>37.3</td>
 <td style='text-align: right;'>96.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Dreadful Raging Waves</strong></td>
-<td style='text-align: right;'>+12.79</td>
-<td style='text-align: right;'>40.7%</td>
-<td style='text-align: right;'>23.3%</td>
-<td style='text-align: right;'>27</td>
-<td style='text-align: right;'><strong><span style='color: red;'>67.7</span></strong></td>
-<td style='text-align: right;'>66.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>134.1</span></strong></td>
-</tr>
 <tr>
 <td>Phoenix Wings Rise</td>
 <td style='text-align: right;'>+12.79</td>
@@ -375,6 +365,16 @@
 <td style='text-align: right;'>44.1</td>
 <td style='text-align: right;'>39.2</td>
 <td style='text-align: right;'>83.3</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Dreadful Raging Waves</strong></td>
+<td style='text-align: right;'>+12.79</td>
+<td style='text-align: right;'>40.7%</td>
+<td style='text-align: right;'>23.3%</td>
+<td style='text-align: right;'>27</td>
+<td style='text-align: right;'><strong><span style='color: red;'>67.7</span></strong></td>
+<td style='text-align: right;'>66.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>134.1</span></strong></td>
 </tr>
 <tr>
 <td>Crimson Energy Release</td>
