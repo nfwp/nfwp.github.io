@@ -53,7 +53,7 @@ async function ensurePickDetailsCache() {
     }
 }
 
-// アイコン動付与ロジック
+// アイコン動的付与ロジック
 function applyCardIcons() {
     if (!pickDetailsAllCache) return;
     const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
@@ -225,12 +225,12 @@ function setupCardFilters() {
                 </select>
             </div>
             <div style="display: flex; gap: 4px; align-items: center;">
-                <span>${isJa ? '採用ギャップ:' : 'Gap:'}</span>
+                <span>${isJa ? '採用ギャップ:' : 'Adoption Gap:'}</span>
                 <select id="gap-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
                     <option value="all">${isJa ? '指定なし' : 'Any'}</option>
-                    <option value="ge1.2">${isJa ? '1.2倍以上 (後伸び)' : '>= 1.2x'}</option>
-                    <option value="mid">0.8倍 〜 1.2倍 (安定)</option>
-                    <option value="lt0.8">${isJa ? '0.8倍 未満 (減衰)' : '< 0.8x'}</option>
+                    <option value="ge1.2">${isJa ? '1.2倍以上 (後伸び)' : '>= 1.2x (Situational)'}</option>
+                    <option value="mid">${isJa ? '0.8倍 〜 1.2倍 (安定)' : '0.8x - 1.2x (Stable)'}</option>
+                    <option value="lt0.8">${isJa ? '0.8倍 未満 (減衰)' : '< 0.8x (Declining)'}</option>
                 </select>
             </div>
             <div style="display: flex; gap: 4px; align-items: center;">
@@ -323,7 +323,7 @@ function setupCardFilters() {
     filterBar.querySelector('#type-select')?.addEventListener('change', applyFilterLogic);
 }
 
-// 拡張版絞り込みロジック（採用ギャップ対応）
+// 拡張版絞り込みロジック
 function applyFilterLogic() {
     const activeButtons = document.querySelectorAll('#card-filter-bar .filter-btn.active');
     const selectedFilters = Array.from(activeButtons).map(b => b.getAttribute('data-filter'));
@@ -351,7 +351,7 @@ function applyFilterLogic() {
         let matchRarity = true;
         let matchType = true;
 
-        const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0'); // 0.0〜1.0
+        const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0');
         const upgradeRateText = row.children[3]?.textContent.trim().replace('%', '') || '0';
         const upgradeRateVal = parseFloat(upgradeRateText) || 0;
 
@@ -370,10 +370,8 @@ function applyFilterLogic() {
         if (cData) {
             const appRatio = (cData.app || 0) / 100;
             const fpkRatio = (cData.fpk || 0) / 100;
-            const pFirst = appRatio * fpkRatio; // 初回ピック実績率 (0.0〜1.0)
+            const pFirst = appRatio * fpkRatio;
 
-            // 採用ギャップの計算 (最終採用率 / 初回ピック実績率)
-            // 初回ピック実績率が0に近い場合のゼロ除算を防ぐ
             let gapRatio = 0;
             if (pFirst > 0.001) {
                 gapRatio = finalAdoption / pFirst;
