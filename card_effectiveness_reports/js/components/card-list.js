@@ -78,7 +78,7 @@ function applyCardIcons() {
 
         const isJa = (LANG === 'ja');
         let iconHtml = '';
-        const isBroom = !isTool && (pFirst > 0.05 && (finalAdoption / pFirst) < 0.80 && fpkRatio >= 0.30);
+        const isBroom = !isTool && (pFirst > 0.05 && (finalAdoption / pFirst) < 0.80 );
         const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
         const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
 
