@@ -485,8 +485,8 @@
 <li><span class="text-purchase">清めの儀式</span>: 7回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 6回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 4回</li>
 <li><span class="text-purchase">二重大結界</span>: 4回</li>
 <li><span class="text-purchase">紅内勁</span>: 3回</li>
@@ -494,8 +494,8 @@
 <li><span class="text-purchase">務光の雷弾</span>: 2回</li>
 <li><span class="text-purchase">亜空点穴</span>: 2回</li>
 <li><span class="text-purchase">住吉三神</span>: 2回</li>
-<li><span class="text-purchase">金剛身</span>: 2回</li>
 <li><span class="text-purchase">魔浄閃結</span>: 2回</li>
+<li><span class="text-purchase">金剛身</span>: 2回</li>
 <li><span class="text-purchase">護身の霊符</span>: 2回</li>
 <li><span class="text-purchase">開運御札</span>: 2回</li>
 </ul>
@@ -597,10 +597,10 @@
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 1回</li>
-<li><span class="text-purchase">常置陣</span>: 1回</li>
-<li><span class="text-purchase">浄化活動</span>: 1回</li>
 <li><span class="text-purchase">紅内勁</span>: 1回</li>
 <li><span class="text-purchase">昇天脚</span>: 1回</li>
+<li><span class="text-purchase">常置陣</span>: 1回</li>
+<li><span class="text-purchase">浄化活動</span>: 1回</li>
 <li><span class="text-purchase">弾幕対決</span>: 1回</li>
 <li><span class="text-purchase">金剛身</span>: 1回</li>
 <li><span class="text-purchase">陰陽宝玉</span>: 1回</li>
@@ -617,8 +617,8 @@
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">憂曇華の盆栽</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
-<li><span class="text-exhibit">ひらり布</span>: 1回</li>
 <li><span class="text-exhibit">唐傘</span>: 1回</li>
+<li><span class="text-exhibit">ひらり布</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>

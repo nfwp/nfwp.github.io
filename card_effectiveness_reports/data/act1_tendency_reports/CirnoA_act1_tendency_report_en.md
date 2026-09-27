@@ -488,8 +488,8 @@
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Call on Friends</span>: 2</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
 <li><span class="text-purchase">Tao Fetal Movement</span>: 1</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 1</li>
@@ -552,8 +552,8 @@
 <li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
 <li><span class="text-exhibit">Leaf</span>: 1</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Vinyl</span>: 1</li>
 <li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
@@ -585,17 +585,17 @@
 <li><span class="text-purchase">Tiny Glacier</span>: 3</li>
 <li><span class="text-purchase">Play With Water</span>: 2</li>
 <li><span class="text-purchase">Blizzard</span>: 2</li>
-<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Absolute Zero</span>: 2</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 2</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Cool Entrance</span>: 1</li>
+<li><span class="text-purchase">Ice-Blooded</span>: 1</li>
 <li><span class="text-purchase">Cool Party</span>: 1</li>
 <li><span class="text-purchase">Daiyousei, Snowcone Assistant</span>: 1</li>
-<li><span class="text-purchase">Ice-Blooded</span>: 1</li>
 <li><span class="text-purchase">Fairy's Wake-Up</span>: 1</li>
 <li><span class="text-purchase">Frost Refraction</span>: 1</li>
 </ul>

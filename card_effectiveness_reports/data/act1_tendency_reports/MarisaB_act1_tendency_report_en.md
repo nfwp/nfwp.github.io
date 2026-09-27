@@ -22,8 +22,8 @@
 <li>Asteroid Belt: 22</li>
 <li>Speed Duel: 18</li>
 <li>Devil's Codex: 16</li>
-<li>Luminous Mushroom: 16</li>
 <li>Magic Converter: 16</li>
+<li>Luminous Mushroom: 16</li>
 </ul></div>
 <div class="column"><ul>
 <li>Unexplained Fever: 11</li>
@@ -447,14 +447,14 @@
 <td style='text-align: right;'><strong><span style='color: red;'>116.1</span></strong></td>
 </tr>
 <tr>
-<td>Shade</td>
+<td>Devour Desires</td>
 <td style='text-align: right;'>+10.86</td>
 <td style='text-align: right;'>38.5%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>26</td>
-<td style='text-align: right;'>45.2</td>
-<td style='text-align: right;'>52.4</td>
-<td style='text-align: right;'>97.6</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>37.9</td>
+<td style='text-align: right;'>85.2</td>
 </tr>
 </tbody>
 </table>
@@ -486,11 +486,11 @@
 <li><span class="text-purchase">Unexplained Fever</span>: 2</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 2</li>
 <li><span class="text-purchase">Impatience</span>: 2</li>
-<li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
 <li><span class="text-purchase">Danmaku Notes</span>: 1</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 1</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 1</li>
 <li><span class="text-purchase">Serial Cleaver</span>: 1</li>
+<li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
 <li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
 <li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
@@ -530,8 +530,8 @@
 <li><span class="text-purchase">Rocket Broom</span>: 8</li>
 <li><span class="text-purchase">Ready For Burst</span>: 8</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 6</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">Clean Energy</span>: 5</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 5</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 5</li>
 <li><span class="text-purchase">Emergency Defense</span>: 5</li>
@@ -539,7 +539,7 @@
 <li><span class="text-purchase">"Borrow" Materials</span>: 5</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 4</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 3</li>
-<li><span class="text-purchase">Luminous Mushroom</span>: 3</li>
+<li><span class="text-purchase">Mushroom Feast</span>: 3</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -578,25 +578,25 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
-<li><span class="text-purchase">Emergency Defense</span>: 2</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
-<li><span class="text-purchase">Bask in Stardust</span>: 2</li>
+<li><span class="text-purchase">Emergency Defense</span>: 2</li>
 <li><span class="text-purchase">Magic Converter</span>: 2</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 2</li>
+<li><span class="text-purchase">Bask in Stardust</span>: 2</li>
 <li><span class="text-purchase">Rocket Broom</span>: 2</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
 <li><span class="text-purchase">Seeping Miasma</span>: 1</li>
-<li><span class="text-purchase">Improvisation</span>: 1</li>
 <li><span class="text-purchase">Speed Duel</span>: 1</li>
 <li><span class="text-purchase">Stardust Reverie</span>: 1</li>
+<li><span class="text-purchase">Improvisation</span>: 1</li>
 <li><span class="text-purchase">Grimoire Study</span>: 1</li>
 <li><span class="text-purchase">And Then Will There Be None?</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 1</li>
 <li><span class="text-purchase">All Out</span>: 1</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 1</li>
+<li><span class="text-purchase">Orrery's Sun</span>: 1</li>
 <li><span class="text-purchase">Red Star Explosion</span>: 1</li>
-<li><span class="text-purchase">Violin Solo</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

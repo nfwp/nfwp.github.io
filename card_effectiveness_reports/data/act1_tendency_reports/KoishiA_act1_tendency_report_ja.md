@@ -377,16 +377,6 @@
 <td style='text-align: right;'>61.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
 </tr>
-<tr>
-<td>暗闇演舞</td>
-<td style='text-align: right;'>+16.92</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>24.6%</td>
-<td style='text-align: right;'>33</td>
-<td style='text-align: right;'>32.7</td>
-<td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>77.0</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 投げキッス</strong></td>
 <td style='text-align: right;'>+16.92</td>
@@ -396,6 +386,16 @@
 <td style='text-align: right;'>50.4</td>
 <td style='text-align: right;'>63.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
+</tr>
+<tr>
+<td>暗闇演舞</td>
+<td style='text-align: right;'>+16.92</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>24.6%</td>
+<td style='text-align: right;'>33</td>
+<td style='text-align: right;'>32.7</td>
+<td style='text-align: right;'>44.3</td>
+<td style='text-align: right;'>77.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 平静の追憶</strong></td>
@@ -495,9 +495,9 @@
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 1回</li>
-<li><span class="text-purchase">最奥の森域</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
 <li><span class="text-purchase">フィルドミアズマ</span>: 1回</li>
+<li><span class="text-purchase">心変わりの刃</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -538,8 +538,8 @@
 <li><span class="text-purchase">両思いの恋煩い</span>: 6回</li>
 <li><span class="text-purchase">好奇心</span>: 5回</li>
 <li><span class="text-purchase">心変わりの刃</span>: 5回</li>
-<li><span class="text-purchase">サバイバル本能</span>: 4回</li>
 <li><span class="text-purchase">ローズ地獄</span>: 4回</li>
+<li><span class="text-purchase">サバイバル本能</span>: 4回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 4回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 4回</li>
 </ul>

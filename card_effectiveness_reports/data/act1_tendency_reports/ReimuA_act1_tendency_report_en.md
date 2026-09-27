@@ -484,8 +484,8 @@
 <li><span class="text-purchase">Cleansing Ritual</span>: 7</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 6</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 4</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 4</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 4</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 4</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 3</li>
@@ -493,8 +493,8 @@
 <li><span class="text-purchase">Servant Lightning Strike</span>: 2</li>
 <li><span class="text-purchase">Dimensional Point Rift</span>: 2</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 2</li>
-<li><span class="text-purchase">Entrench Body</span>: 2</li>
 <li><span class="text-purchase">Exorcising Border</span>: 2</li>
+<li><span class="text-purchase">Entrench Body</span>: 2</li>
 <li><span class="text-purchase">Talisman Protection</span>: 2</li>
 <li><span class="text-purchase">Lucky Break</span>: 2</li>
 </ul>
@@ -596,10 +596,10 @@
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 1</li>
-<li><span class="text-purchase">Permanent Border</span>: 1</li>
-<li><span class="text-purchase">Purify the Land</span>: 1</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 1</li>
 <li><span class="text-purchase">Ascension Kick</span>: 1</li>
+<li><span class="text-purchase">Permanent Border</span>: 1</li>
+<li><span class="text-purchase">Purify the Land</span>: 1</li>
 <li><span class="text-purchase">Spell Card Duel</span>: 1</li>
 <li><span class="text-purchase">Entrench Body</span>: 1</li>
 <li><span class="text-purchase">Orb of Duality</span>: 1</li>
@@ -616,8 +616,8 @@
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Potted Udonge</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
-<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
 <li><span class="text-exhibit">Karakasa</span>: 1</li>
+<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>

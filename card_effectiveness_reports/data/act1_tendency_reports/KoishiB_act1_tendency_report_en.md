@@ -533,8 +533,8 @@
 <li><span class="text-purchase">Lonely Heart</span>: 11</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 10</li>
 <li><span class="text-purchase">Clean Energy</span>: 10</li>
-<li><span class="text-purchase">True Full Moon</span>: 8</li>
 <li><span class="text-purchase">Melancholic Garden</span>: 8</li>
+<li><span class="text-purchase">True Full Moon</span>: 8</li>
 <li><span class="text-purchase">Talk Through the Hat</span>: 8</li>
 <li><span class="text-purchase">Emotional Surge</span>: 7</li>
 <li><span class="text-purchase">Passionate Memories</span>: 7</li>
@@ -560,8 +560,8 @@
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
-<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Watch</span>: 1</li>
+<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -600,8 +600,8 @@
 <li><span class="text-purchase">Withering Dreams</span>: 3</li>
 <li><span class="text-purchase">Instinctive Action</span>: 3</li>
 <li><span class="text-purchase">🧰 Disposable Amulet</span>: 3</li>
-<li><span class="text-purchase">Ancestral Dreams</span>: 2</li>
 <li><span class="text-purchase">Springtime Vacation</span>: 2</li>
+<li><span class="text-purchase">Ancestral Dreams</span>: 2</li>
 <li><span class="text-purchase">Crazed Thorns</span>: 2</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
 </ul>

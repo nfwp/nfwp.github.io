@@ -482,8 +482,8 @@
 <li><span class="text-purchase">Ascension Kick</span>: 5</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
 <li><span class="text-purchase">Binding Border</span>: 3</li>
-<li><span class="text-purchase">Cleansing Ritual</span>: 3</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
+<li><span class="text-purchase">Cleansing Ritual</span>: 3</li>
 <li><span class="text-purchase">Devour History</span>: 3</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
@@ -495,8 +495,8 @@
 <li><span class="text-purchase">Spell Card Duel</span>: 1</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 1</li>
 <li><span class="text-purchase">Barrier Slam</span>: 1</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Servant Lightning Strike</span>: 1</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -526,11 +526,11 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 8</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 6</li>
 <li><span class="text-purchase">Talisman Protection</span>: 6</li>
-<li><span class="text-purchase">Spell Card Duel</span>: 6</li>
 <li><span class="text-purchase">Clean Energy</span>: 6</li>
-<li><span class="text-purchase">Ascension Kick</span>: 5</li>
+<li><span class="text-purchase">Spell Card Duel</span>: 6</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 5</li>
+<li><span class="text-purchase">Ascension Kick</span>: 5</li>
 <li><span class="text-purchase">Devour History</span>: 5</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 5</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 4</li>
@@ -539,8 +539,8 @@
 <li><span class="text-purchase">Entrench Body</span>: 3</li>
 <li><span class="text-purchase">Cleansing Exorcism</span>: 3</li>
 <li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
-<li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
+<li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -552,11 +552,11 @@
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Peony</span>: 2</li>
-<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
+<li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Clog</span>: 1</li>
-<li><span class="text-exhibit">Dango</span>: 1</li>
 <li><span class="text-exhibit">Soulgem</span>: 1</li>
+<li><span class="text-exhibit">Dango</span>: 1</li>
 <li><span class="text-exhibit">Radio</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 1</li>

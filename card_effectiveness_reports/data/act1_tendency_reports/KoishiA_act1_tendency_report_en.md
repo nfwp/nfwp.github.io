@@ -376,16 +376,6 @@
 <td style='text-align: right;'>61.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
 </tr>
-<tr>
-<td>Dark Dancer</td>
-<td style='text-align: right;'>+16.92</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>24.6%</td>
-<td style='text-align: right;'>33</td>
-<td style='text-align: right;'>32.7</td>
-<td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>77.0</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Air Kiss</strong></td>
 <td style='text-align: right;'>+16.92</td>
@@ -395,6 +385,16 @@
 <td style='text-align: right;'>50.4</td>
 <td style='text-align: right;'>63.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
+</tr>
+<tr>
+<td>Dark Dancer</td>
+<td style='text-align: right;'>+16.92</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>24.6%</td>
+<td style='text-align: right;'>33</td>
+<td style='text-align: right;'>32.7</td>
+<td style='text-align: right;'>44.3</td>
+<td style='text-align: right;'>77.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Serene Memories</strong></td>
@@ -494,9 +494,9 @@
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">Devil's Codex</span>: 1</li>
-<li><span class="text-purchase">Forest Depths</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
 <li><span class="text-purchase">Seeping Miasma</span>: 1</li>
+<li><span class="text-purchase">Transference Blade</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -537,8 +537,8 @@
 <li><span class="text-purchase">Lovesickness</span>: 6</li>
 <li><span class="text-purchase">Curiosity</span>: 5</li>
 <li><span class="text-purchase">Transference Blade</span>: 5</li>
-<li><span class="text-purchase">Instinctive Action</span>: 4</li>
 <li><span class="text-purchase">Rose Hell</span>: 4</li>
+<li><span class="text-purchase">Instinctive Action</span>: 4</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 4</li>
 <li><span class="text-purchase">Luminescent Night</span>: 4</li>
 </ul>

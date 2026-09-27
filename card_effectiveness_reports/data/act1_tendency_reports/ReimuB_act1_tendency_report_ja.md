@@ -483,8 +483,8 @@
 <li><span class="text-purchase">昇天脚</span>: 5回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
 <li><span class="text-purchase">緊縛陣</span>: 3回</li>
-<li><span class="text-purchase">清めの儀式</span>: 3回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
+<li><span class="text-purchase">清めの儀式</span>: 3回</li>
 <li><span class="text-purchase">歴史喰い</span>: 3回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
@@ -496,8 +496,8 @@
 <li><span class="text-purchase">弾幕対決</span>: 1回</li>
 <li><span class="text-purchase">二重大結界</span>: 1回</li>
 <li><span class="text-purchase">結界猛撃</span>: 1回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">務光の雷弾</span>: 1回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -527,11 +527,11 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 8回</li>
 <li><span class="text-purchase">清めの儀式</span>: 6回</li>
 <li><span class="text-purchase">護身の霊符</span>: 6回</li>
-<li><span class="text-purchase">弾幕対決</span>: 6回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 6回</li>
-<li><span class="text-purchase">昇天脚</span>: 5回</li>
+<li><span class="text-purchase">弾幕対決</span>: 6回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
 <li><span class="text-purchase">住吉三神</span>: 5回</li>
+<li><span class="text-purchase">昇天脚</span>: 5回</li>
 <li><span class="text-purchase">歴史喰い</span>: 5回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 5回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 4回</li>
@@ -540,8 +540,8 @@
 <li><span class="text-purchase">金剛身</span>: 3回</li>
 <li><span class="text-purchase">厄祓い</span>: 3回</li>
 <li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
-<li><span class="text-purchase">博麗縁日</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
+<li><span class="text-purchase">博麗縁日</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -553,11 +553,11 @@
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">芍薬</span>: 2回</li>
-<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
+<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">天狗の下駄</span>: 1回</li>
-<li><span class="text-exhibit">お団子</span>: 1回</li>
 <li><span class="text-exhibit">宝魂石</span>: 1回</li>
+<li><span class="text-exhibit">お団子</span>: 1回</li>
 <li><span class="text-exhibit">ラジオ</span>: 1回</li>
 <li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>

@@ -534,8 +534,8 @@
 <li><span class="text-purchase">孤独な心</span>: 11回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 10回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 10回</li>
-<li><span class="text-purchase">真実の満月</span>: 8回</li>
 <li><span class="text-purchase">鈴蘭の花園</span>: 8回</li>
+<li><span class="text-purchase">真実の満月</span>: 8回</li>
 <li><span class="text-purchase">出まかせ</span>: 8回</li>
 <li><span class="text-purchase">高鳴る鼓動</span>: 7回</li>
 <li><span class="text-purchase">熱情の追憶</span>: 7回</li>
@@ -561,8 +561,8 @@
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
-<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">腕時計</span>: 1回</li>
+<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -601,8 +601,8 @@
 <li><span class="text-purchase">色褪せた夢</span>: 3回</li>
 <li><span class="text-purchase">サバイバル本能</span>: 3回</li>
 <li><span class="text-purchase">🧰 使い捨ての護符</span>: 3回</li>
-<li><span class="text-purchase">夢枕にご先祖総立ち</span>: 2回</li>
 <li><span class="text-purchase">春の野遊び</span>: 2回</li>
+<li><span class="text-purchase">夢枕にご先祖総立ち</span>: 2回</li>
 <li><span class="text-purchase">いばらの舞</span>: 2回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
 </ul>
