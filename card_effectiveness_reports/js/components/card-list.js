@@ -77,6 +77,7 @@ function applyCardIcons() {
         const isJa = (LANG === 'ja');
         let iconHtml = '';
 
+
         const isBroom = !isTool && (pFirst > 0.02 && (finalAdoption / pFirst) <= 0.50);
         const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
         const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
@@ -392,12 +393,13 @@ function applyFilterLogic() {
             } else if (gapSelectVal === 'mid') {
                 matchGap = (gapRatio >= 0.8 && gapRatio < 1.2);
             } else if (gapSelectVal === 'lt0.8') {
-                matchGap = (gapRatio < 0.8 && pFirst > 0.01);
+                matchGap = (gapRatio < 0.8 && pFirst > 0.001);
             }
 
             const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
 
-            const isBroom = !isTool && (pFirst > 0.02 && (finalAdoption / pFirst) <= 0.50);
+            // フィルター側と完全に同じ条件に統一
+            const isBroom = !isTool && (pFirst > 0.001 && (finalAdoption / pFirst) < 0.80);
             const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
             const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
 
