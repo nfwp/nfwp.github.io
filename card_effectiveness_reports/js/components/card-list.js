@@ -237,7 +237,7 @@ function setupCardFilters() {
                 <select id="gap-select" style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">
                     <option value="all">${isJa ? '指定なし' : 'Any'}</option>
                     <option value="ge1.2">${isJa ? '1.2倍以上 (後から採用)' : '>= 1.2x (Late-picked)'}</option>
-                    <option value="stb">${isJa ? '0.9倍 〜 1.1倍' : '0.8x - 1.2x'}</option>
+                    <option value="stb">${isJa ? '0.9倍 〜 1.1倍' : '0.9x - 1.1x'}</option>
                     <option value="mid">${isJa ? '0.8倍 〜 1.2倍' : '0.8x - 1.2x'}</option>
                     <option value="lt0.8">${isJa ? '0.8倍 未満 (削除対象?)' : '< 0.8x (Declining)'}</option>
                 </select>
