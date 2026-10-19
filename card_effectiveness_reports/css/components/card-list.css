@@ -1,0 +1,73 @@
+/* --- Card List Controls --- */
+.card-list-controls {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; /* 要素間のスペースを確保 */
+}
+
+.card-list-controls label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.card-list-controls .card-list-lang-label {
+    margin-left: 15px;
+}
+
+.card-list-controls select {
+    font-size: 14px;
+    padding: 5px;
+}
+
+.card-list-controls input[type="radio"] {
+    margin-left: 5px;
+}
+
+/* --- Iframe --- */
+#card-list-iframe {
+    width: 100%;
+    height: 85vh;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+
+/* --- Mobile View Adjustments --- */
+@media (max-width: 768px) {
+    /*
+     * モバイル表示の際に、カード一覧タブの親コンテナが持つ
+     * 左右の余白（padding）をなくし、コンテンツが画面幅いっぱいに
+     * 表示されるようにします。
+     */
+    #card-list-tab {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/*
+ * カード一覧タブの親コンテナ（外側）の余白をなくす
+ */
+#card-list-tab {
+    padding: 0;
+}
+
+/*
+ * 読み込まれたHTML内のコンテナ（内側）の
+ * 余白、幅制限、背景、影をすべてリセットし、
+ * 親コンテナと一体化させる。
+ */
+#card-list-content-wrapper .container {
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    background: none;
+    box-shadow: none;
+}

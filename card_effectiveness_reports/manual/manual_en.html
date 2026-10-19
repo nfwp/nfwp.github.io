@@ -1,0 +1,170 @@
+<div class="manual-doc" id="manual-root">
+    <p class="manual-intro">
+        This page is a usage guide for the dashboard.
+    </p>
+
+    <nav class="manual-toc">
+        <b>Contents</b>
+        <ol>
+            <li><a href="#sec-overview">Overview: what this report can do</a></li>
+            <li><a href="#sec-tabs">Tabs</a></li>
+            <li><a href="#sec-filters">Card Performance tab: how to use filters</a></li>
+            <li><a href="#sec-hover">Reading the hover info (glossary)</a></li>
+            <li><a href="#sec-cardlist">Reading the Card List tab</a></li>
+            <li><a href="#sec-runfinder">How to use the Run Finder tab</a></li>
+            <li><a href="#sec-data">Data updates &amp; notes</a></li>
+            <li><a href="#sec-aggregation">Aggregation methods</a></li>
+        </ol>
+    </nav>
+
+    <h2 id="sec-overview" class="c-blue">📌 Overview: what this report can do</h2>
+    <div class="manual-content">
+        <!-- TODO: overview body -->
+        <p>Statistical data created from Lunatic7 clear runs of Touhou Kouyouya (LBOL).<br>
+            It may help you get a rough grasp of the overall flow.</p>
+    </div>
+
+    <h2 id="sec-tabs" class="c-violet">🗂️ Tabs</h2>
+    <div class="manual-content">
+        <table class="manual-table">
+            <tr><th>Tab</th><th>Description</th></tr>
+            <tr><td>📊 Card Performance</td><td>Bubble-chart overview of card strength and features</td></tr>
+            <tr><td>🏺 Exhibits</td><td>Exhibit usage rates</td></tr>
+            <tr><td>🗺️ Route &amp; Events</td><td>Rough flow of the routes players took</td></tr>
+            <tr><td>⚔️ Enemy Analysis</td><td>Rough aggregates for various fights (in boss battles HP is restored after the fight, so HP numbers are not very accurate.)</td></tr>
+            <tr><td>❓ Event Analysis</td><td>Various events listed in chronological order (details of choices are hard to capture, so please use your judgment)</td></tr>
+            <tr><td>📈 Act Trend Analysis</td><td>Trends per Act transition and Total (trimming/removals caused by bosses cannot be distinguished. Use of tools is also counted as removal.)</td></tr>
+            <tr><td>🎴 Card List</td><td>Card list table and filters, details at offering time, etc.</td></tr>
+            <tr><td>🔍 Run Finder</td><td>Search for runs matching given conditions (sharing feature included)</td></tr>
+        </table>
+    </div>
+
+    <h2 id="sec-filters" class="c-orange">🔍 Card Performance tab</h2>
+    <div class="manual-content">
+        <!-- TODO: body -->
+        <p>You can see, at a rough glance, how much various cards contributed &mdash; both overall and situationally (Act 1 elites, etc.).<br>
+		Further down the page there is also the Attention Score ranking, the Act 4 Performance Top 40, and the Tendency Top 40.<br>
+		(The Attention Score ranking may be removed in the future.)</p>
+        <h3>Filters</h3>
+        <dl class="manual-dl">
+            <dt>Rarity</dt><dd>Filter by card rarity (All/Common/Uncommon/Rare)</dd>
+            <dt>Medal</dt><dd>🥇 Gold / 🥈 Silver+ / 🥉 Bronze+ / No medal<br>
+			The more impactful situations a card has, the better its medal. (Act 3 and boss fights are weighted.)</dd>
+            <dt>Adoption Gap</dt><dd>Close to 1 = the share picked at first offer and the share still in the final deck match (landing as expected).<br>
+			Roughly <b>Adoption Gap = Final Adoption &divide; pFirst</b>, where <b>pFirst = (offering rate) &times; (1st-pick rate at the first offering)</b>.<br>
+			1.2x or more = adopted later than planned / 0.8&ndash;1.2x = adopted as planned / under 0.8x = a card that gets trimmed away over time<br>
+			Cards landing above 1.2 come in two flavors: the <b>"late-bloomer" type</b> (low 1st Pick, adopted later) and the <b>"staple" type</b> (offered often and stacked in multiple copies). The gap alone cannot tell them apart, so also check 1st Pick and Avg. Copies.</dd>
+            <p class="manual-note">* Adoption Gap does not function correctly for starting cards (they are never evaluated at first offer).</p>
+            <dt>1st Pick</dt><dd>Rate of being chosen as the 1st option when offered (high = popular from the start)</dd>
+            <dt>Final Adop</dt><dd>Rate of ending up in the final deck</dd>
+            <dt>Avg. Copies</dt><dd>Filter by the average number of copies in the deck when adopted (minimum 1.0)</dd>
+            <dt>Upgrade</dt><dd>Average upgrade rate at adoption</dd>
+            <dt>Card-type filters (buttons under the graph)</dt><dd>You can toggle skill cards, defense cards, etc. on and off. Double-click to select only that one.</dd>
+        </dl>
+    </div>
+
+    <h2 id="sec-hover" class="c-pink">💬 Reading the hover info (glossary)</h2>
+    <div class="manual-content">
+        <p>Various information shown when you hover over a bubble.</p>
+        <h3>Items</h3>
+        <dl class="manual-dl">
+            <dt>Attack Perf</dt><dd>A variance score (50 = average) computed from turn progression in each situation.<br>Results of cards that shine in situations where the character struggles against a particular enemy are weighted more heavily, and scores are roughly comparable across characters with 50 as the baseline.</dd>
+            <dt>Defense Perf</dt><dd>A variance score (50 = average) computed from HP loss in each situation.<br>Results of cards that shine in situations where the character struggles against a particular enemy are weighted more heavily, and scores are roughly comparable across characters with 50 as the baseline.</dd>
+            <dt>Attack Tendency</dt><dd>A number representing upward/downward swings on the attack side. Even negative values are nothing to worry about.<br>Values of 0.5 or more may have a significant effect at the deck level.</dd>
+            <dt>Defense Tendency</dt><dd>A number representing upward/downward swings on the defense side. Even negative values are nothing to worry about.<br>Values of 0.5 or more may have a significant effect at the deck level.</dd>
+            <dt>Adoption Rate</dt><dd>Final adoption rate</dd>
+            <dt>Adoption rate in this situation</dt><dd>Situational tab only. The adoption rate at that point in time. Not the final adoption rate.</dd>
+            <p class="manual-note">* The adoption rate at that point in time. Not the final adoption rate.</p>
+            <dt>1st Pick</dt><dd>Rate of being chosen as the 1st option when offered (high = popular from the start)</dd>
+            <dt>Adoption Gap coefficient</dt><dd>Close to 1 = the share picked at first offer and the share still in the final deck match (landing as expected).<br>
+			Roughly <b>Adoption Gap = Final Adoption &divide; pFirst</b>, where <b>pFirst = (offering rate) &times; (1st-pick rate at the first offering)</b>.<br>
+			1.2x or more = adopted later than planned / 0.8&ndash;1.2x = adopted as planned / under 0.8x = a card that gets trimmed away over time<br>
+			Cards landing above 1.2 come in two flavors: the <b>"late-bloomer" type</b> (low 1st Pick, adopted later) and the <b>"staple" type</b> (offered often and stacked in multiple copies). The gap alone cannot tell them apart, so also check 1st Pick and Avg. Copies.</dd>
+            <p class="manual-note">* Adoption Gap does not function correctly for starting cards (they are never evaluated at first offer).</p>
+            <dt>Attention Score</dt><dd>A number evaluating Adoption Rate, Highlights, and Performance comprehensively.</dd>
+            <dt>Stability</dt><dd>Smallness of the swings in Attack/Defense Perf. Cards at 50 or higher can be expected to perform consistently.<br>
+                Cards with high Attack/Defense Perf but Stability of 40 or below tend to include key combo pieces or quirky cards.</dd>
+            <dt>Avg. Copies</dt><dd>Final aggregate. When a card is adopted, how many copies are in the deck. Minimum value 1.0</dd>
+            <dt>Avg UG Rate</dt><dd>Final aggregate. The upgrade rate when a card is adopted.</dd>
+            <dt>Highlights</dt><dd>Display of sections where the card was particularly effective.</dd>
+            <p class="manual-note">* 🥇 Gold / 🥈 Silver+ / 🥉 Bronze+ / No medal<br>
+                The more impactful situations a card has, the better its medal. (Act 3 and boss fights are weighted.)</p>
+            <dt>Top 20 Co-occurring</dt><dd>Cards often adopted together. Not necessarily synergistic.<br>
+                Those standing out above the average are marked with ★.</dd>
+        </dl>
+    </div>
+
+    <h2 id="sec-cardlist" class="c-teal">🎴 Reading the Card List tab</h2>
+    <div class="manual-content">
+        <!-- TODO: body -->
+        <p>You can view details for various cards.</p>
+        <dl class="manual-dl">
+            <dt>Display filter 👑 Must-Pick</dt><dd>1st Pick &ge; 50%, Final Adop &ge; 10%, and not a 🧹 trim candidate.</dd>
+            <dt>Display filter ⭐ Recommended</dt><dd>1st Pick &ge; 30%, Final Adop &ge; 10%, and (👑 Must-Pick or not a 🧹 trim candidate).</dd>
+            <dt>Display filter 🧹 Trim candidate</dt><dd>Early-game expectation &gt; 5%, Adoption Gap &lt; 0.8, and not a tool</dd>
+            <dt>Various items</dt><dd>See <a href="#sec-hover">Reading the hover info</a></dd>
+            <dt>Details button</dt><dd>You can see the situation when the card was first offered.<br>When it was not chosen at the first offer, you can also see what was chosen instead.</dd>
+        </dl>
+    </div>
+
+    <h2 id="sec-runfinder" class="c-indigo">🔍 How to use the Run Finder tab</h2>
+    <div class="manual-content">
+        <!-- TODO: body -->
+        <p>You can search runs by various conditions. Rough route choices are also visible.<br>For example: you want to see the deck of a Reimu-route run, you wonder how many runs had no AoE attack in Act 1, or you want to find users of a niche card, etc.</p>
+        <ul>
+            <li><strong>If you want to search for the final deck by specifying cards or exhibits, specify <b>ACT4 / Lv4 (Lv5 or higher is also fine)</b></strong>.<br>If no ACT/Level is specified, all runs matching the conditions at any point are returned.</li>
+            <li>When ACT, level, cards, exhibits, etc. are specified, the hover on the runID shown in the play ID indicates whether it is a particular state (e.g. state act1 Lv 7), the final deck, or in which situation the item appeared.</li>
+            <p class="manual-note">* You can search for cards that were adopted mid-route but are not in the final result.</p>
+            <li>Pressing 🔗 Copy share link lets you share those search results.</li>
+        </ul>
+    </div>
+
+    <h2 id="sec-data" class="c-slate">ℹ️ Data updates &amp; notes</h2>
+    <div class="manual-content">
+        <!-- TODO: body -->
+        <ul>
+            <li>If the display looks stale/strange, try <b>Ctrl+F5 (hard reload)</b></li>
+        </ul>
+    </div>
+
+    <h2 id="sec-aggregation" class="c-sky">🧮 Aggregation methods</h2>
+    <div class="manual-content">
+        <h3>1. Log collection &amp; filtering</h3>
+        <p>
+            The latest log data is automatically collected from the public log repository (lbol logs). At that time, only logs suitable for analysis are selected, using the following criteria.
+        </p>
+        <ul>
+            <li>Only logs with a Lunatic7 true-end clear are used</li>
+            <li>Some mods are excluded (logs using mods that affect game balance are excluded)</li>
+            <li>To increase the sample size, only logs with vanilla cards and exhibits are extracted (if mod items are offered but not picked, the run is still reflected)</li>
+            <li>Suspicious logs are excluded (abnormal status changes, discontinuous data, etc.)</li>
+        </ul>
+
+        <h3>2. Per-player log sampling</h3>
+        <p>
+            If one player has too many logs, their play style would disproportionately affect the whole statistics. To prevent this, a cap is placed on the number of logs extracted per player.
+        </p>
+        <p>
+            Players below the cap are not restricted and all of their valid logs are used.
+            Players over the cap are sampled via <b>quantile-weighted sampling</b>.
+        </p>
+        <ol>
+            <li>Logs are split into 4 groups by recency (oldest / older / newer / newest, 25% each)</li>
+            <li>More logs are drawn randomly from the newer groups, fewer from the older ones</li>
+        </ol>
+
+        <h3>3. How to read the numbers</h3>
+        <ul>
+            <li><b>Careful with rarely used cards</b>: Cards with few fights show larger variation (few samples are smoothed toward the situation average, but treat them as a rough guide). Even when a number looks high, read it with the lack of track record in mind.</li>
+            <li><b>Some cards are not shown</b>: Cards that do not meet the criteria (adoption rate, number of fights, etc.) are excluded from the display. Adoption Gap is also not shown for starting cards.</li>
+            <li><b>Sampling bias</b>: The statistics are based on submitted logs, not a random sample. Treat them as reference values for grasping overall trends.</li>
+        </ul>
+
+
+        <div data-funnel="en"></div>
+        <p class="manual-note">* The Stage-1 filter consists of runs that are not L7 clears, runs with mods, runs with inconsistent data, etc.<br>
+            In the final check, NG = runs with abnormal numerical fluctuations, MOD = runs containing cards/exhibits that do not exist in vanilla.<br>
+                Even if mods are installed, runs behaving nearly the same as vanilla are accepted.</p>
+
+    </div>
+</div>

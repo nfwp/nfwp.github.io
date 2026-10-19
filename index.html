@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドーナッツにはなぜ穴があいているのか</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.8;
+    }
+    h1 { text-align: center; margin-bottom: 1.5em; }
+    h2 { margin-top: 2em; border-bottom: 2px solid #ccc; padding-bottom: 4px; }
+    a { text-decoration: none; color: #0070f3; }
+    a:hover { text-decoration: underline; }
+    .section-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1.2em;
+      margin-top: 2em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* グラフテーブル */
+    .styled-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 1em;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .styled-table thead tr {
+      background-color: #009879;
+      color: #fff;
+      text-align: left;
+    }
+    .styled-table th, .styled-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+
+    /* 翻訳カード */
+    .translation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 1em;
+    }
+    .translation-grid a {
+      display: block;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .translation-grid a:hover {
+      background: #e9f5ff;
+      border-color: #0070f3;
+    }
+
+    /* 改行を反映 */
+    p {
+      white-space: pre-line;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 3em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>試作ホットケーキ第一号</h1>
+
+<!-- 🟦 グラフセクション -->
+<div class="section-box">
+  <h2>📊 グラフ / Graph Links</h2>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>怪しいグラフ (Ja ver)</th>
+        <th>potato graph (En ver)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lbol Bubble Charts</td>
+        <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
+        <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="last-update">読み込み中...</p>
+</div>
+
+<!-- 🕒 更新履歴 -->
+<div class="section-box">
+  <h2>🕒 グラフ更新履歴 / Graph Change Log</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <ul>
+      <li><strong>2026-10-19:</strong>統計内に使い方を追加。</li>
+      <li><strong>2026-09-27:</strong>カード一覧のカード名に詳細タブを追加。</li>
+      <li><strong>2026-09-23:</strong>LBOL MP除外のために正邪のライフが999より多いものを除外するように変更。</li>
+      <li><strong>2026-09-22:</strong>対象範囲v1.6.1~1.8.1に変更。StsMapは除外。</li>
+      <li><strong>2026-07-05:</strong>イベント分析のタブを追加。</li>
+      <li><strong>2026-07-04:</strong>ACT別トレンド→ACT1に<strong>より詳細な行動傾向レポート</strong>を追加。</li>
+      <li><strong>2026-06-27:</strong>【試験的な機能】ラン検索を実装しました。実験中なので不具合がある可能性もあります。lbol logsのすべてのデータを検索できるわけではないです。</li>
+      <li><strong>2026-06-07:</strong>Act別トレンド分析に整頓項目を追加。ボス戦闘後の変化削除までしかわからないため、厳密な整頓ではないです。</li>
+      <li><strong>2026-05-07:</strong>Act別トレンド分析を拡張。踏破マスの内訳をより詳細に。性能・リソース指標項目を追加。継戦能力は100から「戦闘での被弾」と「スキマでの回復」を引いた値です。スキマでの回復は、強化機会の喪失（ペナルティ）として計算されます。</li>
+      <li><strong>2026-04-03:</strong>ACT3 boss/ACT4 bossの状況別使用率がおかしかったのを修正。総合タブや使用率に影響はないです。</li>
+      <li><strong>2026-02-24:</strong>ACT別トレンド分析のタブを追加。各ACTでどのカードが追加強化削除されてるか等がわかりやすく把握できます。</li>
+      <li><strong>2025-11-24:</strong>キャラMOD適用済みのデータに対しては、バニラには存在しないカードや展示品が選択されている場合除外するように変更しました。これにより対象サンプルデータを増やせると思います。</li>
+      <li><strong>2025-11-18:</strong>各敵遭遇時のサンプルデッキリンクを追加。(うまく飛ばないときもあるのでlevelを確認ください)。</li>
+      <li><strong>2025-11-07:</strong>傾向値の計算方法をわずかに変更(以前より極端な変動は減ると思います)</li>
+      <li><strong>2025-11-05:</strong> カードの集計方法をソフトフィルターに変更。(今までは各状況において規定回数を満たしていて5%以下は除外されていたため5%境界付近の変動が与える影響が大きかったですが、今は影響は最低限になりました。</li>
+      <li><strong>2025-11-03:</strong> 制限付きで全プレイヤーを対象に。カードタブにサンプルランを追加。</li>
+      <li><strong>2025-11-01:</strong> 1.8.0に対応。集計方法を変更。共起カードにそのカードだけ突出して高いものは★を追加。</li>
+      <li><strong>2025-10-13:</strong> カード使用率のタブを追加。</li>
+      <li><strong>2025-10-05:</strong> 初版リリース。</li>
+    </ul>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <ul>
+      <li><strong>2026-10-19:</strong>Added How to Use Tab.</li>
+      <li><strong>2026-09-27:</strong> Added a Details tab to the card names in the card list.</li>
+      <li><strong>2026-09-23:</strong> Excluded runs where Seija's HP exceeds 999 to filter out LBOL MP.</li>
+      <li><strong>2026-09-22:</strong> Scope changed to v1.6.1–1.8.1. StsMap excluded.</li>
+      <li><strong>2026-07-05:</strong>Added a tab for Event Analysis</li>
+      <li><strong>2026-07-04:</strong>Added a more detailed <strong>Act 1 Player Tendency Report</strong> to <strong>Act Trends</strong>.</li>
+      <li><strong>2026-06-27:</strong>[Experimental Feature] Run Search is now available! It's still a work in progress, so you may run into bugs. Also, not everything in lbol logs can be searched yet.</li>
+      <li><strong>2026-06-07:</strong>Added deck organization metrics to the Act-based trend analysis. Since only changes up to boss-fight removals can be tracked, this is not a strictly accurate deck organization analysis.</li>
+      <li><strong>2026-05-07:</strong>Expanded the Act-based trend analysis. Added a more detailed breakdown of traversed tiles, as well as new performance and resource metrics. Sustainability is calculated as 100 minus "Combat Damage" and "Gap Recovery". Recovery is treated as an opportunity cost (penalty) for missing upgrades.</li>
+      <li><strong>2026-04-03:</strong> Fixed incorrect situational usage rates for ACT3 and ACT4 bosses. This does not affect the Overview tab or overall usage rates.</li>
+      <li><strong>2026-02-24:</strong> Added a tab for ACT-specific trend analysis. You can easily see which cards are added, upgraded, or removed in each ACT.</li>
+      <li><strong>2025-11-24:</strong>For data with character mods applied, I changed it so that any samples selecting cards or exhibits that don’t exist in the vanilla game are now excluded. This should allow us to increase the amount of valid sample data.</li>
+      <li><strong>2025-11-18:</strong> Added sample deck links for each enemy encounter. (If the link doesn’t jump correctly, please check the level.) Fixed some leftover Japanese text in the English version.</li>
+
+      <li><strong>2025-11-07:</strong> Made a slight adjustment to the trend calculation method (this should reduce extreme fluctuations compared to before).</li>
+      <li><strong>2025-11-05:</strong> Changed the card aggregation method to a soft filter. (Previously, cards were excluded if they appeared in less than 5% of cases that met the required count for each situation, which caused large fluctuations near the 5% threshold. Now, the impact of such fluctuations has been minimized.)</li>
+      <li><strong>2025-11-03:</strong> Now includes all players with some restrictions. Added sample runs to the card tab.</li>
+      <li><strong>2025-11-01:</strong> Updated for version 1.8.0. Changed the aggregation method. Added a ★ mark to highlight standout co-occurring cards.</li>
+      <li><strong>2025-10-13:</strong> Added a card usage tab.</li>
+      <li><strong>2025-10-05:</strong> Initial release.</li>
+    </ul>
+  </details>
+</div>
+
+<!-- 📖 概要 -->
+<div class="section-box">
+  <h2>📖 概要 / Overview</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <p>
+本グラフは、ローグライクカードゲーム <strong>『東方光耀夜 (LBoL)』</strong> における
+各カードのパフォーマンスや共起関係を可視化したものです。  
+使用率・同時採用傾向・ルート選択など分析しています。
+
+詳しい使い方等はゲーム内の<strong>使い方</strong>
+を参照ください。
+    </p>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <p>
+This graph visualizes the performance and co-occurrence relationships of each card in the roguelike deck-building game <strong>“Touhou Lost Branch of Legend (LBoL)”</strong>.  
+It analyzes factors such as usage rate, simultaneous adoption tendencies, route selection, and so on.
+
+For detailed instructions and other information, please refer to <strong>How to Use</strong>
+ within the statistics section.
+    </p>
+  </details>
+</div>
+
+<!-- 📮 連絡先（開閉式） -->
+<details class="section-box">
+  <summary>📮 連絡先 / Contact</summary>
+
+    <p>
+      📘 <strong>日本語</strong><br>
+      ご意見・不具合報告・データに関する質問などは、以下の Discord までお願いします。
+      サーバー内の指定チャンネルでお気軽にどうぞ。普段はmod翻訳をしているので、mod関連のチャンネルか日本語チャンネルにいます。
+      Discord名: <strong>neff</strong>
+      サーバー: <strong>Touhou Lost Branch of Legend（公式 Discord）</strong>
+    </p>
+
+    <p>
+      📗 <strong>English</strong><br>
+      For feedback, bug reports, or questions about the data, please contact me on Discord.
+      Feel free to post in the designated channel on the server. I usually work on mod translations, so you can find me in the mod-related channels or the Japanese channel.
+      Discord name: <strong>neff</strong>
+      Server: <strong>Touhou Lost Branch of Legend (official Discord)</strong>
+    </p>
+
+</details>
+
+
+
+<script>
+// card_effectiveness_reports ディレクトリの最新コミット取得
+fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
+  .then(res => res.json())
+  .then(data => {
+    const commit = data[0];
+    const date = new Date(commit.commit.author.date);
+    const message = commit.commit.message;
+
+    document.getElementById("last-update").textContent =
+      `${date.toLocaleString("ja-JP")} (${message})`;
+  })
+  .catch(err => {
+    document.getElementById("last-update").textContent = "取得に失敗しました";
+  });
+</script>
+
+
+<footer>
+  © 2025 nfwp.github.io |
+</footer>
+</body>
+</html>
