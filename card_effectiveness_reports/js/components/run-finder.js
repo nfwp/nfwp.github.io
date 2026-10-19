@@ -707,7 +707,7 @@ async function renderEncounterBars(runs) {
         { name: isJa ? '🩸 苦戦 (ライフ)' : 'Hard (HP)', vals: hpVals, color: '#d6455d' },
         { name: isJa ? '⚡️ 苦戦 (スペルカード)' : 'Hard (Spell)', vals: spVals, color: '#7c5ce0' },
         { name: isJa ? '🩸⚡️ 苦戦 (両方)' : 'Hard (both)', vals: bothVals, color: '#7a1f3d' },
-        { name: isJa ? 'それ以外の遭遇' : 'Other encounters', vals: restVals, color: '#dbe7e4' },
+        { name: isJa ? '苦戦なし' : 'No hard fights', vals: restVals, color: '#dbe7e4' },
     ];
 
     // 敵名が長いので高さは敵数に比例させ, 全表示 (ページスクロール) で読む。下限で下限は確保
