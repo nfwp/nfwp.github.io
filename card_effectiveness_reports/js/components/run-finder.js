@@ -69,7 +69,7 @@ function renderRunFinderTab() {
     const finderHtml = `
         <div class="run-finder-container">
             <h3>${texts.title}</h3>
-            <p class="analysis-note">${texts.data_scope_warning}</p>
+            <p class="analysis-note">${texts.data_scope_warning}${texts.chart_notice ? `<br>${texts.chart_notice}` : ''}</p>
             <div class="finder-controls">
                 <div class="control-group-row">
                     <div class="control-group">
@@ -524,118 +524,303 @@ function setupBossSelectors() {
 //  CORE SEARCH LOGIC - REBUILT FOR PERFORMANCE
 // ==================================================================================
 
-// --- 検索結果末尾の円グラフ: 検索結果全体の苦戦 (ΔHp>=15) / スペル (ΔP>=50, Boss>=10) 戦闘を 敵グループ別に割合化 ---
-async function renderHardFightsPie(runs) {
+// --- 検索結果末尾の棒グラフ: 検索したラン集合での 敵ごと「遭遇回数」を横棒で表示し,
+//     苦戦した部分 (🩸ライフ部門 / ⚡️スペルカード部門) だけを濃色で積み上げて表現する ---
+let hfBarMode = 'count';   // 苦戦棒グラフの表示モード: 'count' = 遭遇回数ベース / 'pct' = 割合ベース (100% 積み上げ)
+
+// --- ボス行キャラ絵オーバーレイ (Plotly の tick に画像は入れられないため、ラベル欄の余白に <img> を重ねる) ---
+let hfBarsPlotDiv = null;                  // 現在の Plotly ルート div (リサイズ再配置用)
+let hfBarsBossRows = [];                   // { code, idx }  ボス行 (idx = 降順ソート後の行番号, y 配列では n-1-idx)
+
+function positionBossAvatarOverlay() {
+    const gd = hfBarsPlotDiv;
+    if (!gd || !hfBarsBossRows.length) return;
+    const full = gd._fullLayout;
+    if (!full || !gd.data || !gd.data[0]) return;
+    const size = full._size;
+    const yaxis = full.yaxis;
+    const n = gd.data[0].y.length;
+    if (!n) return;
+    let holder = gd.querySelector('.hf-boss-avatars');
+    if (!holder) {
+        //基底が静的だと祖先基準になって位置が暴走するため、必ず相対化しておく
+        if (getComputedStyle(gd).position === 'static') gd.style.position = 'relative';
+        holder = document.createElement('div');
+        holder.className = 'hf-boss-avatars';
+        holder.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:2;';
+        gd.appendChild(holder);
+    }
+    holder.innerHTML = '';
+    const AV = 20, PAD = 5;
+    // 右寄せラベルの実文字開始位置の左側に置く (ラベル幅は行ごとに違うため、実測して密着配置する)
+    // tick は DOM 順 = 下→上・全行必ず 1 要素なので、上から数えた行 index (idx) とそのまま対応する
+    const pr = gd.getBoundingClientRect();
+    const svg = gd.querySelector('.main-svg');
+    const sortedTicks = (svg ? Array.from(svg.querySelectorAll('g.ytick text')) : [])
+        .map(t => t.getBoundingClientRect())
+        .map(r => ({ cy: r.top + r.height / 2, left: r.left }))
+        .sort((a, b) => a.cy - b.cy);          // 上→下順に並べ替え
+    for (const { code, idx } of hfBarsBossRows) {
+        // カテゴリは軸長を n 等分して均等配置される (idx = 上から何番目か / y配列は下から順に描かれる)
+        const cy = size.t + yaxis._length * ((idx + 0.5) / n);
+        // 同じ表示順の tick ラベル左端に合わせる
+        const tick = sortedTicks[idx];
+        // 実測が取れないときは automargin 余白の右端に仮置き
+        const left = tick
+            ? Math.max(2, Math.round(tick.left - pr.left - AV - PAD))
+            : Math.max(2, Math.round(size.l - AV - PAD));
+        const img = document.createElement('img');
+        img.src = bossIconMap[code] || './img/boss/Unknown.avif';
+        img.alt = code;
+        img.style.cssText = `position:absolute;width:${AV}px;height:${AV}px;` +
+            `left:${left}px;top:${Math.round(cy - AV / 2)}px;` +
+            `border-radius:50%;box-shadow:0 0 0 1px rgba(148,163,184,.5);object-fit:cover;`;
+        holder.appendChild(img);
+    }
+}
+
+let hfBarsBumpedMargin = null;             // 直前に設定した余白値 (automargin で戻った場合だけ広げ直す目印)
+
+// 左余白を画像ぶん広げてから再配置 (newPlot 直後と window resize 時に実行)
+async function ensureBossAvatarSpace() {
+    const gd = hfBarsPlotDiv;
+    if (!gd || !hfBarsBossRows.length) { positionBossAvatarOverlay(); return; }
+    try {
+        const cur = gd._fullLayout._size.l || 0;
+        // 前回自分で設定した値でなければ (= automargin が戻したとみなされる) 1 度だけ広げる
+        if (cur > 0 && cur !== hfBarsBumpedMargin) {
+            hfBarsBumpedMargin = Math.round(cur + 26);
+            await Plotly.relayout(gd, { 'margin.l': hfBarsBumpedMargin });
+        }
+    } catch (e) { /* 調整失敗時は画像位置がずれるだけ */ }
+    // automargin/ラベル配置は relayout 解決後も非同期に詰め直されるため、確定後に再度張り直す
+    window.setTimeout(positionBossAvatarOverlay, 50);
+    window.setTimeout(positionBossAvatarOverlay, 250);
+}
+
+async function renderEncounterBars(runs) {
     const holder = document.getElementById('run-finder-hardfights-chart');
     if (!holder || typeof Plotly === 'undefined') return;
-    const texts = UI_TEXT.run_finder;
     const isJa = LANG === 'ja';
 
     try {
         await loadHardFights();
     } catch (e) {
-        console.error('[ERROR] hard_fights load failed for pie chart:', e);
+        console.error('[ERROR] hard_fights load failed for bar chart:', e);
         return;
     }
 
-    const TOP_N = 20;
-
-    // 部門別に集計: ライフ (被ダメ>=15) / スペルカード
-    // (両方に該当する戦闘は両方の部門に数える)
+    // 現在の検索結果ラン集合で集計 (フィルタしても分母・分子が同じ集合から取れる)
+    // 部門別積み上げ: 🩸ライフのみ / ⚡スペルのみ / 両方 / それ以外の遭遇 (各敵で排他に分ける)
     let nRuns = 0;
-    const byHp = new Map(), bySp = new Map();
+    const byEnc = new Map();      // code -> 遭遇回数
+    const segHp = new Map();      // code -> 苦戦 (ライフ のみ)
+    const segSp = new Map();      // code -> 苦戦 (スペルカード のみ)
+    const segBoth = new Map();    // code -> 苦戦 (ライフ & スペルの両方)
     for (const run of (runs || [])) {
-        const ent = (hardFightsByChar[run.character] || {})[run.run_id];
-        if (!ent || !ent.length) continue;
+        const enc = (hardFightsEncs[run.character] || {})[run.run_id];
+        if (!enc || !enc.length) continue;
         nRuns++;
-        for (const e of ent) {
-            const gname = isJa ? (e.j || e.e) : (e.e || e.j);
-            if (e.dh >= 15) {
-                const g = byHp.get(gname) || { n: 0 };
-                g.n++; byHp.set(gname, g);
-            }
-            if (e.sp >= 1) {
-                const g = bySp.get(gname) || { n: 0 };
-                g.n++; bySp.set(gname, g);
-            }
+        for (const code of enc) {
+            byEnc.set(code, (byEnc.get(code) || 0) + 1);
+        }
+        const ent = (hardFightsByChar[run.character] || {})[run.run_id];
+        for (const e of (ent || [])) {
+            const code = e.g;
+            if (!code) continue;
+            const isHp = e.dh >= 15, isSp = e.sp >= 1;
+            if (isHp && isSp) segBoth.set(code, (segBoth.get(code) || 0) + 1);
+            else if (isHp) segHp.set(code, (segHp.get(code) || 0) + 1);
+            else if (isSp) segSp.set(code, (segSp.get(code) || 0) + 1);
         }
     }
 
-    // 部門ごとに 上位 TOP_N + その他 のスライスを作る (ラベルは件数ではなく割合表示)
-    const buildSlices = (byGroup) => {
-        const sorted = [...byGroup.entries()].sort((a, b) => b[1].n - a[1].n);
-        let total = 0;
-        for (const [, g] of byGroup) total += g.n;
-        const pct = (n) => `${(n / total * 100).toFixed(1).replace(/\.0$/, '')}%`;
-        const top = sorted.slice(0, TOP_N);
-        const otherCnt = sorted.slice(TOP_N).reduce((s, [, g]) => s + g.n, 0);
-        const labels = top.map(([gname, g]) => `${gname} (${pct(g.n)})`);
-        const values = top.map(([, g]) => g.n);
-        if (otherCnt > 0) {
-            labels.push(`${isJa ? 'その他' : 'Others'} (${pct(otherCnt)})`);
-            values.push(otherCnt);
-        }
-        return { labels, values, total };
-    };
-
-    const hp = buildSlices(byHp), sp = buildSlices(bySp);
-    const totalFlags = hp.total + sp.total;
-    if (!totalFlags) {
-        holder.innerHTML = `<p style="text-align:center;color:#94a3b8;font-size:0.9em;margin:6px 0;">`
-            + `${isJa ? `苦戦した戦闘はありません (${nRuns} ラン)` : `No hard fights in ${nRuns} runs`}</p>`;
+    if (!byEnc.size) {
+        holder.innerHTML = `<p style="text-align:center;color:#94a3b8;font-size:0.9em;margin:30px 0;">`
+            + `${isJa ? `戦闘データがありません (${runs ? runs.length : 0} ラン)` : `No battle data in ${runs ? runs.length : 0} runs`}</p>`;
         return;
     }
 
-    const tTitleHp = texts.hf_pie_title_hp || (isJa ? '苦戦した戦闘 (ライフ)' : 'Hard Fights (HP Loss)');
-    const tTitleSp = texts.hf_pie_title_sp || (isJa ? '苦戦した戦闘 (スペルカード)' : 'Hard Fights (Spell Card)');
-    const tNoteTop = isJa ? `上位${TOP_N} + その他 ・ ${nRuns} ラン` : `top ${TOP_N} + others ・ ${nRuns} runs`;
-
-    // 2 部門を横並びで大きめに描画
-    holder.innerHTML = `
-        <div class="hf-pie-wrap" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:center;">
-            <div id="hardfights-pie-hp" style="flex:1 1 640px;min-width:560px;"></div>
-            <div id="hardfights-pie-sp" style="flex:1 1 640px;min-width:560px;"></div>
-        </div>`;
-
-    const drawPie = (divId, slices, title) => {
-        const div = document.getElementById(divId);
-        if (!div) return;
-        if (!slices.total) {
-            div.innerHTML = `<p style="text-align:center;color:#94a3b8;font-size:0.9em;margin:30px 0;">`
-                + `${isJa ? '該当する戦闘はありません' : 'No matching battles'}</p>`;
-            return;
-        }
-        Plotly.newPlot(div, [{
-            type: 'pie',
-            labels: slices.labels,
-            values: slices.values,
-            textinfo: 'percent',
-            textposition: 'inside',
-            insidetextorientation: 'horizontal',
-            textfont: { color: '#fff', size: 12 },
-            hovertemplate: '%{label}<br>%{percent}<extra></extra>',
-            marker: { line: { color: '#fff', width: 1 } },
-            hole: 0.45,
-        }], {
-            title: { text: `${title} <span style="font-size:0.8em;color:#64748b">(${slices.total}件 / ${slices.total === 1 ? '1 battle' : slices.total + ' battles'})</span><br><span style="font-size:0.7em;color:#64748b">${tNoteTop}</span>`, font: { size: 16 } },
-            showlegend: true,
-            legend: { orientation: 'h', y: -0.35, font: { size: 11 } },
-            margin: { t: 65, b: 10, l: 10, r: 10 },
-            paper_bgcolor: '#fff',
-            height: 560,
-        }, { responsive: true, displayModeBar: false });
+    const nameOf = (code) => {
+        const nm = hardFightsNames[code];
+        if (!nm) return code;
+        const s = isJa ? nm[0] : nm[1];
+        return (s && s.length) ? s : code;
     };
 
-    drawPie('hardfights-pie-hp', hp, tTitleHp);
-    drawPie('hardfights-pie-sp', sp, tTitleSp);
+    // 並び順は敵別戦績タブと同じ時系列順: Act → 種別 (通常→特殊→エリート→ボス) → MinLevel。
+    // (同順内は遭遇回数の降順で補助的に並べる)
+    const kOrd = { 'e': 0, 's': 1, 'x': 2, 'b': 3 };
+    const _keyOf = (c) => {
+        const nm = hardFightsNames[c] || [];
+        return [
+            (Number.isFinite(nm[3]) ? nm[3] : 99),           // Act
+            (kOrd[nm[2]] !== undefined ? kOrd[nm[2]] : 9),   // 種別
+            (Number.isFinite(nm[4]) ? nm[4] : 999),          // MinLevel (最初の出現ステーション)
+        ];
+    };
+    const sorted = [...byEnc.entries()].sort((a, b) => {
+        const ka = _keyOf(a[0]), kb = _keyOf(b[0]);
+        return (ka[0] - kb[0]) || (ka[1] - kb[1]) || (ka[2] - kb[2]) || (b[1] - a[1]);
+    });
+    // ★ 敵種別: ⚔️=エリート / ✨=特殊イベント / ボス=キャラ絵画像・通常=なし (時系列ソートの種別と同じ分類)
+    const kindIcon = { 'x': '👹', 's': '✨' };
+    // ★ 同名敵の区別: 特殊イベント行は「（特殊イベント）」を付け, それでも重複する行だけは
+    //   出現位置 (A{Act}-L{Level}) を添える (Plotly は同名ラベルを同じカテゴリとして積み上げるため、ラベルは必ず一意にする)
+    const raws = sorted.map(([c]) => ({ c, b: nameOf(c), k: (hardFightsNames[c] || [])[2] }));
+    const groups = new Map();
+    for (const row of raws) groups.set(row.b, (groups.get(row.b) || 0) + 1);
+    const seenN = new Map();
+    const labels = raws.map(({ c, b, k }) => {
+        const icon = kindIcon[k] || '';
+        if (k === 's') return `${icon}${b}${isJa ? '（特殊イベント）' : ' (Special Event)'}`;
+        if ((groups.get(b) || 0) <= 1) return `${icon}${b}`;
+        const nm = hardFightsNames[c] || [];
+        const n = (seenN.get(b) || 0) + 1;
+        seenN.set(b, n);
+        if (Number.isFinite(nm[3]) && Number.isFinite(nm[4])) return `${icon}${b} (A${nm[3]}-L${nm[4]})`;
+        return `${icon}${b} (${n})`;
+    });
+    const encVals = sorted.map(([, n]) => n);
+    const segOf = (m) => sorted.map(([c]) => m.get(c) || 0);
+    const hpVals = segOf(segHp);
+    const spVals = segOf(segSp);
+    const bothVals = segOf(segBoth);
+    // 苦戦合計 = ライフのみ + スペルのみ + 両方 / それ以外 = 遭遇 - 苦戦合計
+    const hardVals = sorted.map(([c]) => (segHp.get(c) || 0) + (segSp.get(c) || 0) + (segBoth.get(c) || 0));
+    const restVals = encVals.map((n, i) => n - hardVals[i]);
+    // 棒の右端に書く苦戦率 (例: 35%(35/100))
+    const rateTxt = sorted.map((row, i) => {
+        const h = hardVals[i], n = encVals[i];
+        const p = (h / n * 100).toFixed(1).replace(/\.0$/, '');
+        return `${p}%(${h}/${n})`;
+    });
+    // hover 用の詳細数値: [遭遇, 苦戦合計, 苦戦率文字列]
+    const custom = sorted.map((row, i) => [encVals[i], hardVals[i], rateTxt[i]]);
 
+    const rev = (a) => a.slice().reverse();
+    const labelsRev = rev(labels);
+
+    // 苦戦の部分だけ濃色で塗る: [ライフ / スペル / 両方] を起点側に積み上げ, 残りは薄色
+    // (積み上げ基点 = 軸側なので, 軸から「苦戦した長さ」が伸びる形になる)
+    const segments = [
+        { name: isJa ? '🩸 苦戦 (ライフ)' : 'Hard (HP)', vals: hpVals, color: '#d6455d' },
+        { name: isJa ? '⚡️ 苦戦 (スペルカード)' : 'Hard (Spell)', vals: spVals, color: '#7c5ce0' },
+        { name: isJa ? '🩸⚡️ 苦戦 (両方)' : 'Hard (both)', vals: bothVals, color: '#7a1f3d' },
+        { name: isJa ? 'それ以外の遭遇' : 'Other encounters', vals: restVals, color: '#dbe7e4' },
+    ];
+
+    // 敵名が長いので高さは敵数に比例させ, 全表示 (ページスクロール) で読む。下限で下限は確保
+    const chartHeight = Math.max(700, labels.length * 34 + 160);   // 1行あたり34px: 棒の間隔を広めに取る
+    // 表示モード: 'count' = 棒の長さ = 遭遇回数 / 'pct' = 全員の棒が同じ長さ (100% 積み上げ)
+    const isPct = hfBarMode === 'pct';
+    const scale = (vals) => (isPct ? vals.map((v, i) => v / encVals[i] * 100) : vals);
+    const segMax = isPct ? 100 : Math.max(1, ...encVals);
+
+    holder.innerHTML = `<div style="text-align:center;margin:0 0 2px 0;">`
+        + `<button id="hf-bar-mode-btn" style="font-size:12px;padding:4px 14px;cursor:pointer;border:1px solid #94a3b8;border-radius:6px;background:#f1f5f9;color:#334155;">`
+        + (isJa
+            ? (isPct ? '遭遇回数ベースで表示' : '割合ベース（全員の長さをそろえて）表示')
+            : (isPct ? 'Show counts' : 'Show 100% stacked'))
+        + `</button></div>`
+        + `<div id="run-finder-hardfights-plot" style="max-width:1600px;margin:0 auto;"></div>`;
+    const plotDiv = document.getElementById('run-finder-hardfights-plot');
+    // 全表示: チャート自体をスクロールさせずページスクロールで全体を見る
+    const modeBtn = document.getElementById('hf-bar-mode-btn');
+    if (modeBtn) modeBtn.onclick = () => { hfBarMode = isPct ? 'count' : 'pct'; renderEncounterBars(runs); };
+
+    // 各棒の右端に苦戦率を文字で書き添える (苦戦した戦闘 / 遭遇)
+    const rateNotes = labels.map((lbl, i) => ({
+        xref: 'x', yref: 'y',
+        x: (isPct ? 100 : encVals[i]) + segMax * 0.02,
+        y: lbl,
+        xanchor: 'left',
+        showarrow: false,
+        text: rateTxt[i],
+        font: { size: 11.5, color: '#64748b' },
+    }));
+
+    Plotly.newPlot(plotDiv, segments.map(s => ({
+        type: 'bar',
+        orientation: 'h',
+        y: labelsRev,
+        x: rev(isPct ? scale(s.vals) : s.vals),
+        customdata: rev(custom),
+        name: s.name,
+        marker: { color: s.color, line: { color: '#fff', width: 0.5 } },
+        hovertemplate: `%{y}<br>${isJa ? '遭遇' : 'Encounters'}: %{customdata[0]}`
+            + `<br>${isJa ? '苦戦した戦闘' : 'Hard fights'}: %{customdata[2]}`
+            + `<br>${s.name}: %{x}${isPct ? '%' : ''}<extra></extra>`,
+    })), {
+        barmode: 'stack',
+        title: {
+            text: `${isJa ? '遭遇した戦闘 (敵ごと)' : 'Battles Fought (by Enemy)'}`
+                + ` <span style="font-size:0.8em;color:#64748b">(${nRuns} ラン / ${nRuns === 1 ? '1 run' : nRuns + ' runs'})</span>`
+                + `<br><span style="font-size:0.7em;color:#64748b">${isJa ? '👹=エリート ✨=特殊イベント ・ ボス=キャラ絵 ・ ' : '👹=Elite ✨=Special Event ・ Boss=avatar ・ '}${isJa ? (isPct ? '棒の長さ = 遭遇に対する割合 (100% 積み上げ)' : '棒の長さ = 遭遇回数 ・ 色付き部分 = 苦戦した戦闘') : (isPct ? 'bar length = % of encounters (100% stacked)' : 'bar length = encounters ・ colored part = hard fights')} ・ ${isJa ? '並び順 = 時系列 (Act → 種別 → Lv)' : 'order = chronological (Act → type → level)'}</span>`,
+            font: { size: 16 },
+        },
+        showlegend: true,
+        legend: { orientation: 'h', y: -0.08, font: { size: 11 } },
+        annotations: rateNotes,
+        xaxis: {
+            title: isPct ? (isJa ? '遭遇に対する苦戦の割合 (%)' : '% of encounters')
+                : (isJa ? '遭遇回数' : 'Encounters'),
+            range: [0, segMax * (isPct ? 1.18 : 1.2)],
+            gridcolor: '#e2e8f0',
+        },
+        yaxis: { automargin: true, tickfont: { size: 13 } },
+        bargap: 0.3,   // 棒の太さ = 行の70%: 棒の間に空間を入れて見やすくする
+        margin: { t: 70, b: 70, l: 0, r: 30 },
+        paper_bgcolor: '#fff',
+        plot_bgcolor: '#fff',
+        height: chartHeight,
+        autosize: false,   // 親コンテナ (maxHeight 880 のスクロール枠) に高さを塞がれないように固定
+    }, { responsive: true, displayModeBar: false });
+
+    // ★ 幅の確定: 初期描画時にコンテナ表示幅がまだ決まっていないケースがあるため、
+    //   親要素の実際の幅で明示的に張り直す (autosize:false なので以後は自分で追従させる)
+    try {
+        const w = Math.max(320, plotDiv.parentElement.clientWidth || 0);
+        if (w) await Plotly.relayout(plotDiv, { width: w });
+    } catch (e) { /* 幅調整失敗時は初期幅のまま */ }
+
+    // ★ ボス行だけキャラ絵 (img/boss/*.avif) をラベル脇に重ねる: automargin で決まった左余白に
+    //   画像分の余白を足して再レイアウトし、その空いた領域に <img> を重ねる
+    hfBarsPlotDiv = plotDiv;
+    hfBarsBossRows = sorted.map((row, i) => ({ code: row[0], idx: i }))
+        .filter(x => (hardFightsNames[x.code] || [])[2] === 'b');
+    if (hfBarsBossRows.length) {
+        try {
+            const sz = plotDiv._fullLayout._size;
+            hfBarsBumpedMargin = Math.round((sz.l || 0) + 26);
+            await Plotly.relayout(plotDiv, { 'margin.l': hfBarsBumpedMargin });
+        } catch (e) { /* レイアウト調整失敗時は画像位置がずれるだけ */ }
+    }
+    positionBossAvatarOverlay();
+    // レイアウト完全確定後 (tick ラベル配置後) にもう一度張り直す
+    try { plotDiv.on('plotly_afterplot', positionBossAvatarOverlay); } catch (e) { /* イベント無視 */ }
 }
+
+// window リサイズ (responsive 再レイアウト) 後に幅・余白と画像位置を張り直す
+window.addEventListener('resize', () => {
+    if (!hfBarsPlotDiv || !hfBarsBossRows.length) return;
+    window.setTimeout(() => {
+        if (!hfBarsPlotDiv || !document.body.contains(hfBarsPlotDiv)) return;
+        try {
+            const w = Math.max(320, hfBarsPlotDiv.parentElement.clientWidth || 0);
+            if (w) Plotly.relayout(hfBarsPlotDiv, { width: w });
+        } catch (e) { /* 無視 */ }
+        ensureBossAvatarSpace();
+    }, 120);
+});
 
 // --- NEW: Aggregated Timeline Cache and Fetcher ---
 const characterTimelineCache = new Map();
 
 // --- 苦戦戦闘 (ΔHp>=15) / スペルカード使用 (ΔP>=50) per-run 情報 (data/hard_fights.json) ---
-const hardFightsByChar = {};   // { character: { runId: [ {si,a,l,dh,sp,j,e} ] } }
+const hardFightsByChar = {};   // { character: { runId: [ {si,a,l,dh,sp,g,j,e} ] } }
+const hardFightsNames = {};    // { code ('gid1+gid2'): [jaName, enName] }  遭遇/苦戦集計用の名前テーブル
+const hardFightsEncs = {};     // { character: { runId: [code, ...] } }      全戦闘ステーションの遭遇リスト
 let hardFightsPromise = null;
 let hoveredTooltipLink = null; // マウスが乗っているリンク (遅延ロード後の再描画でのみ参照)
 
@@ -648,6 +833,8 @@ function loadHardFights() {
         .then(response => (response.ok ? response.json() : null))
         .then(data => {
             if (data && data.runs) Object.assign(hardFightsByChar, data.runs);
+            if (data && data.names) Object.assign(hardFightsNames, data.names);
+            if (data && data.encs) Object.assign(hardFightsEncs, data.encs);
             hardFightsByChar.__loaded = true;
             return hardFightsByChar;
         })
@@ -1108,11 +1295,11 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                 </tbody>
             </table>
         </div>
-        <div id="run-finder-hardfights-chart" style="max-width: 1400px; margin: 0 auto;"></div>
+        <div id="run-finder-hardfights-chart" style="max-width: 1600px; margin: 0 auto; width: 100%;"></div>
     `;
 
-    // --- 検索結果末尾の円グラフ (検索結果全体の苦戦戦闘の内訳) ---
-    renderHardFightsPie(runs);
+    // --- 検索結果末尾の棒グラフ (検索結果全体の 敵ごと遭遇回数・苦戦の濃淡) ---
+    renderEncounterBars(runs);
 
 }
 

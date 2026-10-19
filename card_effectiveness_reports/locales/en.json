@@ -181,6 +181,7 @@
     "title": "Run Finder",
     "experimental_warning": "<strong>[Experimental Feature]</strong> This search function is under development.",
     "data_scope_warning": "※This search can only be performed within the data range used for creating statistics.",
+    "chart_notice": "* An aggregate chart, \"Battles Fought (by enemy)\", is displayed at the end of the search results — encounter counts per enemy and the breakdown of hard fights (🩸HP / ⚡️spell card) across all matched runs.",
     "act_label": "Act:",
     "level_label": "Level:",
     "char_label": "Character:",
