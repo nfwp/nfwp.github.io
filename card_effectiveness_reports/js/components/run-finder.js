@@ -821,11 +821,13 @@ const characterTimelineCache = new Map();
 const hardFightsByChar = {};   // { character: { runId: [ {si,a,l,dh,sp,g,j,e} ] } }
 const hardFightsNames = {};    // { code ('gid1+gid2'): [jaName, enName] }  遭遇/苦戦集計用の名前テーブル
 const hardFightsEncs = {};     // { character: { runId: [code, ...] } }      全戦闘ステーションの遭遇リスト
+const hardFightsStats = {};    // { character: { runId: {L:総ライフ喪失, LA:[Act別喪失x4], S:スペル回数, T:{'{act}{kind}':[ターン和,戦闘数]}} } }
 let hardFightsPromise = null;
+let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功したか (失敗時は検索時に再試行)
 let hoveredTooltipLink = null; // マウスが乗っているリンク (遅延ロード後の再描画でのみ参照)
 
-function loadHardFights() {
-    if (hardFightsPromise) return hardFightsPromise;
+function loadHardFights(force) {
+    if (hardFightsPromise && !force) return hardFightsPromise;
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
     const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
@@ -835,12 +837,13 @@ function loadHardFights() {
             if (data && data.runs) Object.assign(hardFightsByChar, data.runs);
             if (data && data.names) Object.assign(hardFightsNames, data.names);
             if (data && data.encs) Object.assign(hardFightsEncs, data.encs);
+            if (data && data.stats) { Object.assign(hardFightsStats, data.stats); hardFightsDataOk = true; }
             hardFightsByChar.__loaded = true;
             return hardFightsByChar;
         })
         .catch(error => {
             console.error('[ERROR] Failed to fetch hard_fights.json:', error);
-            hardFightsByChar.__loaded = true; // 失敗時は再試行しない
+            hardFightsByChar.__loaded = true; // 失敗時は次の検索で再試行
             return hardFightsByChar;
         });
     return hardFightsPromise;
@@ -953,6 +956,16 @@ async function performAdvancedSearch() {
     searchButton.textContent = '検索中...';
 
     try {
+        // --- 0. 検索履歴比較用の stats (hard_fights.json) を必ず先にロード ---
+        //   (4MB の JSON なので、読み込み完了前に検索すると履歴の平均が空になる)
+        try {
+            if (!hardFightsDataOk) {
+                await loadHardFights(true);
+            } else {
+                await loadHardFights();
+            }
+        } catch (e) { /* stats が無くても検索自体は継続 (履歴は '-' 表示になる) */ }
+
         // --- 1. Get all filter values from UI ---
         const selectedChar = document.getElementById('character-select').value;
         const actFilter = document.getElementById('act-filter').value;
@@ -1105,6 +1118,7 @@ async function performAdvancedSearch() {
         lastFoundRuns = filteredRuns;
         currentSortKey = 'run_id';
         currentSortOrder = 'asc';
+        saveSearchHistory(searchCriteria, filteredRuns);   // ★ 検索履歴にスナップショット保存
 
         sortAndDisplayRuns(searchCriteria);
 
@@ -1116,6 +1130,403 @@ async function performAdvancedSearch() {
         searchButton.textContent = originalButtonText;
     }
 }
+
+// --- 検索履歴比較 (localStorage / 検索 1 回ごとに平均値スナップショットを保存) ---
+const RF_HISTORY_KEY = 'rf_search_history_v1';
+const RF_HISTORY_MAX = 30;
+
+function rfLoadHistory() {
+    try {
+        const list = JSON.parse(localStorage.getItem(RF_HISTORY_KEY)) || [];
+        // stats 未ロードのまま記録された壊れた履歴 (ラン数>0 なのに平均なし) は自動で捨てる
+        const clean = list.filter(h => !(h.n > 0 && !(h.nWith > 0)));
+        if (clean.length !== list.length) rfSaveHistory(clean);
+        return clean;
+    } catch (e) { return []; }
+}
+function rfSaveHistory(list) {
+    try { localStorage.setItem(RF_HISTORY_KEY, JSON.stringify(list.slice(0, RF_HISTORY_MAX))); } catch (e) { /* 付随機能なので失敗は無視 */ }
+}
+// 検索結果 run 集団の平均値を集計 (stats がないランは母数から除外)
+function computeRunSetStats(runs) {
+    const all = runs || [];
+    let nWith = 0, loss = 0, turns = 0;
+    const lossAct = [0, 0, 0, 0];
+    const turnAgg = {};
+    const versions = {};
+    // 拾いAct → 所持率: dist[act]=拾ったラン数 / reached[act]=そのActで戦闘したラン数 / held[act]=そのAct開始時点で所持のラン数
+    const dist = {}, reached = {}, held = {};
+    let anyPickup = false;
+    for (const r of all) {
+        versions[r.version] = (versions[r.version] || 0) + 1;
+        const st = (hardFightsStats[r.character] || {})[r.run_id];
+        const pKey = stationIndexToKey(r.matchingStationIndex);
+        const pAct = pKey ? pKey.split('-')[0] : null;
+        if (pAct) { anyPickup = true; dist[pAct] = (dist[pAct] || 0) + 1; }
+        if (!st) continue;
+        nWith++;
+        loss += st.L || 0;
+        if (Array.isArray(st.LA)) for (let i = 0; i < 4; i++) lossAct[i] += st.LA[i] || 0;
+        const stActs = new Set();
+        for (const k in (st.T || {})) {
+            stActs.add(k[0]);
+            const v = st.T[k];
+            const acc = turnAgg[k] || (turnAgg[k] = [0, 0, 0]);
+            acc[0] += v[0];
+            acc[1] += (v[1] || 1);
+            acc[2] += (v.length > 2 ? v[2] : 0);   // ライフ喪失和 (旧データは 0 扱い)
+            turns += v[0];
+        }
+        for (const a of stActs) {
+            reached[a] = (reached[a] || 0) + 1;
+            if (pAct && (parseInt(a, 10) >= parseInt(pAct, 10))) held[a] = (held[a] || 0) + 1;
+        }
+    }
+    const avg = (s) => (nWith ? s / nWith : null);
+    const turnAvg = {};
+    for (const k in turnAgg) if (turnAgg[k][1]) turnAvg[k] = turnAgg[k][0] / turnAgg[k][1];
+    // 区間別 [平均ライフ喪失, 平均ターン, 平均戦闘回数/ラン] (戦闘1回あたりのライフ・ターン。ライフは純損失/敵別戦績と同一定義)
+    const segAvg = {};
+    for (const k in turnAgg) if (turnAgg[k][1]) segAvg[k] = [turnAgg[k][2] / turnAgg[k][1], turnAgg[k][0] / turnAgg[k][1], turnAgg[k][1] / nWith];
+    let poss = null;
+    if (anyPickup) {
+        poss = {};
+        for (const a in reached) poss[a] = Math.round((held[a] || 0) / reached[a] * 100);
+    }
+    return {
+        n: all.length, nWith,
+        avgLoss: avg(loss), avgTurns: avg(turns),
+        actLossAvg: lossAct.map(avg), turnAvg, segAvg, versions,
+        pickup: anyPickup ? dist : null, poss
+    };
+}
+// --- 拾いAct: 検索条件が最初に成立したAct (matchingStationIndex → '2-3' → Act2) ---
+let STATION_INDEX_TO_KEY_CACHE = null;
+function stationIndexToKey(idx) {
+    if (STATION_INDEX_TO_KEY_CACHE === null) {
+        STATION_INDEX_TO_KEY_CACHE = {};
+        for (const key in STATION_MAP_GLOBAL) STATION_INDEX_TO_KEY_CACHE[STATION_MAP_GLOBAL[key]] = key;
+    }
+    return STATION_INDEX_TO_KEY_CACHE[idx] || null;
+}
+// 検索条件を 1 行ラベルにまとめる ("ReimuA A2 L3 deck<=30 +[item, ...]")
+function makeQueryLabel(sc) {
+    if (!sc) return '';
+    const parts = [];
+    if (sc.character) parts.push(sc.character);
+    if (sc.act) parts.push('Act' + sc.act);
+    if (sc.level) parts.push('Lv' + sc.level);
+    if (sc.deckSize) parts.push('deck' + (sc.deckSize.operator === 'lte' ? '<=' : '>=') + sc.deckSize.value);
+    if (sc.includeItems && (sc.includeItems.items || []).length) parts.push('+' + (sc.includeItems.items || []).join(','));
+    if (sc.excludeItems && sc.excludeItems.length) parts.push('-' + sc.excludeItems.join(','));
+    if (sc.includeBosses && (sc.includeBosses.bosses || []).length) parts.push('+B:' + (sc.includeBosses.bosses || []).join(','));
+    if (sc.excludeBosses && sc.excludeBosses.length) parts.push('-B:' + sc.excludeBosses.join(','));
+    return parts.join(' ') || '(all)';
+}
+function saveSearchHistory(searchCriteria, runs) {
+    try {
+        if (!runs || !runs.length) return;   // 0件検索は履歴に記録しない (ノイズ防止)
+        const q = makeQueryLabel(searchCriteria);
+        const agg = computeRunSetStats(runs);
+        const list = rfLoadHistory().filter(h => h.q !== q);   // 同一条件は差し替え (先頭へ更新)
+        // sc = 検索条件の生データ (行/チップ クリックでの再検索 rfRerunSearch 用)
+        list.unshift({ t: Date.now(), q, sc: searchCriteria, ...agg });   // pickup / poss は agg に含まれる
+        rfSaveHistory(list);
+    } catch (e) { /* 無視 */ }
+}
+// 旧履歴 (sc 無し) 用: ラベル文字列 ("SakuyaA +部屋掃除" / "ReimuA A2 L3 deck<=30 …") を検索条件へ復元
+function rfParseQueryLabel(q) {
+    const sc = { character: null, act: null, level: null, deckSize: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null };
+    (String(q || '').split(' ') || []).forEach(p => {
+        let m;
+        if (p.startsWith('+B:')) sc.includeBosses = { bosses: p.slice(3).split(','), logic: 'AND' };
+        else if (p.startsWith('-B:')) sc.excludeBosses = p.slice(3).split(',');
+        else if (p.startsWith('+') && p.length > 1) sc.includeItems = { items: p.slice(1).split(','), logic: 'AND' };
+        else if (p.startsWith('-') && p.length > 1) sc.excludeItems = p.slice(1).split(',');
+        else if ((m = p.match(/^Act(\d+)$/))) sc.act = m[1];
+        else if ((m = p.match(/^Lv(\d+)$/))) sc.level = m[1];
+        else if ((m = p.match(/^deck(<|>)=(\d+)$/))) sc.deckSize = { operator: p[4] === '<' ? 'lte' : 'gte', value: parseInt(m[2], 10) };
+        else if (p) sc.character = p;
+    });
+    return sc;
+}
+// 履歴行/凡例チップのクリック → その条件で再検索 (UI を復元してから performAdvancedSearch)
+window.rfRerunSearch = async function (t) {
+    const h = rfLoadHistory().find(x => x.t === t);
+    // 新履歴: sc (条件の生データ) / 旧履歴: ラベル文字列から復元
+    const sc = h ? (h.sc || rfParseQueryLabel(h.q)) : null;
+    if (!sc) return;
+    const charEl = document.getElementById('character-select');
+    if (charEl) charEl.value = sc.character || 'All';
+    const actEl = document.getElementById('act-filter');
+    if (actEl) actEl.value = sc.act || '';
+    const lvEl = document.getElementById('level-filter');
+    if (lvEl) lvEl.value = sc.level || '';
+    const deckOp = document.getElementById('deck-size-operator');
+    const deckVal = document.getElementById('deck-size-value');
+    if (deckOp) deckOp.value = sc.deckSize ? sc.deckSize.operator : 'any';
+    if (deckVal) deckVal.value = sc.deckSize ? sc.deckSize.value : '';
+    // アイテム/ボスの選択チップを復元
+    ['include-items-list', 'exclude-items-list', 'include-bosses-list', 'exclude-bosses-list'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '';
+    });
+    (sc.includeItems && sc.includeItems.items || []).forEach(it => addItemToSelection(it, 'include-items-list'));
+    (sc.excludeItems || []).forEach(it => addItemToSelection(it, 'exclude-items-list'));
+    (sc.includeBosses && sc.includeBosses.bosses || []).forEach(b => addItemToSelection(b, 'include-bosses-list'));
+    (sc.excludeBosses || []).forEach(b => addItemToSelection(b, 'exclude-bosses-list'));
+    const logic = sc.includeItems ? sc.includeItems.logic : 'AND';
+    const andChk = document.getElementById('include-logic-and');
+    if (andChk) andChk.checked = (logic === 'AND');
+    const bossLogic = sc.includeBosses ? sc.includeBosses.logic : 'AND';
+    const bossRadio = document.querySelector(`input[name="boss-logic"][value="${bossLogic}"]`);
+    if (bossRadio) bossRadio.checked = true;
+    await performAdvancedSearch();
+    // 結果表示は検索フォームの下 (ページ上方) に出るため、クリック元が画面下に居ると気づきにくい → 結果先頭へ案内
+    const resEl = document.getElementById('run-finder-results');
+    if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// 「検索履歴の比較へ」ボタン: 履歴比較セクション (rf-history-panel) へスクロール
+function rfJumpToHistory() {
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function deleteSearchHistory(t) {
+    rfSaveHistory(rfLoadHistory().filter(h => h.t !== t));
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.innerHTML = renderSearchHistoryPanel();
+}
+// --- 検索履歴の比較グラフ (テーブル下: ライフ部門 / ターン部門) ---
+// 行番号 (①②…) と線色は履歴リストの表示順に対応。21行目以降は ㉑㉒… を使用
+function rfHistNumMark(i) {
+    const n = i + 1;
+    return n <= 20 ? String.fromCharCode(0x2460 + n - 1) : String.fromCharCode(0x3250 + n - 20);
+}
+function rfHistLineColor(i) {
+    // 金角 (golden angle) で hue を散らすと色が被りにくい
+    return `hsl(${(i * 47) % 360} 55% 45%)`;
+}
+function rfHistNiceTicks(minV, maxV) {
+    // データ範囲に近付けた目盛り (0 の強制なし → 上下の無駄スペースを削る)
+    const span = Math.max(maxV - minV, 1e-6);
+    const mag = Math.pow(10, Math.floor(Math.log10(Math.max(span / 4, 1e-6))));
+    for (const m of [1, 2, 2.5, 5, 10]) {
+        const s = m * mag;
+        if (span / s <= 5) {
+            const lo = Math.floor(minV / s) * s, hi = Math.ceil(maxV / s) * s;
+            const ticks = [];
+            for (let v = lo; v <= hi + s * 0.5; v += s) ticks.push(Math.round(v * 1000) / 1000);
+            return ticks;
+        }
+    }
+    return [minV, maxV];
+}
+// 連動ハイライト: i 番目の線 (両グラフ) + テーブル行 + 凡例チップを強調し、他を薄暗くする
+window.rfHistHi = function (i, on) {
+    const panel = document.getElementById('rf-history-panel');
+    if (!panel) return;
+    panel.querySelectorAll('[data-hc]').forEach(el => {
+        const act = String(i) === el.getAttribute('data-hc');
+        if (el.tagName === 'path') {
+            el.style.strokeOpacity = on ? (act ? '1' : '0.08') : '';
+            el.style.strokeWidth = (on && act) ? '3.5' : '';
+        } else if (el.tagName === 'circle') {
+            el.style.fillOpacity = on ? (act ? '1' : '0.06') : '';
+            el.style.r = (on && act) ? '5' : '';
+        } else if (el.tagName === 'TR') {
+            el.classList.toggle('rf-hi-row', !!(on && act));
+        } else {
+            el.classList.toggle('rf-hi-chip', !!(on && act));
+        }
+    });
+};
+// 折りたたみセクションの開閉状態をブラウザ内に保持 (再検索で再描画されても復元)
+function rfHistSecOpen(key, def) {
+    try {
+        const v = JSON.parse(localStorage.getItem('rf_hist_sections') || '{}');
+        return v[key] != null ? !!v[key] : def;
+    } catch (e) { return def; }
+}
+window.rfHistSectionToggle = function (key, el) {
+    try {
+        const v = JSON.parse(localStorage.getItem('rf_hist_sections') || '{}');
+        v[key] = el.open;
+        localStorage.setItem('rf_hist_sections', JSON.stringify(v));
+    } catch (e) { /* 無視 */ }
+};
+function rfHistChartSVG(values, list, tKeys, segLabels, labelOf, goodTop) {
+    // values: 行×区間の値行列 (null は欠損 → 線を切る) / labelOf(v) → ツールチップ用の表示値
+    // 凡例は共通 (テーブル直下) なので線端ラベルは無し → 右余白を最小化してプロットを広く
+    // goodTop: Y軸の向き。true = 上ほど良い (ライフ: 0に近い=喪失小) / false = 下ほど良い (ターン: 少ないほど良い)
+    const texts = UI_TEXT.run_finder;
+    const W = 560, H = 336, PL = 50, PR = 18, PT = 18, PB = 46;
+    const DASH = ['', '7 4', '2 4.5', '12 4 3 4', '5 5', '9 3 3 3 3 3'];   // 重なりのある線を区別する破線パターン (行番号で循環)
+    const flat = values.flat().filter(v => v != null && isFinite(v));
+    if (!flat.length) return '';
+    const ticks = rfHistNiceTicks(Math.min(...flat), Math.max(...flat));
+    const lo = ticks[0], hi = ticks[ticks.length - 1];
+    const xAt = (si) => PL + si * (W - PL - PR) / Math.max(tKeys.length - 1, 1);
+    const yAt = (v) => PT + (hi - v) / Math.max(hi - lo, 1e-6) * (H - PT - PB);
+    const fmtTick = (t) => String(Math.round(t * 10) / 10);
+    let out = `<svg viewBox="0 0 ${W} ${H}" role="img" class="rf-hist-svg">`;
+    // Y軸の向きラベル (縦書き): ライフは上ほど良い (0に近い=喪失小) / ターンは下ほど良い
+    out += `<text transform="translate(13 ${(PT + (H - PT - PB) / 2).toFixed(1)}) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#999">${goodTop ? (texts.hist_axis_goodtop || '↑ higher is better') : (texts.hist_axis_goodbottom || '↓ lower is better')}</text>`;
+    for (const tv of ticks) {
+        const y = yAt(tv).toFixed(1);
+        const zero = Math.abs(tv) < 1e-9;
+        out += `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="${zero ? '#aaa' : '#e6e6e6'}" stroke-width="1"/>`;
+        out += `<text x="${PL - 6}" y="${Number(y) + 4}" text-anchor="end" font-size="12" fill="#888">${fmtTick(tv)}</text>`;
+    }
+    // X軸ラベル: "A1敵" など (テーブルの列と同じ並び)
+    tKeys.forEach((k, si) => {
+        out += `<text x="${xAt(si).toFixed(1)}" y="${H - PB + 20}" text-anchor="middle" font-size="13" fill="#555">${segLabels[si]}</text>`;
+        out += `<line x1="${xAt(si).toFixed(1)}" y1="${H - PB}" x2="${xAt(si).toFixed(1)}" y2="${H - PB + 5}" stroke="#bbb" stroke-width="1"/>`;
+    });
+    out += `<line x1="${PL}" y1="${PT - 8}" x2="${PL}" y2="${H - PB}" stroke="#bbb" stroke-width="1"/>`;
+    list.forEach((h, i) => {
+        const color = rfHistLineColor(i);
+        const dash = DASH[i % DASH.length];
+        const vals = values[i];
+        let d = '', started = false;
+        vals.forEach((v, si) => {
+            if (v == null || !isFinite(v)) { started = false; return; }
+            d += ` ${started ? 'L' : 'M'}${xAt(si).toFixed(1)},${yAt(v).toFixed(1)}`;
+            started = true;
+        });
+        if (d) out += `<path class="rf-hist-line" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" d="${d.trim()}" fill="none" stroke="${color}" stroke-width="2.4" ${dash ? `stroke-dasharray="${dash}" ` : ''}stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>`;
+        vals.forEach((v, si) => {
+            if (v == null || !isFinite(v)) return;
+            out += `<circle class="rf-hist-dot" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" cx="${xAt(si).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3.4" fill="${color}" opacity="0.85"><title>${rfHistNumMark(i)} ${(h.q || '-')} — ${segLabels[si]}: ${labelOf(v)}</title></circle>`;
+        });
+    });
+    return out + '</svg>';
+}
+function clearSearchHistory() {
+    rfSaveHistory([]);
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.innerHTML = renderSearchHistoryPanel();
+}
+function renderSearchHistoryPanel() {
+    const texts = UI_TEXT.run_finder;
+    const list = rfLoadHistory();
+    if (!list.length) return `<p class="analysis-note" style="margin:6px 0 0;">${texts.history_none || ''}</p>`;
+    const tk = new Set();
+    for (const h of list) for (const k in (h.turnAvg || {})) if (k.slice(1) !== 's') tk.add(k);   // 特殊イベント (…s) は比較列から外す
+    // 列の並び: Act 昇順 × 敵→エリート→ボス (例: A1敵 A1エ A1ボ … A3ボ A4ボ。Act4はボスのみ)
+    const KIND_ORDER = { e: 0, x: 1, b: 2, s: 3 };
+    const tKeys = Array.from(tk).sort((ka, kb) =>
+        (parseInt(ka[0], 10) - parseInt(kb[0], 10)) ||
+        ((KIND_ORDER[ka.slice(1)] ?? 9) - (KIND_ORDER[kb.slice(1)] ?? 9)));
+    const fmt = (v) => (v == null ? '-' : (Math.round(v * 10) / 10).toFixed(1));
+    // Act×種別の列ラベル: "A1e" → "A1敵" (ja) / "A1 Foe" (en)
+    const turnKindLabel = (kindChar) => ({
+        e: texts.turn_kind_e || 'En',
+        x: texts.turn_kind_x || 'El',
+        b: texts.turn_kind_b || 'B',
+        s: texts.turn_kind_s || 'Event'
+    }[kindChar] || kindChar);
+    // 所持率列: 各Actを戦ったランのうち、検索条件をすでに満たしていた割合 ("A1·54% A2·81%")
+    //   旧形式 (pickup のみ・poss 無し) の履歴はラン数表示にフォールバック
+    const pickupCell = (h) => {
+        if (h.poss) {
+            const counts = Object.keys(h.pickup).sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+                .map(a => `A${a}:${h.pickup[a]}/${h.n}`).join(' ');
+            return `<td class="col-h-pick" title="${counts}">${Object.keys(h.pickup).sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+                .map(a => `A${a}·${h.poss[a] != null ? h.poss[a] : '-'}%`).join(' ')}</td>`;
+        }
+        if (h.pickup) {
+            return `<td class="col-h-pick">${Object.keys(h.pickup).sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+                .map(a => `A${a}·${h.pickup[a]}`).join(' ')}</td>`;
+        }
+        return `<td class="col-h-pick">-</td>`;
+    };
+    // 区間セル: ヘッダー1つに cells 2つ (colspan)。左=平均ライフ喪失 (負の値・net純損失/敵別戦績と同一定義) / 右=平均ターン
+    //   旧履歴 (segAvg 無し) は ライフ '-' + ターンユーノ表示でフォールバック
+    const segCell = (h, k) => {
+        const s = h.segAvg && h.segAvg[k];
+        if (s) {
+            const life = s[0] > 0 ? `-${fmt(s[0])}` : '0';
+            return `<td class="col-h-life">${life}</td><td class="col-h-turn">${fmt(s[1])}</td>`;
+        }
+        return `<td class="col-h-life">-</td><td class="col-h-turn">${fmt(h.turnAvg[k])}</td>`;
+    };
+    const rerunTip = texts.hist_rerun || 'Click to re-run this search';
+    const rows = list.map((h, i) => {
+        /* (後で再表示する場合用) 全体平均ライフ喪失 / 全体ターン平均 のセル:
+            <td class="col-h-val">${fmt(h.avgLoss)}</td>
+            <td class="col-h-val">${fmt(h.avgTurns)}</td> */
+        return `<tr data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" onclick="rfRerunSearch(${h.t})" title="${rerunTip}">
+            <td class="col-h-q" title="${(h.q || '').replace(/"/g, '&quot;')}"><span class="rf-hist-num" style="color:${rfHistLineColor(i)}">${rfHistNumMark(i)}</span> ${h.q || '-'}</td>
+            <td class="col-h-n">${h.n}</td>
+            ${pickupCell(h)}
+            ${tKeys.map(k => segCell(h, k)).join('')}
+            <td><a href="javascript:void(0)" onclick="event.stopPropagation(); deleteSearchHistory(${h.t})" title="${texts.history_delete || 'Delete'}">🗑</a></td>
+        </tr>`;
+    }).join('');
+    // --- 比較グラフ (ライフ/ターン + 各累積)。欠損区間は線を切る。番号・色は表の行と対応 (hover で連動ハイライト) ---
+    const segLabels = tKeys.map(k => `A${k[0]}${turnKindLabel(k.slice(1))}`);
+    // 区間別 平均値の行列 (ライフは喪失=負で描画。ターンは旧履歴は turnAvg にフォールバック)
+    const lifeVals = list.map(h => tKeys.map(k => {
+        const s = h.segAvg && h.segAvg[k];
+        return (s && s[0] != null) ? -s[0] : null;
+    }));
+    const turnVals = list.map(h => tKeys.map(k => {
+        const s = h.segAvg && h.segAvg[k];
+        if (s && s[1] != null) return s[1];
+        return (h.turnAvg && h.turnAvg[k] != null && isFinite(h.turnAvg[k])) ? h.turnAvg[k] : null;
+    }));
+    // 累積: 区間 j までの合計 = Σ (戦闘あたり平均 × 平均戦闘回数)。戦闘回数 (s[2]) が無ければそこで線を切る
+    const cumVals = (vals) => vals.map((valsEntry, i) => {
+        const h = list[i], out = tKeys.map(() => null); let cum = 0;
+        for (let si = 0; si < tKeys.length; si++) {
+            const b = (h.segAvg && h.segAvg[tKeys[si]]) ? h.segAvg[tKeys[si]][2] : null;
+            if (valsEntry[si] == null || b == null) break;
+            cum += valsEntry[si] * b;
+            out[si] = cum;
+        }
+        return out;
+    });
+    const chartBlock = (svg, title) => (!svg ? '' :
+        `<div class="rf-hist-chart"><div class="rf-hist-chart-title">${title}</div>${svg}</div>`);
+    // 凡例チップ: hover で線・行と連動ハイライト
+    const legendChips = list.map((h, i) =>
+        `<span class="rf-hist-chip" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" onclick="rfRerunSearch(${h.t})" title="${rerunTip}"><span class="rf-hist-num" style="color:${rfHistLineColor(i)}">${rfHistNumMark(i)}</span> ${(h.q || '-').replace(/"/g, '&quot;')} <span class="rf-hist-chip-n">(n=${h.n})</span></span>`
+    ).join('');
+    return `
+    <details class="rf-hist-sec" ${(rfHistSecOpen('table', true) ? 'open' : '')} ontoggle="rfHistSectionToggle('table', this)">
+        <summary>${texts.hist_sec_table || 'Segment table'}</summary>
+        <div class="table-wrapper rf-history-wrapper">
+        <table class="run-finder-history-table">
+        <thead><tr>
+            <th>${texts.history_q || 'Query'}</th><th>${texts.history_n || 'n'}</th>
+            <!-- (後で再表示する場合用) 全体平均ライフ喪失 / 全体ターン平均 のヘッダー:
+                hint_life_loss -> 平均ライフ喪失 / hint_turns -> ターン平均 -->
+            <th title="${texts.hint_pickup || ''}">${texts.history_pickact || 'Pickup'}</th>
+            ${tKeys.map(k => `<th colspan="2" style="border-left:1px solid #ccc;" title="${texts.hint_seg || ''}">A${k[0]}${turnKindLabel(k.slice(1))}</th>`).join('')}
+            <th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+        </table></div>
+    </details>
+    <div class="rf-hist-legend">${legendChips}</div>
+    <details class="rf-hist-sec" ${(rfHistSecOpen('charts', true) ? 'open' : '')} ontoggle="rfHistSectionToggle('charts', this)">
+        <summary>${texts.hist_sec_charts || 'Comparison charts'}</summary>
+        <div class="rf-hist-charts rf-hist-grid">
+        ${chartBlock(rfHistChartSVG(lifeVals, list, tKeys, segLabels, fmt, true), texts.hist_chart_life || 'Avg life loss per battle')}
+        ${chartBlock(rfHistChartSVG(turnVals, list, tKeys, segLabels, fmt, false), texts.hist_chart_turn || 'Avg turns per battle')}
+        </div>
+        <details class="rf-hist-sec rf-hist-sub" ${(rfHistSecOpen('cum', false) ? 'open' : '')} ontoggle="rfHistSectionToggle('cum', this)">
+            <summary>${texts.hist_sec_cum || 'Cumulative charts'}</summary>
+            <div class="rf-hist-charts rf-hist-grid">
+            ${chartBlock(rfHistChartSVG(cumVals(lifeVals), list, tKeys, segLabels, fmt, true), texts.hist_chart_life_cum || 'Cumulative life loss')}
+            ${chartBlock(rfHistChartSVG(cumVals(turnVals), list, tKeys, segLabels, fmt, false), texts.hist_chart_turn_cum || 'Cumulative turns')}
+            </div>
+        </details>
+    </details>`;
+}
+window.deleteSearchHistory = deleteSearchHistory;
+window.clearSearchHistory = clearSearchHistory;
 
 function handleSortClick(sortKey) {
     if (currentSortKey === sortKey) {
@@ -1269,6 +1680,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         <div class="results-header">
             <h4>${texts.search_results_title.replace('{count}', runs.length)}</h4>
             <button onclick="generateAndCopyShareLink()" class="copy-share-link">${texts.share_link_button}</button>
+            <button onclick="rfJumpToHistory()" class="copy-share-link" title="${texts.hist_jump_title || ''}">${texts.hist_jump || 'Search history comparison'}</button>
         </div>
         ${criteriaHtml}
         <div class="table-wrapper">
@@ -1296,6 +1708,14 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
             </table>
         </div>
         <div id="run-finder-hardfights-chart" style="max-width: 1600px; margin: 0 auto; width: 100%;"></div>
+        <div style="max-width: 1600px; margin: 26px auto 0;">
+            <div class="results-header">
+                <h4>${texts.history_title || ''}</h4>
+                <button onclick="clearSearchHistory()" class="copy-share-link">${texts.history_clear || ''}</button>
+            </div>
+            <p class="analysis-note" style="margin:6px 0 0;">${texts.history_hint || ''}</p>
+            <div id="rf-history-panel">${renderSearchHistoryPanel()}</div>
+        </div>
     `;
 
     // --- 検索結果末尾の棒グラフ (検索結果全体の 敵ごと遭遇回数・苦戦の濃淡) ---

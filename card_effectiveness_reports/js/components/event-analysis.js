@@ -47,6 +47,9 @@ function renderEventAnalysisTab() {
         }).join(', ');
     };
 
+    // 選択肢ラベル: 焼き込み済み実名 (『【援助】…』) or 従来の「選択肢N」
+    const choiceName = (myLabel, fallbackLabel) => myLabel ? `<span class="event-choice-name">${myLabel}</span>` : fallbackLabel;
+
     const eventsHtml = charData.map(event => {
         const eventName = LANG === 'ja' ? event.eventNameJA : event.eventNameEN;
         const encounterCountLabel = LANG === 'ja' ? '回' : (event.encounterCount === 1 ? ' time' : ' times');
@@ -55,12 +58,14 @@ function renderEventAnalysisTab() {
         const imgSrcset = `./img/events/${event.eventId}@2x.avif 2x`;
 
         const choicesHtml = event.choices.map(choice => {
-            const choiceIndexLabel = choice.choiceIndex === 'N/A' ? C.no_choice_label : `${C.choice_label_prefix}${choice.choiceIndex}`;
+            const myLabel = LANG === 'ja' ? choice.labelJA : choice.labelEN;
+            // 実名ラベル (dialogues.json より焼き込み) 無しのフォールバック = 従来の「選択肢N」
+            const fallbackLabel = choice.choiceIndex === 'N/A' ? C.no_choice_label : `${C.choice_label_prefix}${choice.choiceIndex}`;
             const choiceCountLabel = LANG === 'ja' ? '回' : (choice.count === 1 ? ' time' : ' times');
 
             return `
                 <div class="event-choice-details">
-                    <h4>${choiceIndexLabel} (${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</h4>
+                    <h4 title="${fallbackLabel}">${choiceName(myLabel, fallbackLabel)}<span class="event-choice-meta">(${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</span></h4>
                     <ul>
                         <li><strong>${A.avg_resource_label}:</strong> ${formatResourceChange(choice.avgResourceChange)}</li>
                         <li><strong>${A.actions.card_add} Top10:</strong> ${formatItemList(choice.cardsAdded, 'card')}</li>
@@ -72,6 +77,8 @@ function renderEventAnalysisTab() {
                 </div>`;
         }).join('');
 
+        const eventDesc = LANG === 'ja' ? event.descJA : event.descEN;
+
         return `
             <div class="accordion-item">
                 <button class="accordion-header">
@@ -80,7 +87,7 @@ function renderEventAnalysisTab() {
                     <span class="accordion-stats">${event.encounterCount}${encounterCountLabel} (${vsAllRunsLabel} ${event.encounterRate.toFixed(1)}%)</span>
                     <span class="accordion-icon">▼</span>
                 </button>
-                <div class="accordion-content">${choicesHtml}</div>
+                <div class="accordion-content">${eventDesc ? `<p class="event-desc">${eventDesc}</p>` : ''}${choicesHtml}</div>
             </div>`;
     }).join('');
 

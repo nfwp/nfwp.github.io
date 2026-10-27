@@ -93,10 +93,16 @@
 }
 
 .event-choice-details h4 {
+    margin: 0 0 6px 0;
     margin-top: 0;
     color: #1a5276;
     font-size: 1.1em;
 }
+
+/* 選択肢実名ラベル (dialogues.json より焼き込み) / 従来形式フォールバック */
+.event-choice-name { font-weight: normal; }
+.event-choice-meta { font-weight: normal; font-size: 0.85em; color: #888; margin-left: 6px; }
+.event-desc { font-size: 0.9em; color: #999; margin: 0 0 4px 0; font-style: italic; }
 
 .event-choice-details ul {
     list-style-type: none;

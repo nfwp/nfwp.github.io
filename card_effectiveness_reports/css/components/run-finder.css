@@ -303,6 +303,39 @@
     display: none;
 }
 
+/* --- 検索履歴比較テーブル --- */
+.rf-history-wrapper { overflow-x: auto; }
+.run-finder-history-table { border-collapse: collapse; width: 100%; font-size: 12.5px; white-space: nowrap; }
+.run-finder-history-table th, .run-finder-history-table td {
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    text-align: right;
+}
+.run-finder-history-table thead th { position: static; background-color: #f2f2f2; text-align: center; }
+.run-finder-history-table td.col-h-q { text-align: left; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.run-finder-history-table td.col-h-n { text-align: center; }
+.run-finder-history-table td.col-h-turn { color: #666; background-color: #fafcfa; }
+.run-finder-history-table td.col-h-life { color: #b35959; background-color: #fffafa; }
+.rf-hist-num { font-weight: 600; }
+.rf-hist-charts { margin-top: 8px; }
+.rf-hist-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; max-width: 1300px; }
+.rf-hist-chart { margin-bottom: 0; min-width: 0; }
+.rf-hist-sub { margin-top: 14px; max-width: none; }
+.rf-hist-svg { display: block; width: 100%; height: auto; background: #fff; border: 1px solid #e3e3e3; border-radius: 6px; }
+.rf-hist-chart-title { font-size: 12px; font-weight: 600; margin: 0 0 2px; color: #555; }
+@media (max-width: 880px) { .rf-hist-grid { grid-template-columns: 1fr; } }
+.rf-hist-sec { margin-top: 10px; max-width: 1300px; }
+.rf-hist-sec > summary { cursor: pointer; font-weight: 600; font-size: 13px; color: #444; padding: 3px 2px; user-select: none; }
+.rf-hist-sec > summary:hover { color: #2a6496; }
+.rf-hist-legend { margin-top: 4px; max-width: 860px; padding: 4px 6px; border: 1px dashed #ddd; border-radius: 6px; font-size: 12px; line-height: 1.5; }
+.rf-hist-chip { display: inline-block; margin: 2px 6px 2px 0; padding: 1px 8px; border: 1px solid #e0e0e0; border-radius: 10px; background: #fff; cursor: pointer; }
+.rf-hist-chip.rf-hi-chip { background: #fff3cd; border-color: #e0b400; }
+.rf-hist-chip-n { color: #999; font-size: 11px; }
+.run-finder-history-table tbody tr { cursor: pointer; }
+.run-finder-history-table tr.rf-hi-row td { background: #fff3cd; }
+.run-finder-history-table td.col-h-pick { color: #555; }
+.run-finder-history-table tbody tr:hover { background-color: #f1f8f4; }
+
 
 
 /* --- 検索条件サマリー --- */
