@@ -11,6 +11,7 @@
             <li><a href="#sec-filters">Card Performance tab: how to use filters</a></li>
             <li><a href="#sec-hover">Reading the hover info (glossary)</a></li>
             <li><a href="#sec-cardlist">Reading the Card List tab</a></li>
+            <li><a href="#sec-events">Reading the Event Analysis tab</a></li>
             <li><a href="#sec-runfinder">How to use the Run Finder tab</a></li>
             <li><a href="#sec-data">Data updates &amp; notes</a></li>
             <li><a href="#sec-aggregation">Aggregation methods</a></li>
@@ -32,7 +33,7 @@
             <tr><td>🏺 Exhibits</td><td>Exhibit usage rates</td></tr>
             <tr><td>🗺️ Route &amp; Events</td><td>Rough flow of the routes players took</td></tr>
             <tr><td>⚔️ Enemy Analysis</td><td>Rough aggregates for various fights (in boss battles HP is restored after the fight, so HP numbers are not very accurate.)</td></tr>
-            <tr><td>❓ Event Analysis</td><td>Various events listed in chronological order (details of choices are hard to capture, so please use your judgment)</td></tr>
+            <tr><td>❓ Event Analysis</td><td>Various events listed in chronological order (details of choices are hard to capture, so please use your judgment)<br>Since 2026-10-27, choices show real card/exhibit name labels and a Top-10 block</td></tr>
             <tr><td>📈 Act Trend Analysis</td><td>Trends per Act transition and Total (trimming/removals caused by bosses cannot be distinguished. Use of tools is also counted as removal.)</td></tr>
             <tr><td>🎴 Card List</td><td>Card list table and filters, details at offering time, etc.</td></tr>
             <tr><td>🔍 Run Finder</td><td>Search for runs matching given conditions (sharing feature included)</td></tr>
@@ -107,6 +108,18 @@
         </dl>
     </div>
 
+    <h2 id="sec-events" class="c-green">❓ Reading the Event Analysis tab</h2>
+    <div class="manual-content">
+        <p>Choices made at each event are listed in chronological order. Choice labels became more informative as of 2026-10-27.</p>
+        <h3>About the choice labels</h3>
+        <dl class="manual-dl">
+            <dt>Real names</dt><dd>Chosen cards / exhibits are shown with their in-game names.<br>Event-specific branches (character IDs for &quot;Debut&quot;, pill assignments, etc.) are also aggregated per real name.</dd>
+            <dt>Mana color events</dt><dd>Mana choices such as 純化光玉 / 光玉精製 are shown with emoji icons: white🟡 blue🔵 black🟣 red🔴 green🟢 colorless🔘.<br>Hovering shows the color name in the title.</dd>
+            <dt>Numbers shown as (…)</dt><dd>Numbers inside event text vary from run to run, so variable parts are collapsed to <b>…</b> (static text of the event itself is kept as-is).</dd>
+            <dt>Top-10 block</dt><dd>For each choice it shows the top items that tend to happen around it (card add/remove/upgrade and exhibit add/remove). Hidden when everything is zero (e.g. mana events).</dd>
+        </dl>
+    </div>
+
     <h2 id="sec-runfinder" class="c-indigo">🔍 How to use the Run Finder tab</h2>
     <div class="manual-content">
         <!-- TODO: body -->
@@ -116,6 +129,17 @@
             <li>When ACT, level, cards, exhibits, etc. are specified, the hover on the runID shown in the play ID indicates whether it is a particular state (e.g. state act1 Lv 7), the final deck, or in which situation the item appeared.</li>
             <p class="manual-note">* You can search for cards that were adopted mid-route but are not in the final result.</p>
             <li>Pressing 🔗 Copy share link lets you share those search results.</li>
+            <li>The <b>Player name</b> field next to the deck size filters runs by that player (partial match, case-insensitive). Leave it empty for &quot;no specification&quot;. Player names appearing in the logs appear as autocomplete candidates. It is included in the share link.</li>
+        </ul>
+        <h3>🕰️ Search history comparison and IQR (Q1–Q3) display</h3>
+        <p>After a search, the <b>Search history comparison</b> at the bottom of the page keeps the last 30 searches as a table and line charts of average life loss / turns per segment. Hovering a row or a chart point shows the condition's <b>IQR (Q1–Q3)</b>.</p>
+        <ul>
+            <li><b>Life sign</b>: segment life is a net loss (heals included) — ‑ means damage-dominated, + means healing exceeded damage.</li>
+            <li><b>IQR band</b>: the chart shows thin dashed Q1/Q3 lines with a gradient fill that is densest at the median (Q2). The Q2 line itself is drawn as a short dashed line.</li>
+            <li><b>Spread charts</b>: line charts of each segment's Q3−Q1 width (how much the condition wobbles). Lower is better (smaller spread = more consistent results). Off by default — check <b>&quot;Spread (life) / Spread (turns)&quot;</b> in the &quot;Charts to show&quot; bar to show them.</li>
+            <li><b>Chart filtering &amp; zoom</b>: the 6 charts (2 segment + 2 spread (off by default) + 2 cumulative) are chosen with the <b>&quot;Charts to show&quot;</b> checkboxes (the bar is always visible). <b>Click a chart to pop it up enlarged in a full-screen dialog</b> (close with ✕ / ESC / backdrop click — hover highlighting and the IQR band stay interactive in the enlarged view). A single visible chart expands to full width automatically. &quot;Reset&quot; restores the defaults.</li>
+            <li>Computed only for conditions with 2 or more runs. Older history entries have no band — re-running the same condition adds it.</li>
+        </ul>
         </ul>
         <h3>⚔️ "Battles Fought (by Enemy)" chart</h3>
         <p>

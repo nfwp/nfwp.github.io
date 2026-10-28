@@ -99,6 +99,10 @@ function renderRunFinderTab() {
                         </select>
                         <input type="number" id="deck-size-value" min="0" placeholder="${texts.deck_size_placeholder}" style="width: 80px;">
                     </div>
+                    <div class="control-group">
+                        <label for="player-name-filter">${texts.player_label}</label>
+                        <input type="text" id="player-name-filter" list="player-name-datalist" placeholder="${texts.no_specify}" style="width: 140px;">
+                    </div>
                 </div>
                 <div class="control-group-row">
                     <div class="control-section" style="flex-grow: 1;">
@@ -167,6 +171,7 @@ function renderRunFinderTab() {
             </div>
         </div>
         <datalist id="all-items-datalist">${datalistOptions}</datalist>
+        <datalist id="player-name-datalist"></datalist>
     `;
 
     tabContent.innerHTML = `<div class="analysis-section">${finderHtml}</div>`;
@@ -527,6 +532,7 @@ function setupBossSelectors() {
 // --- 検索結果末尾の棒グラフ: 検索したラン集合での 敵ごと「遭遇回数」を横棒で表示し,
 //     苦戦した部分 (🩸ライフ部門 / ⚡️スペルカード部門) だけを濃色で積み上げて表現する ---
 let hfBarMode = 'count';   // 苦戦棒グラフの表示モード: 'count' = 遭遇回数ベース / 'pct' = 割合ベース (100% 積み上げ)
+let hfBarsCriteria = null; // 棒グラフと一緒に表示する検索条件 (タイトルに条件ラベルを出す)
 
 // --- ボス行キャラ絵オーバーレイ (Plotly の tick に画像は入れられないため、ラベル欄の余白に <img> を重ねる) ---
 let hfBarsPlotDiv = null;                  // 現在の Plotly ルート div (リサイズ再配置用)
@@ -598,7 +604,8 @@ async function ensureBossAvatarSpace() {
     window.setTimeout(positionBossAvatarOverlay, 250);
 }
 
-async function renderEncounterBars(runs) {
+async function renderEncounterBars(runs, searchCriteria = null) {
+    hfBarsCriteria = searchCriteria;   // 表示モード切替時も同じ条件ラベルを使い回す
     const holder = document.getElementById('run-finder-hardfights-chart');
     if (!holder || typeof Plotly === 'undefined') return;
     const isJa = LANG === 'ja';
@@ -727,7 +734,7 @@ async function renderEncounterBars(runs) {
     const plotDiv = document.getElementById('run-finder-hardfights-plot');
     // 全表示: チャート自体をスクロールさせずページスクロールで全体を見る
     const modeBtn = document.getElementById('hf-bar-mode-btn');
-    if (modeBtn) modeBtn.onclick = () => { hfBarMode = isPct ? 'count' : 'pct'; renderEncounterBars(runs); };
+    if (modeBtn) modeBtn.onclick = () => { hfBarMode = isPct ? 'count' : 'pct'; renderEncounterBars(runs, hfBarsCriteria); };
 
     // 各棒の右端に苦戦率を文字で書き添える (苦戦した戦闘 / 遭遇)
     const rateNotes = labels.map((lbl, i) => ({
@@ -740,6 +747,8 @@ async function renderEncounterBars(runs) {
         font: { size: 11.5, color: '#64748b' },
     }));
 
+    // タイトルへ検索条件ラベルを追加 (例: "@Sophie CirnoA Act1 …") — 条件が空 ('(all)') のときは出さない
+    const criteriaLabel = hfBarsCriteria ? makeQueryLabel(hfBarsCriteria) : '';
     Plotly.newPlot(plotDiv, segments.map(s => ({
         type: 'bar',
         orientation: 'h',
@@ -756,6 +765,7 @@ async function renderEncounterBars(runs) {
         title: {
             text: `${isJa ? '遭遇した戦闘 (敵ごと)' : 'Battles Fought (by Enemy)'}`
                 + ` <span style="font-size:0.8em;color:#64748b">(${nRuns} ラン / ${nRuns === 1 ? '1 run' : nRuns + ' runs'})</span>`
+                + (criteriaLabel && criteriaLabel !== '(all)' ? ` <span style="font-size:0.75em;color:#475569;font-weight:700">｜${criteriaLabel}</span>` : '')
                 + `<br><span style="font-size:0.7em;color:#64748b">${isJa ? '👹=エリート ✨=特殊イベント ・ ボス=キャラ絵 ・ ' : '👹=Elite ✨=Special Event ・ Boss=avatar ・ '}${isJa ? (isPct ? '棒の長さ = 遭遇に対する割合 (100% 積み上げ)' : '棒の長さ = 遭遇回数 ・ 色付き部分 = 苦戦した戦闘') : (isPct ? 'bar length = % of encounters (100% stacked)' : 'bar length = encounters ・ colored part = hard fights')} ・ ${isJa ? '並び順 = 時系列 (Act → 種別 → Lv)' : 'order = chronological (Act → type → level)'}</span>`,
             font: { size: 16 },
         },
@@ -967,6 +977,7 @@ async function performAdvancedSearch() {
         } catch (e) { /* stats が無くても検索自体は継続 (履歴は '-' 表示になる) */ }
 
         // --- 1. Get all filter values from UI ---
+        rfPopulatePlayerDatalist();   // プレイヤー名の入力補完 (自動検索でもここで更新される)
         const selectedChar = document.getElementById('character-select').value;
         const actFilter = document.getElementById('act-filter').value;
         const levelFilter = document.getElementById('level-filter').value;
@@ -974,6 +985,8 @@ async function performAdvancedSearch() {
         const deckSizeOperator = document.getElementById('deck-size-operator').value;
         const deckSizeValueStr = document.getElementById('deck-size-value').value;
         const deckSizeValue = deckSizeValueStr ? parseInt(deckSizeValueStr, 10) : NaN;
+        // プレイヤー名フィルタ (空なら指定なし = 全件 / 部分一致)
+        const playerNameFilter = (document.getElementById('player-name-filter').value || '').trim();
         const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
         const includeKeywords = getItemsFromList('include-items-list');
         const excludeKeywords = getItemsFromList('exclude-items-list');
@@ -988,6 +1001,7 @@ async function performAdvancedSearch() {
             act: actFilter ? actFilter : null,
             level: levelFilter ? levelFilter : null,
             deckSize: (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) ? { operator: deckSizeOperator, value: deckSizeValue } : null,
+            playerName: playerNameFilter || null,
             includeItems: includeKeywords.length > 0 ? { items: includeKeywords, logic: includeLogic } : null,
             excludeItems: excludeKeywords.length > 0 ? excludeKeywords : null,
             includeBosses: includeBosses.length > 0 ? { bosses: includeBosses, logic: bossLogic } : null,
@@ -1034,6 +1048,8 @@ async function performAdvancedSearch() {
         console.log(`[DEBUG] All necessary timelines loaded and cached.`);
 
         for (const run of runsToSearch) {
+            // プレイヤー名フィルタ (先にやって軽減) — 大小文字を区別しない部分一致
+            if (playerNameFilter && !(run.player_name || '').toLowerCase().includes(playerNameFilter.toLowerCase())) continue;
             // Boss filter (can be done early)
             const runBossNames = run.bosses ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : '')) : [];
             const includeBossesLower = includeBosses.map(b => b.toLowerCase());
@@ -1156,6 +1172,9 @@ function computeRunSetStats(runs) {
     const versions = {};
     // 拾いAct → 所持率: dist[act]=拾ったラン数 / reached[act]=そのActで戦闘したラン数 / held[act]=そのAct開始時点で所持のラン数
     const dist = {}, reached = {}, held = {};
+    const segValsAgg = {};   // 区間キー → ランごとの符号付き区間内平均ライフ値 (喪失=負・net=回復込み) → Q1/Q3 (IQR) 用
+    const segTurnAgg = {};   // 区間キー → ランごとの区間内 1戦闘あたり平均ターン → Q1/Q3 (IQR) 用
+    const runCums = [];   // 各ランの自キー分の符号付き累積 {key: [累積ライフ, 累積ターン]} (後段で全キー軸に frozen 展開 → Q1/Q3 用)
     let anyPickup = false;
     for (const r of all) {
         versions[r.version] = (versions[r.version] || 0) + 1;
@@ -1175,11 +1194,27 @@ function computeRunSetStats(runs) {
             acc[0] += v[0];
             acc[1] += (v[1] || 1);
             acc[2] += (v.length > 2 ? v[2] : 0);   // ライフ喪失和 (旧データは 0 扱い)
+            // Q1/Q3 用: このランの区間内 1戦闘あたり平均ライフ純損失 (符号付き: 喪失=負・回復=正)
+            (segValsAgg[k] || (segValsAgg[k] = [])).push(-(v.length > 2 ? v[2] : 0) / (v[1] || 1));
+            // Q1/Q3 用: このランの区間内 1戦闘あたり平均ターン
+            (segTurnAgg[k] || (segTurnAgg[k] = [])).push(v[0] / (v[1] || 1));
             turns += v[0];
         }
         for (const a of stActs) {
             reached[a] = (reached[a] || 0) + 1;
             if (pAct && (parseInt(a, 10) >= parseInt(pAct, 10))) held[a] = (held[a] || 0) + 1;
+        }
+        // 区間累積: ランごとの自キー分の累積値を保持。全 分布化 (frozen 展開) は後段
+        if (st.T && Object.keys(st.T).length) {
+            let cl = 0, ct = 0;
+            const m = {};
+            for (const k of Object.keys(st.T).filter(k => k.slice(1) !== 's').sort(rfTKeyCmp)) {
+                const v = st.T[k];
+                cl += -(v.length > 2 ? v[2] : 0);   // ライフ: 純損失を符号付きで積算 (喪失=負・回復が勝つと+)
+                ct += v[0];
+                m[k] = [cl, ct];
+            }
+            if (Object.keys(m).length) runCums.push(m);
         }
     }
     const avg = (s) => (nWith ? s / nWith : null);
@@ -1188,6 +1223,49 @@ function computeRunSetStats(runs) {
     // 区間別 [平均ライフ喪失, 平均ターン, 平均戦闘回数/ラン] (戦闘1回あたりのライフ・ターン。ライフは純損失/敵別戦績と同一定義)
     const segAvg = {};
     for (const k in turnAgg) if (turnAgg[k][1]) segAvg[k] = [turnAgg[k][2] / turnAgg[k][1], turnAgg[k][0] / turnAgg[k][1], turnAgg[k][1] / nWith];
+    // 区間別 Q1/Q3 (IQR): ランごとの区間内平均ライフ純損失の分布から四分位を取る (サンプル2件以上のみ記録)。
+    //   注意: segAvg は「全戦闘 pooled 平均」、Q1/Q3 は「ラン平均の分布」なので厳密には別物 (母集団=検索結果ラン集合)
+    const mkIqr = (agg) => {
+        const out = {};
+        for (const k in agg) {
+            if (agg[k].length < 2) continue;
+            const q1 = rfQuantile(agg[k], 0.25), q3 = rfQuantile(agg[k], 0.75);
+            if (q1 != null && q3 != null) out[k] = [q1, q3];
+        }
+        return out;
+    };
+    // 中央値 (Q2): IQR帯の描画を「中央値が濃いグラデーション」にする用。旧履歴は med 無し → 塗りは従来の単色
+    const mkMed = (agg) => {
+        const out = {};
+        for (const k in agg) {
+            if (agg[k].length < 2) continue;
+            const q2 = rfQuantile(agg[k], 0.5);
+            if (q2 != null) out[k] = q2;
+        }
+        return out;
+    };
+    // 累積分布: 全キー軸 (union) 上に「そのランがその区間に到達していない場合は直前の累積値をそのまま (frozen)」で展開。
+    //   これで各時点の分布平均 = 折れ線 (pooled 累積 Σ_k Σ_run T[k][2] / nWith) に恒等式で完全一致する
+    const ukSet = {};
+    for (const m of runCums) for (const k in m) ukSet[k] = 1;
+    const ukKeys = Object.keys(ukSet).sort(rfTKeyCmp);
+    const cumLifeAgg = {}, cumTurnAgg = {};
+    if (runCums.length >= 2) {
+        for (const k of ukKeys) { cumLifeAgg[k] = []; cumTurnAgg[k] = []; }
+        for (const m of runCums) {
+            const rKeys = Object.keys(m).sort(rfTKeyCmp);
+            let pi = 0, last = [0, 0];
+            for (const k of ukKeys) {
+                while (pi < rKeys.length && rfTKeyCmp(rKeys[pi], k) <= 0) { last = m[rKeys[pi]]; pi++; }
+                cumLifeAgg[k].push(last[0]);
+                cumTurnAgg[k].push(last[1]);
+            }
+        }
+    }
+    const segIqr = mkIqr(segValsAgg), segTurnIqr = mkIqr(segTurnAgg);
+    // 累積グラフ用: ランごとの区間累積値の分布の Q1/Q3 (ライフ=符号付き・ターン=素値)
+    const cumLifeIqr = mkIqr(cumLifeAgg), cumTurnIqr = mkIqr(cumTurnAgg);
+    const segMed = mkMed(segValsAgg), segTurnMed = mkMed(segTurnAgg), cumLifeMed = mkMed(cumLifeAgg), cumTurnMed = mkMed(cumTurnAgg);
     let poss = null;
     if (anyPickup) {
         poss = {};
@@ -1196,7 +1274,8 @@ function computeRunSetStats(runs) {
     return {
         n: all.length, nWith,
         avgLoss: avg(loss), avgTurns: avg(turns),
-        actLossAvg: lossAct.map(avg), turnAvg, segAvg, versions,
+        actLossAvg: lossAct.map(avg), turnAvg, segAvg, segIqr, segTurnIqr, cumLifeIqr, cumTurnIqr,
+        segMed, segTurnMed, cumLifeMed, cumTurnMed, versions,
         pickup: anyPickup ? dist : null, poss
     };
 }
@@ -1209,10 +1288,19 @@ function stationIndexToKey(idx) {
     }
     return STATION_INDEX_TO_KEY_CACHE[idx] || null;
 }
+// プレイヤー名入力補完 (datalist): ALL_RUN_DETAILS から名前一覧を作る (検索時 & 自動検索タイミングで更新)
+function rfPopulatePlayerDatalist() {
+    const dl = document.getElementById('player-name-datalist');
+    if (!dl || !ALL_RUN_DETAILS || !ALL_RUN_DETAILS.length) return;
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const names = [...new Set(ALL_RUN_DETAILS.map(r => r.player_name).filter(Boolean))].sort();
+    dl.innerHTML = names.map(n => `<option value="${esc(n)}"></option>`).join('');
+}
 // 検索条件を 1 行ラベルにまとめる ("ReimuA A2 L3 deck<=30 +[item, ...]")
 function makeQueryLabel(sc) {
     if (!sc) return '';
     const parts = [];
+    if (sc.playerName) parts.push('@' + sc.playerName);   // 先頭に置く (@name トークン・名前はスペース非推奨 = 旧履歴解析の制約)
     if (sc.character) parts.push(sc.character);
     if (sc.act) parts.push('Act' + sc.act);
     if (sc.level) parts.push('Lv' + sc.level);
@@ -1236,10 +1324,11 @@ function saveSearchHistory(searchCriteria, runs) {
 }
 // 旧履歴 (sc 無し) 用: ラベル文字列 ("SakuyaA +部屋掃除" / "ReimuA A2 L3 deck<=30 …") を検索条件へ復元
 function rfParseQueryLabel(q) {
-    const sc = { character: null, act: null, level: null, deckSize: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null };
+    const sc = { character: null, act: null, level: null, deckSize: null, playerName: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null };
     (String(q || '').split(' ') || []).forEach(p => {
         let m;
-        if (p.startsWith('+B:')) sc.includeBosses = { bosses: p.slice(3).split(','), logic: 'AND' };
+        if (p.startsWith('@') && p.length > 1) sc.playerName = p.slice(1);
+        else if (p.startsWith('+B:')) sc.includeBosses = { bosses: p.slice(3).split(','), logic: 'AND' };
         else if (p.startsWith('-B:')) sc.excludeBosses = p.slice(3).split(',');
         else if (p.startsWith('+') && p.length > 1) sc.includeItems = { items: p.slice(1).split(','), logic: 'AND' };
         else if (p.startsWith('-') && p.length > 1) sc.excludeItems = p.slice(1).split(',');
@@ -1266,6 +1355,8 @@ window.rfRerunSearch = async function (t) {
     const deckVal = document.getElementById('deck-size-value');
     if (deckOp) deckOp.value = sc.deckSize ? sc.deckSize.operator : 'any';
     if (deckVal) deckVal.value = sc.deckSize ? sc.deckSize.value : '';
+    const plEl = document.getElementById('player-name-filter');
+    if (plEl) plEl.value = sc.playerName || '';
     // アイテム/ボスの選択チップを復元
     ['include-items-list', 'exclude-items-list', 'include-bosses-list', 'exclude-bosses-list'].forEach(id => {
         const el = document.getElementById(id);
@@ -1307,6 +1398,19 @@ function rfHistLineColor(i) {
     // 金角 (golden angle) で hue を散らすと色が被りにくい
     return `hsl(${(i * 47) % 360} 55% 45%)`;
 }
+// 四分位数 (線形補間法)。arr が空なら null
+function rfQuantile(arr, p) {
+    if (!arr || !arr.length) return null;
+    const s = [...arr].sort((a, b) => a - b);
+    const idx = (s.length - 1) * p, lo = Math.floor(idx), hi = Math.ceil(idx);
+    return s[lo] + (s[hi] - s[lo]) * (idx - lo);
+}
+// 区間キーの並び (Act 昇順 × 敵→エリート→ボス→特殊)。履歴比較テーブルの tKeys と同一順序に使う
+const RF_KIND_ORDER = { e: 0, x: 1, b: 2, s: 3 };
+function rfTKeyCmp(ka, kb) {
+    return (parseInt(ka[0], 10) - parseInt(kb[0], 10)) ||
+        ((RF_KIND_ORDER[ka.slice(1)] ?? 9) - (RF_KIND_ORDER[kb.slice(1)] ?? 9));
+}
 function rfHistNiceTicks(minV, maxV) {
     // データ範囲に近付けた目盛り (0 の強制なし → 上下の無駄スペースを削る)
     const span = Math.max(maxV - minV, 1e-6);
@@ -1340,6 +1444,10 @@ window.rfHistHi = function (i, on) {
             el.classList.toggle('rf-hi-chip', !!(on && act));
         }
     });
+    // IQR帯 (rf-iqr-band): ホバー中の行の帯だけ表示、mouseout で全部消す
+    panel.querySelectorAll('.rf-iqr-band').forEach(el => {
+        el.style.display = (on && String(i) === el.getAttribute('data-hb')) ? '' : 'none';
+    });
 };
 // 折りたたみセクションの開閉状態をブラウザ内に保持 (再検索で再描画されても復元)
 function rfHistSecOpen(key, def) {
@@ -1355,12 +1463,80 @@ window.rfHistSectionToggle = function (key, el) {
         localStorage.setItem('rf_hist_sections', JSON.stringify(v));
     } catch (e) { /* 無視 */ }
 };
-function rfHistChartSVG(values, list, tKeys, segLabels, labelOf, goodTop) {
+// --- グラフの表示チェック (2026-10-28): 6枚のうち見たいグラフだけをチェックで選ぶ。
+//     セクション内で表示が1枚だけのときは自動で全幅 (拡大) 表示になる (.rf-hist-solo)
+const RF_HIST_VIS_KEYS = ['life', 'turn', 'slife', 'sturn', 'clife', 'cturn'];
+function rfHistVisLoad() {
+    // 既定: 区間別ライフ/ターンのみ ON (2026-10-28 user 指定)。ばらつき/累積はチェックで増やす
+    const def = { life: true, turn: true, slife: false, sturn: false, clife: false, cturn: false };
+    try { return Object.assign(def, JSON.parse(localStorage.getItem('rf_hist_chartvis') || '{}')); }
+    catch (e) { return def; }
+}
+function rfHistVisSave(v) {
+    try { localStorage.setItem('rf_hist_chartvis', JSON.stringify(v)); } catch (e) { /* 無視 */ }
+}
+window.rfHistChartVisToggle = function (key) {
+    const v = rfHistVisLoad();
+    v[key] = !v[key];
+    rfHistVisSave(v);
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.innerHTML = renderSearchHistoryPanel();
+};
+window.rfHistChartVisReset = function () {
+    rfHistVisSave({});
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.innerHTML = renderSearchHistoryPanel();
+};
+// --- グラフ拡大: パネル内にライトボックス (ポップアップ拡大) を表示 (2026-10-28・⤢ ボタンからの置き換え) ---
+//     クリックしたグラフの SVG を複製して大きく表示。パネル内に置くのは rfHistHi の連動ハイライトが
+//     #rf-history-panel 配下を探すため (ポップアップ内でもホバー連動が有効)
+window.rfHistLbOpen = function (chartEl) {
+    const panel = document.getElementById('rf-history-panel');
+    if (!panel || !chartEl) return;
+    // 既に開いていれば閉じる (トグル)
+    const ex = panel.querySelector('.rf-hist-lightbox');
+    if (ex) ex.remove();
+    const svg = chartEl.querySelector('svg.rf-hist-svg');
+    if (!svg) return;
+    const titleEl = chartEl.querySelector('.rf-hist-chart-title span');
+    const legend = panel.querySelector('.rf-hist-legend');
+    const box = document.createElement('div');
+    box.className = 'rf-hist-lightbox';
+    box.onclick = function (e) { if (e.target === box) rfHistLbClose(); };
+    // クリック連打で選択が伝播しないよう inner 側で stopPropagation
+    box.innerHTML = `<div class="rf-hist-lightbox-inner" onclick="event.stopPropagation()">` +
+        `<div class="rf-hist-lb-head"><span>${titleEl ? titleEl.textContent : ''}</span>` +
+        `<button type="button" class="rf-hist-lb-close" onclick="rfHistLbClose()" title="✕">✕</button></div>` +
+        (legend ? `<div class="rf-hist-lb-legend">${legend.innerHTML}</div>` : '') +
+        svg.outerHTML + `</div>`;
+    panel.appendChild(box);
+};
+window.rfHistLbClose = function () {
+    const box = document.querySelector('#rf-history-panel > .rf-hist-lightbox');
+    if (box) box.remove();
+};
+// ESC キーで閉じる (多重登録防止)
+if (!window.rfHistLbEscInit) {
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') rfHistLbClose(); });
+    window.rfHistLbEscInit = true;
+}
+// 履歴エントリの IQR [Q1,Q3] (+中央値 med) から描画用の3点組を作る。旧履歴 (med 無し) は med = null
+function rfIqrTriplet(q, med) {
+    if (!q || q.length < 2 || !isFinite(q[0]) || !isFinite(q[1])) return null;
+    const m = (typeof med === 'number' && isFinite(med)) ? med : null;
+    return [q[0], q[1], m];
+}
+// IQR帯のグラデーション層: Q2 から両端へ正規化距離 f の等高ポリゴンを足し合わせ (中心ほど濃くなる)
+//   ※ rfHistChartSVG 内に literal で定義 (トップレベル const は eval 経由だと呼び出し後に参照できない)
+function rfHistChartSVG(values, list, tKeys, segLabels, labelOf, goodTop, iqrOf, hMul) {
+    // hMul: プロット縦幅の倍率 (2026-10-28: PC で表示グラフが 2枚以下のとき 2 → 縦を倍にして見やすく)
     // values: 行×区間の値行列 (null は欠損 → 線を切る) / labelOf(v) → ツールチップ用の表示値
+    // iqrOf: (h, 区間キー) → [Q1, Q3] | null。あれば点ツールチップに IQR を付し、ホバーで薄い水平線を表示。
+    //        (区間ライフ=h.segIqr / 累積ライフ=h.cumLifeIqr / 累積ターン=h.cumTurnIqr。ターン部門は null で非対応)
     // 凡例は共通 (テーブル直下) なので線端ラベルは無し → 右余白を最小化してプロットを広く
     // goodTop: Y軸の向き。true = 上ほど良い (ライフ: 0に近い=喪失小) / false = 下ほど良い (ターン: 少ないほど良い)
     const texts = UI_TEXT.run_finder;
-    const W = 560, H = 336, PL = 50, PR = 18, PT = 18, PB = 46;
+    const W = 560, H = 336 * (hMul || 1), PL = 50, PR = 18, PT = 18, PB = 46;
     const DASH = ['', '7 4', '2 4.5', '12 4 3 4', '5 5', '9 3 3 3 3 3'];   // 重なりのある線を区別する破線パターン (行番号で循環)
     const flat = values.flat().filter(v => v != null && isFinite(v));
     if (!flat.length) return '';
@@ -1369,7 +1545,78 @@ function rfHistChartSVG(values, list, tKeys, segLabels, labelOf, goodTop) {
     const xAt = (si) => PL + si * (W - PL - PR) / Math.max(tKeys.length - 1, 1);
     const yAt = (v) => PT + (hi - v) / Math.max(hi - lo, 1e-6) * (H - PT - PB);
     const fmtTick = (t) => String(Math.round(t * 10) / 10);
+    // --- IQR帯 (行ごと・ホバー連動): Q1/Q3 折れ線 (同色の薄い破線) + 中央値 Q2 (密な短破線) + Q1..Q3 間の塗り。
+    //     med があれば「中央値に近いほど濃い」層状グラデーション (正規化距離の等高ポリゴン重ね)。
+    //     med 無し (旧履歴) は従来どおり単色の薄塗り。表示切替は rfHistHi 側で data-hb を見て行う
+    let iqrBands = '';
+    if (iqrOf) {
+        list.forEach((h, i) => {
+            const qr = tKeys.map(k => iqrOf(h, k));
+            const valid = (si) => {
+                const q = qr[si];
+                return !!q && isFinite(q[0]) && isFinite(q[1]);
+            };
+            if (!qr.some((q, si) => valid(si))) return;
+            const color = rfHistLineColor(i);
+            const bandPath = (pick) => {
+                let d = '', started = false;
+                qr.forEach((q, si) => {
+                    const v = valid(si) ? pick(q) : null;
+                    if (v == null || !isFinite(v)) { started = false; return; }
+                    d += `${started ? 'L' : 'M'}${xAt(si).toFixed(1)},${yAt(v).toFixed(1)}`;
+                    started = true;
+                });
+                return d.trim();
+            };
+            const dq1 = bandPath(q => q[0]), dq3 = bandPath(q => q[1]);
+            // Q2 (中央値) も破線で追加 — Q1/Q3 より密な破線 + やや薄めで区別 (med 無し区間は自動で途切れる)
+            const dq2 = bandPath(q => q[2]);
+            if (!dq1 && !dq3 && !dq2) return;
+            // 塗り: med (中央値) が揃う連続区間ごとにグラデ層 / med 無し区間は単色薄塗り
+            const GRAD_LAYERS = [1, 0.8, 0.6, 0.4, 0.2], GRAD_OP = 0.055;
+            const medOk = (si) => valid(si) && qr[si][2] != null && isFinite(qr[si][2]);
+            let grad = '', flat = '', run = [];
+            const flushFlat = () => {
+                if (run.length > 1) {
+                    const up = run.map(si => `${xAt(si).toFixed(1)},${yAt(qr[si][1]).toFixed(1)}`).join(' ');
+                    const dn = run.slice().reverse().map(si => `${xAt(si).toFixed(1)},${yAt(qr[si][0]).toFixed(1)}`).join(' ');
+                    flat += `<polygon points="${up} ${dn}" fill="${color}" fill-opacity="0.14" stroke="none"/>`;
+                }
+                run = [];
+            };
+            const flushGrad = () => { if (run.length > 1) for (const f of GRAD_LAYERS) {
+                    const up = run.map(si => `${xAt(si).toFixed(1)},${yAt(qr[si][2] + (qr[si][1] - qr[si][2]) * f).toFixed(1)}`).join(' ');
+                    const dn = run.slice().reverse().map(si => `${xAt(si).toFixed(1)},${yAt(qr[si][2] - (qr[si][2] - qr[si][0]) * f).toFixed(1)}`).join(' ');
+                    grad += `<polygon points="${up} ${dn}" fill="${color}" fill-opacity="${GRAD_OP}" stroke="none"/>`;
+                } run = []; };
+            // 現在のモードに対応する flush だけを行う (runMode 無視の全 flush は誤重ね描きになる)
+            const flushMode = () => {
+                if (runMode === 'grad') flushGrad(); else if (runMode === 'flat') flushFlat();
+            };
+            // 区間を med 有無で grad/flat に振り分けつつ、連続区間ごとにまとめて flush (push 先に flush すると run が育たない)
+            let runMode = null;   // 'grad' | 'flat' | null
+            qr.forEach((q, si) => {
+                if (medOk(si)) {
+                    if (runMode !== 'grad') flushMode();
+                    run.push(si); runMode = 'grad';
+                } else if (valid(si)) {
+                    if (runMode !== 'flat') flushMode();
+                    run.push(si); runMode = 'flat';
+                } else {
+                    flushMode();
+                    runMode = null;
+                }
+            });
+            flushMode();
+            iqrBands += `<g class="rf-iqr-band" data-hb="${i}" style="display:none">` + flat + grad +
+                (dq1 ? `<path d="${dq1}" fill="none" stroke="${color}" stroke-opacity="0.45" stroke-width="1.6" stroke-dasharray="4 3"/>` : '') +
+                (dq3 ? `<path d="${dq3}" fill="none" stroke="${color}" stroke-opacity="0.45" stroke-width="1.6" stroke-dasharray="4 3"/>` : '') +
+                (dq2 ? `<path d="${dq2}" fill="none" stroke="${color}" stroke-opacity="0.55" stroke-width="1.2" stroke-dasharray="2 3"/>` : '') +
+                `</g>`;
+        });
+    }
     let out = `<svg viewBox="0 0 ${W} ${H}" role="img" class="rf-hist-svg">`;
+    out += iqrBands;   // 帯はメイン線より下層に置く
     // Y軸の向きラベル (縦書き): ライフは上ほど良い (0に近い=喪失小) / ターンは下ほど良い
     out += `<text transform="translate(13 ${(PT + (H - PT - PB) / 2).toFixed(1)}) rotate(-90)" text-anchor="middle" font-size="11.5" fill="#999">${goodTop ? (texts.hist_axis_goodtop || '↑ higher is better') : (texts.hist_axis_goodbottom || '↓ lower is better')}</text>`;
     for (const tv of ticks) {
@@ -1397,7 +1644,12 @@ function rfHistChartSVG(values, list, tKeys, segLabels, labelOf, goodTop) {
         if (d) out += `<path class="rf-hist-line" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" d="${d.trim()}" fill="none" stroke="${color}" stroke-width="2.4" ${dash ? `stroke-dasharray="${dash}" ` : ''}stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>`;
         vals.forEach((v, si) => {
             if (v == null || !isFinite(v)) return;
-            out += `<circle class="rf-hist-dot" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" cx="${xAt(si).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3.4" fill="${color}" opacity="0.85"><title>${rfHistNumMark(i)} ${(h.q || '-')} — ${segLabels[si]}: ${labelOf(v)}</title></circle>`;
+            // その区間の Q1/Q3 (+中央値 Q2) (IQR) があれば title に付ける (帯の折れ線/塗りは rfHistHi のホバー連動側で表示)
+            const iqr = iqrOf ? iqrOf(h, tKeys[si]) : null;
+            const iqrSuffix = (iqr && iqr.length > 1)
+                ? ` (${texts.hist_seg_iqr_short || 'IQR'}: ${labelOf(iqr[0])}〜${labelOf(iqr[1])}${(iqr[2] != null) ? `, ${texts.hist_seg_q2_short || 'med'} ${labelOf(iqr[2])}` : ''})`
+                : '';
+            out += `<circle class="rf-hist-dot" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" cx="${xAt(si).toFixed(1)}" cy="${yAt(v).toFixed(1)}" r="3.4" fill="${color}" opacity="0.85"><title>${rfHistNumMark(i)} ${(h.q || '-')} — ${segLabels[si]}: ${labelOf(v)}${iqrSuffix}</title></circle>`;
         });
     });
     return out + '</svg>';
@@ -1413,11 +1665,8 @@ function renderSearchHistoryPanel() {
     if (!list.length) return `<p class="analysis-note" style="margin:6px 0 0;">${texts.history_none || ''}</p>`;
     const tk = new Set();
     for (const h of list) for (const k in (h.turnAvg || {})) if (k.slice(1) !== 's') tk.add(k);   // 特殊イベント (…s) は比較列から外す
-    // 列の並び: Act 昇順 × 敵→エリート→ボス (例: A1敵 A1エ A1ボ … A3ボ A4ボ。Act4はボスのみ)
-    const KIND_ORDER = { e: 0, x: 1, b: 2, s: 3 };
-    const tKeys = Array.from(tk).sort((ka, kb) =>
-        (parseInt(ka[0], 10) - parseInt(kb[0], 10)) ||
-        ((KIND_ORDER[ka.slice(1)] ?? 9) - (KIND_ORDER[kb.slice(1)] ?? 9)));
+    // 列の並び: Act 昇順 × 敵→エリート→ボス (例: A1敵 A1エ A1ボ … A3ボ A4ボ。Act4はボスのみ) — rfTKeyCmp (共通)
+    const tKeys = Array.from(tk).sort(rfTKeyCmp);
     const fmt = (v) => (v == null ? '-' : (Math.round(v * 10) / 10).toFixed(1));
     // Act×種別の列ラベル: "A1e" → "A1敵" (ja) / "A1 Foe" (en)
     const turnKindLabel = (kindChar) => ({
@@ -1446,8 +1695,17 @@ function renderSearchHistoryPanel() {
     const segCell = (h, k) => {
         const s = h.segAvg && h.segAvg[k];
         if (s) {
-            const life = s[0] > 0 ? `-${fmt(s[0])}` : '0';
-            return `<td class="col-h-life">${life}</td><td class="col-h-turn">${fmt(s[1])}</td>`;
+            // [旧] 回復が被弾を上回る区間 (net<=0) も強制的に "0" 表示していた:
+            // const life = s[0] > 0 ? `-${fmt(s[0])}` : '0';
+            // [新] 純損失を素直に表示: 被弾優位は -x / 回復優位 (net<0) は +x / 完全一致は 0
+            const life = s[0] > 0 ? `-${fmt(s[0])}` : (s[0] < 0 ? `+${fmt(-s[0])}` : '0');
+            // ホバー時 (title=ネイティブ tooltip) に Q1/Q2/Q3 (IQR) を出す。旧履歴 (segIqr/segMed 無し) は付かない
+            const iqr = h.segIqr && h.segIqr[k];
+            const med = h.segMed && h.segMed[k];
+            const iqrTitle = (iqr && iqr.length > 1)
+                ? ` title="${texts.hist_seg_iqr_prefix || 'IQR'}: Q1 ${fmt(iqr[0])} / ${med != null ? `Q2 ${fmt(med)} / ` : ''}Q3 ${fmt(iqr[1])}"`
+                : '';
+            return `<td class="col-h-life"${iqrTitle}>${life}</td><td class="col-h-turn">${fmt(s[1])}</td>`;
         }
         return `<td class="col-h-life">-</td><td class="col-h-turn">${fmt(h.turnAvg[k])}</td>`;
     };
@@ -1487,12 +1745,43 @@ function renderSearchHistoryPanel() {
         }
         return out;
     });
-    const chartBlock = (svg, title) => (!svg ? '' :
-        `<div class="rf-hist-chart"><div class="rf-hist-chart-title">${title}</div>${svg}</div>`);
+    // ばらつき (IQR幅): 区間ごとの Q3-Q1 絶対値 = その条件のランが区間でどれだけ「ブレる」か。
+    //     旧履歴 (segIqr 無し) は該当区間で線を切る。値は必ず 0 以上 → 下ほどブレが小さい (安定)
+    const spreadVals = (iqrPick) => list.map(h => tKeys.map(k => {
+        const q = iqrPick(h) && iqrPick(h)[k];
+        return (q && q.length > 1 && isFinite(q[0]) && isFinite(q[1])) ? Math.abs(q[1] - q[0]) : null;
+    }));
+    // グラフ表示チェック (rf_hist_chartvis): ON/OFF は rfHistChartVisToggle で再描画
+    const vis = rfHistVisLoad();
     // 凡例チップ: hover で線・行と連動ハイライト
     const legendChips = list.map((h, i) =>
         `<span class="rf-hist-chip" data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" onclick="rfRerunSearch(${h.t})" title="${rerunTip}"><span class="rf-hist-num" style="color:${rfHistLineColor(i)}">${rfHistNumMark(i)}</span> ${(h.q || '-').replace(/"/g, '&quot;')} <span class="rf-hist-chip-n">(n=${h.n})</span></span>`
     ).join('');
+    // --- グラフ6枚を1つのグリッドに並べる (チェックで表示/非表示・アコーディオンは廃止 2026-10-28) ---
+    //     PC (幅 >880px) で見えるグラフが 2枚以下のときは縦も 2倍にして大きく描画
+    const hasVals = (m) => m.some(valsRow => valsRow.some(v => v != null && isFinite(v)));
+    const spreadLifeM = spreadVals(h => h.segIqr);
+    const spreadTurnM = spreadVals(h => h.segTurnIqr);
+    const mkEntries = [
+        ['life',  lifeVals, true,  (h, k) => rfIqrTriplet(h.segIqr && h.segIqr[k], h.segMed && h.segMed[k]),  texts.hist_chart_life || 'Avg life loss per battle'],
+        ['turn',  turnVals, false, (h, k) => rfIqrTriplet(h.segTurnIqr && h.segTurnIqr[k], h.segTurnMed && h.segTurnMed[k]), texts.hist_chart_turn || 'Avg turns per battle'],
+        ['slife', spreadLifeM, false, null, texts.hist_chart_life_spread || 'Per-segment life spread'],
+        ['sturn', spreadTurnM, false, null, texts.hist_chart_turn_spread || 'Per-segment turn spread'],
+        ['clife', cumVals(lifeVals), true,  (h, k) => rfIqrTriplet(h.cumLifeIqr && h.cumLifeIqr[k], h.cumLifeMed && h.cumLifeMed[k]), texts.hist_chart_life_cum || 'Cumulative life loss'],
+        ['cturn', cumVals(turnVals), false, (h, k) => rfIqrTriplet(h.cumTurnIqr && h.cumTurnIqr[k], h.cumTurnMed && h.cumTurnMed[k]), texts.hist_chart_turn_cum || 'Cumulative turns'],
+    ];
+    const shownCount = mkEntries.filter(([k, m]) => vis[k] && hasVals(m)).length;
+    // モバイル (≤880px) は縦横比が環境ごとに異なるため高さは据え置き (user 同日確認)
+    // const hMul = (window.innerWidth > 880 && (shownCount === 1 || shownCount === 2)) ? 2 : 1;
+    const hMul = 1; // 常に縦1倍に固定
+
+    const defs = mkEntries
+        .filter(([k, m]) => vis[k] && hasVals(m))
+        .map(([k, m, goodTop, iqrOf, title]) => [k, rfHistChartSVG(m, list, tKeys, segLabels, fmt, goodTop, iqrOf, hMul), title]);
+    // クリック → ライトボックス拡大 (rfHistLbOpen)。表示チェック1枚のときは全幅
+    const chartBlock = ([k, svg, title]) => (!svg || !vis[k]) ? '' :
+        `<div class="rf-hist-chart rf-hist-clickable${(shownCount === 1) ? ' rf-hist-solo' : ''}" onclick="rfHistLbOpen(this)">` +
+        `<div class="rf-hist-chart-title"><span>${title}</span></div>${svg}</div>`;
     return `
     <details class="rf-hist-sec" ${(rfHistSecOpen('table', true) ? 'open' : '')} ontoggle="rfHistSectionToggle('table', this)">
         <summary>${texts.hist_sec_table || 'Segment table'}</summary>
@@ -1510,20 +1799,17 @@ function renderSearchHistoryPanel() {
         </table></div>
     </details>
     <div class="rf-hist-legend">${legendChips}</div>
-    <details class="rf-hist-sec" ${(rfHistSecOpen('charts', true) ? 'open' : '')} ontoggle="rfHistSectionToggle('charts', this)">
-        <summary>${texts.hist_sec_charts || 'Comparison charts'}</summary>
-        <div class="rf-hist-charts rf-hist-grid">
-        ${chartBlock(rfHistChartSVG(lifeVals, list, tKeys, segLabels, fmt, true), texts.hist_chart_life || 'Avg life loss per battle')}
-        ${chartBlock(rfHistChartSVG(turnVals, list, tKeys, segLabels, fmt, false), texts.hist_chart_turn || 'Avg turns per battle')}
-        </div>
-        <details class="rf-hist-sec rf-hist-sub" ${(rfHistSecOpen('cum', false) ? 'open' : '')} ontoggle="rfHistSectionToggle('cum', this)">
-            <summary>${texts.hist_sec_cum || 'Cumulative charts'}</summary>
-            <div class="rf-hist-charts rf-hist-grid">
-            ${chartBlock(rfHistChartSVG(cumVals(lifeVals), list, tKeys, segLabels, fmt, true), texts.hist_chart_life_cum || 'Cumulative life loss')}
-            ${chartBlock(rfHistChartSVG(cumVals(turnVals), list, tKeys, segLabels, fmt, false), texts.hist_chart_turn_cum || 'Cumulative turns')}
-            </div>
-        </details>
-    </details>`;
+    <div class="rf-hist-visbar">
+        <span>${texts.hist_vis_title || 'Charts to show'}:</span>
+        ${[['life', texts.hist_vis_life || 'Avg life'], ['turn', texts.hist_vis_turn || 'Avg turns'],
+           ['slife', texts.hist_vis_spread_life || 'Spread (life)'], ['sturn', texts.hist_vis_spread_turn || 'Spread (turns)'],
+           ['clife', texts.hist_vis_cum_life || 'Cumulative life'], ['cturn', texts.hist_vis_cum_turn || 'Cumulative turns']]
+            .map(([k, lbl]) => `<label><input type="checkbox" ${vis[k] ? 'checked' : ''} onchange="rfHistChartVisToggle('${k}')">${lbl}</label>`).join('')}
+        <button type="button" class="rf-hist-vis-reset" onclick="rfHistChartVisReset()">${texts.hist_vis_reset || 'Reset'}</button>
+    </div>
+    <div class="rf-hist-charts rf-hist-grid">
+    ${defs.map(chartBlock).join('')}
+    </div>`;
 }
 window.deleteSearchHistory = deleteSearchHistory;
 window.clearSearchHistory = clearSearchHistory;
@@ -1579,6 +1865,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         const crit = (label, value) => `<span class="search-criterion"><strong>${label}:</strong> ${value}</span>`;
 
         if (searchCriteria.character) criteriaList.push(crit(critLabel('char', 'Char'), searchCriteria.character));
+        if (searchCriteria.playerName) criteriaList.push(crit(critLabel('player', 'Player'), searchCriteria.playerName));
         if (searchCriteria.act) criteriaList.push(crit(critLabel('act', 'Act'), searchCriteria.act));
         if (searchCriteria.level) criteriaList.push(crit(critLabel('level', 'Level'), searchCriteria.level));
         if (searchCriteria.deckSize) {
@@ -1644,11 +1931,11 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
             }
 
             return `<tr>
-                <td class="col-run_id"><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
+                <td class="col-run_id" title="${run.run_id}"><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
                 <td class="col-version">${run.version}</td>
                 <td class="col-character">${run.character}</td>
                 <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>
-                <td class="col-player_name">${run.player_name}</td>
+                <td class="col-player_name" title="${run.player_name}">${run.player_name}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.early}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.mid}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.late}</td>
@@ -1719,7 +2006,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
     `;
 
     // --- 検索結果末尾の棒グラフ (検索結果全体の 敵ごと遭遇回数・苦戦の濃淡) ---
-    renderEncounterBars(runs);
+    renderEncounterBars(runs, searchCriteria);
 
 }
 
@@ -1740,6 +2027,8 @@ async function generateAndCopyShareLink() {
         params.set('deckOp', deckOp);
         params.set('deckVal', deckVal);
     }
+    const pln = (document.getElementById('player-name-filter').value || '').trim();
+    if (pln) params.set('player', pln);
     const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
     const includeItems = getItemsFromList('include-items-list');
     if (includeItems.length > 0) params.set('includeItems', includeItems.join(','));
@@ -1811,6 +2100,7 @@ function populateUiFromUrlParams() {
     if (params.has('level')) document.getElementById('level-filter').value = params.get('level');
     if (params.has('deckOp')) document.getElementById('deck-size-operator').value = params.get('deckOp');
     if (params.has('deckVal')) document.getElementById('deck-size-value').value = params.get('deckVal');
+    if (params.has('player')) document.getElementById('player-name-filter').value = params.get('player');
     if (params.has('includeItems')) params.get('includeItems').split(',').forEach(item => addItemToSelection(item, 'include-items-list'));
     if (params.has('excludeItems')) params.get('excludeItems').split(',').forEach(item => addItemToSelection(item, 'exclude-items-list'));
     if (params.has('includeBosses')) params.get('includeBosses').split(',').forEach(boss => addBossToSelection(boss, 'include-bosses-list'));

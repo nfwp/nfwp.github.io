@@ -160,7 +160,7 @@
   },
   "enemy": {
     "title": "Enemy Combat Analysis",
-    "note": " ⚠\uFE0FPower change for bosses may be inaccurate due to post-battle recovery.",
+    "note": " ⚠️Power change for bosses may be inaccurate due to post-battle recovery.",
     "table": {
       "act": "Act",
       "name": "Enemy Group",
@@ -172,9 +172,9 @@
       "p": "Avg P Change"
     },
     "combat_types": {
-        "Enemy": "Enemy",
-        "EliteEnemy": "Elite",
-        "Boss": "Boss"
+      "Enemy": "Enemy",
+      "EliteEnemy": "Elite",
+      "Boss": "Boss"
     }
   },
   "run_finder": {
@@ -211,9 +211,10 @@
     "hint_life_loss": "Total life lost in battles (sum of per-battle damage taken; heals are not subtracted)",
     "hint_turns": "Total number of battle rounds",
     "hint_turn_avg": "Average battle rounds per Act × enemy type (Foe=normal / Elite / Boss / Event=special)",
-    "hint_seg": "Per segment average per battle. Left = avg HP lost (negative; net HP change including heals — same definition as the enemy-performance tab) / Right = avg turns",
+    "hint_seg": "Per segment average per battle. Left = avg HP lost (net HP change including heals — same definition as the enemy-performance tab; + when heals dominate) / Right = avg turns. Hover a life cell for its Q1/Q3 (IQR)",
+    "hist_seg_iqr_prefix": "Life loss quartiles (per-run segment averages)",
     "history_title": "🕘 Search History Comparison",
-    "history_hint": "Compares averages of your last 30 searches (stored only in this browser). Re-running the same query replaces the previous entry.",
+    "history_hint": "Compares the averages of your last 30 searches (stored in this browser only). Re-running the same condition overwrites the entry. Hover a row or chart to show the IQR (Q1–Q3) and median Q2 band / dashed lines.",
     "history_none": "No history yet. Run a search to record it automatically.",
     "history_q": "Query",
     "history_n": "Runs",
@@ -226,8 +227,8 @@
     "hist_chart_life_cum": "HP department (cumulative) — per-run cumulative HP lost as of finishing each segment (segment per-battle HP avg × avg battles summed)",
     "hist_chart_turn_cum": "Turns department (cumulative) — per-run cumulative rounds as of finishing each segment (segment per-battle turn avg × avg battles summed)",
     "hist_sec_table": "Segment table (click to collapse)",
-    "hist_sec_charts": "Comparison charts — HP / Turns (click to collapse)",
-    "hist_sec_cum": "Cumulative charts (click to collapse)",
+    "hist_sec_charts": "Segment charts — HP / Turns (click to collapse)",
+    "hist_sec_cum": "Segment cumulative charts — HP / Turns (click to collapse)",
     "hist_axis_goodtop": "↑ Higher is better",
     "hist_axis_goodbottom": "↓ Lower is better",
     "hist_rerun": "Click to re-run this search",
@@ -284,17 +285,33 @@
       "sample_decks_title": "Sample Decks"
     },
     "boxplot": {
-        "min": "Min",
-        "q1": "Q1",
-        "median": "Median",
-        "q3": "Q3",
-        "max": "Max",
-        "mean": "Mean"
-    }
+      "min": "Min",
+      "q1": "Q1",
+      "median": "Median",
+      "q3": "Q3",
+      "max": "Max",
+      "mean": "Mean"
+    },
+    "player_label": "Player name:",
+    "crit_player": "Player",
+    "hist_seg_q2_short": "median",
+    "hist_sec_spread": "Segment spread charts — HP / Turns (click to collapse)",
+    "hist_chart_life_spread": "HP department — HP-loss spread per segment (IQR width, lower = more consistent)",
+    "hist_chart_turn_spread": "Turns department — turn spread per segment (IQR width, lower = more consistent)",
+    "hist_vis_title": "Charts to show",
+    "hist_vis_life": "Per-segment life",
+    "hist_vis_turn": "Per-segment turns",
+    "hist_vis_spread_life": "Spread (life)",
+    "hist_vis_spread_turn": "Spread (turns)",
+    "hist_vis_cum_life": "Cumulative life",
+    "hist_vis_cum_turn": "Cumulative turns",
+    "hist_vis_reset": "Reset",
+    "hist_zoom_in": "Show enlarged",
+    "hist_zoom_out": "Back to normal size"
   },
   "act_trend": {
     "title": "Act Trend Analysis",
-    "desc": "Trends in card/exhibit acquisition, removal, and upgrades per Act. Values are average counts per run. Includes operations from events.<br>⚠\uFE0FFor boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated.<br><strong>※A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>",
+    "desc": "Trends in card/exhibit acquisition, removal, and upgrades per Act. Values are average counts per run. Includes operations from events.<br>⚠️For boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated.<br><strong>※A more detailed behavioral tendency report is generated separately for Act 1 only.</strong>",
     "sections": {
       "card": "Card-related",
       "exhibit": "Exhibit-related"
@@ -311,14 +328,14 @@
     "boss_organized_card_note": "Note: For boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated."
   },
   "event_analysis": {
-      "desc": "Aggregated data for events on '?' nodes. Events are ordered chronologically. <br>⚠\uFE0FChoice tracking is simplified due to complexity.",
-      "avg_resource_label": "Avg. Resource Change",
-      "actions": {
-        "card_add": "Cards Added",
-        "card_rem": "Cards Removed",
-        "card_upg": "Cards Upgraded",
-        "exh_add": "Exhibits Added",
-        "exh_rem": "Exhibits Removed"
-      }
+    "desc": "Aggregated data for events on '?' nodes. Events are ordered chronologically. <br>⚠️Choice tracking is simplified due to complexity.",
+    "avg_resource_label": "Avg. Resource Change",
+    "actions": {
+      "card_add": "Cards Added",
+      "card_rem": "Cards Removed",
+      "card_upg": "Cards Upgraded",
+      "exh_add": "Exhibits Added",
+      "exh_rem": "Exhibits Removed"
+    }
   }
 }

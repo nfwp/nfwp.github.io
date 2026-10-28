@@ -61,18 +61,26 @@ function renderEventAnalysisTab() {
             const myLabel = LANG === 'ja' ? choice.labelJA : choice.labelEN;
             // 実名ラベル (dialogues.json より焼き込み) 無しのフォールバック = 従来の「選択肢N」
             const fallbackLabel = choice.choiceIndex === 'N/A' ? C.no_choice_label : `${C.choice_label_prefix}${choice.choiceIndex}`;
+            // 色選択 (icon 表記) は title に色名 (焼き込み)。無ければ従来のフォールバック
+            const titleTxt = (LANG === 'ja' ? choice.labelTitleJA : choice.labelTitleEN) || fallbackLabel;
             const choiceCountLabel = LANG === 'ja' ? '回' : (choice.count === 1 ? ' time' : ' times');
 
-            return `
-                <div class="event-choice-details">
-                    <h4 title="${fallbackLabel}">${choiceName(myLabel, fallbackLabel)}<span class="event-choice-meta">(${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</span></h4>
-                    <ul>
-                        <li><strong>${A.avg_resource_label}:</strong> ${formatResourceChange(choice.avgResourceChange)}</li>
+            // 5項目ブロック: 1つでも追加/削除/強化があれば全部表示、全部ゼロなら丸ごと省略
+            const hasAnyItems = ['cardsAdded', 'cardsRemoved', 'cardsUpgraded', 'exhibitsAdded', 'exhibitsRemoved']
+                .some(k => (choice[k] || []).length > 0);
+            const itemsHtml = hasAnyItems ? `
                         <li><strong>${A.actions.card_add} Top10:</strong> ${formatItemList(choice.cardsAdded, 'card')}</li>
                         <li><strong>${A.actions.card_rem} Top10:</strong> ${formatItemList(choice.cardsRemoved, 'card')}</li>
                         <li><strong>${A.actions.card_upg} Top10:</strong> ${formatItemList(choice.cardsUpgraded, 'card')}</li>
                         <li><strong>${A.actions.exh_add} Top10:</strong> ${formatItemList(choice.exhibitsAdded, 'exhibit')}</li>
-                        <li><strong>${A.actions.exh_rem} Top10:</strong> ${formatItemList(choice.exhibitsRemoved, 'exhibit')}</li>
+                        <li><strong>${A.actions.exh_rem} Top10:</strong> ${formatItemList(choice.exhibitsRemoved, 'exhibit')}</li>` : '';
+
+            return `
+                <div class="event-choice-details">
+                    <h4 title="${titleTxt}">${choiceName(myLabel, fallbackLabel)}<span class="event-choice-meta">(${choice.count}${choiceCountLabel}, ${choice.rate.toFixed(1)}%)</span></h4>
+                    <ul>
+                        <li><strong>${A.avg_resource_label}:</strong> ${formatResourceChange(choice.avgResourceChange)}</li>
+                        ${itemsHtml}
                     </ul>
                 </div>`;
         }).join('');
