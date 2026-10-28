@@ -316,16 +316,6 @@
 <td style='text-align: right;'>51.1</td>
 <td style='text-align: right;'>106.7</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Heart Blossoms</strong></td>
-<td style='text-align: right;'>+18.20</td>
-<td style='text-align: right;'>41.0%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>61</td>
-<td style='text-align: right;'><strong><span style='color: red;'>60.9</span></strong></td>
-<td style='text-align: right;'>63.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.9</span></strong></td>
-</tr>
 <tr>
 <td>Wheel of Misfortune</td>
 <td style='text-align: right;'>+18.20</td>
@@ -335,6 +325,16 @@
 <td style='text-align: right;'>48.1</td>
 <td style='text-align: right;'>36.3</td>
 <td style='text-align: right;'>84.4</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Heart Blossoms</strong></td>
+<td style='text-align: right;'>+18.20</td>
+<td style='text-align: right;'>41.0%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>61</td>
+<td style='text-align: right;'><strong><span style='color: red;'>60.9</span></strong></td>
+<td style='text-align: right;'>63.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.9</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Refine Potion</strong></td>

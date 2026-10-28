@@ -4,7 +4,7 @@
 <div class="tendency-text">
 <ul>
 <li><strong>休憩（回復）を選択した時の平均HP</strong>: 22.4 (中央値: 21.0, N=244)</li>
-<li><strong>カード強化を選択した時の平均HP</strong>: 45.7 (中央値: 47.0, N=828)</li>
+<li><strong>カード強化を選択した時の平均HP</strong>: 45.7 (中央値: 47.0, N=825)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -16,8 +16,8 @@
 <div class="column"><ul>
 <li>部屋掃除: 97回</li>
 <li>聖地巡礼: 65回</li>
-<li>降雪決行: 55回</li>
-<li>危険な手品師: 53回</li>
+<li>降雪決行: 54回</li>
+<li>危険な手品師: 52回</li>
 <li>チェンジリングマジック: 44回</li>
 <li>シルバープッシュ: 41回</li>
 <li>浄化活動: 39回</li>
@@ -40,8 +40,8 @@
 </div>
 <h3>2. エリートマスへの挑戦傾向</h3>
 <ul>
-<li><strong>エリート挑戦時の平均HP</strong>: 43.4 (中央値: 44.0, N=669)</li>
-<li><strong>通常戦闘選択時の平均HP</strong>: 53.6 (中央値: 59.0, N=2047)</li>
+<li><strong>エリート挑戦時の平均HP</strong>: 43.4 (中央値: 44.0, N=667)</li>
+<li><strong>通常戦闘選択時の平均HP</strong>: 53.6 (中央値: 59.0, N=2041)</li>
 </ul>
 <h4>2.1 Act 1 エリート挑戦・影響度カード分析 (Top 40)</h4>
 <p>カードの所持・非所持がエリートマスへの挑戦率に与える影響をスコア化しました。スコアが高いほど、そのカードがエリート挑戦を後押ししていることを示します。サンプル数が少ないカードの影響度は補正されています。<br>また、Act1エリート戦でのパフォーマンスにおいて、<strong>攻撃偏差値が60以上<strong>、または<strong>合計値が110以上<strong>のカードは、<strong>背景色と🔥アイコン<strong>で強調表示されます。</p>
@@ -69,43 +69,43 @@
 </tr>
 <tr>
 <td>プライベートヴィジョン</td>
-<td style='text-align: right;'>+26.77</td>
+<td style='text-align: right;'>+26.78</td>
 <td style='text-align: right;'>50.7%</td>
-<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>23.9%</td>
 <td style='text-align: right;'>69</td>
 <td style='text-align: right;'>47.0</td>
 <td style='text-align: right;'>56.5</td>
 <td style='text-align: right;'>103.5</td>
 </tr>
 <tr>
-<td>咲夜特製ストップウォッチ</td>
-<td style='text-align: right;'>+25.92</td>
+<td>本読み</td>
+<td style='text-align: right;'>+26.34</td>
 <td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>58</td>
-<td style='text-align: right;'>44.9</td>
-<td style='text-align: right;'>38.4</td>
-<td style='text-align: right;'>83.3</td>
+<td style='text-align: right;'>23.7%</td>
+<td style='text-align: right;'>100</td>
+<td style='text-align: right;'>42.4</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>89.7</td>
 </tr>
 <tr>
 <td>危険な手品師</td>
-<td style='text-align: right;'>+25.56</td>
-<td style='text-align: right;'>48.0%</td>
+<td style='text-align: right;'>+25.27</td>
+<td style='text-align: right;'>47.8%</td>
 <td style='text-align: right;'>22.5%</td>
-<td style='text-align: right;'>229</td>
+<td style='text-align: right;'>226</td>
 <td style='text-align: right;'>39.5</td>
 <td style='text-align: right;'>52.7</td>
 <td style='text-align: right;'>92.2</td>
 </tr>
 <tr>
-<td>本読み</td>
-<td style='text-align: right;'>+24.95</td>
-<td style='text-align: right;'>48.6%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>107</td>
-<td style='text-align: right;'>42.4</td>
-<td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>89.7</td>
+<td>咲夜特製ストップウォッチ</td>
+<td style='text-align: right;'>+25.02</td>
+<td style='text-align: right;'>49.1%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>57</td>
+<td style='text-align: right;'>44.9</td>
+<td style='text-align: right;'>38.4</td>
+<td style='text-align: right;'>83.3</td>
 </tr>
 <tr>
 <td>ディフレクション</td>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 <td>時間厳守</td>
-<td style='text-align: right;'>+23.33</td>
+<td style='text-align: right;'>+23.34</td>
 <td style='text-align: right;'>45.6%</td>
 <td style='text-align: right;'>22.2%</td>
 <td style='text-align: right;'>281</td>
@@ -149,7 +149,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 瀟洒なメイド</strong></td>
-<td style='text-align: right;'>+23.32</td>
+<td style='text-align: right;'>+23.33</td>
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>21.5%</td>
 <td style='text-align: right;'>366</td>
@@ -159,17 +159,17 @@
 </tr>
 <tr>
 <td>拘束時間</td>
-<td style='text-align: right;'>+22.70</td>
-<td style='text-align: right;'>45.4%</td>
-<td style='text-align: right;'>22.7%</td>
-<td style='text-align: right;'>229</td>
+<td style='text-align: right;'>+22.58</td>
+<td style='text-align: right;'>45.3%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>225</td>
 <td style='text-align: right;'>37.9</td>
 <td style='text-align: right;'>60.5</td>
 <td style='text-align: right;'>98.4</td>
 </tr>
 <tr>
 <td>弾幕手品</td>
-<td style='text-align: right;'>+22.56</td>
+<td style='text-align: right;'>+22.57</td>
 <td style='text-align: right;'>46.3%</td>
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>108</td>
@@ -189,7 +189,7 @@
 </tr>
 <tr>
 <td>ルミネスリコシェ</td>
-<td style='text-align: right;'>+22.27</td>
+<td style='text-align: right;'>+22.28</td>
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>80</td>
@@ -199,7 +199,7 @@
 </tr>
 <tr>
 <td>シルバープッシュ</td>
-<td style='text-align: right;'>+22.15</td>
+<td style='text-align: right;'>+22.16</td>
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>197</td>
@@ -207,9 +207,19 @@
 <td style='text-align: right;'>51.0</td>
 <td style='text-align: right;'>102.3</td>
 </tr>
+<tr>
+<td>ウォーターカーペット</td>
+<td style='text-align: right;'>+21.35</td>
+<td style='text-align: right;'>45.0%</td>
+<td style='text-align: right;'>23.6%</td>
+<td style='text-align: right;'>129</td>
+<td style='text-align: right;'>34.1</td>
+<td style='text-align: right;'>47.0</td>
+<td style='text-align: right;'>81.1</td>
+</tr>
 <tr class="specialist-row">
 <td><strong>🔥 ダモクレスの刃</strong></td>
-<td style='text-align: right;'>+21.25</td>
+<td style='text-align: right;'>+21.26</td>
 <td style='text-align: right;'>43.8%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>260</td>
@@ -231,7 +241,7 @@
 <td>大天狗の号令</td>
 <td style='text-align: right;'>+21.15</td>
 <td style='text-align: right;'>45.0%</td>
-<td style='text-align: right;'>23.9%</td>
+<td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>100</td>
 <td style='text-align: right;'>54.8</td>
 <td style='text-align: right;'>43.9</td>
@@ -239,23 +249,13 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 部屋掃除</strong></td>
-<td style='text-align: right;'>+21.06</td>
+<td style='text-align: right;'>+21.08</td>
 <td style='text-align: right;'>42.6%</td>
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>394</td>
 <td style='text-align: right;'><strong><span style='color: red;'>61.0</span></strong></td>
 <td style='text-align: right;'>61.0</td>
 <td style='text-align: right;'><strong><span style='color: red;'>122.1</span></strong></td>
-</tr>
-<tr>
-<td>ウォーターカーペット</td>
-<td style='text-align: right;'>+20.85</td>
-<td style='text-align: right;'>44.4%</td>
-<td style='text-align: right;'>23.6%</td>
-<td style='text-align: right;'>135</td>
-<td style='text-align: right;'>34.1</td>
-<td style='text-align: right;'>47.0</td>
-<td style='text-align: right;'>81.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 月相</strong></td>
@@ -289,7 +289,7 @@
 </tr>
 <tr>
 <td>星剣の舞</td>
-<td style='text-align: right;'>+20.08</td>
+<td style='text-align: right;'>+20.09</td>
 <td style='text-align: right;'>43.9%</td>
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>107</td>
@@ -339,7 +339,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 イカサマ</strong></td>
-<td style='text-align: right;'>+19.12</td>
+<td style='text-align: right;'>+19.13</td>
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>23.4%</td>
 <td style='text-align: right;'>174</td>
@@ -369,7 +369,7 @@
 </tr>
 <tr>
 <td>チェンジリングマジック</td>
-<td style='text-align: right;'>+18.21</td>
+<td style='text-align: right;'>+18.22</td>
 <td style='text-align: right;'>40.6%</td>
 <td style='text-align: right;'>22.4%</td>
 <td style='text-align: right;'>335</td>
@@ -399,23 +399,13 @@
 </tr>
 <tr>
 <td>一休み</td>
-<td style='text-align: right;'>+17.08</td>
+<td style='text-align: right;'>+17.09</td>
 <td style='text-align: right;'>40.4%</td>
 <td style='text-align: right;'>23.3%</td>
 <td style='text-align: right;'>213</td>
 <td style='text-align: right;'>49.0</td>
 <td style='text-align: right;'>45.5</td>
 <td style='text-align: right;'>94.5</td>
-</tr>
-<tr>
-<td>🧰 ライオットシールド</td>
-<td style='text-align: right;'>+17.08</td>
-<td style='text-align: right;'>41.2%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>85</td>
-<td style='text-align: right;'>47.6</td>
-<td style='text-align: right;'>54.8</td>
-<td style='text-align: right;'>102.4</td>
 </tr>
 <tr>
 <td>イマジナリバーチカルタイム</td>
@@ -428,8 +418,18 @@
 <td style='text-align: right;'>103.7</td>
 </tr>
 <tr>
+<td>🧰 ライオットシールド</td>
+<td style='text-align: right;'>+16.35</td>
+<td style='text-align: right;'>40.5%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>84</td>
+<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>54.8</td>
+<td style='text-align: right;'>102.4</td>
+</tr>
+<tr>
 <td>ジャック・ザ・ルドビレ</td>
-<td style='text-align: right;'>+16.23</td>
+<td style='text-align: right;'>+16.24</td>
 <td style='text-align: right;'>41.9%</td>
 <td style='text-align: right;'>24.4%</td>
 <td style='text-align: right;'>43</td>
@@ -439,7 +439,7 @@
 </tr>
 <tr>
 <td>🧰 今泉影狼の毛</td>
-<td style='text-align: right;'>+16.13</td>
+<td style='text-align: right;'>+16.14</td>
 <td style='text-align: right;'>39.6%</td>
 <td style='text-align: right;'>23.5%</td>
 <td style='text-align: right;'>197</td>
@@ -463,7 +463,7 @@
 <div class="tendency-container">
 <div class="tendency-text">
 <ul>
-<li><strong>ショップ訪問時の平均所持金</strong>: 214.7 (中央値: 228.0, N=581)</li>
+<li><strong>ショップ訪問時の平均所持金</strong>: 214.7 (中央値: 228.0, N=580)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -517,7 +517,7 @@
 </div>
 </div>
 <div class="shop-tendency-column">
-<h4>所持金 151～300円 の場合 (N=355)</h4>
+<h4>所持金 151～300円 の場合 (N=354)</h4>
 <div class="shop-item-grid">
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
@@ -525,8 +525,8 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 28回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 26回</li>
 <li><span class="text-purchase">部屋掃除</span>: 24回</li>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 23回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 22回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 22回</li>
 <li><span class="text-purchase">歴史喰い</span>: 22回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 21回</li>
 <li><span class="text-purchase">時間厳守</span>: 19回</li>
@@ -572,7 +572,7 @@
 <div class="shop-item-sub-column">
 <h5> よく削除されるカード Top 20
 <ul>
-<li><span class="text-remove">フェイント投げ</span>: 210回</li>
+<li><span class="text-remove">フェイント投げ</span>: 209回</li>
 <li><span class="text-remove">ショット</span>: 39回</li>
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 20回</li>
 <li><span class="text-remove">危険予知</span>: 13回</li>
