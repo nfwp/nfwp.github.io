@@ -62,9 +62,9 @@
 <td style='text-align: right;'>59.1%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>44</td>
-<td style='text-align: right;'>58.3</td>
-<td style='text-align: right;'>72.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
+<td style='text-align: right;'>58.2</td>
+<td style='text-align: right;'>72.7</td>
+<td style='text-align: right;'><strong><span style='color: red;'>130.9</span></strong></td>
 </tr>
 <tr>
 <td>Fairy On Ice</td>
@@ -72,9 +72,9 @@
 <td style='text-align: right;'>49.7%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>159</td>
-<td style='text-align: right;'>39.0</td>
-<td style='text-align: right;'>59.5</td>
-<td style='text-align: right;'>98.6</td>
+<td style='text-align: right;'>37.4</td>
+<td style='text-align: right;'>58.6</td>
+<td style='text-align: right;'>96.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Absolute Zero</strong></td>
@@ -82,9 +82,9 @@
 <td style='text-align: right;'>49.2%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>181</td>
-<td style='text-align: right;'><strong><span style='color: red;'>61.0</span></strong></td>
-<td style='text-align: right;'>45.0</td>
-<td style='text-align: right;'>105.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>61.4</span></strong></td>
+<td style='text-align: right;'>43.3</td>
+<td style='text-align: right;'>104.8</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Letty, Winter Embodied</strong></td>
@@ -93,8 +93,8 @@
 <td style='text-align: right;'>25.0%</td>
 <td style='text-align: right;'>208</td>
 <td style='text-align: right;'><strong><span style='color: red;'>66.9</span></strong></td>
-<td style='text-align: right;'>46.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
+<td style='text-align: right;'>46.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.2</span></strong></td>
 </tr>
 <tr>
 <td>Careful Deliberation</td>
@@ -102,9 +102,9 @@
 <td style='text-align: right;'>47.6%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>225</td>
-<td style='text-align: right;'>48.6</td>
-<td style='text-align: right;'>51.4</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>49.3</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
 <td>Frost Refraction</td>
@@ -112,9 +112,9 @@
 <td style='text-align: right;'>49.2%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>59</td>
-<td style='text-align: right;'>43.6</td>
-<td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>87.9</td>
+<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>44.7</td>
+<td style='text-align: right;'>88.4</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Ballistic Shield</strong></td>
@@ -123,8 +123,8 @@
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>57</td>
 <td style='text-align: right;'><strong><span style='color: red;'>70.0</span></strong></td>
-<td style='text-align: right;'>61.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>131.0</span></strong></td>
+<td style='text-align: right;'>60.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>130.9</span></strong></td>
 </tr>
 <tr>
 <td>Cool Entrance</td>
@@ -132,8 +132,8 @@
 <td style='text-align: right;'>48.4%</td>
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>124</td>
-<td style='text-align: right;'>52.0</td>
-<td style='text-align: right;'>45.9</td>
+<td style='text-align: right;'>52.2</td>
+<td style='text-align: right;'>45.7</td>
 <td style='text-align: right;'>97.9</td>
 </tr>
 <tr>
@@ -142,9 +142,9 @@
 <td style='text-align: right;'>47.5%</td>
 <td style='text-align: right;'>25.3%</td>
 <td style='text-align: right;'>183</td>
-<td style='text-align: right;'>53.8</td>
-<td style='text-align: right;'>46.5</td>
-<td style='text-align: right;'>100.3</td>
+<td style='text-align: right;'>54.0</td>
+<td style='text-align: right;'>46.0</td>
+<td style='text-align: right;'>100.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sweet Sweet Potato</strong></td>
@@ -162,8 +162,8 @@
 <td style='text-align: right;'>47.9%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>117</td>
-<td style='text-align: right;'>47.4</td>
-<td style='text-align: right;'>57.1</td>
+<td style='text-align: right;'>47.5</td>
+<td style='text-align: right;'>57.0</td>
 <td style='text-align: right;'>104.5</td>
 </tr>
 <tr class="specialist-row">
@@ -172,9 +172,9 @@
 <td style='text-align: right;'>44.8%</td>
 <td style='text-align: right;'>23.7%</td>
 <td style='text-align: right;'>357</td>
-<td style='text-align: right;'>59.5</td>
-<td style='text-align: right;'>52.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>112.1</span></strong></td>
+<td style='text-align: right;'>59.4</td>
+<td style='text-align: right;'>51.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.3</span></strong></td>
 </tr>
 <tr>
 <td>Daiyousei, Lively Assistant</td>
@@ -182,9 +182,9 @@
 <td style='text-align: right;'>47.1%</td>
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>119</td>
-<td style='text-align: right;'>40.0</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>91.2</td>
+<td style='text-align: right;'>40.1</td>
+<td style='text-align: right;'>51.0</td>
+<td style='text-align: right;'>91.1</td>
 </tr>
 <tr>
 <td>In Plain Sight</td>
@@ -192,9 +192,9 @@
 <td style='text-align: right;'>46.1%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>89</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>100.3</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>100.6</td>
 </tr>
 <tr>
 <td>Ice Barrier</td>
@@ -202,9 +202,9 @@
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>268</td>
-<td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>50.6</td>
-<td style='text-align: right;'>91.9</td>
+<td style='text-align: right;'>41.4</td>
+<td style='text-align: right;'>51.3</td>
+<td style='text-align: right;'>92.7</td>
 </tr>
 <tr>
 <td>On Thin Ice</td>
@@ -212,8 +212,8 @@
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>109</td>
-<td style='text-align: right;'>57.1</td>
-<td style='text-align: right;'>39.0</td>
+<td style='text-align: right;'>57.0</td>
+<td style='text-align: right;'>39.1</td>
 <td style='text-align: right;'>96.1</td>
 </tr>
 <tr>
@@ -222,9 +222,9 @@
 <td style='text-align: right;'>57.1%</td>
 <td style='text-align: right;'>27.0%</td>
 <td style='text-align: right;'>21</td>
-<td style='text-align: right;'>48.0</td>
-<td style='text-align: right;'>60.0</td>
-<td style='text-align: right;'>108.0</td>
+<td style='text-align: right;'>48.4</td>
+<td style='text-align: right;'>60.4</td>
+<td style='text-align: right;'>108.8</td>
 </tr>
 <tr>
 <td>Call on Friends</td>
@@ -232,9 +232,9 @@
 <td style='text-align: right;'>44.7%</td>
 <td style='text-align: right;'>25.2%</td>
 <td style='text-align: right;'>226</td>
-<td style='text-align: right;'>45.0</td>
-<td style='text-align: right;'>54.7</td>
-<td style='text-align: right;'>99.7</td>
+<td style='text-align: right;'>45.1</td>
+<td style='text-align: right;'>54.9</td>
+<td style='text-align: right;'>100.0</td>
 </tr>
 <tr>
 <td>Fairy's Wake-Up</td>
@@ -242,9 +242,9 @@
 <td style='text-align: right;'>51.6%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>31</td>
-<td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>35.9</td>
-<td style='text-align: right;'>90.0</td>
+<td style='text-align: right;'>53.7</td>
+<td style='text-align: right;'>36.0</td>
+<td style='text-align: right;'>89.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Flashlight</strong></td>
@@ -252,9 +252,9 @@
 <td style='text-align: right;'>53.8%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>26</td>
-<td style='text-align: right;'>59.1</td>
-<td style='text-align: right;'>63.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>122.4</span></strong></td>
+<td style='text-align: right;'>59.0</td>
+<td style='text-align: right;'>63.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>122.3</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Daiyousei, Snowcone Assistant</strong></td>
@@ -262,9 +262,9 @@
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>94</td>
-<td style='text-align: right;'><strong><span style='color: red;'>62.1</span></strong></td>
-<td style='text-align: right;'>46.2</td>
-<td style='text-align: right;'>108.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>62.0</span></strong></td>
+<td style='text-align: right;'>47.5</td>
+<td style='text-align: right;'>109.5</td>
 </tr>
 <tr>
 <td>Panoramic Shot</td>
@@ -272,9 +272,9 @@
 <td style='text-align: right;'>48.7%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>39</td>
-<td style='text-align: right;'>40.5</td>
-<td style='text-align: right;'>43.3</td>
-<td style='text-align: right;'>83.7</td>
+<td style='text-align: right;'>40.6</td>
+<td style='text-align: right;'>43.9</td>
+<td style='text-align: right;'>84.4</td>
 </tr>
 <tr>
 <td>Water Blanket</td>
@@ -282,9 +282,9 @@
 <td style='text-align: right;'>45.3%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>117</td>
-<td style='text-align: right;'>45.9</td>
-<td style='text-align: right;'>47.1</td>
-<td style='text-align: right;'>93.0</td>
+<td style='text-align: right;'>46.3</td>
+<td style='text-align: right;'>46.9</td>
+<td style='text-align: right;'>93.2</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Blizzard</strong></td>
@@ -292,9 +292,9 @@
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>24.5%</td>
 <td style='text-align: right;'>307</td>
-<td style='text-align: right;'><strong><span style='color: red;'>72.8</span></strong></td>
-<td style='text-align: right;'>64.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>136.9</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>72.7</span></strong></td>
+<td style='text-align: right;'>64.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>136.8</span></strong></td>
 </tr>
 <tr>
 <td>Cool Rose</td>
@@ -303,7 +303,7 @@
 <td style='text-align: right;'>26.8%</td>
 <td style='text-align: right;'>48</td>
 <td style='text-align: right;'>31.8</td>
-<td style='text-align: right;'>53.5</td>
+<td style='text-align: right;'>53.4</td>
 <td style='text-align: right;'>85.2</td>
 </tr>
 <tr class="specialist-row">
@@ -312,9 +312,9 @@
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>73</td>
-<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'>54.9</td>
 <td style='text-align: right;'>56.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.1</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.9</span></strong></td>
 </tr>
 <tr>
 <td>Frozen Matrix</td>
@@ -322,9 +322,9 @@
 <td style='text-align: right;'>47.5%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>40</td>
-<td style='text-align: right;'>36.6</td>
-<td style='text-align: right;'>45.6</td>
-<td style='text-align: right;'>82.2</td>
+<td style='text-align: right;'>33.1</td>
+<td style='text-align: right;'>43.9</td>
+<td style='text-align: right;'>77.0</td>
 </tr>
 <tr>
 <td>Larva, God of Evernight</td>
@@ -332,9 +332,9 @@
 <td style='text-align: right;'>43.1%</td>
 <td style='text-align: right;'>25.0%</td>
 <td style='text-align: right;'>260</td>
-<td style='text-align: right;'>43.3</td>
-<td style='text-align: right;'>42.1</td>
-<td style='text-align: right;'>85.4</td>
+<td style='text-align: right;'>42.6</td>
+<td style='text-align: right;'>41.4</td>
+<td style='text-align: right;'>84.0</td>
 </tr>
 <tr>
 <td>Lily White, Herald of Spring</td>
@@ -342,19 +342,19 @@
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>46</td>
-<td style='text-align: right;'>40.9</td>
-<td style='text-align: right;'>58.7</td>
-<td style='text-align: right;'>99.6</td>
+<td style='text-align: right;'>41.0</td>
+<td style='text-align: right;'>59.4</td>
+<td style='text-align: right;'>100.4</td>
 </tr>
-<tr>
-<td>Freeze Beam</td>
+<tr class="specialist-row">
+<td><strong>🔥 Freeze Beam</strong></td>
 <td style='text-align: right;'>+17.89</td>
 <td style='text-align: right;'>44.3%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>97</td>
-<td style='text-align: right;'>60.0</td>
-<td style='text-align: right;'>48.9</td>
-<td style='text-align: right;'>108.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>60.4</span></strong></td>
+<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>109.4</td>
 </tr>
 <tr>
 <td>Kasumi, Mansion Maid</td>
@@ -362,19 +362,19 @@
 <td style='text-align: right;'>42.9%</td>
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>217</td>
-<td style='text-align: right;'>50.0</td>
-<td style='text-align: right;'>43.6</td>
-<td style='text-align: right;'>93.6</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>43.0</td>
+<td style='text-align: right;'>92.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Ice-Forged Blade</strong></td>
+<tr>
+<td>Ice-Forged Blade</td>
 <td style='text-align: right;'>+16.61</td>
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>88</td>
-<td style='text-align: right;'><strong><span style='color: red;'>60.5</span></strong></td>
-<td style='text-align: right;'>51.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>112.2</span></strong></td>
+<td style='text-align: right;'>59.9</td>
+<td style='text-align: right;'>48.1</td>
+<td style='text-align: right;'>108.0</td>
 </tr>
 <tr>
 <td>Summer Ice</td>
@@ -382,9 +382,9 @@
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>37</td>
-<td style='text-align: right;'>41.7</td>
-<td style='text-align: right;'>48.3</td>
-<td style='text-align: right;'>90.0</td>
+<td style='text-align: right;'>42.2</td>
+<td style='text-align: right;'>48.7</td>
+<td style='text-align: right;'>90.9</td>
 </tr>
 <tr>
 <td>Swift Cool</td>
@@ -392,9 +392,9 @@
 <td style='text-align: right;'>42.4%</td>
 <td style='text-align: right;'>26.8%</td>
 <td style='text-align: right;'>66</td>
-<td style='text-align: right;'>35.1</td>
-<td style='text-align: right;'>41.7</td>
-<td style='text-align: right;'>76.9</td>
+<td style='text-align: right;'>36.0</td>
+<td style='text-align: right;'>42.2</td>
+<td style='text-align: right;'>78.2</td>
 </tr>
 <tr>
 <td>Sakura-Colored Sea</td>
@@ -402,9 +402,9 @@
 <td style='text-align: right;'>42.2%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>90</td>
-<td style='text-align: right;'>47.1</td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>102.8</td>
+<td style='text-align: right;'>45.7</td>
+<td style='text-align: right;'>54.6</td>
+<td style='text-align: right;'>100.3</td>
 </tr>
 <tr>
 <td>Flash of Spring</td>
@@ -412,8 +412,8 @@
 <td style='text-align: right;'>48.1%</td>
 <td style='text-align: right;'>27.0%</td>
 <td style='text-align: right;'>27</td>
-<td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>53.8</td>
+<td style='text-align: right;'>44.4</td>
+<td style='text-align: right;'>53.7</td>
 <td style='text-align: right;'>98.1</td>
 </tr>
 <tr>
@@ -422,8 +422,8 @@
 <td style='text-align: right;'>41.2%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>194</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>37.3</td>
+<td style='text-align: right;'>54.3</td>
+<td style='text-align: right;'>37.4</td>
 <td style='text-align: right;'>91.7</td>
 </tr>
 <tr>
@@ -432,9 +432,9 @@
 <td style='text-align: right;'>43.9%</td>
 <td style='text-align: right;'>26.9%</td>
 <td style='text-align: right;'>41</td>
-<td style='text-align: right;'>51.1</td>
-<td style='text-align: right;'>40.9</td>
-<td style='text-align: right;'>92.1</td>
+<td style='text-align: right;'>51.3</td>
+<td style='text-align: right;'>41.0</td>
+<td style='text-align: right;'>92.3</td>
 </tr>
 <tr>
 <td>Yummy Fruit Freezies</td>
@@ -442,9 +442,9 @@
 <td style='text-align: right;'>41.2%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>131</td>
-<td style='text-align: right;'>57.5</td>
-<td style='text-align: right;'>44.6</td>
-<td style='text-align: right;'>102.1</td>
+<td style='text-align: right;'>57.4</td>
+<td style='text-align: right;'>45.1</td>
+<td style='text-align: right;'>102.4</td>
 </tr>
 <tr>
 <td>Exteeending Aaaarm</td>
@@ -452,9 +452,9 @@
 <td style='text-align: right;'>41.3%</td>
 <td style='text-align: right;'>26.6%</td>
 <td style='text-align: right;'>92</td>
-<td style='text-align: right;'>51.7</td>
-<td style='text-align: right;'>38.5</td>
-<td style='text-align: right;'>90.2</td>
+<td style='text-align: right;'>51.9</td>
+<td style='text-align: right;'>38.6</td>
+<td style='text-align: right;'>90.4</td>
 </tr>
 </tbody>
 </table>
