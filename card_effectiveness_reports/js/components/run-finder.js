@@ -534,6 +534,18 @@ function setupBossSelectors() {
 let hfBarMode = 'count';   // 苦戦棒グラフの表示モード: 'count' = 遭遇回数ベース / 'pct' = 割合ベース (100% 積み上げ)
 let hfBarsCriteria = null; // 棒グラフと一緒に表示する検索条件 (タイトルに条件ラベルを出す)
 
+// 四分位数 [Q1, Q2(中央値), Q3, n] (線形補間・敵別戦績タブと同定義の データで計算)。n<2 は null
+function hfQuartiles(raw) {
+    const a = (raw || []).filter(v => v != null && isFinite(v)).sort((x, y) => x - y);
+    const n = a.length;
+    if (n < 2) return null;
+    const q = (p) => {
+        const pos = (n - 1) * p, lo = Math.floor(pos), hi = Math.ceil(pos);
+        return a[lo] + (a[hi] - a[lo]) * (pos - lo);
+    };
+    return { q1: q(0.25), med: q(0.5), q3: q(0.75), n };
+}
+
 // --- ボス行キャラ絵オーバーレイ (Plotly の tick に画像は入れられないため、ラベル欄の余白に <img> を重ねる) ---
 let hfBarsPlotDiv = null;                  // 現在の Plotly ルート div (リサイズ再配置用)
 let hfBarsBossRows = [];                   // { code, idx }  ボス行 (idx = 降順ソート後の行番号, y 配列では n-1-idx)
@@ -585,6 +597,225 @@ function positionBossAvatarOverlay() {
     }
 }
 
+// --- 敵行全体 (ラベル+棒) のホバー: リッチなカード (.rf-hf-card) を出す ---
+//     既定の Plotly ツールチップ (hovertemplate) は無効化して差し替え。HP/ターンの箱ひげは
+//     全行で軸を統一 (検索結果+参考値の共通 min〜max) して, ACT別/ボス間の比較をしやすくする
+let hfBarsRowData = [];    // 上→下順に {label, enc, rate, hpHard/spHard/bothHard, hpVals, tnVals, charName, charHpVals, charTnVals} (renderEncounterBars で構築)
+let rfHfCardEl = null;     // 固定表示用カード (body 直下)
+let rfHfCardRow = null;    // 直前に表示した行 (同一行の差し替えを避ける)
+let rfHfCardTimer = 0;     // タップ表示時の自動消去タイマー
+
+// 行内の値分布 → Q0〜Q4 (min/Q1/Q2/Q3/max) を数値ごと埋め込んだ箱ひげ SVG (敵別戦績タブと同語彙):
+//   細線+目盛 = min〜max (ヒゲ) / 枠付き矩形 = Q1〜Q3 / 太い縦線 = Q2 (中央値) / 青点 = 平均
+//   数値は箱の上段 (min/max は下段) に描く。近接して重なる数値は左右にずらし、
+//   大きくずれた場合だけ元の位置への小さなガイド線を出す
+//   axis = {lo, hi} で同グループ (ACT|種別) 共通の軸にする (軸端の数値は出さず、トラックで揃える)。muted = 参考グラフ (薄め)
+function rfHfSparkSvg(vals, q, color, axis, muted) {
+    const H = 46, MID = 25, PADX = 3, W = 294;   // カード内幅 (max-width 320 - 余白24 - 枠2) いっぱいに広げる
+    const a = (vals || []).filter(v => v != null && isFinite(v));
+    if (!q || a.length < 2) return '';
+    const vmin = a[0], vmax = a[a.length - 1];   // 呼び出し元で昇順ソート済み (hfQuartiles 内)
+    if (!(isFinite(vmin) && isFinite(vmax))) return '';
+    const lo = (axis && isFinite(axis.lo)) ? axis.lo : vmin;
+    const hi = (axis && isFinite(axis.hi)) ? axis.hi : vmax;
+    if (!(isFinite(lo) && isFinite(hi)) || hi - lo <= 0) return '';
+    const op = muted ? 0.6 : 1;                 // 参考グラフは薄めに出して「自分のラン」との差を強調
+    const x = (v) => PADX + (v - lo) / (hi - lo) * (W - 2 * PADX);
+    const fq = (v) => (Math.round(v * 10) / 10).toString().replace(/\.0$/, '');
+    let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="font-family:Arial,sans-serif;">`;
+    if (axis) {
+        // 共通スケールの土台 (トラック): 全行で同じ幅の軸になる
+        s += `<line x1="${PADX}" y1="${MID}" x2="${W - PADX}" y2="${MID}" stroke="#e2e8f0" stroke-width="3"/>`;
+    }
+    if (vmin < 0 && vmax > 0) {
+        // プラスとマイナスが混ざる分布 (HP変化なら被弾/回復込み) では 0 の基準線を出す
+        s += `<line x1="${x(0).toFixed(1)}" y1="${MID - 8}" x2="${x(0).toFixed(1)}" y2="${MID + 8}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="1 2"/>`;
+    }
+    // ヒゲ (min〜max) + 両端の目盛
+    s += `<line x1="${x(vmin).toFixed(1)}" y1="${MID}" x2="${x(vmax).toFixed(1)}" y2="${MID}" stroke="${color}" stroke-opacity="${(0.45 * op).toFixed(2)}" stroke-width="1.2"/>`;
+    s += `<line x1="${x(vmin).toFixed(1)}" y1="${MID - 7}" x2="${x(vmin).toFixed(1)}" y2="${MID + 7}" stroke="${color}" stroke-opacity="${(0.8 * op).toFixed(2)}" stroke-width="1.5"/>`;
+    s += `<line x1="${x(vmax).toFixed(1)}" y1="${MID - 7}" x2="${x(vmax).toFixed(1)}" y2="${MID + 7}" stroke="${color}" stroke-opacity="${(0.8 * op).toFixed(2)}" stroke-width="1.5"/>`;
+    // 箱 (Q1〜Q3) と 中央値 Q2 (太い縦線) / 平均 (青点, 敵別戦績と同じ)
+    s += `<rect x="${x(q.q1).toFixed(1)}" y="${MID - 7}" width="${Math.max(1.5, x(q.q3) - x(q.q1)).toFixed(1)}" height="14" fill="${color}" fill-opacity="${(0.16 * op).toFixed(2)}" stroke="${color}" stroke-opacity="${(0.8 * op).toFixed(2)}"/>`;
+    s += `<line x1="${x(q.med).toFixed(1)}" y1="${MID - 9}" x2="${x(q.med).toFixed(1)}" y2="${MID + 9}" stroke="${muted ? '#64748b' : '#1e293b'}" stroke-opacity="${op.toFixed(2)}" stroke-width="2"/>`;
+    const mean = a.reduce((acc, v) => acc + v, 0) / a.length;
+    s += `<circle cx="${x(mean).toFixed(1)}" cy="${MID}" r="3" fill="#3182bd" fill-opacity="${op.toFixed(2)}"/>`;
+    // --- 数値ラベル (上段 = Q1/Q2/Q3, 下段 = min/max)。近接衝突はズラシで回避 ---
+    //   共通スケール時も下段は min/max だけ (軸端の数値は出さない。トラックの長さでスケールを伝える)
+    const measure = (t) => t.length * 5.3 + 3;   // 9.5px フォントの概算幅
+    const chain = (arr, blo, bhi) => {
+        if (!arr.length) return;
+        let cursor = -Infinity;
+        for (const it of arr) {
+            const hw = measure(it.txt) / 2;
+            it.rx = Math.max(Math.max(blo, it.x), cursor + hw + 2);
+            cursor = it.rx + hw + 2;
+        }
+        // 右端のはみ出しは全体を左に詰めてもう一度走らせる
+        const last = arr[arr.length - 1];
+        const over = last.rx + measure(last.txt) / 2 - bhi;
+        if (over > 0) {
+            cursor = -Infinity;
+            for (const it of arr) {
+                const hw = measure(it.txt) / 2;
+                it.rx = Math.max(Math.max(blo, it.x - over), cursor + hw + 2);
+                cursor = it.rx + hw + 2;
+            }
+        }
+    };
+    const labelsAbove = [q.q1, q.med, q.q3].map(v => ({ txt: fq(v), x: x(v) })).sort((p, r) => p.x - r.x);
+    chain(labelsAbove, 8, W - 8);
+    const labelsBelow = [{ txt: fq(vmin), x: x(vmin) }, { txt: fq(vmax), x: x(vmax) }].sort((p, r) => p.x - r.x);
+    chain(labelsBelow, 8, W - 8);
+    for (const it of labelsAbove) {
+        if (Math.abs(it.rx - it.x) > 5) {
+            s += `<line x1="${it.x.toFixed(1)}" y1="12" x2="${it.x.toFixed(1)}" y2="16" stroke="#94a3b8" stroke-width="1"/>`;
+        }
+        s += `<text x="${it.rx.toFixed(1)}" y="9" font-size="9.5" fill="${muted ? '#94a3b8' : '#475569'}" text-anchor="middle">${it.txt}</text>`;
+    }
+    for (const it of labelsBelow) {
+        if (Math.abs(it.rx - it.x) > 5) {
+            s += `<line x1="${it.x.toFixed(1)}" y1="${MID + 8}" x2="${it.x.toFixed(1)}" y2="${MID + 12}" stroke="#94a3b8" stroke-width="1"/>`;
+        }
+        s += `<text x="${it.rx.toFixed(1)}" y="${H - 2}" font-size="9.5" fill="#64748b" text-anchor="middle">${it.txt}</text>`;
+    }
+    s += `</svg>`;
+    return s;
+}
+
+// 行データ → カードHTML: 名前+遭遇/苦戦率 → 苦戦内訳 → HP/ターンの箱ひげ (同グループ共通スケール)
+//   → (検索でキャラ指定時) (参考) そのキャラ全ランの苦戦率/内訳+箱ひげを同じスケール・薄め表示で重ねる
+//     (上段=この検索に合致した自分のラン / 下段=全ラン の比較が縦に揃えて読める)
+//   共通スケールの軸は「Act|種別」が同じ行 (+その参考値) だけで決める → 全行一律だと
+//   極端な敵に引きずられて箱が潰れるため (2026-10-31)
+function rfHfCardBuild(rd) {
+    const isJa = LANG === 'ja';
+    let html = `<div class="rf-hf-card-h"><span title="${rd.label}">${rd.label}</span>`
+        + `<span class="rf-hf-card-sub">${isJa ? `遭遇 ${rd.enc}回 ・ 苦戦率 ${rd.rate}` : `${rd.enc} enc ・ hard ${rd.rate}`}</span></div>`;
+    html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.hpHard} ・ ⚡️${rd.spHard} ・ 🩸⚡️${rd.bothHard}</div>`;
+    const fq = (v) => (Math.round(v * 10) / 10).toString().replace(/\.0$/, '');
+    // 同じグループ (Act|種別) の行 + その参考値 から共通スケールを算出 (HP は変化量表示 = 被弾 − / 回復 ＋ で反転)
+    const ext = (arr, neg) => {
+        let lo = Infinity, hi = -Infinity;
+        for (const v of arr) { const w = neg ? -v : v; if (w < lo) lo = w; if (w > hi) hi = w; }
+        return [lo, hi];
+    };
+    let hpLo = Infinity, hpHi = -Infinity, tnLo = Infinity, tnHi = -Infinity;
+    for (const r of hfBarsRowData) {
+        if (r.gkey !== rd.gkey) continue;   // Act と敵種別が同じグループの軸だけを使う
+        if (r.hpVals.length) { const e = ext(r.hpVals, true); if (e[0] < hpLo) hpLo = e[0]; if (e[1] > hpHi) hpHi = e[1]; }
+        if (r.tnVals.length) { const e = ext(r.tnVals, false); if (e[0] < tnLo) tnLo = e[0]; if (e[1] > tnHi) tnHi = e[1]; }
+        if (r.charHpVals) { const e = ext(r.charHpVals, true); if (e[0] < hpLo) hpLo = e[0]; if (e[1] > hpHi) hpHi = e[1]; }
+        if (r.charTnVals) { const e = ext(r.charTnVals, false); if (e[0] < tnLo) tnLo = e[0]; if (e[1] > tnHi) tnHi = e[1]; }
+    }
+    const hpAxis = isFinite(hpLo) ? { lo: hpLo, hi: hpHi } : null;
+    const tnAxis = isFinite(tnLo) ? { lo: tnLo, hi: tnHi } : null;
+    const metric = (title, vals, q, color, axis, muted) => {
+        if (!q) return '';
+        // 見出しの右の余白を利用: avg / Q1 / Q2 / Q3 を均等割りで並べる (ラベル淡色 + 数値太字)
+        const fp = vals.filter(v => v != null && isFinite(v));
+        const mean = fp.length ? fp.reduce((a, v) => a + v, 0) / fp.length : null;
+        const stat = mean == null ? '' : `<span class="avg"><span class="q">avg</span><b>${fq(mean)}</b></span>`
+            + `<span class="iqr"><span class="q">IQR</span>`
+                + `<span class="br">[</span>`
+                + [['Q1', q.q1], ['Q2', q.med], ['Q3', q.q3]]
+                    .map(([k, v]) => `<span class="qv"><span class="q">${k}</span><b>${fq(v)}</b></span>`).join('')
+                + `<span class="br">]</span></span>`;
+        return `<div class="rf-hf-metric">`
+            + `<div class="rf-hf-metric-t"><span>${title}</span>${stat ? `<span class="rf-hf-metric-q">${stat}</span>` : ''}</div>`
+            + rfHfSparkSvg(vals, q, color, axis, muted)   // Q0〜Q4 の数値はグラフ内に埋め込み
+            + `</div>`;
+    };
+    // HP は「変化量」表示に反転: 被弾 = − (ライフが減る) / 回復 = ＋。Q0〜Q4 も符号が反転する
+    const hpQRaw = hfQuartiles(rd.hpVals);
+    const hpNeg = rd.hpVals.map(v => -v).sort((a, b) => a - b);
+    const hpQ = hpQRaw ? { q1: -hpQRaw.q3, med: -hpQRaw.med, q3: -hpQRaw.q1, n: hpQRaw.n } : null;
+    html += metric(isJa ? '🩸 HP変化' : '🩸 HP change', hpNeg, hpQ, '#d6455d', hpAxis, false);
+    html += metric(isJa ? '🌀 ターン数' : '🌀 Turns', rd.tnVals, hfQuartiles(rd.tnVals), '#7c5ce0', tnAxis, false);
+    // (参考) キャラ全ラン: 検索でキャラ指定があるときだけ表示。苦戦率/内訳も全ラン側で併記する
+    if (rd.charName && rd.charEncN) {
+        html += `<div class="rf-hf-refhead"><span class="rf-hf-refcap">${isJa ? '(参考)' : '(ref.)'}</span>`
+            + ` <b>${rd.charName}</b> ${isJa ? '全ラン' : 'all runs'}`
+            + ` ${isJa ? ` ・ 苦戦率 ${rd.charRate}` : ` ・ hard ${rd.charRate}`}</div>`;
+        html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.charHpHard} ・ ⚡️${rd.charSpHard} ・ 🩸⚡️${rd.charBothHard}</div>`;
+        if (rd.charHpVals && rd.charHpVals.length >= 2) {
+            const chpNeg = rd.charHpVals.map(v => -v).sort((a, b) => a - b);
+            html += metric(isJa ? '🩸 HP変化' : '🩸 HP change', chpNeg, hfQuartiles(chpNeg), '#d6455d', hpAxis, true);
+        }
+        if (rd.charTnVals && rd.charTnVals.length >= 2) {
+            html += metric(isJa ? '🌀 ターン数' : '🌀 Turns', rd.charTnVals, hfQuartiles(rd.charTnVals), '#7c5ce0', tnAxis, true);
+        }
+    }
+    return html;
+}
+
+function rfHfCardShow(rd, cx, cy) {
+    if (!rfHfCardEl) {
+        rfHfCardEl = document.createElement('div');
+        rfHfCardEl.id = 'rf-hf-card';
+        rfHfCardEl.className = 'rf-hf-card';
+        rfHfCardEl.style.display = 'none';
+        document.body.appendChild(rfHfCardEl);
+    }
+    if (rfHfCardRow !== rd) {
+        rfHfCardEl.innerHTML = rfHfCardBuild(rd);
+        rfHfCardRow = rd;
+    }
+    rfHfCardEl.style.display = 'block';
+    // カーソル右下に置く (右端/下端のはみ出しは反転)
+    const w = rfHfCardEl.offsetWidth || 260, h = rfHfCardEl.offsetHeight || 120;
+    let x = cx + 16, y = cy + 14;
+    if (x + w > window.innerWidth - 6) x = Math.max(6, cx - w - 16);
+    if (y + h > window.innerHeight - 6) y = Math.max(6, cy - h - 14);
+    rfHfCardEl.style.left = Math.round(x) + 'px';
+    rfHfCardEl.style.top = Math.round(y) + 'px';
+}
+
+function rfHfCardHide() {
+    if (rfHfCardEl) rfHfCardEl.style.display = 'none';
+    rfHfCardRow = null;
+}
+
+// 各行 (ラベル+棒の帯) に透明 div を重ねてホバー/タップを受け取る
+function positionHfRowHover() {
+    const gd = hfBarsPlotDiv;
+    if (!gd || !hfBarsRowData.length) return;
+    const full = gd._fullLayout;
+    if (!full || !gd.data || !gd.data[0]) return;
+    const size = full._size;
+    const yaxis = full.yaxis;
+    const n = gd.data[0].y.length;
+    if (!n) return;
+    let holder = gd.querySelector('.rf-hf-rowhover');
+    if (!holder) {
+        if (getComputedStyle(gd).position === 'static') gd.style.position = 'relative';
+        holder = document.createElement('div');
+        holder.className = 'rf-hf-rowhover';
+        holder.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:2;';
+        gd.appendChild(holder);
+    }
+    holder.innerHTML = '';
+    const rowH = yaxis._length / n;
+    const cnt = Math.min(n, hfBarsRowData.length);
+    for (let i = 0; i < cnt; i++) {
+        const rd = hfBarsRowData[i];
+        const d = document.createElement('div');
+        d.style.cssText = `position:absolute;left:0;top:${Math.round(size.t + i * rowH)}px;`
+            + `width:${Math.max(20, Math.round(size.l + size.w))}px;height:${Math.max(12, rowH - 1)}px;`
+            + 'pointer-events:auto;cursor:default;';
+        d.addEventListener('pointerenter', (ev) => { if (ev.pointerType === 'mouse') rfHfCardShow(rd, ev.clientX, ev.clientY); });
+        d.addEventListener('pointermove', (ev) => { if (ev.pointerType === 'mouse') rfHfCardShow(rd, ev.clientX, ev.clientY); });
+        d.addEventListener('pointerleave', () => rfHfCardHide());
+        // タップ (タッチ) では指を離しても hoverleave が走るため、click で出して自動消去する
+        d.addEventListener('click', (ev) => {
+            rfHfCardShow(rd, ev.clientX, ev.clientY);
+            clearTimeout(rfHfCardTimer);
+            rfHfCardTimer = setTimeout(rfHfCardHide, 4000);
+        });
+        holder.appendChild(d);
+    }
+}
+
 let hfBarsBumpedMargin = null;             // 直前に設定した余白値 (automargin で戻った場合だけ広げ直す目印)
 
 // 左余白を画像ぶん広げてから再配置 (newPlot 直後と window resize 時に実行)
@@ -624,12 +855,20 @@ async function renderEncounterBars(runs, searchCriteria = null) {
     const segHp = new Map();      // code -> 苦戦 (ライフ のみ)
     const segSp = new Map();      // code -> 苦戦 (スペルカード のみ)
     const segBoth = new Map();    // code -> 苦戦 (ライフ & スペルの両方)
+    const encHp = new Map();      // code -> [ΔHp,...]  この検索ラン集合での HP損失 (純損失・回復は負) の分布
+    const encTn = new Map();      // code -> [Rounds,...] 同・ターン数の分布
     for (const run of (runs || [])) {
         const enc = (hardFightsEncs[run.character] || {})[run.run_id];
         if (!enc || !enc.length) continue;
         nRuns++;
-        for (const code of enc) {
+        const bvs = (hardFightsBvals[run.character] || {})[run.run_id];
+        for (let i = 0; i < enc.length; i++) {
+            const code = enc[i];
             byEnc.set(code, (byEnc.get(code) || 0) + 1);
+            const bv = bvs && bvs[i];
+            if (!bv) continue;
+            if (bv[0] != null) { let arr = encHp.get(code); if (!arr) { arr = []; encHp.set(code, arr); } arr.push(bv[0]); }
+            if (bv[1] != null) { let arr = encTn.get(code); if (!arr) { arr = []; encTn.set(code, arr); } arr.push(bv[1]); }
         }
         const ent = (hardFightsByChar[run.character] || {})[run.run_id];
         for (const e of (ent || [])) {
@@ -639,6 +878,41 @@ async function renderEncounterBars(runs, searchCriteria = null) {
             if (isHp && isSp) segBoth.set(code, (segBoth.get(code) || 0) + 1);
             else if (isHp) segHp.set(code, (segHp.get(code) || 0) + 1);
             else if (isSp) segSp.set(code, (segSp.get(code) || 0) + 1);
+        }
+    }
+
+    // ★ キャラ指定があれば そのキャラ「全ラン」の敵別 IQR も比較用に集計 (敵別戦績タブと同定義: HP=純損失 / ターン=Rounds)
+    //   遭遇回数・苦戦内訳も数えて (参考) に苦戦率/内訳を併記する
+    const searchChar = (searchCriteria && searchCriteria.character && searchCriteria.character !== 'All')
+        ? searchCriteria.character : null;
+    const charHp = searchChar ? new Map() : null;
+    const charTn = searchChar ? new Map() : null;
+    const charEnc = searchChar ? new Map() : null;      // code -> 全ランでの遭遇回数
+    const charSegHp = searchChar ? new Map() : null;    // code -> 苦戦 (ライフ のみ)
+    const charSegSp = searchChar ? new Map() : null;    // code -> 苦戦 (スペル のみ)
+    const charSegBoth = searchChar ? new Map() : null;  // code -> 苦戦 (両方)
+    if (searchChar) {
+        const chEncs = hardFightsEncs[searchChar] || {};
+        const chBv = hardFightsBvals[searchChar] || {};
+        for (const rid of Object.keys(chBv)) {
+            const encAll = chEncs[rid], bvAll = chBv[rid];
+            if (!encAll || !bvAll) continue;
+            for (let i = 0; i < encAll.length; i++) {
+                const code = encAll[i], bv = bvAll[i];
+                charEnc.set(code, (charEnc.get(code) || 0) + 1);
+                if (!bv) continue;
+                if (bv[0] != null) { let arr = charHp.get(code); if (!arr) { arr = []; charHp.set(code, arr); } arr.push(bv[0]); }
+                if (bv[1] != null) { let arr = charTn.get(code); if (!arr) { arr = []; charTn.set(code, arr); } arr.push(bv[1]); }
+            }
+            const ent = (hardFightsByChar[searchChar] || {})[rid];
+            for (const e of (ent || [])) {
+                const code = e.g;
+                if (!code) continue;
+                const isHp = e.dh >= 15, isSp = e.sp >= 1;
+                if (isHp && isSp) charSegBoth.set(code, (charSegBoth.get(code) || 0) + 1);
+                else if (isHp) charSegHp.set(code, (charSegHp.get(code) || 0) + 1);
+                else if (isSp) charSegSp.set(code, (charSegSp.get(code) || 0) + 1);
+            }
         }
     }
 
@@ -702,27 +976,75 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         const p = (h / n * 100).toFixed(1).replace(/\.0$/, '');
         return `${p}%(${h}/${n})`;
     });
-    // hover 用の詳細数値: [遭遇, 苦戦合計, 苦戦率文字列]
-    const custom = sorted.map((row, i) => [encVals[i], hardVals[i], rateTxt[i]]);
-
+    // Plotly 用の上下反転ラベル
     const rev = (a) => a.slice().reverse();
     const labelsRev = rev(labels);
 
     // 苦戦の部分だけ濃色で塗る: [ライフ / スペル / 両方] を起点側に積み上げ, 残りは薄色
     // (積み上げ基点 = 軸側なので, 軸から「苦戦した長さ」が伸びる形になる)
+    // 苦戦なし部分は背景の区間色と判別しやすいように色を浅く + 細い枠線で囲む
     const segments = [
-        { name: isJa ? '🩸 苦戦 (ライフ)' : 'Hard (HP)', vals: hpVals, color: '#d6455d' },
-        { name: isJa ? '⚡️ 苦戦 (スペルカード)' : 'Hard (Spell)', vals: spVals, color: '#7c5ce0' },
-        { name: isJa ? '🩸⚡️ 苦戦 (両方)' : 'Hard (both)', vals: bothVals, color: '#7a1f3d' },
-        { name: isJa ? '苦戦なし' : 'No hard fights', vals: restVals, color: '#dbe7e4' },
+        { name: isJa ? '🩸 苦戦 (ライフ)' : 'Hard (HP)', vals: hpVals, color: '#d6455d', line: { color: '#ffffff', width: 0.5 } },
+        { name: isJa ? '⚡️ 苦戦 (スペルカード)' : 'Hard (Spell)', vals: spVals, color: '#7c5ce0', line: { color: '#ffffff', width: 0.5 } },
+        { name: isJa ? '🩸⚡️ 苦戦 (両方)' : 'Hard (both)', vals: bothVals, color: '#7a1f3d', line: { color: '#ffffff', width: 0.5 } },
+        { name: isJa ? '苦戦なし' : 'No hard fights', vals: restVals, color: '#f2f5f3', line: { color: '#93a8a1', width: 1 } },
     ];
 
     // 敵名が長いので高さは敵数に比例させ, 全表示 (ページスクロール) で読む。下限で下限は確保
-    const chartHeight = Math.max(700, labels.length * 34 + 160);   // 1行あたり34px: 棒の間隔を広めに取る
+    // 狭い幅 (スマホ等) では敵名 tick を折り返して縮め、左余白の増殖でプロット域が消えるのを防ぐ (2026-10-31)
+    const NARROW_W = 640;
+    const narrow = Math.min(holder.clientWidth, document.documentElement.clientWidth) <= NARROW_W;
+    const wrapTickLabel = (lbl) => (!narrow) ? lbl :
+        lbl.replace(isJa ? '（特殊イベント）' : ' (Special Event)', isJa ? '<br>（特殊イベント）' : '<br>(Special Event)')
+            .replace(/ & /g, ' &<br>')
+            .split('<br>')
+            .map((part) => {
+                const t = part.trim();
+                if (t.length > 9 && !t.includes(' ')) return t.replace(/(.{9})(?=.)/g, '$1<br>');   // CJK の長い連続は 9字ごと
+                if (t.length > 14 && t.includes(' ')) return t.replace(/ (?=\S)/g, '<br>');   // 英字の長い名前は空白で折る
+                return t;
+            })
+            .join('<br>');
+    const tickLabels = labels.map(wrapTickLabel);
+    const chartHeight = Math.max(700, labels.length * (narrow ? 44 : 34) + 160);   // 折返しラベルは行間を広めに (狭幅時 1行あたり44px)
     // 表示モード: 'count' = 棒の長さ = 遭遇回数 / 'pct' = 全員の棒が同じ長さ (100% 積み上げ)
     const isPct = hfBarMode === 'pct';
     const scale = (vals) => (isPct ? vals.map((v, i) => v / encVals[i] * 100) : vals);
     const segMax = isPct ? 100 : Math.max(1, ...encVals);
+
+    // ★ 行の背景にうっすら色を敷いて区間が一目で分かるようにする:
+    //   グループ = Act × (通常敵はルート選択と同じ lv帯: 序盤/中盤/終盤) + エリート/ボス/特殊
+    //   Plotly の shape (paper座標・layer below) は棒の後ろに敷かれる
+    const bandColor = {
+        'E': '#e2edfa',   // Act1〜3 通常敵 lv0〜5 (序盤)
+        'M': '#e6f2e7',   // lv5〜10 (中盤)
+        'L': '#fdebd7',   // lv10〜15 (終盤)
+        'x': '#eee7f8',   // エリート
+        'b': '#f9e6ee',   // ボス
+        's': '#f6f3d3',   // 特殊イベント
+    };
+    const bandKeyOf = (c) => {
+        const nm = hardFightsNames[c] || [];
+        const kind = nm[2] || '?', act = Number.isFinite(nm[3]) ? nm[3] : 99;
+        if (kind === 'e' && act >= 1 && act <= 3 && Number.isFinite(nm[4])) return nm[4] < 5 ? 'E' : nm[4] < 10 ? 'M' : 'L';
+        return bandColor[kind] ? kind : null;
+    };
+    const bandKeys = sorted.map(([c]) => bandKeyOf(c));
+    const nRows = bandKeys.length;
+    const bandShapes = [];
+    for (let i = 1, gs = 0; i <= nRows; i++) {
+        if (i === nRows || bandKeys[i] !== bandKeys[gs]) {
+            if (bandKeys[gs]) {
+                // 上→下の行 gs〜i-1 は下から数えると n-1-i+1 〜 n-1-gs 番目のカテゴリ帯
+                bandShapes.push({
+                    type: 'rect', xref: 'paper', yref: 'paper', x0: 0, x1: 1,
+                    y0: (nRows - i) / nRows, y1: (nRows - gs) / nRows,
+                    fillcolor: bandColor[bandKeys[gs]], line: { width: 0 }, layer: 'below',
+                });
+            }
+            gs = i;
+        }
+    }
 
     holder.innerHTML = `<div style="text-align:center;margin:0 0 2px 0;">`
         + `<button id="hf-bar-mode-btn" style="font-size:12px;padding:4px 14px;cursor:pointer;border:1px solid #94a3b8;border-radius:6px;background:#f1f5f9;color:#334155;">`
@@ -744,7 +1066,7 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         xanchor: 'left',
         showarrow: false,
         text: rateTxt[i],
-        font: { size: 11.5, color: '#64748b' },
+        font: { size: narrow ? 9.5 : 11.5, color: '#64748b' },
     }));
 
     // タイトルへ検索条件ラベルを追加 (例: "@Sophie CirnoA Act1 …") — 条件が空 ('(all)') のときは出さない
@@ -754,33 +1076,45 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         orientation: 'h',
         y: labelsRev,
         x: rev(isPct ? scale(s.vals) : s.vals),
-        customdata: rev(custom),
         name: s.name,
-        marker: { color: s.color, line: { color: '#fff', width: 0.5 } },
-        hovertemplate: `%{y}<br>${isJa ? '遭遇' : 'Encounters'}: %{customdata[0]}`
-            + `<br>${isJa ? '苦戦した戦闘' : 'Hard fights'}: %{customdata[2]}`
-            + `<br>${s.name}: %{x}${isPct ? '%' : ''}<extra></extra>`,
+        marker: { color: s.color, line: s.line },
+        hoverinfo: 'none',   // 既定の簡素ツールチップは出さない。行ホバーは .rf-hf-rowhover + カード (.rf-hf-card) が担当
     })), {
         barmode: 'stack',
         title: {
             text: `${isJa ? '遭遇した戦闘 (敵ごと)' : 'Battles Fought (by Enemy)'}`
                 + ` <span style="font-size:0.8em;color:#64748b">(${nRuns} ラン / ${nRuns === 1 ? '1 run' : nRuns + ' runs'})</span>`
                 + (criteriaLabel && criteriaLabel !== '(all)' ? ` <span style="font-size:0.75em;color:#475569;font-weight:700">｜${criteriaLabel}</span>` : '')
-                + `<br><span style="font-size:0.7em;color:#64748b">${isJa ? '👹=エリート ✨=特殊イベント ・ ボス=キャラ絵 ・ ' : '👹=Elite ✨=Special Event ・ Boss=avatar ・ '}${isJa ? (isPct ? '棒の長さ = 遭遇に対する割合 (100% 積み上げ)' : '棒の長さ = 遭遇回数 ・ 色付き部分 = 苦戦した戦闘') : (isPct ? 'bar length = % of encounters (100% stacked)' : 'bar length = encounters ・ colored part = hard fights')} ・ ${isJa ? '並び順 = 時系列 (Act → 種別 → Lv)' : 'order = chronological (Act → type → level)'}</span>`,
-            font: { size: 16 },
+                + `<br><span style="font-size:0.7em;color:#64748b">${[
+                    isJa ? '👹=エリート ✨=特殊イベント ・ ボス=キャラ絵' : '👹=Elite ✨=Special Event ・ Boss=avatar',
+                    isJa ? (isPct ? '棒の長さ = 遭遇に対する割合 (100% 積み上げ)' : '棒の長さ = 遭遇回数 ・ 色付き部分 = 苦戦した戦闘') : (isPct ? 'bar length = % of encounters (100% stacked)' : 'bar length = encounters ・ colored part = hard fights'),
+                    isJa ? '並び順 = 時系列 (Act → 種別 → Lv)' : 'order = chronological (Act → type → level)',
+                ].join(narrow ? '<br>' : ' ・ ')
+                + (isJa
+                    ? ` ・ 背景 = `
+                    + `<span style="color:${bandColor['E']}"><b>■</b></span>序盤 `
+                    + `<span style="color:${bandColor['M']}"><b>■</b></span>中盤 `
+                    + `<span style="color:${bandColor['L']}"><b>■</b></span>終盤 `
+                    + `<span style="color:${bandColor['x']}"><b>■</b></span>エリート `
+                    + `<span style="color:${bandColor['b']}"><b>■</b></span>ボス`
+                    : '')}</span>`,
+            font: { size: narrow ? 13 : 16 },
         },
         showlegend: true,
-        legend: { orientation: 'h', y: -0.08, font: { size: 11 } },
+        legend: { orientation: 'h', y: -0.08, font: { size: narrow ? 9.5 : 11 } },
         annotations: rateNotes,
+        shapes: bandShapes,   // 区間 (Act×序盤/中盤/終盤 etc) のうっすら色背景
         xaxis: {
             title: isPct ? (isJa ? '遭遇に対する苦戦の割合 (%)' : '% of encounters')
                 : (isJa ? '遭遇回数' : 'Encounters'),
             range: [0, segMax * (isPct ? 1.18 : 1.2)],
             gridcolor: '#e2e8f0',
         },
-        yaxis: { automargin: true, tickfont: { size: 13 } },
+        yaxis: narrow
+            ? { automargin: true, tickmode: 'array', tickvals: labelsRev, ticktext: rev(tickLabels), tickfont: { size: 10 } }
+            : { automargin: true, tickfont: { size: 13 } },
         bargap: 0.3,   // 棒の太さ = 行の70%: 棒の間に空間を入れて見やすくする
-        margin: { t: 70, b: 70, l: 0, r: 30 },
+        margin: { t: narrow ? 96 : 70, b: 70, l: 0, r: narrow ? 24 : 30 },
         paper_bgcolor: '#fff',
         plot_bgcolor: '#fff',
         height: chartHeight,
@@ -793,6 +1127,48 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         const w = Math.max(320, plotDiv.parentElement.clientWidth || 0);
         if (w) await Plotly.relayout(plotDiv, { width: w });
     } catch (e) { /* 幅調整失敗時は初期幅のまま */ }
+
+    // ★ リッチカード用の行データ (上→下順): 名前ラベル・棒・その間の隙間のどれに乗っても同じ内容を出す
+    //   charHp/charTnVals = (参考) そのキャラ全ランの分布。カートで共通スケールを算出する
+    //   gkey = 共通軸グループ: 「Act|種別」 (通常敵は lv帯で細分: gkeyOf)
+    // 共通軸グループ: 基本 = Act|種別。通常敵 (雑魚) はさらに Act1〜3 内で出現レベル帯
+    //   (ルート選択と同じ: lv0〜5=序盤 / lv5〜10=中盤 / lv10〜15=終盤) で区切る
+    const gkeyOf = (nm) => {
+        const kind = nm[2] || '?';
+        const act = Number.isFinite(nm[3]) ? nm[3] : 99;
+        let band = '';
+        if (kind === 'e' && act >= 1 && act <= 3 && Number.isFinite(nm[4])) {
+            band = nm[4] < 5 ? 'E' : nm[4] < 10 ? 'M' : 'L';   // 序盤 / 中盤 / 終盤 (MinLevel 基準)
+        }
+        return `A${act}|${kind}${band ? '|' + band : ''}`;
+    };
+    const rateTxtOf = (enc, hp, sp, both) => {
+        const h = hp + sp + both;
+        const p = (h / enc * 100).toFixed(1).replace(/\.0$/, '');
+        return `${p}%(${h}/${enc})`;
+    };
+    hfBarsRowData = sorted.map(([c], i) => {
+        const nm = hardFightsNames[c] || [];
+        return {
+            label: labels[i],
+            enc: encVals[i],
+            rate: rateTxt[i],
+            hpHard: segHp.get(c) || 0,
+            spHard: segSp.get(c) || 0,
+            bothHard: segBoth.get(c) || 0,
+            hpVals: (encHp.get(c) || []).slice().sort((x, y) => x - y),
+            tnVals: (encTn.get(c) || []).slice().sort((x, y) => x - y),
+            gkey: gkeyOf(nm),
+            charName: searchChar,
+            charEncN: searchChar ? (charEnc.get(c) || 0) : 0,
+            charHpHard: searchChar ? (charSegHp.get(c) || 0) : 0,
+            charSpHard: searchChar ? (charSegSp.get(c) || 0) : 0,
+            charBothHard: searchChar ? (charSegBoth.get(c) || 0) : 0,
+            charRate: searchChar ? rateTxtOf(charEnc.get(c) || 0, charSegHp.get(c) || 0, charSegSp.get(c) || 0, charSegBoth.get(c) || 0) : null,
+            charHpVals: searchChar ? (charHp.get(c) || []).slice().sort((x, y) => x - y) : null,
+            charTnVals: searchChar ? (charTn.get(c) || []).slice().sort((x, y) => x - y) : null,
+        };
+    });
 
     // ★ ボス行だけキャラ絵 (img/boss/*.avif) をラベル脇に重ねる: automargin で決まった左余白に
     //   画像分の余白を足して再レイアウトし、その空いた領域に <img> を重ねる
@@ -807,8 +1183,12 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         } catch (e) { /* レイアウト調整失敗時は画像位置がずれるだけ */ }
     }
     positionBossAvatarOverlay();
+    positionHfRowHover();
     // レイアウト完全確定後 (tick ラベル配置後) にもう一度張り直す
-    try { plotDiv.on('plotly_afterplot', positionBossAvatarOverlay); } catch (e) { /* イベント無視 */ }
+    try {
+        plotDiv.on('plotly_afterplot', positionBossAvatarOverlay);
+        plotDiv.on('plotly_afterplot', positionHfRowHover);
+    } catch (e) { /* イベント無視 */ }
 }
 
 // window リサイズ (responsive 再レイアウト) 後に幅・余白と画像位置を張り直す
@@ -821,6 +1201,7 @@ window.addEventListener('resize', () => {
             if (w) Plotly.relayout(hfBarsPlotDiv, { width: w });
         } catch (e) { /* 無視 */ }
         ensureBossAvatarSpace();
+        positionHfRowHover();
     }, 120);
 });
 
@@ -831,6 +1212,7 @@ const characterTimelineCache = new Map();
 const hardFightsByChar = {};   // { character: { runId: [ {si,a,l,dh,sp,g,j,e} ] } }
 const hardFightsNames = {};    // { code ('gid1+gid2'): [jaName, enName] }  遭遇/苦戦集計用の名前テーブル
 const hardFightsEncs = {};     // { character: { runId: [code, ...] } }      全戦闘ステーションの遭遇リスト
+const hardFightsBvals = {};    // { character: { runId: [[ΔHp(純損失・回復は負)|null, Rounds|null], ...] } }  encs と同順に並ぶ (敵ごとの HP/ターン IQR 集計用・2026-10-31)
 const hardFightsStats = {};    // { character: { runId: {L:総ライフ喪失, LA:[Act別喪失x4], S:スペル回数, T:{'{act}{kind}':[ターン和,戦闘数]}} } }
 let hardFightsPromise = null;
 let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功したか (失敗時は検索時に再試行)
@@ -847,6 +1229,7 @@ function loadHardFights(force) {
             if (data && data.runs) Object.assign(hardFightsByChar, data.runs);
             if (data && data.names) Object.assign(hardFightsNames, data.names);
             if (data && data.encs) Object.assign(hardFightsEncs, data.encs);
+            if (data && data.bvals) Object.assign(hardFightsBvals, data.bvals);
             if (data && data.stats) { Object.assign(hardFightsStats, data.stats); hardFightsDataOk = true; }
             hardFightsByChar.__loaded = true;
             return hardFightsByChar;

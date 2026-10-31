@@ -387,3 +387,81 @@
 .search-criterion strong {
     color: #002752;
 }
+/* --- 遭遇戦闘グラフ: リッチなホバーカード (棒・敵名のどちらに乗っても同じ内容を出す 2026-10-31) --- */
+.rf-hf-card {
+    position: fixed;
+    z-index: 9998;
+    display: none;
+    pointer-events: none;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.20);
+    padding: 8px 12px 9px 12px;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.45;
+    max-width: 294px;   /* content-box 基準: + 余白24 + 枠2 でカード全体が320 → SVG は294で巾いっぱい */
+}
+.rf-hf-card .rf-hf-card-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 12.5px;
+    color: #0f172a;
+}
+/* 敵名が長いとレイアウトを圧迫するので1行に収めて省略 (…表示) する */
+.rf-hf-card .rf-hf-card-h > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+.rf-hf-card .rf-hf-card-h .rf-hf-card-sub {
+    font-weight: 400;
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.rf-hf-card .rf-hf-metric { margin-top: 7px; }
+.rf-hf-card .rf-hf-metric-t {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #475569;
+}
+.rf-hf-card .rf-hf-metric-q {
+    flex: 1;                 /* 見出しの右の余白を利用: avg を左寄りに・IQR を右端に */
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-left: 12px;
+    font-size: 10.5px;
+    color: #64748b;
+    white-space: nowrap;
+}
+.rf-hf-card .rf-hf-metric-q .q { color: #94a3b8; margin-right: 2px; }
+.rf-hf-card .rf-hf-metric-q b { color: #334155; font-weight: 600; }
+.rf-hf-card .rf-hf-metric-q .iqr { display: inline-flex; align-items: baseline; }
+.rf-hf-card .rf-hf-metric-q .iqr .qv { display: inline-flex; align-items: baseline; margin-right: 4px; }
+.rf-hf-card .rf-hf-metric-q .iqr .qv:last-child { margin-right: 2px; }
+.rf-hf-card .rf-hf-metric-q .br { color: #b4c1cb; font-size: 14px; font-weight: 500; margin: 0 2px; }
+.rf-hf-card .rf-hf-metric svg { display: block; margin-top: 2px; }
+.rf-hf-card .rf-hf-seg {
+    margin-top: 4px;
+    font-size: 10.5px;
+    color: #64748b;
+}
+.rf-hf-card .rf-hf-refhead {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 11.5px;
+    color: #334155;
+    line-height: 1.35;
+}
+.rf-hf-card .rf-hf-refhead .rf-hf-refcap { color: #94a3b8; font-weight: 600; margin-right: 1px; }
+.rf-hf-card .rf-hf-refhead b { color: #1e293b; }
