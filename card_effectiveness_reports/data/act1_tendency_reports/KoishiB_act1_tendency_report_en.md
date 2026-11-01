@@ -33,9 +33,9 @@
 <li>Mischievous Rose: 11</li>
 <li>Dark Dancer: 9</li>
 <li>Curiosity: 9</li>
-<li>Autumnal Harvest: 9</li>
+<li>True Self's Awakening: 9</li>
 <li>Sin of the Black Pegasus: 9</li>
-<li>Dance of the Heart: 9</li>
+<li>Autumnal Harvest: 9</li>
 </ul></div>
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
@@ -217,16 +217,6 @@
 <td style='text-align: right;'>74.4</td>
 </tr>
 <tr>
-<td>Last Romantic Night Call</td>
-<td style='text-align: right;'>+20.91</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>40</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>38.7</td>
-<td style='text-align: right;'>89.0</td>
-</tr>
-<tr>
 <td>Shade</td>
 <td style='text-align: right;'>+20.91</td>
 <td style='text-align: right;'>50.0%</td>
@@ -235,6 +225,16 @@
 <td style='text-align: right;'>38.7</td>
 <td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>96.5</td>
+</tr>
+<tr>
+<td>Last Romantic Night Call</td>
+<td style='text-align: right;'>+20.91</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>40</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>38.7</td>
+<td style='text-align: right;'>89.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Tarot: The Chariot</strong></td>
@@ -478,11 +478,11 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">🧰 Canned Food</span>: 10</li>
-<li><span class="text-purchase">Closed Heart</span>: 6</li>
-<li><span class="text-purchase">Clean Energy</span>: 6</li>
 <li><span class="text-purchase">Talk Through the Hat</span>: 6</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 6</li>
+<li><span class="text-purchase">Clean Energy</span>: 6</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 6</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 6</li>
+<li><span class="text-purchase">Closed Heart</span>: 6</li>
 <li><span class="text-purchase">Devil's Codex</span>: 4</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 4</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 3</li>
@@ -490,13 +490,13 @@
 <li><span class="text-purchase">Instinctive Action</span>: 3</li>
 <li><span class="text-purchase">Luminescent Night</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 2</li>
-<li><span class="text-purchase">Lonely Heart</span>: 2</li>
-<li><span class="text-purchase">Air Kiss</span>: 2</li>
-<li><span class="text-purchase">Passionate Memories</span>: 2</li>
-<li><span class="text-purchase">Dance of the Heart</span>: 2</li>
 <li><span class="text-purchase">Emotional Surge</span>: 2</li>
-<li><span class="text-purchase">True Full Moon</span>: 1</li>
+<li><span class="text-purchase">Air Kiss</span>: 2</li>
+<li><span class="text-purchase">Dance of the Heart</span>: 2</li>
+<li><span class="text-purchase">Lonely Heart</span>: 2</li>
+<li><span class="text-purchase">Passionate Memories</span>: 2</li>
 <li><span class="text-purchase">Forest Depths</span>: 1</li>
+<li><span class="text-purchase">Autumnal Harvest</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -529,15 +529,15 @@
 <li><span class="text-purchase">🧰 Water Gun</span>: 21</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 18</li>
 <li><span class="text-purchase">Devil's Codex</span>: 14</li>
-<li><span class="text-purchase">Clean Energy</span>: 11</li>
 <li><span class="text-purchase">Lonely Heart</span>: 11</li>
+<li><span class="text-purchase">Clean Energy</span>: 11</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 10</li>
-<li><span class="text-purchase">Ageless Dream</span>: 10</li>
 <li><span class="text-purchase">Talk Through the Hat</span>: 10</li>
+<li><span class="text-purchase">Ageless Dream</span>: 10</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 8</li>
-<li><span class="text-purchase">Persecutory Delusions</span>: 8</li>
 <li><span class="text-purchase">Melancholic Garden</span>: 8</li>
 <li><span class="text-purchase">True Full Moon</span>: 8</li>
+<li><span class="text-purchase">Persecutory Delusions</span>: 8</li>
 <li><span class="text-purchase">Passionate Memories</span>: 7</li>
 <li><span class="text-purchase">DNA's Flaw</span>: 6</li>
 <li><span class="text-purchase">Luminescent Night</span>: 6</li>
@@ -555,14 +555,14 @@
 <li><span class="text-exhibit">Dream Catcher</span>: 2</li>
 <li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Watch</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
-<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Spider Lily</span>: 1</li>
-<li><span class="text-exhibit">Black Notebook</span>: 1</li>
+<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
+<li><span class="text-exhibit">Black Notebook</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -594,15 +594,15 @@
 <li><span class="text-purchase">Withering Dreams</span>: 5</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 4</li>
 <li><span class="text-purchase">Luminescent Night</span>: 4</li>
-<li><span class="text-purchase">🧰 Disposable Amulet</span>: 3</li>
-<li><span class="text-purchase">Instinctive Action</span>: 3</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 3</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 3</li>
-<li><span class="text-purchase">Crazed Thorns</span>: 3</li>
 <li><span class="text-purchase">Devil's Codex</span>: 3</li>
+<li><span class="text-purchase">🧰 Disposable Amulet</span>: 3</li>
+<li><span class="text-purchase">Instinctive Action</span>: 3</li>
+<li><span class="text-purchase">Crazed Thorns</span>: 3</li>
 <li><span class="text-purchase">Lonely Heart</span>: 3</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
-<li><span class="text-purchase">Beauties of Nature</span>: 2</li>
+<li><span class="text-purchase">🧰 Floppy Disk</span>: 2</li>
 <li><span class="text-purchase">Calm Mind</span>: 2</li>
 <li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
 </ul>
@@ -621,14 +621,14 @@
 <li><span class="text-exhibit">Bottle</span>: 2</li>
 <li><span class="text-exhibit">Omikuji</span>: 2</li>
 <li><span class="text-exhibit">Anesthesia Gun Watch</span>: 2</li>
-<li><span class="text-exhibit">Oil</span>: 1</li>
+<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
+<li><span class="text-exhibit">Oil</span>: 1</li>
+<li><span class="text-exhibit">Robot Model</span>: 1</li>
 <li><span class="text-exhibit">Vinyl</span>: 1</li>
 <li><span class="text-exhibit">Leaky Ladle</span>: 1</li>
 <li><span class="text-exhibit">Chopper</span>: 1</li>
 <li><span class="text-exhibit">Bicycle</span>: 1</li>
-<li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
-<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Bamboo</span>: 1</li>
 </ul>
 </div>

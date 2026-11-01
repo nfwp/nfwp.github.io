@@ -129,7 +129,7 @@
             <li>When ACT, level, cards, exhibits, etc. are specified, the hover on the runID shown in the play ID indicates whether it is a particular state (e.g. state act1 Lv 7), the final deck, or in which situation the item appeared.</li>
             <p class="manual-note">* You can search for cards that were adopted mid-route but are not in the final result.</p>
             <li>Pressing 🔗 Copy share link lets you share those search results.</li>
-            <li>The <b>Player name</b> field next to the deck size filters runs by that player (partial match, case-insensitive). Leave it empty for &quot;no specification&quot;. Player names appearing in the logs appear as autocomplete candidates. It is included in the share link.</li>
+            <li>The <b>Player name</b> field next to the deck size filters runs by that player (partial match, case-insensitive). Leave it empty for &quot;no specification&quot;. Player names appearing in the logs appear as             <li>Check <b>"Include non-stat runs"</b> in the filter panel to also search runs excluded from the statistics by per-player sampling (extra data loads only the first time it is enabled). Matching rows get a <b>"Non-stat"</b> badge. It is included in the criteria summary, share links and search history.</li>
         </ul>
         <h3>🕰️ Search history comparison and IQR (Q1–Q3) display</h3>
         <p>After a search, the <b>Search history comparison</b> at the bottom of the page keeps the last 30 searches as a table and line charts of average life loss / turns per segment. Hovering a row or a chart point shows the condition's <b>IQR (Q1–Q3)</b>.</p>
@@ -139,6 +139,8 @@
             <li><b>Spread charts</b>: line charts of each segment's Q3−Q1 width (how much the condition wobbles). Lower is better (smaller spread = more consistent results). Off by default — check <b>&quot;Spread (life) / Spread (turns)&quot;</b> in the &quot;Charts to show&quot; bar to show them.</li>
             <li><b>Chart filtering &amp; zoom</b>: the 6 charts (2 segment + 2 spread (off by default) + 2 cumulative) are chosen with the <b>&quot;Charts to show&quot;</b> checkboxes (the bar is always visible). <b>Click a chart to pop it up enlarged in a full-screen dialog</b> (close with ✕ / ESC / backdrop click — hover highlighting and the IQR band stay interactive in the enlarged view). A single visible chart expands to full width automatically. &quot;Reset&quot; restores the defaults.</li>
             <li>Computed only for conditions with 2 or more runs. Older history entries have no band — re-running the same condition adds it.</li>
+            <li><b>"Graph" column</b>: the ①②③ checkboxes in the first column show/hide each condition's lines in the charts below (table rows stay; numbering and colors do not shift).</li>
+            <li><b>Deleting a row</b>: press the 🗑 at the end of a row — it shows <b>"Sure?"</b> first; press again to delete (two-step confirmation, auto-cancels after 3 s). The delete cell is always visible at the right edge even when the table is scrolled horizontally.</li>
         </ul>
         </ul>
         <h3>⚔️ "Battles Fought (by Enemy)" chart</h3>

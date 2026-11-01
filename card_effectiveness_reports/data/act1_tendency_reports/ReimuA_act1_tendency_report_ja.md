@@ -29,8 +29,8 @@
 <li>護身の霊符: 37回</li>
 <li>龍殺陣: 36回</li>
 <li>浄化活動: 36回</li>
-<li>ホーミングアミュレット: 28回</li>
 <li>常置陣: 28回</li>
+<li>ホーミングアミュレット: 28回</li>
 <li>弾幕護符: 24回</li>
 <li>作戦姿勢: 22回</li>
 <li>聖人化: 20回</li>
@@ -488,16 +488,16 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 5回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">住吉三神</span>: 4回</li>
 <li><span class="text-purchase">紅内勁</span>: 4回</li>
+<li><span class="text-purchase">住吉三神</span>: 4回</li>
 <li><span class="text-purchase">二重大結界</span>: 4回</li>
 <li><span class="text-purchase">境界遊行</span>: 2回</li>
 <li><span class="text-purchase">厄祓い</span>: 2回</li>
+<li><span class="text-purchase">開運御札</span>: 2回</li>
+<li><span class="text-purchase">護身の霊符</span>: 2回</li>
 <li><span class="text-purchase">魔浄閃結</span>: 2回</li>
 <li><span class="text-purchase">亜空点穴</span>: 2回</li>
-<li><span class="text-purchase">開運御札</span>: 2回</li>
-<li><span class="text-purchase">務光の雷弾</span>: 2回</li>
-<li><span class="text-purchase">護身の霊符</span>: 2回</li>
+<li><span class="text-purchase">作戦姿勢</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -527,21 +527,21 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 14回</li>
 <li><span class="text-purchase">昇天脚</span>: 14回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 12回</li>
-<li><span class="text-purchase">清めの儀式</span>: 11回</li>
-<li><span class="text-purchase">聖地巡礼</span>: 11回</li>
 <li><span class="text-purchase">長袖善舞</span>: 11回</li>
+<li><span class="text-purchase">聖地巡礼</span>: 11回</li>
+<li><span class="text-purchase">清めの儀式</span>: 11回</li>
 <li><span class="text-purchase">護身の霊符</span>: 10回</li>
 <li><span class="text-purchase">常置陣</span>: 9回</li>
 <li><span class="text-purchase">二重大結界</span>: 7回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 7回</li>
 <li><span class="text-purchase">紅内勁</span>: 7回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 7回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 6回</li>
-<li><span class="text-purchase">作戦姿勢</span>: 6回</li>
 <li><span class="text-purchase">自由自在</span>: 6回</li>
+<li><span class="text-purchase">作戦姿勢</span>: 6回</li>
 <li><span class="text-purchase">住吉三神</span>: 5回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 5回</li>
 <li><span class="text-purchase">浄化活動</span>: 5回</li>
-<li><span class="text-purchase">🧰 フロッピーディスク</span>: 4回</li>
+<li><span class="text-purchase">夢想封印　寂</span>: 4回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -556,11 +556,11 @@
 <li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">白狼天狗の盾</span>: 1回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 1回</li>
+<li><span class="text-exhibit">おみくじ</span>: 1回</li>
+<li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">ひらり布</span>: 1回</li>
 <li><span class="text-exhibit">唐傘</span>: 1回</li>
-<li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
-<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -568,8 +568,8 @@
 <ul>
 <li><span class="text-remove">博麗アミュレット</span>: 101回</li>
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 16回</li>
-<li><span class="text-remove">ショット</span>: 12回</li>
 <li><span class="text-remove">弾幕護符</span>: 12回</li>
+<li><span class="text-remove">ショット</span>: 12回</li>
 <li><span class="text-remove">結界</span>: 7回</li>
 <li><span class="text-remove">🌀 不幸</span>: 2回</li>
 <li><span class="text-remove">封魔陣</span>: 1回</li>
@@ -583,33 +583,33 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">長袖善舞</span>: 5回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
+<li><span class="text-purchase">長袖善舞</span>: 5回</li>
 <li><span class="text-purchase">自由自在</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">博麗縁日</span>: 3回</li>
 <li><span class="text-purchase">🧰 フロッピーディスク</span>: 2回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
-<li><span class="text-purchase">聖地巡礼</span>: 2回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 2回</li>
+<li><span class="text-purchase">聖地巡礼</span>: 2回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
+<li><span class="text-purchase">龍殺陣</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
-<li><span class="text-purchase">龍殺陣</span>: 1回</li>
 <li><span class="text-purchase">明珠暗投</span>: 1回</li>
 <li><span class="text-purchase">幻想一重</span>: 1回</li>
 <li><span class="text-purchase">聖人化</span>: 1回</li>
-<li><span class="text-purchase">陰陽宝玉</span>: 1回</li>
 <li><span class="text-purchase">金剛身</span>: 1回</li>
-<li><span class="text-purchase">常置陣</span>: 1回</li>
+<li><span class="text-purchase">肉体強化</span>: 1回</li>
+<li><span class="text-purchase">開運御札</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> よく購入される展示品 Top 20
 <ul>
-<li><span class="text-exhibit">プラモデル</span>: 5回</li>
 <li><span class="text-exhibit">リボン</span>: 5回</li>
+<li><span class="text-exhibit">プラモデル</span>: 5回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 2回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>

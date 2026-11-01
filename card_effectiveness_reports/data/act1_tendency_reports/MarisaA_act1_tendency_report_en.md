@@ -30,10 +30,10 @@
 <li>Radioactive Elements: 21</li>
 <li>Orthodox Rebellion: 16</li>
 <li>Crimson Energy Release: 15</li>
-<li>Spirit Assignment: 14</li>
-<li>Full Moon Howl: 14</li>
 <li>True Full Moon: 14</li>
+<li>Full Moon Howl: 14</li>
 <li>Dark Satellite: 14</li>
+<li>Spirit Assignment: 14</li>
 <li>Indiscriminate Ignition: 12</li>
 <li>Hand Warmer: 12</li>
 </ul></div>
@@ -376,16 +376,6 @@
 <td style='text-align: right;'>66.1</td>
 <td style='text-align: right;'>103.1</td>
 </tr>
-<tr>
-<td>Stargazing</td>
-<td style='text-align: right;'>+16.17</td>
-<td style='text-align: right;'>39.0%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>59</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>44.8</td>
-<td style='text-align: right;'>95.5</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Red Star Explosion</strong></td>
 <td style='text-align: right;'>+16.17</td>
@@ -395,6 +385,16 @@
 <td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>52.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.0</span></strong></td>
+</tr>
+<tr>
+<td>Stargazing</td>
+<td style='text-align: right;'>+16.17</td>
+<td style='text-align: right;'>39.0%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>59</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>44.8</td>
+<td style='text-align: right;'>95.5</td>
 </tr>
 <tr>
 <td>Devil's Codex</td>
@@ -482,21 +482,21 @@
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 6</li>
 <li><span class="text-purchase">Devil's Codex</span>: 5</li>
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
-<li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 3</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 3</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 3</li>
 <li><span class="text-purchase">Alioth</span>: 3</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
-<li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
 <li><span class="text-purchase">Rocket Broom</span>: 2</li>
-<li><span class="text-purchase">Dark Satellite</span>: 2</li>
+<li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
 <li><span class="text-purchase">Hand Warmer</span>: 2</li>
-<li><span class="text-purchase">Navigation Star</span>: 2</li>
-<li><span class="text-purchase">Sin of the Black Pegasus</span>: 2</li>
 <li><span class="text-purchase">Danmaku Notes</span>: 2</li>
+<li><span class="text-purchase">Navigation Star</span>: 2</li>
+<li><span class="text-purchase">Dark Satellite</span>: 2</li>
 <li><span class="text-purchase">Ready For Burst</span>: 2</li>
+<li><span class="text-purchase">Bask in Stardust</span>: 2</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -529,16 +529,16 @@
 <li><span class="text-purchase">Magic Converter</span>: 19</li>
 <li><span class="text-purchase">Product of Failure</span>: 17</li>
 <li><span class="text-purchase">Devil's Codex</span>: 16</li>
-<li><span class="text-purchase">Luminous Mushroom</span>: 13</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 13</li>
+<li><span class="text-purchase">Luminous Mushroom</span>: 13</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 12</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 10</li>
 <li><span class="text-purchase">Radioactive Elements</span>: 9</li>
-<li><span class="text-purchase">Dark Satellite</span>: 9</li>
 <li><span class="text-purchase">Mushroom Feast</span>: 9</li>
-<li><span class="text-purchase">Emergency Defense</span>: 8</li>
+<li><span class="text-purchase">Dark Satellite</span>: 9</li>
 <li><span class="text-purchase">Improvisation</span>: 8</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 8</li>
+<li><span class="text-purchase">Emergency Defense</span>: 8</li>
 <li><span class="text-purchase">Hand Warmer</span>: 8</li>
 <li><span class="text-purchase">Alioth</span>: 7</li>
 </ul>
@@ -547,36 +547,36 @@
 <h5> Top 20 Most Purchased Exhibits
 <ul>
 <li><span class="text-exhibit">Tengu's Fan</span>: 4</li>
-<li><span class="text-exhibit">Hakurei Amulet</span>: 3</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 3</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
-<li><span class="text-exhibit">Ribbon</span>: 3</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 3</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 3</li>
+<li><span class="text-exhibit">Hakurei Amulet</span>: 3</li>
+<li><span class="text-exhibit">Ribbon</span>: 3</li>
 <li><span class="text-exhibit">Membership Card</span>: 2</li>
 <li><span class="text-exhibit">Vinyl</span>: 2</li>
+<li><span class="text-exhibit">Bottle</span>: 1</li>
+<li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
 <li><span class="text-exhibit">Karakasa</span>: 1</li>
+<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
+<li><span class="text-exhibit">Hina Doll</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
-<li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
-<li><span class="text-exhibit">Bottle</span>: 1</li>
 <li><span class="text-exhibit">Sewing Machine</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
 <li><span class="text-exhibit">Beer</span>: 1</li>
-<li><span class="text-exhibit">Hina Doll</span>: 1</li>
-<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Removed Cards
 <ul>
 <li><span class="text-remove">Illusion Laser</span>: 150</li>
-<li><span class="text-remove">Shoot</span>: 20</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 20</li>
+<li><span class="text-remove">Shoot</span>: 20</li>
 <li><span class="text-remove">Boundary</span>: 12</li>
 <li><span class="text-remove">Broom Defense</span>: 6</li>
-<li><span class="text-remove">🌀 Misfortune</span>: 1</li>
 <li><span class="text-remove">🌀 Buy Safety</span>: 1</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 1</li>
 <li><span class="text-remove">🌀 Jealous</span>: 1</li>
 </ul>
 </div>
@@ -589,25 +589,25 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
-<li><span class="text-purchase">Dark Satellite</span>: 3</li>
 <li><span class="text-purchase">Devil's Codex</span>: 3</li>
-<li><span class="text-purchase">Clean Energy</span>: 3</li>
+<li><span class="text-purchase">Dark Satellite</span>: 3</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 3</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
+<li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 2</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 2</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
+<li><span class="text-purchase">Radioactive Elements</span>: 2</li>
 <li><span class="text-purchase">Too Big to Fail</span>: 2</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
-<li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 2</li>
-<li><span class="text-purchase">Radioactive Elements</span>: 2</li>
 <li><span class="text-purchase">Luminous Mushroom</span>: 2</li>
 <li><span class="text-purchase">Product of Failure</span>: 2</li>
 <li><span class="text-purchase">Ageless Dream</span>: 1</li>
+<li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
 <li><span class="text-purchase">Meltdown</span>: 1</li>
-<li><span class="text-purchase">🧰 Intelligent Sweeping Robot</span>: 1</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 1</li>
 <li><span class="text-purchase">Magic Converter</span>: 1</li>
+<li><span class="text-purchase">Orrery's Sun</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -615,10 +615,10 @@
 <ul>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
+<li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Oil</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Blink Dagger</span>: 1</li>
-<li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Smart Speaker</span>: 1</li>
 <li><span class="text-exhibit">Soulgem</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>

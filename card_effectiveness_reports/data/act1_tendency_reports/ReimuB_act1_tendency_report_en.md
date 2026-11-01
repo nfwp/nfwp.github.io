@@ -32,10 +32,10 @@
 <li>Secret Orbs: 16</li>
 <li>Full Moon Howl: 13</li>
 <li>Permanent Border: 12</li>
+<li>Servant Lightning Strike: 11</li>
+<li>Bullet Extermination: 11</li>
 <li>Dragon-Slaying Circle: 11</li>
 <li>Crimson Energy Release: 11</li>
-<li>Bullet Extermination: 11</li>
-<li>Servant Lightning Strike: 11</li>
 </ul></div>
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
@@ -187,16 +187,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>120.8</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Pagoda's Glare</strong></td>
-<td style='text-align: right;'>+20.38</td>
-<td style='text-align: right;'>44.2%</td>
-<td style='text-align: right;'>23.8%</td>
-<td style='text-align: right;'>52</td>
-<td style='text-align: right;'><strong><span style='color: red;'>66.2</span></strong></td>
-<td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.6</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Hakurei Temple Fair</strong></td>
 <td style='text-align: right;'>+20.38</td>
 <td style='text-align: right;'>44.2%</td>
@@ -205,6 +195,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>60.0</span></strong></td>
 <td style='text-align: right;'>53.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.1</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Pagoda's Glare</strong></td>
+<td style='text-align: right;'>+20.38</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>23.8%</td>
+<td style='text-align: right;'>52</td>
+<td style='text-align: right;'><strong><span style='color: red;'>66.2</span></strong></td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.6</span></strong></td>
 </tr>
 <tr>
 <td>Orb of Duality</td>
@@ -247,16 +247,6 @@
 <td style='text-align: right;'>91.0</td>
 </tr>
 <tr>
-<td>Dichromatic Lotus Butterfly</td>
-<td style='text-align: right;'>+19.44</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.0%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>40.0</td>
-<td style='text-align: right;'>95.7</td>
-</tr>
-<tr>
 <td>Fleeting Fantasy</td>
 <td style='text-align: right;'>+19.44</td>
 <td style='text-align: right;'>50.0%</td>
@@ -265,6 +255,16 @@
 <td style='text-align: right;'>54.8</td>
 <td style='text-align: right;'>44.6</td>
 <td style='text-align: right;'>99.4</td>
+</tr>
+<tr>
+<td>Dichromatic Lotus Butterfly</td>
+<td style='text-align: right;'>+19.44</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>55.7</td>
+<td style='text-align: right;'>40.0</td>
+<td style='text-align: right;'>95.7</td>
 </tr>
 <tr>
 <td>Full Moon Howl</td>
@@ -477,26 +477,26 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Ascension Kick</span>: 5</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 5</li>
+<li><span class="text-purchase">Ascension Kick</span>: 5</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 4</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 4</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 3</li>
-<li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
-<li><span class="text-purchase">Binding Border</span>: 3</li>
+<li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
+<li><span class="text-purchase">Binding Border</span>: 3</li>
 <li><span class="text-purchase">Indiscriminate Ignition</span>: 2</li>
 <li><span class="text-purchase">Devour History</span>: 2</li>
 <li><span class="text-purchase">Cleansing Exorcism</span>: 2</li>
 <li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
 <li><span class="text-purchase">Fleeting Fantasy</span>: 1</li>
-<li><span class="text-purchase">Freefly</span>: 1</li>
-<li><span class="text-purchase">Battle Stance</span>: 1</li>
-<li><span class="text-purchase">Barrier Slam</span>: 1</li>
-<li><span class="text-purchase">Great Duplex Barrier</span>: 1</li>
+<li><span class="text-purchase">Evil-Sealing Circle</span>: 1</li>
+<li><span class="text-purchase">Servant Lightning Strike</span>: 1</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
+<li><span class="text-purchase">Celestial Flight</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -523,8 +523,8 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">🧰 Canned Food</span>: 10</li>
-<li><span class="text-purchase">Maiden's Waltz</span>: 9</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 9</li>
+<li><span class="text-purchase">Maiden's Waltz</span>: 9</li>
 <li><span class="text-purchase">Devour History</span>: 7</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 7</li>
 <li><span class="text-purchase">Clean Energy</span>: 6</li>
@@ -535,13 +535,13 @@
 <li><span class="text-purchase">Ascension Kick</span>: 4</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 4</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 4</li>
+<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 3</li>
 <li><span class="text-purchase">Entrench Body</span>: 3</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 3</li>
 <li><span class="text-purchase">Cleansing Exorcism</span>: 3</li>
-<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 3</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
-<li><span class="text-purchase">Edge of Fantasy</span>: 2</li>
-<li><span class="text-purchase">Hakurei Temple Fair</span>: 2</li>
+<li><span class="text-purchase">Indiscriminate Ignition</span>: 2</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
+<li><span class="text-purchase">Purify the Land</span>: 2</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -551,16 +551,16 @@
 <li><span class="text-exhibit">Membership Card</span>: 4</li>
 <li><span class="text-exhibit">Ribbon</span>: 3</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
-<li><span class="text-exhibit">Peony</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
+<li><span class="text-exhibit">Peony</span>: 2</li>
+<li><span class="text-exhibit">Radio</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Clog</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
-<li><span class="text-exhibit">Hina Doll</span>: 1</li>
 <li><span class="text-exhibit">Soulgem</span>: 1</li>
-<li><span class="text-exhibit">Radio</span>: 1</li>
+<li><span class="text-exhibit">Hina Doll</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -583,34 +583,34 @@
 <ul>
 <li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Talisman Protection</span>: 3</li>
-<li><span class="text-purchase">Cleansing Ritual</span>: 2</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
-<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 2</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 2</li>
 <li><span class="text-purchase">Clean Energy</span>: 2</li>
+<li><span class="text-purchase">Cleansing Ritual</span>: 2</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
+<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 2</li>
+<li><span class="text-purchase">Ascension Kick</span>: 1</li>
 <li><span class="text-purchase">Yin-Yang Rune</span>: 1</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
-<li><span class="text-purchase">Ascension Kick</span>: 1</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
+<li><span class="text-purchase">🧰 First Aid Kit</span>: 1</li>
+<li><span class="text-purchase">Crossing the Border</span>: 1</li>
 <li><span class="text-purchase">"Fantasy Seal -Silence-"</span>: 1</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 1</li>
-<li><span class="text-purchase">🧰 First Aid Kit</span>: 1</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">The Birth of Yin-Yang</span>: 1</li>
-<li><span class="text-purchase">Crossing the Border</span>: 1</li>
-<li><span class="text-purchase">Freefly</span>: 1</li>
 <li><span class="text-purchase">Evil-Sealing Circle</span>: 1</li>
-<li><span class="text-purchase">Dimensional Point Rift</span>: 1</li>
+<li><span class="text-purchase">Devour History</span>: 1</li>
+<li><span class="text-purchase">Cleansing Exorcism</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Exhibits
 <ul>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
+<li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
+<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
 <li><span class="text-exhibit">Moriya Purification Rod</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
-<li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Ribbon</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
@@ -622,8 +622,8 @@
 <ul>
 <li><span class="text-remove">Talisman Shooting</span>: 4</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 2</li>
-<li><span class="text-remove">Shoot</span>: 1</li>
 <li><span class="text-remove">🌀 Misfortune</span>: 1</li>
+<li><span class="text-remove">Shoot</span>: 1</li>
 <li><span class="text-remove">Bullet Extermination</span>: 1</li>
 </ul>
 </div>

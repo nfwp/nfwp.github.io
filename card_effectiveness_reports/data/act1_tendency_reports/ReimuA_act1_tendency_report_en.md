@@ -29,8 +29,8 @@
 <li>Talisman Protection: 37</li>
 <li>Dragon-Slaying Circle: 36</li>
 <li>Purify the Land: 36</li>
-<li>Homing Amulet: 28</li>
 <li>Permanent Border: 28</li>
+<li>Homing Amulet: 28</li>
 <li>Danmaku Protection: 24</li>
 <li>Battle Stance: 22</li>
 <li>Apotheosis: 20</li>
@@ -487,16 +487,16 @@
 <li><span class="text-purchase">Cucumber Missile</span>: 5</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 5</li>
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
-<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 4</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 4</li>
+<li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 4</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 4</li>
 <li><span class="text-purchase">Breaking Boundaries</span>: 2</li>
 <li><span class="text-purchase">Cleansing Exorcism</span>: 2</li>
+<li><span class="text-purchase">Lucky Break</span>: 2</li>
+<li><span class="text-purchase">Talisman Protection</span>: 2</li>
 <li><span class="text-purchase">Exorcising Border</span>: 2</li>
 <li><span class="text-purchase">Dimensional Point Rift</span>: 2</li>
-<li><span class="text-purchase">Lucky Break</span>: 2</li>
-<li><span class="text-purchase">Servant Lightning Strike</span>: 2</li>
-<li><span class="text-purchase">Talisman Protection</span>: 2</li>
+<li><span class="text-purchase">Battle Stance</span>: 2</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -526,21 +526,21 @@
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 14</li>
 <li><span class="text-purchase">Ascension Kick</span>: 14</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 12</li>
-<li><span class="text-purchase">Cleansing Ritual</span>: 11</li>
-<li><span class="text-purchase">Wandering Heaven</span>: 11</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 11</li>
+<li><span class="text-purchase">Wandering Heaven</span>: 11</li>
+<li><span class="text-purchase">Cleansing Ritual</span>: 11</li>
 <li><span class="text-purchase">Talisman Protection</span>: 10</li>
 <li><span class="text-purchase">Permanent Border</span>: 9</li>
 <li><span class="text-purchase">Great Duplex Barrier</span>: 7</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 7</li>
 <li><span class="text-purchase">Crimson Energy Release</span>: 7</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 7</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 6</li>
-<li><span class="text-purchase">Battle Stance</span>: 6</li>
 <li><span class="text-purchase">Freefly</span>: 6</li>
+<li><span class="text-purchase">Battle Stance</span>: 6</li>
 <li><span class="text-purchase">Three Gods of Sumiyoshi</span>: 5</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 5</li>
 <li><span class="text-purchase">Purify the Land</span>: 5</li>
-<li><span class="text-purchase">🧰 Floppy Disk</span>: 4</li>
+<li><span class="text-purchase">"Fantasy Seal -Silence-"</span>: 4</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -555,11 +555,11 @@
 <li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Wolf Tengu's Shield</span>: 1</li>
 <li><span class="text-exhibit">Sutra of Dharmatic Power</span>: 1</li>
+<li><span class="text-exhibit">Omikuji</span>: 1</li>
+<li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Nimble Fabric</span>: 1</li>
 <li><span class="text-exhibit">Karakasa</span>: 1</li>
-<li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
-<li><span class="text-exhibit">Omikuji</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -567,8 +567,8 @@
 <ul>
 <li><span class="text-remove">Hakurei Amulet</span>: 101</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 16</li>
-<li><span class="text-remove">Shoot</span>: 12</li>
 <li><span class="text-remove">Danmaku Protection</span>: 12</li>
+<li><span class="text-remove">Shoot</span>: 12</li>
 <li><span class="text-remove">Boundary</span>: 7</li>
 <li><span class="text-remove">🌀 Misfortune</span>: 2</li>
 <li><span class="text-remove">Evil-Sealing Circle</span>: 1</li>
@@ -582,33 +582,33 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Maiden's Waltz</span>: 5</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 5</li>
+<li><span class="text-purchase">Maiden's Waltz</span>: 5</li>
 <li><span class="text-purchase">Freefly</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Hakurei Temple Fair</span>: 3</li>
 <li><span class="text-purchase">🧰 Floppy Disk</span>: 2</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
-<li><span class="text-purchase">Wandering Heaven</span>: 2</li>
 <li><span class="text-purchase">Full Moon Howl</span>: 2</li>
+<li><span class="text-purchase">Wandering Heaven</span>: 2</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
+<li><span class="text-purchase">Dragon-Slaying Circle</span>: 1</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 1</li>
 <li><span class="text-purchase">🧰 First Aid Kit</span>: 1</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
-<li><span class="text-purchase">Dragon-Slaying Circle</span>: 1</li>
 <li><span class="text-purchase">Secret Orbs</span>: 1</li>
 <li><span class="text-purchase">Fleeting Fantasy</span>: 1</li>
 <li><span class="text-purchase">Apotheosis</span>: 1</li>
-<li><span class="text-purchase">Orb of Duality</span>: 1</li>
 <li><span class="text-purchase">Entrench Body</span>: 1</li>
-<li><span class="text-purchase">Permanent Border</span>: 1</li>
+<li><span class="text-purchase">Strengthen Body</span>: 1</li>
+<li><span class="text-purchase">Lucky Break</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Exhibits
 <ul>
-<li><span class="text-exhibit">Robot Model</span>: 5</li>
 <li><span class="text-exhibit">Ribbon</span>: 5</li>
+<li><span class="text-exhibit">Robot Model</span>: 5</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 2</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 2</li>

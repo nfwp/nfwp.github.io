@@ -49,10 +49,11 @@ window.addEventListener('DOMContentLoaded', async () => {
             // path_summary 圧縮形式 (9要素配列 "E1E2A3G4"...) を旧形式へデコード。
             // スロット順: [Act1 Early, Act1 Mid, Act1 Late, Act2 ... , Act3 Late]
             // 旧形式 (dict) はそのまま (ロード時のデータ/JS混在に対応)。
+            // ★ window 経由で run-finder.js (ns データのロード時) からも使えるよう公開
             const PATH_STAGE_ORDER = [[1, 'Early'], [1, 'Mid'], [1, 'Late'], [2, 'Early'], [2, 'Mid'], [2, 'Late'], [3, 'Early'], [3, 'Mid'], [3, 'Late']];
             const PATH_TYPE_MAP = { E: 'Enemy', X: 'EliteEnemy', A: 'Adventure', G: 'Gap', S: 'Shop' };
-            ALL_RUN_DETAILS.forEach(run => {
-                if (!Array.isArray(run.path_summary)) return;
+            const decodeRunPathSummary = (run) => {
+                if (!run || !Array.isArray(run.path_summary)) return run;
                 const out = {};
                 run.path_summary.forEach((code, i) => {
                     if (!code) return;
@@ -67,7 +68,10 @@ window.addEventListener('DOMContentLoaded', async () => {
                     if (nodes.length) out[`Act${slot[0]} ${slot[1]}`] = nodes;
                 });
                 run.path_summary = out;
-            });
+                return run;
+            };
+            window.decodeRunPathSummary = decodeRunPathSummary;
+            ALL_RUN_DETAILS.forEach(decodeRunPathSummary);
             console.log(`Loaded run_details.json generated at: ${runDetailsData.metadata?.generated_at || 'N/A'}`);
         } else {
             console.error('run_details.json のロードに失敗しました。検索機能は無効になります。');

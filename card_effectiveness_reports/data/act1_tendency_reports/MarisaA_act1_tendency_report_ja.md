@@ -30,10 +30,10 @@
 <li>元素放射: 21回</li>
 <li>逆張り: 16回</li>
 <li>紅内勁: 15回</li>
-<li>怨霊支配: 14回</li>
-<li>満月の咆哮: 14回</li>
 <li>真実の満月: 14回</li>
+<li>満月の咆哮: 14回</li>
 <li>ピッチダークサテライト: 14回</li>
+<li>怨霊支配: 14回</li>
 <li>無差別発火の符: 12回</li>
 <li>冬日和: 12回</li>
 </ul></div>
@@ -377,16 +377,6 @@
 <td style='text-align: right;'>66.1</td>
 <td style='text-align: right;'>103.1</td>
 </tr>
-<tr>
-<td>スターゲイジング</td>
-<td style='text-align: right;'>+16.17</td>
-<td style='text-align: right;'>39.0%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>59</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>44.8</td>
-<td style='text-align: right;'>95.5</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 レッドドワーフ・エクスプロージョン</strong></td>
 <td style='text-align: right;'>+16.17</td>
@@ -396,6 +386,16 @@
 <td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>52.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>110.0</span></strong></td>
+</tr>
+<tr>
+<td>スターゲイジング</td>
+<td style='text-align: right;'>+16.17</td>
+<td style='text-align: right;'>39.0%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>59</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>44.8</td>
+<td style='text-align: right;'>95.5</td>
 </tr>
 <tr>
 <td>悪魔の典籍</td>
@@ -483,21 +483,21 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 6回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 5回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 3回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 3回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 3回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 3回</li>
 <li><span class="text-purchase">无寿の夢</span>: 3回</li>
 <li><span class="text-purchase">アリオト</span>: 3回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 2回</li>
-<li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
 <li><span class="text-purchase">ロケットブルーム</span>: 2回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 2回</li>
+<li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
 <li><span class="text-purchase">冬日和</span>: 2回</li>
-<li><span class="text-purchase">ナビゲーションスター</span>: 2回</li>
-<li><span class="text-purchase">ブラックペガサスの罪</span>: 2回</li>
 <li><span class="text-purchase">ダンマクノート</span>: 2回</li>
+<li><span class="text-purchase">ナビゲーションスター</span>: 2回</li>
+<li><span class="text-purchase">ピッチダークサテライト</span>: 2回</li>
 <li><span class="text-purchase">チャージ</span>: 2回</li>
+<li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -530,16 +530,16 @@
 <li><span class="text-purchase">マジックコンバーター</span>: 19回</li>
 <li><span class="text-purchase">失敗の産物</span>: 17回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 16回</li>
-<li><span class="text-purchase">ヤコウタケ</span>: 13回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 13回</li>
+<li><span class="text-purchase">ヤコウタケ</span>: 13回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 12回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 10回</li>
 <li><span class="text-purchase">元素放射</span>: 9回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 9回</li>
 <li><span class="text-purchase">ドカ食い</span>: 9回</li>
-<li><span class="text-purchase">エマージェンシーディフェンス</span>: 8回</li>
+<li><span class="text-purchase">ピッチダークサテライト</span>: 9回</li>
 <li><span class="text-purchase">臨機応変</span>: 8回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 8回</li>
+<li><span class="text-purchase">エマージェンシーディフェンス</span>: 8回</li>
 <li><span class="text-purchase">冬日和</span>: 8回</li>
 <li><span class="text-purchase">アリオト</span>: 7回</li>
 </ul>
@@ -548,36 +548,36 @@
 <h5> よく購入される展示品 Top 20
 <ul>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 4回</li>
-<li><span class="text-exhibit">博麗アミュレット</span>: 3回</li>
-<li><span class="text-exhibit">ドリームキャッチャー</span>: 3回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
-<li><span class="text-exhibit">リボン</span>: 3回</li>
+<li><span class="text-exhibit">ドリームキャッチャー</span>: 3回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 3回</li>
+<li><span class="text-exhibit">博麗アミュレット</span>: 3回</li>
+<li><span class="text-exhibit">リボン</span>: 3回</li>
 <li><span class="text-exhibit">会員証</span>: 2回</li>
 <li><span class="text-exhibit">レコード</span>: 2回</li>
+<li><span class="text-exhibit">空き瓶</span>: 1回</li>
+<li><span class="text-exhibit">実験器具</span>: 1回</li>
 <li><span class="text-exhibit">唐傘</span>: 1回</li>
+<li><span class="text-exhibit">ひらり布</span>: 1回</li>
+<li><span class="text-exhibit">雛人形</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
-<li><span class="text-exhibit">実験器具</span>: 1回</li>
-<li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">ミシン</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
 <li><span class="text-exhibit">ビール</span>: 1回</li>
-<li><span class="text-exhibit">雛人形</span>: 1回</li>
-<li><span class="text-exhibit">ひらり布</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> よく削除されるカード Top 20
 <ul>
 <li><span class="text-remove">イリュージョンレーザー</span>: 150回</li>
-<li><span class="text-remove">ショット</span>: 20回</li>
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 20回</li>
+<li><span class="text-remove">ショット</span>: 20回</li>
 <li><span class="text-remove">結界</span>: 12回</li>
 <li><span class="text-remove">ブルームディフェンス</span>: 6回</li>
-<li><span class="text-remove">🌀 不幸</span>: 1回</li>
 <li><span class="text-remove">🌀 財禍</span>: 1回</li>
+<li><span class="text-remove">🌀 不幸</span>: 1回</li>
 <li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
 </ul>
 </div>
@@ -590,25 +590,25 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
-<li><span class="text-purchase">ピッチダークサテライト</span>: 3回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 3回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
+<li><span class="text-purchase">ピッチダークサテライト</span>: 3回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 3回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 2回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">元素放射</span>: 2回</li>
 <li><span class="text-purchase">山の如し</span>: 2回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 2回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
-<li><span class="text-purchase">元素放射</span>: 2回</li>
 <li><span class="text-purchase">ヤコウタケ</span>: 2回</li>
 <li><span class="text-purchase">失敗の産物</span>: 2回</li>
 <li><span class="text-purchase">无寿の夢</span>: 1回</li>
+<li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
 <li><span class="text-purchase">炉心融解</span>: 1回</li>
-<li><span class="text-purchase">🧰 ロボット掃除機</span>: 1回</li>
-<li><span class="text-purchase">原因不明の熱病</span>: 1回</li>
 <li><span class="text-purchase">マジックコンバーター</span>: 1回</li>
+<li><span class="text-purchase">太陽系儀</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -616,10 +616,10 @@
 <ul>
 <li><span class="text-exhibit">会員証</span>: 3回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
+<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">石油</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">Blink Dagger</span>: 1回</li>
-<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">スマートスピーカー</span>: 1回</li>
 <li><span class="text-exhibit">宝魂石</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>

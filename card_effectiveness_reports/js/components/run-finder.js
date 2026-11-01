@@ -103,6 +103,11 @@ function renderRunFinderTab() {
                         <label for="player-name-filter">${texts.player_label}</label>
                         <input type="text" id="player-name-filter" list="player-name-datalist" placeholder="${texts.no_specify}" style="width: 140px;">
                     </div>
+                    <div class="control-group" title="${texts.include_ns_tooltip || ''}">
+                        <label style="display:flex;align-items:center;gap:5px;white-space:nowrap;cursor:pointer;">
+                            <input type="checkbox" id="include-ns-checkbox"> ${texts.include_ns_label || 'Include non-stat runs'}
+                        </label>
+                    </div>
                 </div>
                 <div class="control-group-row">
                     <div class="control-section" style="flex-grow: 1;">
@@ -1242,6 +1247,75 @@ function loadHardFights(force) {
     return hardFightsPromise;
 }
 
+// --- サンプリング除外ラン (統計外) のレイジーロード (run_details_ns.json / hard_fights_ns.json) ---
+// チェックボックスONの検索時のみロードする (OFF時は通信・メモリゼロ / 従来動作のまま)。
+let ALL_RUN_DETAILS_NS = null;     // null = 未ロード / 配列 = ロード済み (各エントリに s:0)
+let nsAssetsPromise = null;        // run_details_ns + hard_fights_ns のロード Promise (1回だけ)
+
+function isNsEnabled() {
+    const el = document.getElementById('include-ns-checkbox');
+    return !!(el && el.checked);
+}
+
+function _mergeCharDicts(dst, src) {
+    // char -> {runId: ...} の2段辞書を run 単位でマージ (既存キーはメイン統計側を優先)
+    if (!src) return;
+    for (const ch in src) {
+        if (!dst[ch]) { dst[ch] = src[ch]; continue; }
+        dst[ch] = Object.assign({}, src[ch], dst[ch]);
+    }
+}
+
+function ensureNsAssetsLoaded() {
+    if (!isNsEnabled()) return Promise.resolve(null);
+    if (nsAssetsPromise) return nsAssetsPromise;
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
+    const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
+    nsAssetsPromise = Promise.all([
+        fetch(`${basePath}run_details_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
+        fetch(`${basePath}hard_fights_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
+    ]).then(async ([rdNs, hfNs]) => {
+        // path_summary 圧縮形式 → 展開形式 (script.dev.js と同じデコーダを適用。
+        // これがないと統計外ランの Act1-3 序盤/中盤/終盤アイコンが空になる)
+        const decoder = window.decodeRunPathSummary;
+        ALL_RUN_DETAILS_NS = (rdNs && rdNs.runs) ? rdNs.runs.map(r => decoder ? decoder(r) : r) : [];
+        if (hfNs) {
+            _mergeCharDicts(hardFightsByChar, hfNs.runs);
+            if (hfNs.names) for (const code in hfNs.names) if (!hardFightsNames[code]) hardFightsNames[code] = hfNs.names[code];
+            _mergeCharDicts(hardFightsEncs, hfNs.encs);
+            _mergeCharDicts(hardFightsBvals, hfNs.bvals);
+            _mergeCharDicts(hardFightsStats, hfNs.stats);
+            hardFightsDataOk = hardFightsDataOk || !!hfNs.stats;
+        }
+        rfPopulatePlayerDatalist();   // 統計外ランのプレイヤー名も入力補完に追加
+
+        // 既にキャッシュ済みのキャラ別タイムラインにも ns を統合
+        // (ns ONより前に検索してキャッシュが先に作られているケースへの対応)
+        if (characterTimelineCache.size) {
+            const cachedChars = Array.from(characterTimelineCache.keys()).filter(c => c && characterTimelineCache.get(c));
+            await Promise.all(cachedChars.map(async ch => {
+                try {
+                    const resp = await fetch(`${basePath}${ch}_timelines_ns.json`);
+                    if (resp.ok) {
+                        const nsTl = await resp.json();
+                        const cur = characterTimelineCache.get(ch) || {};
+                        Object.assign(cur, nsTl);
+                        characterTimelineCache.set(ch, cur);
+                    }
+                } catch (e) { /* ns ファイル無しは正常 */ }
+            }));
+        }
+        console.log(`[DEBUG] NS assets loaded: ${ALL_RUN_DETAILS_NS.length} runs`);
+        return ALL_RUN_DETAILS_NS;
+    }).catch(err => {
+        console.error('[ERROR] NS assets load failed:', err);
+        ALL_RUN_DETAILS_NS = [];
+        return ALL_RUN_DETAILS_NS;
+    });
+    return nsAssetsPromise;
+}
+
 // 1 ラン分のエントリ -> ツールチップ末尾に付ける HTML
 // targetIdx: 表示中ステーションの index (このステーションより前に発生した戦闘のみ出す / Infinity で全件)
 function buildHardFightsHtml(entries, targetIdx, texts) {
@@ -1282,6 +1356,16 @@ async function loadCharacterTimeline(charKey) {
             return null;
         }
         const data = await response.json();
+        // サンプリング除外ランのタイムライン (チェックボックスON時のみ取得・キャッシュに統合)
+        if (isNsEnabled()) {
+            try {
+                const nsResp = await fetch(`${basePath}${charKey}_timelines_ns.json`);
+                if (nsResp.ok) {
+                    const nsData = await nsResp.json();
+                    Object.assign(data, nsData);   // run_id キー重複は無いはず (母集団が別のため)
+                }
+            } catch (e) { /* ns ファイル無しは正常 (そのキャラに統計外ランが無い等) */ }
+        }
         characterTimelineCache.set(charKey, data);
         return data;
     } catch (error) {
@@ -1359,6 +1443,10 @@ async function performAdvancedSearch() {
             }
         } catch (e) { /* stats が無くても検索自体は継続 (履歴は '-' 表示になる) */ }
 
+        // --- 0.5 サンプリング除外ラン (チェックボックスON時のみレイジーロード) ---
+        const includeNs = isNsEnabled();
+        if (includeNs) await ensureNsAssetsLoaded();
+
         // --- 1. Get all filter values from UI ---
         rfPopulatePlayerDatalist();   // プレイヤー名の入力補完 (自動検索でもここで更新される)
         const selectedChar = document.getElementById('character-select').value;
@@ -1388,7 +1476,8 @@ async function performAdvancedSearch() {
             includeItems: includeKeywords.length > 0 ? { items: includeKeywords, logic: includeLogic } : null,
             excludeItems: excludeKeywords.length > 0 ? excludeKeywords : null,
             includeBosses: includeBosses.length > 0 ? { bosses: includeBosses, logic: bossLogic } : null,
-            excludeBosses: excludeBosses.length > 0 ? excludeBosses : null
+            excludeBosses: excludeBosses.length > 0 ? excludeBosses : null,
+            includeNs: includeNs ? true : null
         };
 
 
@@ -1398,10 +1487,16 @@ async function performAdvancedSearch() {
             return;
         }
 
-        // --- 3. Filter by character if specified ---
+        // --- 3. Filter by character if specified (チェックボックスON時はサンプリング除外ランも母集団に追加) ---
         let runsToSearch = (selectedChar === 'All')
             ? ALL_RUN_DETAILS
             : ALL_RUN_DETAILS.filter(run => run.character === selectedChar);
+        if (includeNs && ALL_RUN_DETAILS_NS && ALL_RUN_DETAILS_NS.length) {
+            const nsPool = (selectedChar === 'All')
+                ? ALL_RUN_DETAILS_NS
+                : ALL_RUN_DETAILS_NS.filter(run => run.character === selectedChar);
+            runsToSearch = runsToSearch.concat(nsPool);
+        }
 
         console.log(`[DEBUG] Initial run count for character '${selectedChar}': ${runsToSearch.length}`);
 
@@ -1692,6 +1787,7 @@ function makeQueryLabel(sc) {
     if (sc.excludeItems && sc.excludeItems.length) parts.push('-' + sc.excludeItems.join(','));
     if (sc.includeBosses && (sc.includeBosses.bosses || []).length) parts.push('+B:' + (sc.includeBosses.bosses || []).join(','));
     if (sc.excludeBosses && sc.excludeBosses.length) parts.push('-B:' + sc.excludeBosses.join(','));
+    if (sc.includeNs) parts.push('+NS');
     return parts.join(' ') || '(all)';
 }
 function saveSearchHistory(searchCriteria, runs) {
@@ -1707,10 +1803,11 @@ function saveSearchHistory(searchCriteria, runs) {
 }
 // 旧履歴 (sc 無し) 用: ラベル文字列 ("SakuyaA +部屋掃除" / "ReimuA A2 L3 deck<=30 …") を検索条件へ復元
 function rfParseQueryLabel(q) {
-    const sc = { character: null, act: null, level: null, deckSize: null, playerName: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null };
+    const sc = { character: null, act: null, level: null, deckSize: null, playerName: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null, includeNs: null };
     (String(q || '').split(' ') || []).forEach(p => {
         let m;
-        if (p.startsWith('@') && p.length > 1) sc.playerName = p.slice(1);
+        if (p === '+NS') sc.includeNs = true;
+        else if (p.startsWith('@') && p.length > 1) sc.playerName = p.slice(1);
         else if (p.startsWith('+B:')) sc.includeBosses = { bosses: p.slice(3).split(','), logic: 'AND' };
         else if (p.startsWith('-B:')) sc.excludeBosses = p.slice(3).split(',');
         else if (p.startsWith('+') && p.length > 1) sc.includeItems = { items: p.slice(1).split(','), logic: 'AND' };
@@ -1755,6 +1852,8 @@ window.rfRerunSearch = async function (t) {
     const bossLogic = sc.includeBosses ? sc.includeBosses.logic : 'AND';
     const bossRadio = document.querySelector(`input[name="boss-logic"][value="${bossLogic}"]`);
     if (bossRadio) bossRadio.checked = true;
+    const nsChk = document.getElementById('include-ns-checkbox');
+    if (nsChk) nsChk.checked = !!sc.includeNs;
     await performAdvancedSearch();
     // 結果表示は検索フォームの下 (ページ上方) に出るため、クリック元が画面下に居ると気づきにくい → 結果先頭へ案内
     const resEl = document.getElementById('run-finder-results');
@@ -1771,6 +1870,26 @@ function deleteSearchHistory(t) {
     const panel = document.getElementById('rf-history-panel');
     if (panel) panel.innerHTML = renderSearchHistoryPanel();
 }
+// 履歴削除ボタン: セル全体をタップ領域にするため 2 段階確認 (1回目=「削除?」表示, 2回目=削除)。
+// 誤タップで他行を押しても削除されない & 3秒で自動解除。
+let _rfHistDelTimer = null;
+window.rfHistDeleteTap = function (cell, t) {
+    if (cell.classList.contains('armed')) {
+        if (_rfHistDelTimer) { clearTimeout(_rfHistDelTimer); _rfHistDelTimer = null; }
+        deleteSearchHistory(t);
+        return;
+    }
+    // 既に armed な他の行があれば解除
+    document.querySelectorAll('.col-h-del.armed').forEach(el => { el.classList.remove('armed'); el.textContent = '🗑'; });
+    cell.classList.add('armed');
+    cell.textContent = UI_TEXT.run_finder.history_delete_confirm || '削除?';
+    if (_rfHistDelTimer) clearTimeout(_rfHistDelTimer);
+    _rfHistDelTimer = setTimeout(() => {
+        cell.classList.remove('armed');
+        cell.textContent = '🗑';
+        _rfHistDelTimer = null;
+    }, 3000);
+};
 // --- 検索履歴の比較グラフ (テーブル下: ライフ部門 / ターン部門) ---
 // 行番号 (①②…) と線色は履歴リストの表示順に対応。21行目以降は ㉑㉒… を使用
 function rfHistNumMark(i) {
@@ -2046,6 +2165,7 @@ function renderSearchHistoryPanel() {
     const texts = UI_TEXT.run_finder;
     const list = rfLoadHistory();
     if (!list.length) return `<p class="analysis-note" style="margin:6px 0 0;">${texts.history_none || ''}</p>`;
+    const hiddenLines = rfHistHiddenLoad();   // 「グラフ」列チェックで外した条件 (t の Set)
     const tk = new Set();
     for (const h of list) for (const k in (h.turnAvg || {})) if (k.slice(1) !== 's') tk.add(k);   // 特殊イベント (…s) は比較列から外す
     // 列の並び: Act 昇順 × 敵→エリート→ボス (例: A1敵 A1エ A1ボ … A3ボ A4ボ。Act4はボスのみ) — rfTKeyCmp (共通)
@@ -2098,11 +2218,12 @@ function renderSearchHistoryPanel() {
             <td class="col-h-val">${fmt(h.avgLoss)}</td>
             <td class="col-h-val">${fmt(h.avgTurns)}</td> */
         return `<tr data-hc="${i}" onmouseover="rfHistHi(${i},1)" onmouseout="rfHistHi(${i},0)" onclick="rfRerunSearch(${h.t})" title="${rerunTip}">
+            <td class="col-h-graph" onclick="event.stopPropagation()"><label><input type="checkbox" ${hiddenLines.has(h.t) ? '' : 'checked'} onchange="rfHistLineToggle(${h.t})"></label></td>
             <td class="col-h-q" title="${(h.q || '').replace(/"/g, '&quot;')}"><span class="rf-hist-num" style="color:${rfHistLineColor(i)}">${rfHistNumMark(i)}</span> ${h.q || '-'}</td>
             <td class="col-h-n">${h.n}</td>
             ${pickupCell(h)}
             ${tKeys.map(k => segCell(h, k)).join('')}
-            <td><a href="javascript:void(0)" onclick="event.stopPropagation(); deleteSearchHistory(${h.t})" title="${texts.history_delete || 'Delete'}">🗑</a></td>
+            <td class="col-h-del" onclick="event.stopPropagation(); rfHistDeleteTap(this, ${h.t})" title="${texts.history_delete || 'Delete'}">🗑</td>
         </tr>`;
     }).join('');
     // --- 比較グラフ (ライフ/ターン + 各累積)。欠損区間は線を切る。番号・色は表の行と対応 (hover で連動ハイライト) ---
@@ -2142,16 +2263,22 @@ function renderSearchHistoryPanel() {
     ).join('');
     // --- グラフ6枚を1つのグリッドに並べる (チェックで表示/非表示・アコーディオンは廃止 2026-10-28) ---
     //     PC (幅 >880px) で見えるグラフが 2枚以下のときは縦も 2倍にして大きく描画
+    // 「グラフ」列チェックで外された条件は行列を null 化 (線が切れる) + iqrOf も null (IQR帯も消える)。
+    // 行自体は残すので ①②③ の番号・色はずれない
+    const hideRow = (m) => m.map((row, i) => (list[i] && hiddenLines.has(list[i].t)) ? row.map(() => null) : row);
+    const wrapIqr = (fn) => (fn ? (h, k) => (hiddenLines.has(h.t) ? null : fn(h, k)) : null);
     const hasVals = (m) => m.some(valsRow => valsRow.some(v => v != null && isFinite(v)));
-    const spreadLifeM = spreadVals(h => h.segIqr);
-    const spreadTurnM = spreadVals(h => h.segTurnIqr);
+    const spreadLifeM = hideRow(spreadVals(h => h.segIqr));
+    const spreadTurnM = hideRow(spreadVals(h => h.segTurnIqr));
+    const lifeValsH = hideRow(lifeVals);
+    const turnValsH = hideRow(turnVals);
     const mkEntries = [
-        ['life',  lifeVals, true,  (h, k) => rfIqrTriplet(h.segIqr && h.segIqr[k], h.segMed && h.segMed[k]),  texts.hist_chart_life || 'Avg life loss per battle'],
-        ['turn',  turnVals, false, (h, k) => rfIqrTriplet(h.segTurnIqr && h.segTurnIqr[k], h.segTurnMed && h.segTurnMed[k]), texts.hist_chart_turn || 'Avg turns per battle'],
+        ['life',  lifeValsH, true,  wrapIqr((h, k) => rfIqrTriplet(h.segIqr && h.segIqr[k], h.segMed && h.segMed[k])),  texts.hist_chart_life || 'Avg life loss per battle'],
+        ['turn',  turnValsH, false, wrapIqr((h, k) => rfIqrTriplet(h.segTurnIqr && h.segTurnIqr[k], h.segTurnMed && h.segTurnMed[k])), texts.hist_chart_turn || 'Avg turns per battle'],
         ['slife', spreadLifeM, false, null, texts.hist_chart_life_spread || 'Per-segment life spread'],
         ['sturn', spreadTurnM, false, null, texts.hist_chart_turn_spread || 'Per-segment turn spread'],
-        ['clife', cumVals(lifeVals), true,  (h, k) => rfIqrTriplet(h.cumLifeIqr && h.cumLifeIqr[k], h.cumLifeMed && h.cumLifeMed[k]), texts.hist_chart_life_cum || 'Cumulative life loss'],
-        ['cturn', cumVals(turnVals), false, (h, k) => rfIqrTriplet(h.cumTurnIqr && h.cumTurnIqr[k], h.cumTurnMed && h.cumTurnMed[k]), texts.hist_chart_turn_cum || 'Cumulative turns'],
+        ['clife', hideRow(cumVals(lifeVals)), true,  wrapIqr((h, k) => rfIqrTriplet(h.cumLifeIqr && h.cumLifeIqr[k], h.cumLifeMed && h.cumLifeMed[k])), texts.hist_chart_life_cum || 'Cumulative life loss'],
+        ['cturn', hideRow(cumVals(turnVals)), false, wrapIqr((h, k) => rfIqrTriplet(h.cumTurnIqr && h.cumTurnIqr[k], h.cumTurnMed && h.cumTurnMed[k])), texts.hist_chart_turn_cum || 'Cumulative turns'],
     ];
     const shownCount = mkEntries.filter(([k, m]) => vis[k] && hasVals(m)).length;
     // モバイル (≤880px) は縦横比が環境ごとに異なるため高さは据え置き (user 同日確認)
@@ -2171,7 +2298,7 @@ function renderSearchHistoryPanel() {
         <div class="table-wrapper rf-history-wrapper">
         <table class="run-finder-history-table">
         <thead><tr>
-            <th>${texts.history_q || 'Query'}</th><th>${texts.history_n || 'n'}</th>
+            <th>${texts.history_graph || 'グラフ'}</th><th>${texts.history_q || 'Query'}</th><th>${texts.history_n || 'n'}</th>
             <!-- (後で再表示する場合用) 全体平均ライフ喪失 / 全体ターン平均 のヘッダー:
                 hint_life_loss -> 平均ライフ喪失 / hint_turns -> ターン平均 -->
             <th title="${texts.hint_pickup || ''}">${texts.history_pickact || 'Pickup'}</th>
@@ -2194,6 +2321,21 @@ function renderSearchHistoryPanel() {
     ${defs.map(chartBlock).join('')}
     </div>`;
 }
+// --- 「グラフ」列の行チェック: その条件 (①②③…) の線/IQR帯を比較グラフから出し入れする ---
+// 状態は localStorage に「非表示にした履歴 t の配列」で保持 (行番号はリスト先頭のままで色・番号がずれない)
+function rfHistHiddenLoad() {
+    try {
+        const arr = JSON.parse(localStorage.getItem('rf_hist_linehidden') || '[]');
+        return new Set(Array.isArray(arr) ? arr : []);
+    } catch (e) { return new Set(); }
+}
+window.rfHistLineToggle = function (t) {
+    const hidden = rfHistHiddenLoad();
+    if (hidden.has(t)) hidden.delete(t); else hidden.add(t);
+    try { localStorage.setItem('rf_hist_linehidden', JSON.stringify([...hidden])); } catch (e) { /* 無視 */ }
+    const panel = document.getElementById('rf-history-panel');
+    if (panel) panel.innerHTML = renderSearchHistoryPanel();
+};
 window.deleteSearchHistory = deleteSearchHistory;
 window.clearSearchHistory = clearSearchHistory;
 
@@ -2259,6 +2401,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         if (searchCriteria.excludeItems) criteriaList.push(crit(critLabel('exclude', 'Exclude'), searchCriteria.excludeItems.join(', ')));
         if (searchCriteria.includeBosses) criteriaList.push(crit(critLabel('bosses', 'Bosses'), `${searchCriteria.includeBosses.bosses.join(', ')} (${searchCriteria.includeBosses.logic})`));
         if (searchCriteria.excludeBosses) criteriaList.push(crit(critLabel('ex_bosses', 'Exclude Bosses'), searchCriteria.excludeBosses.join(', ')));
+        if (searchCriteria.includeNs) criteriaList.push(crit(critLabel('ns', 'Non-stat'), UI_TEXT.run_finder.ns_crit_value || 'ON'));
 
         if (criteriaList.length > 0) {
             criteriaHtml = `<div class="search-criteria-summary">${criteriaList.join('')}</div>`;
@@ -2314,7 +2457,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
             }
 
             return `<tr>
-                <td class="col-run_id" title="${run.run_id}"><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a></td>
+                <td class="col-run_id" title="${run.run_id}"><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a>${run.s === 0 ? ` <span class="rf-ns-badge" title="${texts.ns_badge_tooltip || texts.ns_badge || 'Non-statistics run'}">${texts.ns_badge || 'Non-stat'}</span>` : ''}</td>
                 <td class="col-version">${run.version}</td>
                 <td class="col-character">${run.character}</td>
                 <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>
@@ -2425,6 +2568,7 @@ async function generateAndCopyShareLink() {
     if (itemLogic !== 'OR') params.set('itemLogic', itemLogic);
     const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
     if (bossLogic !== 'OR') params.set('bossLogic', bossLogic);
+    if (document.getElementById('include-ns-checkbox') && document.getElementById('include-ns-checkbox').checked) params.set('ns', '1');
     params.set('search', 'true');
 
     const baseUrl = window.location.origin + window.location.pathname;
@@ -2490,6 +2634,7 @@ function populateUiFromUrlParams() {
     if (params.has('excludeBosses')) params.get('excludeBosses').split(',').forEach(boss => addBossToSelection(boss, 'exclude-bosses-list'));
     if (params.has('itemLogic')) document.querySelector(`input[name="include-logic"][value="${params.get('itemLogic')}"]`).checked = true;
     if (params.has('bossLogic')) document.querySelector(`input[name="boss-logic"][value="${params.get('bossLogic')}"]`).checked = true;
+    if (params.has('ns')) { const nsEl = document.getElementById('include-ns-checkbox'); if (nsEl) nsEl.checked = true; }
 
     // UI設定が完了したら、自動検索を試みる
     attemptAutoSearch();
