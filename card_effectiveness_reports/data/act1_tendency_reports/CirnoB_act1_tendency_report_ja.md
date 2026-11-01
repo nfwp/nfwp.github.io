@@ -428,16 +428,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>111.7</span></strong></td>
 </tr>
 <tr>
-<td>🌀 嫉妬</td>
-<td style='text-align: right;'>+14.48</td>
-<td style='text-align: right;'>42.3%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>26</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>44.4</td>
-<td style='text-align: right;'>95.1</td>
-</tr>
-<tr>
 <td>竹取物語</td>
 <td style='text-align: right;'>+14.48</td>
 <td style='text-align: right;'>42.3%</td>
@@ -446,6 +436,16 @@
 <td style='text-align: right;'>36.0</td>
 <td style='text-align: right;'>40.6</td>
 <td style='text-align: right;'>76.5</td>
+</tr>
+<tr>
+<td>🌀 嫉妬</td>
+<td style='text-align: right;'>+14.48</td>
+<td style='text-align: right;'>42.3%</td>
+<td style='text-align: right;'>22.2%</td>
+<td style='text-align: right;'>26</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>44.4</td>
+<td style='text-align: right;'>95.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 清涼なる薔薇</strong></td>

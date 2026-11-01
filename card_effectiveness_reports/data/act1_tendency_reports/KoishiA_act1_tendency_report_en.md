@@ -157,16 +157,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Tarot: The Chariot</strong></td>
-<td style='text-align: right;'>+21.51</td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>24.8%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'>57.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.3</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Cage of Roses</strong></td>
 <td style='text-align: right;'>+21.51</td>
 <td style='text-align: right;'>47.7%</td>
@@ -175,6 +165,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>70.4</span></strong></td>
 <td style='text-align: right;'>52.9</td>
 <td style='text-align: right;'><strong><span style='color: red;'>123.3</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Tarot: The Chariot</strong></td>
+<td style='text-align: right;'>+21.51</td>
+<td style='text-align: right;'>47.7%</td>
+<td style='text-align: right;'>24.8%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'>57.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.3</span></strong></td>
 </tr>
 <tr>
 <td>Clean Energy</td>

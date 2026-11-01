@@ -1007,6 +1007,7 @@ async function renderEncounterBars(runs, searchCriteria = null) {
         const chEncs = hardFightsEncs[searchChar] || {};
         const chBv = hardFightsBvals[searchChar] || {};
         for (const rid of Object.keys(chBv)) {
+            if (hardFightsNsRunIds.has(rid)) continue;   // 参考値は統計母集団固定 (nsランを除外)
             const encAll = chEncs[rid], bvAll = chBv[rid];
             if (!encAll || !bvAll) continue;
             for (let i = 0; i < encAll.length; i++) {
@@ -1328,6 +1329,9 @@ const hardFightsBvals = {};    // { character: { runId: [[ΔHp(純損失・回�
 const hardFightsStats = {};    // { character: { runId: {L:総ライフ喪失, LA:[Act別喪失x4], S:スペル回数, T:{'{act}{kind}':[ターン和,戦闘数]}} } }
 let hardFightsPromise = null;
 let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功したか (失敗時は検索時に再試行)
+// hard_fights_ns.json から統合された runId (統計外ラン)。参考値 (キャラ全ラン) は統計母集団固定のため
+// このSetに載るランは参考集計から除外する (敵別戦績タブ=統計データと同じ母集団に揃える)
+const hardFightsNsRunIds = new Set();
 let hoveredTooltipLink = null; // マウスが乗っているリンク (遅延ロード後の再描画でのみ参照)
 
 function loadHardFights(force) {
@@ -1388,6 +1392,7 @@ function ensureNsAssetsLoaded() {
         const decoder = window.decodeRunPathSummary;
         ALL_RUN_DETAILS_NS = (rdNs && rdNs.runs) ? rdNs.runs.map(r => decoder ? decoder(r) : r) : [];
         if (hfNs) {
+            if (hfNs.encs) for (const ch in hfNs.encs) for (const rid in hfNs.encs[ch]) hardFightsNsRunIds.add(rid);
             _mergeCharDicts(hardFightsByChar, hfNs.runs);
             if (hfNs.names) for (const code in hfNs.names) if (!hardFightsNames[code]) hardFightsNames[code] = hfNs.names[code];
             _mergeCharDicts(hardFightsEncs, hfNs.encs);

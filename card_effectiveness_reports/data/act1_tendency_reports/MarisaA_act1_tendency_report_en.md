@@ -376,16 +376,6 @@
 <td style='text-align: right;'>66.1</td>
 <td style='text-align: right;'>103.1</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Red Star Explosion</strong></td>
-<td style='text-align: right;'>+16.17</td>
-<td style='text-align: right;'>39.0%</td>
-<td style='text-align: right;'>22.8%</td>
-<td style='text-align: right;'>59</td>
-<td style='text-align: right;'>57.7</td>
-<td style='text-align: right;'>52.3</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.0</span></strong></td>
-</tr>
 <tr>
 <td>Stargazing</td>
 <td style='text-align: right;'>+16.17</td>
@@ -395,6 +385,16 @@
 <td style='text-align: right;'>50.7</td>
 <td style='text-align: right;'>44.8</td>
 <td style='text-align: right;'>95.5</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Red Star Explosion</strong></td>
+<td style='text-align: right;'>+16.17</td>
+<td style='text-align: right;'>39.0%</td>
+<td style='text-align: right;'>22.8%</td>
+<td style='text-align: right;'>59</td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>52.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.0</span></strong></td>
 </tr>
 <tr>
 <td>Devil's Codex</td>
