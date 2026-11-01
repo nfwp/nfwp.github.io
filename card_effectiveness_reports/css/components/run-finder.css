@@ -525,3 +525,25 @@
     margin: 0;
 }
 .rf-history-wrapper td.col-h-graph input { margin: 0; vertical-align: middle; cursor: pointer; }
+
+/* 敵グループ: 含む/含まない 2段バーのキャプション */
+.rf-bar-cap { font-size: 11px; color: #64748b; margin: 5px 0 2px; }
+
+/* 含む/含まない 2段バー: モバイルは縦積み、PC (881px以上) は左右2列 */
+.rf-bar-pair { display: block; }
+.rf-bar-group { margin-bottom: 4px; min-width: 0; }
+@media (min-width: 881px) {
+    .rf-bar-pair { display: flex; gap: 18px; align-items: flex-start; }
+    .rf-bar-group { flex: 1 1 0; margin-bottom: 0; }
+}
+.item-input-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.item-input-row input { flex: 1 1 150px; min-width: 130px; }
+.item-input-row .add-btn { flex: 0 0 auto; font-size: 12.5px; padding: 6px 10px; }
+
+/* 入力行 (敵/カード共通) コンパクト化 */
+.enemy-input-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.enemy-input-row input, .item-input-row input { font-size: 13px; padding: 4px 8px; }
+.enemy-input-row .add-btn, .item-input-row .add-btn { font-size: 12px; padding: 4px 10px; flex: 0 0 auto; }
+/* 敵グループトグルを小さく */
+.boss-filter-toggle-button { font-size: 13px; padding: 6px 10px; margin-bottom: 8px; }
+.enemy-input-row input, .item-input-row input { max-width: 320px; }

@@ -109,47 +109,54 @@ function renderRunFinderTab() {
                         </label>
                     </div>
                 </div>
-                <div class="control-group-row">
-                    <div class="control-section" style="flex-grow: 1;">
-                        <h4>${texts.include_items_label}</h4>
-                        <div class="control-group-input">
-                            <input list="all-items-datalist" id="include-item-input" placeholder="${texts.item_placeholder}">
-                            <button id="add-include-item-btn" class="add-btn">${texts.add_btn}</button>
-                            <div class="search-logic">
-                                <input type="radio" id="include-logic-and" name="include-logic" value="AND" checked>
-                                <label for="include-logic-and">${texts.logic_and}</label>
-                                <input type="radio" id="include-logic-or" name="include-logic" value="OR">
-                                <label for="include-logic-or">${texts.logic_or}</label>
-                            </div>
-                        </div>
-                        <div id="include-items-list" class="item-tag-list"></div>
+                <div class="control-section" style="flex-grow: 1;">
+                    <h4>${texts.items_label}</h4>
+                    <div class="control-group-input item-input-row">
+                        <input list="all-items-datalist" id="item-input" placeholder="${texts.item_placeholder}">
+                        <button id="add-item-include-btn" class="add-btn" title="${texts.add_include_tooltip}">${texts.add_include_btn}</button>
+                        <button id="add-item-exclude-btn" class="add-btn add-btn-ex" title="${texts.add_exclude_tooltip}">${texts.add_exclude_btn}</button>
                     </div>
-                    <div class="control-section" style="flex-grow: 1;">
-                        <h4>${texts.exclude_items_label}</h4>
-                        <div class="control-group-input">
-                            <input list="all-items-datalist" id="exclude-item-input" placeholder="${texts.item_placeholder}">
-                            <button id="add-exclude-item-btn" class="add-btn">${texts.add_btn}</button>
+                    <div class="search-logic" id="item-logic-row" style="display:none; margin-top: 8px;">
+                        <input type="radio" id="include-logic-and" name="include-logic" value="AND" checked>
+                        <label for="include-logic-and">${texts.logic_and}</label>
+                        <input type="radio" id="include-logic-or" name="include-logic" value="OR">
+                        <label for="include-logic-or">${texts.logic_or}</label>
+                    </div>
+                    <div class="rf-bar-pair">
+                        <div class="rf-bar-group" id="item-in-group">
+                            <div class="rf-bar-cap" id="item-in-cap" style="display:none;">${texts.item_in_cap}:</div>
+                            <div id="include-items-list" class="item-tag-list"></div>
                         </div>
-                        <div id="exclude-items-list" class="item-tag-list"></div>
+                        <div class="rf-bar-group" id="item-ex-group">
+                            <div class="rf-bar-cap" id="item-ex-cap" style="display:none;">${texts.item_ex_cap}:</div>
+                            <div id="exclude-items-list" class="item-tag-list"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="control-group-row boss-collapsible-section">
-                    <div id="boss-filter-toggle" class="boss-filter-toggle-button">${texts.boss_filter_toggle_expand}</div>
-                    <div id="boss-filter-content" class="boss-filter-content collapsed">
+                <div class="boss-collapsible-section">
+                    <div id="enemy-filter-toggle" class="boss-filter-toggle-button">${texts.enemy_filter_toggle_expand}</div>
+                    <div id="enemy-filter-content" class="boss-filter-content collapsed">
                         <div class="control-section" style="flex-grow: 1;">
-                            <h4>${texts.include_bosses_label}</h4>
-                            <div id="include-boss-selector-container" class="boss-selector-grid"></div>
-                            <div class="search-logic" style="margin-top: 10px;">
-                                <label><input type="radio" name="boss-logic" value="AND" checked> ${texts.logic_and}</label>
-                                <label><input type="radio" name="boss-logic" value="OR" > ${texts.logic_or}</label>
-
+                            <h4>${texts.enemies_label}</h4>
+                            <div class="control-group-input enemy-input-row">
+                                <input list="enemy-groups-datalist" id="enemy-input" placeholder="${texts.enemy_placeholder}">
+                                <button id="add-enemy-include-btn" class="add-btn" title="${texts.add_include_tooltip || ''}">${texts.add_include_btn}</button>
+                                <button id="add-enemy-exclude-btn" class="add-btn add-btn-ex" title="${texts.add_exclude_tooltip || ''}">${texts.add_exclude_btn}</button>
                             </div>
-                            <div class="item-tag-list" id="include-bosses-list"></div>
-                        </div>
-                        <div class="control-section" style="flex-grow: 1;">
-                            <h4>${texts.exclude_bosses_label}</h4>
-                            <div id="exclude-boss-selector-container" class="boss-selector-grid"></div>
-                            <div class="item-tag-list" id="exclude-bosses-list"></div>
+                            <div class="search-logic" id="enemy-logic-row" style="display:none; margin-top: 8px;">
+                                <label><input type="radio" name="enemy-logic" value="AND" checked> ${texts.logic_and}</label>
+                                <label><input type="radio" name="enemy-logic" value="OR"> ${texts.logic_or}</label>
+                            </div>
+                            <div class="rf-bar-pair">
+                                <div class="rf-bar-group" id="enemy-in-group">
+                                    <div class="rf-bar-cap" id="enemy-in-cap" style="display:none;">${texts.enemy_in_cap}:</div>
+                                    <div class="item-tag-list" id="enemy-in-list"></div>
+                                </div>
+                                <div class="rf-bar-group" id="enemy-ex-group">
+                                    <div class="rf-bar-cap" id="enemy-ex-cap" style="display:none;">${texts.enemy_ex_cap}:</div>
+                                    <div class="item-tag-list" id="enemy-ex-list"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,6 +184,7 @@ function renderRunFinderTab() {
         </div>
         <datalist id="all-items-datalist">${datalistOptions}</datalist>
         <datalist id="player-name-datalist"></datalist>
+        <datalist id="enemy-groups-datalist"></datalist>
     `;
 
     tabContent.innerHTML = `<div class="analysis-section">${finderHtml}</div>`;
@@ -202,19 +210,41 @@ function renderRunFinderTab() {
         });
     };
 
-    setupTagInput('include-item-input', 'add-include-item-btn', 'include-items-list');
-    setupTagInput('exclude-item-input', 'add-exclude-item-btn', 'exclude-items-list');
+    // カード・展示品: 1入力 + 「含むに追加 / 含まないに追加」の2ボタン (Enter は含むに追加)
+    const itemInput = document.getElementById('item-input');
+    const addItemBy = (mode) => () => {
+        const value = itemInput.value.trim();
+        if (value) addItemTag(value, mode);
+        itemInput.value = '';
+        itemInput.focus();
+    };
+    document.getElementById('add-item-include-btn').addEventListener('click', addItemBy('in'));
+    document.getElementById('add-item-exclude-btn').addEventListener('click', addItemBy('ex'));
+    itemInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addItemBy('in')(); } });
 
-    setupBossSelectors();
-
-    const bossToggleBtn = document.getElementById('boss-filter-toggle');
-    const bossContent = document.getElementById('boss-filter-content');
-    if (bossToggleBtn && bossContent) {
-        bossToggleBtn.addEventListener('click', () => {
-            const isCollapsed = bossContent.classList.toggle('collapsed');
-            bossToggleBtn.textContent = isCollapsed ? texts.boss_filter_toggle_expand : texts.boss_filter_toggle_collapse;
+    // --- 敵グループフィルター (開閉 + タグ入力 + 選択グリッド。候補は hard_fights.json ロード後に充填) ---
+    const enemyToggleBtn = document.getElementById('enemy-filter-toggle');
+    const enemyContent = document.getElementById('enemy-filter-content');
+    if (enemyToggleBtn && enemyContent) {
+        enemyToggleBtn.addEventListener('click', () => {
+            const isCollapsed = enemyContent.classList.toggle('collapsed');
+            enemyToggleBtn.textContent = isCollapsed ? texts.enemy_filter_toggle_expand : texts.enemy_filter_toggle_collapse;
+            if (!isCollapsed) loadHardFights().then(() => rfPopulateEnemyDatalist());   // 開いたときに候補を用意
         });
     }
+    // 敵グループ: 1入力 + 「含むに追加 / 含まないに追加」の2ボタン (Enter は含むに追加)
+    const enemyInput = document.getElementById('enemy-input');
+    const addEnemyBy = (mode) => () => {
+        const value = enemyInput.value.trim();
+        if (value) addEnemyTag(value, mode);
+        enemyInput.value = '';
+        enemyInput.focus();
+    };
+    document.getElementById('add-enemy-include-btn').addEventListener('click', addEnemyBy('in'));
+    document.getElementById('add-enemy-exclude-btn').addEventListener('click', addEnemyBy('ex'));
+    enemyInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addEnemyBy('in')(); } });
+    // 敵名候補は hard_fights.json (4.6MB) 必要なので、入力欄に触れたときだけロードする
+    enemyInput.addEventListener('focus', () => { loadHardFights().then(() => rfPopulateEnemyDatalist()); });
 
 
     // ツールチップ用のHTML要素をページに追加
@@ -384,6 +414,7 @@ function renderRunFinderTab() {
                 const translatedNodeType = texts[translationKey];
                 const nodeTypeName = translatedNodeType || nodeType; // Fallback to original name (for bosses)
                 stateDetails = `Act ${act}, Lvl ${level}: ${nodeTypeName}`;
+                if (link.dataset.enemyName) stateDetails += ` — ${escAttr(link.dataset.enemyName)}`;
             } else if (stationIndexToActLevel[stationIndex]) {
                 // For run-id links pointing to a specific station
                 const actLevelString = stationIndexToActLevel[stationIndex];
@@ -496,38 +527,112 @@ function addItemToSelection(itemName, listId) {
     tag.className = 'item-tag';
     tag.dataset.itemName = itemName;
     tag.innerHTML = `<span>${itemName}</span><button class="remove-tag-btn" onclick="this.parentElement.remove()">&times;</button>`;
-    if (listId === 'exclude-items-list' || listId === 'exclude-bosses-list') {
+    if (listId === 'exclude-items-list' || listId === 'exclude-bosses-list' || listId === 'exclude-enemies-list') {
         tag.style.backgroundColor = '#F44336';
     }
     list.appendChild(tag);
 }
 
-function addBossToSelection(bossName, listId) {
-    addItemToSelection(bossName, listId);
+// カード・展示品チップ追加 (mode: 'in'=含む / 'ex'=含まない)。同一名は両バーに存在しない
+function addItemTag(name, mode) {
+    const inList = document.getElementById('include-items-list');
+    const exList = document.getElementById('exclude-items-list');
+    if (!inList || !exList) return;
+    Array.from(inList.children).concat(Array.from(exList.children))
+        .filter(tag => tag.dataset.itemName === name)
+        .forEach(tag => tag.remove());
+    const target = (mode === 'ex') ? exList : inList;
+    addItemToSelection(name, target.id);   // 除外バーは赤に自動着色される
+    const tag = target.lastElementChild;
+    if (tag) tag.dataset.mode = mode;
+    const btn = tag && tag.querySelector('.remove-tag-btn');
+    if (btn) btn.setAttribute('onclick', 'rfRemoveItemTag(this)');
+    rfUpdateItemAreas();
+}
+window.rfRemoveItemTag = function (btn) {
+    btn.parentElement.remove();
+    rfUpdateItemAreas();
+};
+// 空のバー/キャプションは隠す。「含む」カードが2個以上のときだけ AND/OR を出す
+function rfUpdateItemAreas() {
+    const inList = document.getElementById('include-items-list');
+    const exList = document.getElementById('exclude-items-list');
+    const row = document.getElementById('item-logic-row');
+    if (!inList || !exList) return;
+    const nIn = inList.children.length, nEx = exList.children.length;
+    const inCap = document.getElementById('item-in-cap'), exCap = document.getElementById('item-ex-cap');
+    if (inCap) inCap.style.display = nIn ? '' : 'none';
+    inList.style.display = nIn ? '' : 'none';
+    if (exCap) exCap.style.display = nEx ? '' : 'none';
+    exList.style.display = nEx ? '' : 'none';
+    if (row) row.style.display = (nIn >= 2) ? '' : 'none';
 }
 
-function setupBossSelectors() {
-    const includeContainer = document.getElementById('include-boss-selector-container');
-    const excludeContainer = document.getElementById('exclude-boss-selector-container');
-    if (!includeContainer || !excludeContainer) return;
-    let bossIconsHtml = '';
-    for (const bossName in bossIconMap) {
-        const iconUrl = bossIconMap[bossName];
-        bossIconsHtml += `<img src="${iconUrl}" alt="${bossName}" title="${bossName}" class="boss-selector-icon" data-boss-name="${bossName}">`;
+function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+// 敵グループ候補 (hard_fights.json の names テーブル): 出現順 (Act → 種別 → Lv) ソート。
+// テキスト入力用 datalist と、クリックで追加できる選択グリッド (ボス=ピンク / エリート=紫 / 特殊=黄 の背景色つき) の両方を作る
+let _enemyDatalistPopulated = false;
+const _enemyKindByDisp = new Map();
+function rfPopulateEnemyDatalist() {
+    if (_enemyDatalistPopulated || !hardFightsNames) return;
+    const KIND_RANK = { e: 0, x: 1, b: 2, s: 3 };
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const entries = [];
+    for (const code in hardFightsNames) {
+        const nm = hardFightsNames[code] || [];
+        if (!nm.length) continue;
+        entries.push({ ja: nm[0] || '', en: nm[1] || '', kind: nm[2] || 'e',
+                       act: (typeof nm[3] === 'number') ? nm[3] : 99, lv: (typeof nm[4] === 'number') ? nm[4] : 999 });
     }
-    includeContainer.innerHTML = bossIconsHtml;
-    excludeContainer.innerHTML = bossIconsHtml;
-    includeContainer.addEventListener('click', (event) => {
-        if (event.target.classList.contains('boss-selector-icon')) {
-            addBossToSelection(event.target.dataset.bossName, 'include-bosses-list');
-        }
-    });
-    excludeContainer.addEventListener('click', (event) => {
-        if (event.target.classList.contains('boss-selector-icon')) {
-            addBossToSelection(event.target.dataset.bossName, 'exclude-bosses-list');
-        }
-    });
+    entries.sort((a, b) => (a.act - b.act) ||
+        (((KIND_RANK[a.kind] ?? 9) - (KIND_RANK[b.kind] ?? 9)) || (a.lv - b.lv) || a.ja.localeCompare(b.ja, 'ja')));
+    // チップ表示は「A<Act> 名前」形式 (ユーザー指定)。datalist の候補も同じ形式で出現順に並ぶ
+    // ▼候補の名前自体にボス/エリートの色アイコンを埋め込む (注記なし・1行表示)
+    const KIND_MARK = { x: '🟣', b: '🔴' };
+    const dispOf = (e) => `A${e.act} ` + (KIND_MARK[e.kind] || '') + ((LANG === 'en') ? (e.en || e.ja) : (e.ja || e.en));
+    const dl = document.getElementById('enemy-groups-datalist');
+    if (dl) dl.innerHTML = entries.map(e => `<option value="${esc(dispOf(e))}"></option>`).join('');
+    for (const e of entries) _enemyKindByDisp.set(dispOf(e), e.kind);
+    _enemyDatalistPopulated = true;
 }
+// 敵チップ追加 (mode: 'in'=含む / 'ex'=含まない)。同一名が既にあればモードを差し替える
+// チップの色: 含む=種別の背景色 (エリート=紫 / ボス=ピンク / 特殊=黄、通常=デフォルト) / 含まない=赤
+function addEnemyTag(disp, mode) {
+    const inList = document.getElementById('enemy-in-list');
+    const exList = document.getElementById('enemy-ex-list');
+    if (!inList || !exList) return;
+    Array.from(inList.children).concat(Array.from(exList.children))
+        .filter(tag => tag.dataset.itemName === disp)
+        .forEach(tag => tag.remove());
+    const target = (mode === 'ex') ? exList : inList;
+    addItemToSelection(disp, target.id);
+    const tag = target.lastElementChild;
+    if (tag) {
+        tag.dataset.mode = mode;
+        tag.style.backgroundColor = (mode === 'ex') ? '#F44336' : '';
+        const btn = tag.querySelector('.remove-tag-btn');
+        if (btn) btn.setAttribute('onclick', 'rfRemoveEnemyTag(this)');
+    }
+    rfUpdateEnemyAreas();
+}
+window.rfRemoveEnemyTag = function (btn) {
+    btn.parentElement.remove();
+    rfUpdateEnemyAreas();
+};
+function rfUpdateEnemyAreas() {
+    const inList = document.getElementById('enemy-in-list');
+    const exList = document.getElementById('enemy-ex-list');
+    const row = document.getElementById('enemy-logic-row');
+    if (!inList || !exList || !row) return;
+    const nIn = inList.children.length, nEx = exList.children.length;
+    document.getElementById('enemy-in-cap').style.display = nIn ? '' : 'none';
+    inList.style.display = nIn ? '' : 'none';
+    document.getElementById('enemy-ex-cap').style.display = nEx ? '' : 'none';
+    exList.style.display = nEx ? '' : 'none';
+    row.style.display = (nIn >= 2) ? '' : 'none';
+}
+
 
 
 // ==================================================================================
@@ -1461,9 +1566,10 @@ async function performAdvancedSearch() {
         const getItemsFromList = (listId) => Array.from(document.getElementById(listId).children).map(tag => tag.dataset.itemName);
         const includeKeywords = getItemsFromList('include-items-list');
         const excludeKeywords = getItemsFromList('exclude-items-list');
-        const includeBosses = getItemsFromList('include-bosses-list');
-        const excludeBosses = getItemsFromList('exclude-bosses-list');
-        const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
+        const includeEnemies = Array.from((document.getElementById('enemy-in-list') || { children: [] }).children).map(tag => tag.dataset.itemName);
+        const excludeEnemies = Array.from((document.getElementById('enemy-ex-list') || { children: [] }).children).map(tag => tag.dataset.itemName);
+        const enemyLogicEl = document.querySelector('input[name="enemy-logic"]:checked');
+        const enemyLogic = enemyLogicEl ? enemyLogicEl.value : 'AND';
         const useTimelineSearch = !!actFilter || !!levelFilter || (deckSizeOperator !== 'any' && !isNaN(deckSizeValue)) || includeKeywords.length > 0 || excludeKeywords.length > 0;
 
 
@@ -1475,8 +1581,8 @@ async function performAdvancedSearch() {
             playerName: playerNameFilter || null,
             includeItems: includeKeywords.length > 0 ? { items: includeKeywords, logic: includeLogic } : null,
             excludeItems: excludeKeywords.length > 0 ? excludeKeywords : null,
-            includeBosses: includeBosses.length > 0 ? { bosses: includeBosses, logic: bossLogic } : null,
-            excludeBosses: excludeBosses.length > 0 ? excludeBosses : null,
+            includeEnemies: includeEnemies.length > 0 ? { enemies: includeEnemies, logic: enemyLogic } : null,
+            excludeEnemies: excludeEnemies.length > 0 ? excludeEnemies : null,
             includeNs: includeNs ? true : null
         };
 
@@ -1515,6 +1621,25 @@ async function performAdvancedSearch() {
         const includeIds = includeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
         const excludeIds = excludeKeywords.map(k => nameToIdMap.get(k.toLowerCase())).filter(Boolean);
 
+        // --- 4.5 敵グループフィルタ: 表示名 → 敵コード変換 (hard_fights names テーブル / 検索条件の単位は苦戦グラフの行と同じ) ---
+        const enemyCodeByDisp = new Map();
+        for (const code in hardFightsNames) {
+            const nm = hardFightsNames[code] || [];
+            if (!nm.length) continue;
+            const plain = (LANG === 'en') ? (nm[1] || nm[0]) : (nm[0] || nm[1]);
+            if (!plain) continue;
+            const act_s = (typeof nm[3] === 'number') ? nm[3] : '?';
+            const kind = nm[2] || 'e';
+            const MARK = { x: '🟣', b: '🔴' };
+            const prefixed = `A${act_s} ${plain}`;
+            const marked = `A${act_s} ${MARK[kind] || ''}${plain}`;
+            if (!enemyCodeByDisp.has(marked.toLowerCase())) enemyCodeByDisp.set(marked.toLowerCase(), code);
+            if (!enemyCodeByDisp.has(prefixed.toLowerCase())) enemyCodeByDisp.set(prefixed.toLowerCase(), code);
+            if (!enemyCodeByDisp.has(plain.toLowerCase())) enemyCodeByDisp.set(plain.toLowerCase(), code);
+        }
+        const includeEnemyCodes = includeEnemies.map(n => enemyCodeByDisp.get(n.toLowerCase())).filter(Boolean);
+        const excludeEnemyCodes = excludeEnemies.map(n => enemyCodeByDisp.get(n.toLowerCase())).filter(Boolean);
+
         // --- 5. Perform the actual filtering loop ---
         const filteredRuns = [];
         const charactersToLoad = new Set(runsToSearch.map(r => r.character));
@@ -1528,16 +1653,21 @@ async function performAdvancedSearch() {
         for (const run of runsToSearch) {
             // プレイヤー名フィルタ (先にやって軽減) — 大小文字を区別しない部分一致
             if (playerNameFilter && !(run.player_name || '').toLowerCase().includes(playerNameFilter.toLowerCase())) continue;
-            // Boss filter (can be done early)
-            const runBossNames = run.bosses ? Object.values(run.bosses).map(b => (b.name ? b.name.toLowerCase() : '')) : [];
-            const includeBossesLower = includeBosses.map(b => b.toLowerCase());
-            const excludeBossesLower = excludeBosses.map(b => b.toLowerCase());
-            if (includeBossesLower.length > 0) {
-                const includeMatch = (bossLogic === 'AND') ? includeBossesLower.every(boss => runBossNames.includes(boss)) : includeBossesLower.some(boss => runBossNames.includes(boss));
-                if (!includeMatch) continue;
+            // 敵グループフィルタ (hard_fights encs = そのランが遭遇した敵コード一覧)
+            if (includeEnemyCodes.length > 0 || excludeEnemyCodes.length > 0) {
+                const runEncs = (hardFightsEncs[run.character] || {})[run.run_id];
+                if (includeEnemyCodes.length > 0) {
+                    if (!runEncs) continue;   // 遭遇データが無いランは「含む」条件に合致しない
+                    let matched = true;
+                    if (enemyLogic === 'AND') {
+                        for (const c of includeEnemyCodes) { if (runEncs.indexOf(c) === -1) { matched = false; break; } }
+                    } else {
+                        matched = includeEnemyCodes.some(c => runEncs.indexOf(c) !== -1);
+                    }
+                    if (!matched) continue;
+                }
+                if (excludeEnemyCodes.length > 0 && runEncs && excludeEnemyCodes.some(c => runEncs.indexOf(c) !== -1)) continue;
             }
-            if (excludeBossesLower.length > 0 && excludeBossesLower.some(boss => runBossNames.includes(boss))) continue;
-
             const runWithDisplayData = { ...run };
 
             if (useTimelineSearch) {
@@ -1783,10 +1913,10 @@ function makeQueryLabel(sc) {
     if (sc.act) parts.push('Act' + sc.act);
     if (sc.level) parts.push('Lv' + sc.level);
     if (sc.deckSize) parts.push('deck' + (sc.deckSize.operator === 'lte' ? '<=' : '>=') + sc.deckSize.value);
-    if (sc.includeItems && (sc.includeItems.items || []).length) parts.push('+' + (sc.includeItems.items || []).join(','));
-    if (sc.excludeItems && sc.excludeItems.length) parts.push('-' + sc.excludeItems.join(','));
-    if (sc.includeBosses && (sc.includeBosses.bosses || []).length) parts.push('+B:' + (sc.includeBosses.bosses || []).join(','));
-    if (sc.excludeBosses && sc.excludeBosses.length) parts.push('-B:' + sc.excludeBosses.join(','));
+    if (sc.includeItems && (sc.includeItems.items || []).length) parts.push('+' + (sc.includeItems.items || []).map(n => n.replace(/ /g, '_')).join(','));
+    if (sc.excludeItems && sc.excludeItems.length) parts.push('-' + sc.excludeItems.map(n => n.replace(/ /g, '_')).join(','));
+    if (sc.includeEnemies && (sc.includeEnemies.enemies || []).length) parts.push('+E:' + (sc.includeEnemies.enemies || []).map(n => n.replace(/ /g, '_')).join(','));
+    if (sc.excludeEnemies && sc.excludeEnemies.length) parts.push('-E:' + sc.excludeEnemies.map(n => n.replace(/ /g, '_')).join(','));
     if (sc.includeNs) parts.push('+NS');
     return parts.join(' ') || '(all)';
 }
@@ -1803,15 +1933,17 @@ function saveSearchHistory(searchCriteria, runs) {
 }
 // 旧履歴 (sc 無し) 用: ラベル文字列 ("SakuyaA +部屋掃除" / "ReimuA A2 L3 deck<=30 …") を検索条件へ復元
 function rfParseQueryLabel(q) {
-    const sc = { character: null, act: null, level: null, deckSize: null, playerName: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null, includeNs: null };
+    const sc = { character: null, act: null, level: null, deckSize: null, playerName: null, includeItems: null, excludeItems: null, includeBosses: null, excludeBosses: null, includeEnemies: null, excludeEnemies: null, includeNs: null };
     (String(q || '').split(' ') || []).forEach(p => {
         let m;
         if (p === '+NS') sc.includeNs = true;
+        else if (p.startsWith('+E:')) sc.includeEnemies = { enemies: p.slice(3).split(',').map(s => s.replace(/_/g, ' ')), logic: 'AND' };
+        else if (p.startsWith('-E:')) sc.excludeEnemies = p.slice(3).split(',').map(s => s.replace(/_/g, ' '));
         else if (p.startsWith('@') && p.length > 1) sc.playerName = p.slice(1);
         else if (p.startsWith('+B:')) sc.includeBosses = { bosses: p.slice(3).split(','), logic: 'AND' };
         else if (p.startsWith('-B:')) sc.excludeBosses = p.slice(3).split(',');
-        else if (p.startsWith('+') && p.length > 1) sc.includeItems = { items: p.slice(1).split(','), logic: 'AND' };
-        else if (p.startsWith('-') && p.length > 1) sc.excludeItems = p.slice(1).split(',');
+        else if (p.startsWith('+') && p.length > 1) sc.includeItems = { items: p.slice(1).split(',').map(s => s.replace(/_/g, ' ')), logic: 'AND' };
+        else if (p.startsWith('-') && p.length > 1) sc.excludeItems = p.slice(1).split(',').map(s => s.replace(/_/g, ' '));
         else if ((m = p.match(/^Act(\d+)$/))) sc.act = m[1];
         else if ((m = p.match(/^Lv(\d+)$/))) sc.level = m[1];
         else if ((m = p.match(/^deck(<|>)=(\d+)$/))) sc.deckSize = { operator: p[4] === '<' ? 'lte' : 'gte', value: parseInt(m[2], 10) };
@@ -1837,21 +1969,21 @@ window.rfRerunSearch = async function (t) {
     if (deckVal) deckVal.value = sc.deckSize ? sc.deckSize.value : '';
     const plEl = document.getElementById('player-name-filter');
     if (plEl) plEl.value = sc.playerName || '';
-    // アイテム/ボスの選択チップを復元
-    ['include-items-list', 'exclude-items-list', 'include-bosses-list', 'exclude-bosses-list'].forEach(id => {
+    // アイテム/ボス/敵グループの選択チップを復元
+    ['include-items-list', 'exclude-items-list', 'include-enemies-list', 'exclude-enemies-list'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '';
     });
-    (sc.includeItems && sc.includeItems.items || []).forEach(it => addItemToSelection(it, 'include-items-list'));
-    (sc.excludeItems || []).forEach(it => addItemToSelection(it, 'exclude-items-list'));
-    (sc.includeBosses && sc.includeBosses.bosses || []).forEach(b => addItemToSelection(b, 'include-bosses-list'));
-    (sc.excludeBosses || []).forEach(b => addItemToSelection(b, 'exclude-bosses-list'));
+    (sc.includeItems && sc.includeItems.items || []).forEach(it => addItemTag(it, 'in'));
+    (sc.excludeItems || []).forEach(it => addItemTag(it, 'ex'));
+    (sc.includeEnemies && sc.includeEnemies.enemies || []).forEach(e => addEnemyTag(e, 'in'));
+    (sc.excludeEnemies || []).forEach(e => addEnemyTag(e, 'ex'));
     const logic = sc.includeItems ? sc.includeItems.logic : 'AND';
     const andChk = document.getElementById('include-logic-and');
     if (andChk) andChk.checked = (logic === 'AND');
-    const bossLogic = sc.includeBosses ? sc.includeBosses.logic : 'AND';
-    const bossRadio = document.querySelector(`input[name="boss-logic"][value="${bossLogic}"]`);
-    if (bossRadio) bossRadio.checked = true;
+    const enemyLogic = sc.includeEnemies ? sc.includeEnemies.logic : 'AND';
+    const enemyRadio = document.querySelector(`input[name="enemy-logic"][value="${enemyLogic}"]`);
+    if (enemyRadio) enemyRadio.checked = true;
     const nsChk = document.getElementById('include-ns-checkbox');
     if (nsChk) nsChk.checked = !!sc.includeNs;
     await performAdvancedSearch();
@@ -2399,8 +2531,8 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         }
         if (searchCriteria.includeItems) criteriaList.push(crit(critLabel('include', 'Include'), `${searchCriteria.includeItems.items.join(', ')} (${searchCriteria.includeItems.logic})`));
         if (searchCriteria.excludeItems) criteriaList.push(crit(critLabel('exclude', 'Exclude'), searchCriteria.excludeItems.join(', ')));
-        if (searchCriteria.includeBosses) criteriaList.push(crit(critLabel('bosses', 'Bosses'), `${searchCriteria.includeBosses.bosses.join(', ')} (${searchCriteria.includeBosses.logic})`));
-        if (searchCriteria.excludeBosses) criteriaList.push(crit(critLabel('ex_bosses', 'Exclude Bosses'), searchCriteria.excludeBosses.join(', ')));
+        if (searchCriteria.includeEnemies) criteriaList.push(crit(critLabel('enemies', 'Include enemies'), `${(searchCriteria.includeEnemies.enemies || []).join(', ')} (${searchCriteria.includeEnemies.logic})`));
+        if (searchCriteria.excludeEnemies) criteriaList.push(crit(critLabel('ex_enemies', 'Exclude enemies'), searchCriteria.excludeEnemies.join(', ')));
         if (searchCriteria.includeNs) criteriaList.push(crit(critLabel('ns', 'Non-stat'), UI_TEXT.run_finder.ns_crit_value || 'ON'));
 
         if (criteriaList.length > 0) {
@@ -2434,7 +2566,13 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                             const nodeUrl = `${baseUrl}?a=${actNum}&l=${node.level}`;
                             const stationMapKey = `${actNum}-${node.level}`;
                             const stationIndex = STATION_MAP_GLOBAL[stationMapKey];
-                            const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}" data-act="${actNum}" data-level="${node.level}" data-node-type="${node.type}"`;
+                            let eliteAttr = '';
+                            if (node.type === 'EliteEnemy' && run.elite_ids) {
+                                const ecode = run.elite_ids[`${actNum}-${node.level}`];
+                                const enm = (ecode && hardFightsNames[ecode]) ? ((LANG === 'en') ? (hardFightsNames[ecode][1] || hardFightsNames[ecode][0]) : hardFightsNames[ecode][0]) : null;
+                                if (enm) eliteAttr = ` data-enemy-name="${escAttr(enm)}"`;
+                            }
+                            const dataAttributes = `data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${stationIndex}" data-act="${actNum}" data-level="${node.level}" data-node-type="${node.type}"${eliteAttr}`;
                             return `<a href="${nodeUrl}" target="_blank" class="path-icon-link" ${dataAttributes}>${icon}</a>`;
                         }).filter(Boolean).join('');
 
@@ -2560,14 +2698,14 @@ async function generateAndCopyShareLink() {
     if (includeItems.length > 0) params.set('includeItems', includeItems.join(','));
     const excludeItems = getItemsFromList('exclude-items-list');
     if (excludeItems.length > 0) params.set('excludeItems', excludeItems.join(','));
-    const includeBosses = getItemsFromList('include-bosses-list');
-    if (includeBosses.length > 0) params.set('includeBosses', includeBosses.join(','));
-    const excludeBosses = getItemsFromList('exclude-bosses-list');
-    if (excludeBosses.length > 0) params.set('excludeBosses', excludeBosses.join(','));
     const itemLogic = document.querySelector('input[name="include-logic"]:checked').value;
     if (itemLogic !== 'OR') params.set('itemLogic', itemLogic);
-    const bossLogic = document.querySelector('input[name="boss-logic"]:checked').value;
-    if (bossLogic !== 'OR') params.set('bossLogic', bossLogic);
+    const includeEnemies = getItemsFromList('include-enemies-list');
+    if (includeEnemies.length > 0) params.set('includeEnemies', includeEnemies.join(','));
+    const excludeEnemies = getItemsFromList('exclude-enemies-list');
+    if (excludeEnemies.length > 0) params.set('excludeEnemies', excludeEnemies.join(','));
+    const enemyLogic = document.querySelector('input[name="enemy-logic"]:checked').value;
+    if (enemyLogic !== 'OR') params.set('enemyLogic', enemyLogic);
     if (document.getElementById('include-ns-checkbox') && document.getElementById('include-ns-checkbox').checked) params.set('ns', '1');
     params.set('search', 'true');
 
@@ -2628,12 +2766,12 @@ function populateUiFromUrlParams() {
     if (params.has('deckOp')) document.getElementById('deck-size-operator').value = params.get('deckOp');
     if (params.has('deckVal')) document.getElementById('deck-size-value').value = params.get('deckVal');
     if (params.has('player')) document.getElementById('player-name-filter').value = params.get('player');
-    if (params.has('includeItems')) params.get('includeItems').split(',').forEach(item => addItemToSelection(item, 'include-items-list'));
-    if (params.has('excludeItems')) params.get('excludeItems').split(',').forEach(item => addItemToSelection(item, 'exclude-items-list'));
-    if (params.has('includeBosses')) params.get('includeBosses').split(',').forEach(boss => addBossToSelection(boss, 'include-bosses-list'));
-    if (params.has('excludeBosses')) params.get('excludeBosses').split(',').forEach(boss => addBossToSelection(boss, 'exclude-bosses-list'));
+    if (params.has('includeItems')) params.get('includeItems').split(',').forEach(item => addItemTag(item, 'in'));
+    if (params.has('excludeItems')) params.get('excludeItems').split(',').forEach(item => addItemTag(item, 'ex'));
     if (params.has('itemLogic')) document.querySelector(`input[name="include-logic"][value="${params.get('itemLogic')}"]`).checked = true;
-    if (params.has('bossLogic')) document.querySelector(`input[name="boss-logic"][value="${params.get('bossLogic')}"]`).checked = true;
+    if (params.has('includeEnemies')) params.get('includeEnemies').split(',').forEach(e => addEnemyTag(e, 'in'));
+    if (params.has('excludeEnemies')) params.get('excludeEnemies').split(',').forEach(e => addEnemyTag(e, 'ex'));
+    if (params.has('enemyLogic')) { const r = document.querySelector(`input[name="enemy-logic"][value="${params.get('enemyLogic')}"]`); if (r) r.checked = true; }
     if (params.has('ns')) { const nsEl = document.getElementById('include-ns-checkbox'); if (nsEl) nsEl.checked = true; }
 
     // UI設定が完了したら、自動検索を試みる
