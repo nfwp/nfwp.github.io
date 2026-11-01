@@ -226,7 +226,7 @@ function switchTab(tabId, autoSearch = false) {
             const uiPopulated = populateUiFromUrlParams();
             if (autoSearch && uiPopulated) {
                 console.log("自動検索を実行します...");
-                performAdvancedSearch();
+                attemptAutoSearch();   // データ準備を待ってから1回だけ検索 (直接呼びは二重検索になるため廃止)
             }
         }
 

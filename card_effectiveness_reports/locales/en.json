@@ -331,7 +331,9 @@
         "enemy_ex_cap": "Exclude",
         "items_label": "Cards & Exhibits",
         "item_in_cap": "Include",
-        "item_ex_cap": "Exclude"
+        "item_ex_cap": "Exclude",
+        "copy_link_success_short": "Short link copied to clipboard",
+        "copy_link_fail_fallback": "The shortener was unavailable — the full link was copied instead"
     },
     "act_trend": {
         "title": "Act Trend Analysis",

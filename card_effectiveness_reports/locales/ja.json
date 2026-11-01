@@ -331,7 +331,9 @@
         "enemy_ex_cap": "含まない",
         "items_label": "カード・展示品",
         "item_in_cap": "含む",
-        "item_ex_cap": "含まない"
+        "item_ex_cap": "含まない",
+        "copy_link_success_short": "短縮リンクをコピーしました",
+        "copy_link_fail_fallback": "短縮サービスが使えなかったため、通常のリンクをコピーしました"
     },
     "act_trend": {
         "title": "Act別トレンド分析",

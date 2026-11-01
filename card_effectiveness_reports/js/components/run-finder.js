@@ -410,18 +410,19 @@ function renderRunFinderTab() {
             let stateDetails = '';
             if (act && level && nodeType) {
                 // For path/boss icons with full data
-                const translationKey = `node_type_${nodeType.toLowerCase()}`;
-                const translatedNodeType = texts[translationKey];
-                const nodeTypeName = translatedNodeType || nodeType; // Fallback to original name (for bosses)
-                stateDetails = `Act ${act}, Lvl ${level}: ${nodeTypeName}`;
-                if (link.dataset.enemyName) stateDetails += ` — ${escAttr(link.dataset.enemyName)}`;
+                                // 短縮表示: 「A2-Lv4 エリ 河城にとり」形式
+                const SHORT_NODE = { Enemy: '敵', EliteEnemy: 'エリ', Boss: 'ボス', Adventure: '特殊', Gap: 'スキマ', Shop: '店' };
+                const SHORT_NODE_EN = { EliteEnemy: 'El', Adventure: 'Event' };
+                const stateName = (LANG === 'en') ? (SHORT_NODE_EN[nodeType] || nodeType) : (SHORT_NODE[nodeType] || nodeType);
+                stateDetails = `A${act}-Lv${level} ${stateName}`;
+                if (link.dataset.enemyName) stateDetails += ` ${escAttr(link.dataset.enemyName)}`;
             } else if (stationIndexToActLevel[stationIndex]) {
                 // For run-id links pointing to a specific station
                 const actLevelString = stationIndexToActLevel[stationIndex];
                 stateDetails = `Act ${actLevelString}`;
             }
             if (stateDetails) {
-                locationInfo = ` (${texts.tooltip_state_prefix}${stateDetails})`;
+                locationInfo = ` (${stateDetails})`;
             }
         }
 
@@ -429,10 +430,11 @@ function renderRunFinderTab() {
         hoveredTooltipLink = link;
         const targetIdx = (stationIndex === 'final') ? Infinity : parseInt(stationIndex, 10);
         const hfEntries = (hardFightsByChar[character] || {})[runId];
+        const ownFightMark = rfOwnFightMark(hfEntries, targetIdx);
         const hardFightsHtml = buildHardFightsHtml(hfEntries, targetIdx, texts);
 
         tooltipElement.innerHTML = `
-            <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}</div>
+            <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}${ownFightMark}</div>
             <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
             ${hardFightsHtml}
         `;
@@ -449,7 +451,7 @@ function renderRunFinderTab() {
                 const list2 = (hardFightsByChar[character] || {})[runId];
                 if (!list2 || !list2.length) return;
                 tooltipElement.innerHTML = `
-                    <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}</div>
+                    <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}${rfOwnFightMark(list2, targetIdx)}</div>
                     <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
                     ${buildHardFightsHtml(list2, targetIdx, texts)}
                 `;
@@ -1421,11 +1423,22 @@ function ensureNsAssetsLoaded() {
     return nsAssetsPromise;
 }
 
+// このステーション自体が苦戦戦闘なら、ポップアップのタイトル用の苦戦マーク (🩸/⚡️) を返す
+function rfOwnFightMark(entries, targetIdx) {
+    if (!entries || targetIdx === Infinity || isNaN(targetIdx)) return '';
+    const own = entries.find(e => e.si === targetIdx);
+    if (!own) return '';
+    let mark = '';
+    if (own.dh >= 15) mark += ' 🩸';
+    if (own.sp >= 1) mark += ' ⚡️';
+    return mark;
+}
+
 // 1 ラン分のエントリ -> ツールチップ末尾に付ける HTML
-// targetIdx: 表示中ステーションの index (このステーションより前に発生した戦闘のみ出す / Infinity で全件)
+// targetIdx: 表示中ステーションの index (このステーション以前 = 自マスの戦闘を含めて出す / Infinity で全件)
 function buildHardFightsHtml(entries, targetIdx, texts) {
     const isJa = LANG === 'ja';
-    const list = (entries || []).filter(e => (targetIdx === Infinity || isNaN(targetIdx)) ? true : e.si < targetIdx);
+    const list = (entries || []).filter(e => (targetIdx === Infinity || isNaN(targetIdx)) ? true : e.si <= targetIdx);
     if (!list.length) return '';
     const tTitle = texts.hard_fights_title || (isJa ? '苦戦した戦闘' : 'Hard Fights');
     const maxLines = 8;
@@ -1530,7 +1543,10 @@ function applyIdFilters(itemIds, includeIds, excludeIds, includeLogic) {
 }
 
 
+let _rfSearchRunning = false;
 async function performAdvancedSearch() {
+    if (_rfSearchRunning) { console.log('[DEBUG] search already running — skip'); return; }
+    _rfSearchRunning = true;
     console.log('[DEBUG] --- Starting Search (Final Performance Version) ---');
     const searchButton = document.getElementById('run-search-button');
     const originalButtonText = searchButton.textContent;
@@ -1750,6 +1766,7 @@ async function performAdvancedSearch() {
     } catch (error) {
         console.error("[FATAL] A critical error occurred during search:", error);
     } finally {
+        _rfSearchRunning = false;
         searchButton.disabled = false;
         searchButton.textContent = originalButtonText;
     }
@@ -2700,12 +2717,12 @@ async function generateAndCopyShareLink() {
     if (excludeItems.length > 0) params.set('excludeItems', excludeItems.join(','));
     const itemLogic = document.querySelector('input[name="include-logic"]:checked').value;
     if (itemLogic !== 'OR') params.set('itemLogic', itemLogic);
-    const includeEnemies = getItemsFromList('include-enemies-list');
+    const includeEnemies = Array.from((document.getElementById('enemy-in-list') || { children: [] }).children).map(tag => tag.dataset.itemName);
     if (includeEnemies.length > 0) params.set('includeEnemies', includeEnemies.join(','));
-    const excludeEnemies = getItemsFromList('exclude-enemies-list');
+    const excludeEnemies = Array.from((document.getElementById('enemy-ex-list') || { children: [] }).children).map(tag => tag.dataset.itemName);
     if (excludeEnemies.length > 0) params.set('excludeEnemies', excludeEnemies.join(','));
-    const enemyLogic = document.querySelector('input[name="enemy-logic"]:checked').value;
-    if (enemyLogic !== 'OR') params.set('enemyLogic', enemyLogic);
+    const enemyLogicEl = document.querySelector('input[name="enemy-logic"]:checked');
+    if (enemyLogicEl && enemyLogicEl.value !== 'OR') params.set('enemyLogic', enemyLogicEl.value);
     if (document.getElementById('include-ns-checkbox') && document.getElementById('include-ns-checkbox').checked) params.set('ns', '1');
     params.set('search', 'true');
 
@@ -2716,27 +2733,52 @@ async function generateAndCopyShareLink() {
     button.textContent = '短縮中...';
 
     try {
-        const apiUrl = `https://api.shrtco.de/v2/shorten?url=${encodeURIComponent(longUrl)}`;
+        // shrtco.de はサービス終了のため is.gd を使用 (失敗時は長いURLをコピー)
+        const apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
         const response = await fetch(apiUrl);
         if (!response.ok) {
             throw new Error(`API request failed with status ${response.status}`);
         }
         const data = await response.json();
-        if (!data.ok) {
-            throw new Error(`API returned an error: ${data.error}`);
+        if (!data.shorturl) {
+            throw new Error(`API returned an error: ${data.errormessage || 'unknown'}`);
         }
-        const shortUrl = data.result.full_short_link;
-        await navigator.clipboard.writeText(shortUrl);
-        alert(UI_TEXT.run_finder.copy_link_success_short); // 新しい成功メッセージ
+        await rfCopyToClipboard(data.shorturl);
+        alert(UI_TEXT.run_finder.copy_link_success_short);
 
     } catch (err) {
         console.error('URLの短縮に失敗しました。元のURLをコピーします。', err);
         // フォールバック: 短縮に失敗したら元の長いURLをコピーする
-        await navigator.clipboard.writeText(longUrl);
-        alert(UI_TEXT.run_finder.copy_link_fail_fallback); // 新しい失敗メッセージ
+        try {
+            await rfCopyToClipboard(longUrl);
+            alert(UI_TEXT.run_finder.copy_link_fail_fallback);
+        } catch (err2) {
+            // クリップボードも使えない場合 (非セキュアコンテキスト等) はURLを表示して手コピーできるようにする
+            prompt(UI_TEXT.run_finder.copy_link_fail_fallback, longUrl);
+        }
     } finally {
         button.disabled = false;
         button.textContent = originalButtonText;
+    }
+}
+
+// クリップボード複写 (navigator.clipboard が使えない環境では execCommand にフォールバック)
+async function rfCopyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+        if (!document.execCommand('copy')) throw new Error('execCommand copy failed');
+    } finally {
+        document.body.removeChild(ta);
     }
 }
 
@@ -2774,14 +2816,13 @@ function populateUiFromUrlParams() {
     if (params.has('enemyLogic')) { const r = document.querySelector(`input[name="enemy-logic"][value="${params.get('enemyLogic')}"]`); if (r) r.checked = true; }
     if (params.has('ns')) { const nsEl = document.getElementById('include-ns-checkbox'); if (nsEl) nsEl.checked = true; }
 
-    // UI設定が完了したら、自動検索を試みる
-    attemptAutoSearch();
-
+    // 自動検索は呼び出し元 (script.dev.js) が attemptAutoSearch() で行う (二重検索防止)
     return true;
 }
 
 // script.dev.js から呼び出される関数をグローバルスコープに登録
 window.renderRunFinderTab = renderRunFinderTab;
 window.populateUiFromUrlParams = populateUiFromUrlParams;
+window.attemptAutoSearch = attemptAutoSearch;
 window.handleSortClick = handleSortClick; // ソート関数もグローバルに
 window.generateAndCopyShareLink = generateAndCopyShareLink; // 共有リンク生成関数もグローバルに
