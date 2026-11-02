@@ -802,9 +802,15 @@ function rfHfSparkSvg(vals, q, color, axis, muted) {
 //   極端な敵に引きずられて箱が潰れるため (2026-10-31)
 function rfHfCardBuild(rd) {
     const isJa = LANG === 'ja';
+    // 苦戦内訳の割合 (n>0 のときのみ付ける): 分母は各行の遭遇回数 (参考側は参考母集団の遭遇回数)
+    const segPct = (n, den) => {
+        if (!(n > 0 && den)) return '';
+        const p = Math.round(n / den * 100);
+        return `(${p > 0 ? p + '%' : '<1%'})`;
+    };
     let html = `<div class="rf-hf-card-h"><span title="${rd.label}">${rd.label}</span>`
         + `<span class="rf-hf-card-sub">${isJa ? `遭遇 ${rd.enc}回 ・ 苦戦率 ${rd.rate}` : `${rd.enc} enc ・ hard ${rd.rate}`}</span></div>`;
-    html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.hpHard} ・ ⚡️${rd.spHard} ・ 🩸⚡️${rd.bothHard}</div>`;
+    html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.hpHard}${segPct(rd.hpHard, rd.enc)} ・ ⚡️${rd.spHard}${segPct(rd.spHard, rd.enc)} ・ 🩸⚡️${rd.bothHard}${segPct(rd.bothHard, rd.enc)}</div>`;
     const fq = (v) => (Math.round(v * 10) / 10).toString().replace(/\.0$/, '');
     // 同じグループ (Act|種別) の行 + その参考値 から共通スケールを算出 (HP は変化量表示 = 被弾 − / 回復 ＋ で反転)
     const ext = (arr, neg) => {
@@ -849,7 +855,7 @@ function rfHfCardBuild(rd) {
         html += `<div class="rf-hf-refhead"><span class="rf-hf-refcap">${isJa ? '(参考)' : '(ref.)'}</span>`
             + ` <b>${rd.charName}</b> ${isJa ? '全ラン' : 'all runs'}`
             + ` ${isJa ? ` ・ 苦戦率 ${rd.charRate}` : ` ・ hard ${rd.charRate}`}</div>`;
-        html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.charHpHard} ・ ⚡️${rd.charSpHard} ・ 🩸⚡️${rd.charBothHard}</div>`;
+        html += `<div class="rf-hf-seg">${isJa ? '苦戦内訳' : 'Hard by type'}: 🩸${rd.charHpHard}${segPct(rd.charHpHard, rd.charEncN)} ・ ⚡️${rd.charSpHard}${segPct(rd.charSpHard, rd.charEncN)} ・ 🩸⚡️${rd.charBothHard}${segPct(rd.charBothHard, rd.charEncN)}</div>`;
         if (rd.charHpVals && rd.charHpVals.length >= 2) {
             const chpNeg = rd.charHpVals.map(v => -v).sort((a, b) => a - b);
             html += metric(isJa ? '🩸 HP変化' : '🩸 HP change', chpNeg, hfQuartiles(chpNeg), '#d6455d', hpAxis, true);

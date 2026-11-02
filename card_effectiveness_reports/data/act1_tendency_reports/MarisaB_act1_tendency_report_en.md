@@ -20,22 +20,22 @@
 <li>Shoot the Moon: 28</li>
 <li>Asteroid Belt: 25</li>
 <li>Luminous Mushroom: 19</li>
-<li>Bask in Stardust: 18</li>
 <li>Speed Duel: 18</li>
+<li>Bask in Stardust: 18</li>
 <li>Magic Converter: 17</li>
 <li>Devil's Codex: 15</li>
 </ul></div>
 <div class="column"><ul>
 <li>Crimson Energy Release: 10</li>
 <li>Alioth: 9</li>
+<li>Full Moon Howl: 7</li>
 <li>Final Spark: 7</li>
 <li>Unexplained Fever: 7</li>
-<li>Full Moon Howl: 7</li>
 <li>Stardust Reverie: 7</li>
-<li>Orthodox Rebellion: 6</li>
 <li>Ready For Burst: 6</li>
 <li>Hand Warmer: 6</li>
-<li>Indiscriminate Ignition: 5</li>
+<li>Orthodox Rebellion: 6</li>
+<li>Bass of Taiko: 5</li>
 </ul></div>
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
@@ -277,16 +277,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr>
-<td>Fluorescent Forest</td>
-<td style='text-align: right;'>+15.46</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>22.1%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>47.5</td>
-<td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>95.7</td>
-</tr>
-<tr>
 <td>Heart Blossoms</td>
 <td style='text-align: right;'>+15.46</td>
 <td style='text-align: right;'>45.5%</td>
@@ -295,6 +285,16 @@
 <td style='text-align: right;'>49.2</td>
 <td style='text-align: right;'>33.7</td>
 <td style='text-align: right;'>82.9</td>
+</tr>
+<tr>
+<td>Fluorescent Forest</td>
+<td style='text-align: right;'>+15.46</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>22.1%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>47.5</td>
+<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>95.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Hand Warmer</strong></td>
@@ -406,16 +406,6 @@
 <td style='text-align: right;'>50.2</td>
 <td style='text-align: right;'>100.3</td>
 </tr>
-<tr>
-<td>Shade</td>
-<td style='text-align: right;'>+11.71</td>
-<td style='text-align: right;'>38.5%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>26</td>
-<td style='text-align: right;'>45.1</td>
-<td style='text-align: right;'>53.1</td>
-<td style='text-align: right;'>98.2</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 Rainbow Star Blast</strong></td>
 <td style='text-align: right;'>+11.71</td>
@@ -425,6 +415,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>63.4</span></strong></td>
 <td style='text-align: right;'>52.8</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.2</span></strong></td>
+</tr>
+<tr>
+<td>Shade</td>
+<td style='text-align: right;'>+11.71</td>
+<td style='text-align: right;'>38.5%</td>
+<td style='text-align: right;'>22.2%</td>
+<td style='text-align: right;'>26</td>
+<td style='text-align: right;'>45.1</td>
+<td style='text-align: right;'>53.1</td>
+<td style='text-align: right;'>98.2</td>
 </tr>
 <tr>
 <td>Money Shower</td>
@@ -479,24 +479,24 @@
 <ul>
 <li><span class="text-purchase">Rocket Broom</span>: 4</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 3</li>
-<li><span class="text-purchase">Danmaku Notes</span>: 3</li>
 <li><span class="text-purchase">Speed Duel</span>: 3</li>
 <li><span class="text-purchase">Shoot the Moon</span>: 3</li>
-<li><span class="text-purchase">Clean Energy</span>: 2</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 3</li>
+<li><span class="text-purchase">Danmaku Notes</span>: 3</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
+<li><span class="text-purchase">Clean Energy</span>: 2</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 2</li>
-<li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
-<li><span class="text-purchase">Devil's Codex</span>: 2</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 2</li>
+<li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
 <li><span class="text-purchase">Impatience</span>: 2</li>
-<li><span class="text-purchase">🧰 Ballistic Shield</span>: 1</li>
+<li><span class="text-purchase">Devil's Codex</span>: 2</li>
+<li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
+<li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">Luminous Mushroom</span>: 1</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 1</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 1</li>
 <li><span class="text-purchase">Serial Cleaver</span>: 1</li>
-<li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
-<li><span class="text-purchase">Phoenix Wings Rise</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -529,16 +529,16 @@
 <li><span class="text-purchase">Rocket Broom</span>: 7</li>
 <li><span class="text-purchase">Ready For Burst</span>: 7</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 6</li>
-<li><span class="text-purchase">Clean Energy</span>: 5</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 5</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 5</li>
+<li><span class="text-purchase">Clean Energy</span>: 5</li>
 <li><span class="text-purchase">Emergency Defense</span>: 5</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 5</li>
-<li><span class="text-purchase">🧰 Energy Drink</span>: 4</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 5</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 4</li>
-<li><span class="text-purchase">Devil's Codex</span>: 4</li>
-<li><span class="text-purchase">Hand Warmer</span>: 4</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 4</li>
+<li><span class="text-purchase">Devil's Codex</span>: 4</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 4</li>
+<li><span class="text-purchase">Hand Warmer</span>: 4</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 3</li>
 </ul>
 </div>
@@ -547,14 +547,14 @@
 <ul>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 5</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
-<li><span class="text-exhibit">Hina Doll</span>: 2</li>
 <li><span class="text-exhibit">Take-Copter</span>: 2</li>
+<li><span class="text-exhibit">Hina Doll</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
-<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
-<li><span class="text-exhibit">Black Notebook</span>: 1</li>
+<li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Ribbon</span>: 1</li>
+<li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Parasol</span>: 1</li>
 </ul>
 </div>
@@ -577,25 +577,25 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
-<li><span class="text-purchase">Bask in Stardust</span>: 2</li>
 <li><span class="text-purchase">Magic Converter</span>: 2</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 2</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 2</li>
 <li><span class="text-purchase">Rocket Broom</span>: 2</li>
+<li><span class="text-purchase">Bask in Stardust</span>: 2</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 2</li>
 <li><span class="text-purchase">Speed Duel</span>: 1</li>
 <li><span class="text-purchase">Stardust Reverie</span>: 1</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 1</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 1</li>
 <li><span class="text-purchase">And Then Will There Be None?</span>: 1</li>
 <li><span class="text-purchase">Hand Warmer</span>: 1</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 1</li>
 <li><span class="text-purchase">Orrery's Sun</span>: 1</li>
 <li><span class="text-purchase">Emergency Defense</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
+<li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">Red Star Explosion</span>: 1</li>
 <li><span class="text-purchase">Violin Solo</span>: 1</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
-<li><span class="text-purchase">Asteroid Belt</span>: 1</li>
 <li><span class="text-purchase">All Out</span>: 1</li>
 </ul>
 </div>
@@ -606,8 +606,8 @@
 <li><span class="text-exhibit">Membership Card</span>: 2</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
-<li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
+<li><span class="text-exhibit">Silver Pocket Watch</span>: 1</li>
 <li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Keystone</span>: 1</li>
 <li><span class="text-exhibit">Tape</span>: 1</li>
@@ -616,8 +616,8 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Removed Cards
 <ul>
-<li><span class="text-remove">🌀 Misfortune</span>: 4</li>
 <li><span class="text-remove">Hot Star Impact</span>: 4</li>
+<li><span class="text-remove">🌀 Misfortune</span>: 4</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
 <li><span class="text-remove">Stardust Defense</span>: 1</li>
 </ul>

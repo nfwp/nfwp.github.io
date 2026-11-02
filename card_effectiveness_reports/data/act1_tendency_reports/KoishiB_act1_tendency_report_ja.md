@@ -33,9 +33,9 @@
 <li>やんちゃな薔薇: 11回</li>
 <li>暗闇演舞: 9回</li>
 <li>好奇心: 9回</li>
-<li>真我の目覚め: 9回</li>
-<li>ブラックペガサスの罪: 9回</li>
 <li>春植えざれば秋実らず: 9回</li>
+<li>ブラックペガサスの罪: 9回</li>
+<li>ハートステップ: 9回</li>
 </ul></div>
 </div>
 <h3>2. エリートマスへの挑戦傾向</h3>
@@ -479,11 +479,11 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">🧰 缶詰</span>: 10回</li>
-<li><span class="text-purchase">出まかせ</span>: 6回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 6回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
-<li><span class="text-purchase">原因不明の熱病</span>: 6回</li>
 <li><span class="text-purchase">閉じた心</span>: 6回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 6回</li>
+<li><span class="text-purchase">出まかせ</span>: 6回</li>
+<li><span class="text-purchase">原因不明の熱病</span>: 6回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 4回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 4回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 3回</li>
@@ -491,13 +491,13 @@
 <li><span class="text-purchase">サバイバル本能</span>: 3回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 3回</li>
 <li><span class="text-purchase">无寿の夢</span>: 2回</li>
-<li><span class="text-purchase">高鳴る鼓動</span>: 2回</li>
-<li><span class="text-purchase">投げキッス</span>: 2回</li>
-<li><span class="text-purchase">ハートステップ</span>: 2回</li>
 <li><span class="text-purchase">孤独な心</span>: 2回</li>
+<li><span class="text-purchase">投げキッス</span>: 2回</li>
 <li><span class="text-purchase">熱情の追憶</span>: 2回</li>
+<li><span class="text-purchase">ハートステップ</span>: 2回</li>
+<li><span class="text-purchase">高鳴る鼓動</span>: 2回</li>
+<li><span class="text-purchase">真実の満月</span>: 1回</li>
 <li><span class="text-purchase">最奥の森域</span>: 1回</li>
-<li><span class="text-purchase">春植えざれば秋実らず</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -530,15 +530,15 @@
 <li><span class="text-purchase">🧰 水鉄砲</span>: 21回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 18回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 14回</li>
-<li><span class="text-purchase">孤独な心</span>: 11回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 11回</li>
+<li><span class="text-purchase">孤独な心</span>: 11回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 10回</li>
-<li><span class="text-purchase">出まかせ</span>: 10回</li>
 <li><span class="text-purchase">无寿の夢</span>: 10回</li>
+<li><span class="text-purchase">出まかせ</span>: 10回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 8回</li>
+<li><span class="text-purchase">被害妄想</span>: 8回</li>
 <li><span class="text-purchase">鈴蘭の花園</span>: 8回</li>
 <li><span class="text-purchase">真実の満月</span>: 8回</li>
-<li><span class="text-purchase">被害妄想</span>: 8回</li>
 <li><span class="text-purchase">熱情の追憶</span>: 7回</li>
 <li><span class="text-purchase">DNAの瑕</span>: 6回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 6回</li>
@@ -556,14 +556,14 @@
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
 <li><span class="text-exhibit">竹取コプター</span>: 1回</li>
-<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 <li><span class="text-exhibit">腕時計</span>: 1回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
-<li><span class="text-exhibit">彼岸花</span>: 1回</li>
+<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
-<li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
+<li><span class="text-exhibit">彼岸花</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
+<li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -595,15 +595,15 @@
 <li><span class="text-purchase">色褪せた夢</span>: 5回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
 <li><span class="text-purchase">蛍光の夜</span>: 4回</li>
-<li><span class="text-purchase">スイートポテトルーム</span>: 3回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 3回</li>
-<li><span class="text-purchase">悪魔の典籍</span>: 3回</li>
 <li><span class="text-purchase">🧰 使い捨ての護符</span>: 3回</li>
 <li><span class="text-purchase">サバイバル本能</span>: 3回</li>
+<li><span class="text-purchase">スイートポテトルーム</span>: 3回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 3回</li>
 <li><span class="text-purchase">いばらの舞</span>: 3回</li>
+<li><span class="text-purchase">悪魔の典籍</span>: 3回</li>
 <li><span class="text-purchase">孤独な心</span>: 3回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
-<li><span class="text-purchase">🧰 フロッピーディスク</span>: 2回</li>
+<li><span class="text-purchase">花鳥風月</span>: 2回</li>
 <li><span class="text-purchase">無の心</span>: 2回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
 </ul>
@@ -622,14 +622,14 @@
 <li><span class="text-exhibit">空き瓶</span>: 2回</li>
 <li><span class="text-exhibit">おみくじ</span>: 2回</li>
 <li><span class="text-exhibit">腕時計型麻酔銃</span>: 2回</li>
-<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
-<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">石油</span>: 1回</li>
-<li><span class="text-exhibit">プラモデル</span>: 1回</li>
+<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">レコード</span>: 1回</li>
 <li><span class="text-exhibit">底抜け柄杓</span>: 1回</li>
 <li><span class="text-exhibit">ナタ</span>: 1回</li>
 <li><span class="text-exhibit">自転車</span>: 1回</li>
+<li><span class="text-exhibit">実験器具</span>: 1回</li>
+<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">竹</span>: 1回</li>
 </ul>
 </div>

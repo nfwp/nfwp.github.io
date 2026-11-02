@@ -32,8 +32,8 @@
 <li>Letty, Winter Embodied: 18</li>
 <li>Frozen Throne: 15</li>
 <li>Riptide: 15</li>
-<li>On Thin Ice: 14</li>
 <li>Sakura-Colored Sea: 14</li>
+<li>On Thin Ice: 14</li>
 <li>Ice Lance: 14</li>
 <li>Refreshing Breeze: 12</li>
 </ul></div>
@@ -480,23 +480,23 @@
 <li><span class="text-purchase">Larva, God of Evernight</span>: 4</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 4</li>
-<li><span class="text-purchase">Riptide</span>: 3</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 3</li>
+<li><span class="text-purchase">Riptide</span>: 3</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 3</li>
-<li><span class="text-purchase">Blizzard</span>: 3</li>
 <li><span class="text-purchase">Absolute Zero</span>: 3</li>
-<li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
+<li><span class="text-purchase">Blizzard</span>: 3</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 2</li>
-<li><span class="text-purchase">Daiyousei, Snowcone Assistant</span>: 2</li>
+<li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Fairy On Ice</span>: 2</li>
-<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
-<li><span class="text-purchase">Clean Energy</span>: 1</li>
-<li><span class="text-purchase">Play With Water</span>: 1</li>
-<li><span class="text-purchase">Vivid Color Downpour</span>: 1</li>
-<li><span class="text-purchase">Tao Fetal Movement</span>: 1</li>
+<li><span class="text-purchase">Daiyousei, Snowcone Assistant</span>: 2</li>
 <li><span class="text-purchase">Frozen Throne</span>: 1</li>
+<li><span class="text-purchase">Ice Barrier</span>: 1</li>
+<li><span class="text-purchase">Clean Energy</span>: 1</li>
+<li><span class="text-purchase">🧰 Water Gun</span>: 1</li>
+<li><span class="text-purchase">Play With Water</span>: 1</li>
 <li><span class="text-purchase">Princess Undine</span>: 1</li>
+<li><span class="text-purchase">Call on Friends</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -521,26 +521,26 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">🧰 Canned Food</span>: 17</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 17</li>
 <li><span class="text-purchase">Absolute Zero</span>: 17</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 17</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 13</li>
-<li><span class="text-purchase">Clean Energy</span>: 12</li>
 <li><span class="text-purchase">Blizzard</span>: 12</li>
-<li><span class="text-purchase">Play With Water</span>: 8</li>
+<li><span class="text-purchase">Clean Energy</span>: 12</li>
 <li><span class="text-purchase">Larva, God of Evernight</span>: 8</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 8</li>
+<li><span class="text-purchase">Play With Water</span>: 8</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 8</li>
 <li><span class="text-purchase">Princess Undine</span>: 7</li>
 <li><span class="text-purchase">Ice Barrier</span>: 7</li>
 <li><span class="text-purchase">Kasumi, Mansion Maid</span>: 6</li>
 <li><span class="text-purchase">Frozen Specimen</span>: 6</li>
 <li><span class="text-purchase">Call on Friends</span>: 6</li>
-<li><span class="text-purchase">Autumnal Harvest</span>: 5</li>
 <li><span class="text-purchase">Letty, Winter Embodied</span>: 5</li>
+<li><span class="text-purchase">Autumnal Harvest</span>: 5</li>
 <li><span class="text-purchase">Daiyousei, Snowcone Assistant</span>: 5</li>
-<li><span class="text-purchase">Tao Fetal Movement</span>: 4</li>
 <li><span class="text-purchase">The Reclusive Sage</span>: 4</li>
+<li><span class="text-purchase">Tao Fetal Movement</span>: 4</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -550,8 +550,8 @@
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 4</li>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
 <li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
-<li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Leaf</span>: 1</li>
+<li><span class="text-exhibit">Black Lotus</span>: 1</li>
 <li><span class="text-exhibit">Vinyl</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 1</li>
@@ -579,24 +579,24 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 6</li>
-<li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Clean Energy</span>: 5</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Water Blanket</span>: 4</li>
 <li><span class="text-purchase">Tiny Glacier</span>: 3</li>
-<li><span class="text-purchase">Play With Water</span>: 2</li>
-<li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
 <li><span class="text-purchase">Absolute Zero</span>: 2</li>
 <li><span class="text-purchase">🧰 Flashlight</span>: 2</li>
 <li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Yummy Fruit Freezies</span>: 2</li>
+<li><span class="text-purchase">Letty, Winter Embodied</span>: 2</li>
+<li><span class="text-purchase">Play With Water</span>: 2</li>
 <li><span class="text-purchase">Blizzard</span>: 2</li>
-<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
+<li><span class="text-purchase">In Plain Sight</span>: 1</li>
 <li><span class="text-purchase">Frost Refraction</span>: 1</li>
 <li><span class="text-purchase">Beauties of Nature</span>: 1</li>
 <li><span class="text-purchase">Fairy's Wake-Up</span>: 1</li>
-<li><span class="text-purchase">In Plain Sight</span>: 1</li>
-<li><span class="text-purchase">🧰 Intelligent Sweeping Robot</span>: 1</li>
 <li><span class="text-purchase">Refreshing Breeze</span>: 1</li>
+<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 1</li>
+<li><span class="text-purchase">Frozen Specimen</span>: 1</li>
 <li><span class="text-purchase">Ice Barrier</span>: 1</li>
 </ul>
 </div>
@@ -608,17 +608,17 @@
 <li><span class="text-exhibit">Bottle</span>: 3</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 2</li>
-<li><span class="text-exhibit">High Fidelity Headphones</span>: 1</li>
-<li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
-<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
-<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
-<li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Omikuji</span>: 1</li>
+<li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Dango</span>: 1</li>
 <li><span class="text-exhibit">Potted Udonge</span>: 1</li>
+<li><span class="text-exhibit">High Fidelity Headphones</span>: 1</li>
+<li><span class="text-exhibit">Crow Tengu's Wing</span>: 1</li>
 <li><span class="text-exhibit">Black Lotus</span>: 1</li>
-<li><span class="text-exhibit">Watch</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
+<li><span class="text-exhibit">Lab Apparatus</span>: 1</li>
+<li><span class="text-exhibit">Watch</span>: 1</li>
+<li><span class="text-exhibit">Take-Copter</span>: 1</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
@@ -632,8 +632,8 @@
 <li><span class="text-remove">Shoot</span>: 4</li>
 <li><span class="text-remove">🌀 Misfortune</span>: 3</li>
 <li><span class="text-remove">Boundary</span>: 1</li>
-<li><span class="text-remove">Leafy Protection</span>: 1</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 1</li>
+<li><span class="text-remove">Leafy Protection</span>: 1</li>
 </ul>
 </div>
 </div>

@@ -64,8 +64,8 @@
 <td style='text-align: right;'>24.1%</td>
 <td style='text-align: right;'>56</td>
 <td style='text-align: right;'>42.4</td>
-<td style='text-align: right;'>51.3</td>
-<td style='text-align: right;'>93.7</td>
+<td style='text-align: right;'>51.6</td>
+<td style='text-align: right;'>94.0</td>
 </tr>
 <tr>
 <td>本読み</td>
@@ -83,9 +83,9 @@
 <td style='text-align: right;'>50.7%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>73</td>
-<td style='text-align: right;'>47.0</td>
+<td style='text-align: right;'>46.4</td>
 <td style='text-align: right;'>57.6</td>
-<td style='text-align: right;'>104.6</td>
+<td style='text-align: right;'>104.0</td>
 </tr>
 <tr>
 <td>危険な手品師</td>
@@ -94,8 +94,8 @@
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>226</td>
 <td style='text-align: right;'>39.5</td>
-<td style='text-align: right;'>52.1</td>
-<td style='text-align: right;'>91.6</td>
+<td style='text-align: right;'>52.4</td>
+<td style='text-align: right;'>91.9</td>
 </tr>
 <tr>
 <td>咲夜特製ストップウォッチ</td>
@@ -134,8 +134,8 @@
 <td style='text-align: right;'>24.3%</td>
 <td style='text-align: right;'>34</td>
 <td style='text-align: right;'><strong><span style='color: red;'>65.9</span></strong></td>
-<td style='text-align: right;'>49.3</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.2</span></strong></td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.5</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 瀟洒なメイド</strong></td>
@@ -144,8 +144,8 @@
 <td style='text-align: right;'>21.5%</td>
 <td style='text-align: right;'>371</td>
 <td style='text-align: right;'><strong><span style='color: red;'>63.4</span></strong></td>
-<td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.8</span></strong></td>
+<td style='text-align: right;'>51.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>114.4</span></strong></td>
 </tr>
 <tr>
 <td>時間厳守</td>
@@ -164,8 +164,8 @@
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>224</td>
 <td style='text-align: right;'>39.9</td>
-<td style='text-align: right;'>61.0</td>
-<td style='text-align: right;'>101.0</td>
+<td style='text-align: right;'>60.5</td>
+<td style='text-align: right;'>100.5</td>
 </tr>
 <tr>
 <td>弾幕手品</td>
@@ -174,8 +174,8 @@
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>108</td>
 <td style='text-align: right;'>57.9</td>
-<td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>107.5</td>
+<td style='text-align: right;'>49.9</td>
+<td style='text-align: right;'>107.8</td>
 </tr>
 <tr>
 <td>ルミネスリコシェ</td>
@@ -183,9 +183,9 @@
 <td style='text-align: right;'>46.4%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>84</td>
-<td style='text-align: right;'>46.7</td>
-<td style='text-align: right;'>52.4</td>
-<td style='text-align: right;'>99.1</td>
+<td style='text-align: right;'>47.3</td>
+<td style='text-align: right;'>50.7</td>
+<td style='text-align: right;'>98.0</td>
 </tr>
 <tr>
 <td>金剛身</td>
@@ -203,9 +203,9 @@
 <td style='text-align: right;'>45.0%</td>
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>202</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>101.4</td>
+<td style='text-align: right;'>51.6</td>
+<td style='text-align: right;'>50.4</td>
+<td style='text-align: right;'>102.0</td>
 </tr>
 <tr>
 <td>ウォーターカーペット</td>
@@ -223,9 +223,9 @@
 <td style='text-align: right;'>45.3%</td>
 <td style='text-align: right;'>23.9%</td>
 <td style='text-align: right;'>95</td>
-<td style='text-align: right;'>52.7</td>
+<td style='text-align: right;'>53.0</td>
 <td style='text-align: right;'>42.1</td>
-<td style='text-align: right;'>94.8</td>
+<td style='text-align: right;'>95.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ダモクレスの刃</strong></td>
@@ -243,9 +243,9 @@
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>24.1%</td>
 <td style='text-align: right;'>73</td>
-<td style='text-align: right;'>37.9</td>
-<td style='text-align: right;'>64.1</td>
-<td style='text-align: right;'>102.0</td>
+<td style='text-align: right;'>37.2</td>
+<td style='text-align: right;'>65.0</td>
+<td style='text-align: right;'>102.2</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 部屋掃除</strong></td>
@@ -254,8 +254,8 @@
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>394</td>
 <td style='text-align: right;'><strong><span style='color: red;'>61.6</span></strong></td>
-<td style='text-align: right;'>60.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>121.6</span></strong></td>
+<td style='text-align: right;'>61.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>122.6</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 缶詰</strong></td>
@@ -283,9 +283,9 @@
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>24.1%</td>
 <td style='text-align: right;'>81</td>
-<td style='text-align: right;'>51.0</td>
+<td style='text-align: right;'>50.7</td>
 <td style='text-align: right;'>70.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>121.0</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>120.8</span></strong></td>
 </tr>
 <tr>
 <td>聖地巡礼</td>
@@ -294,8 +294,8 @@
 <td style='text-align: right;'>22.4%</td>
 <td style='text-align: right;'>311</td>
 <td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>48.7</td>
-<td style='text-align: right;'>90.0</td>
+<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>90.3</td>
 </tr>
 <tr>
 <td>星剣の舞</td>
@@ -324,8 +324,8 @@
 <td style='text-align: right;'>24.2%</td>
 <td style='text-align: right;'>69</td>
 <td style='text-align: right;'><strong><span style='color: red;'>70.1</span></strong></td>
-<td style='text-align: right;'>65.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>135.9</span></strong></td>
+<td style='text-align: right;'>67.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>137.0</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 イカサマ</strong></td>
@@ -334,8 +334,8 @@
 <td style='text-align: right;'>23.5%</td>
 <td style='text-align: right;'>174</td>
 <td style='text-align: right;'>58.7</td>
-<td style='text-align: right;'>60.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>119.3</span></strong></td>
+<td style='text-align: right;'>60.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>118.8</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 プリンセスウンディネ</strong></td>
@@ -343,9 +343,9 @@
 <td style='text-align: right;'>42.7%</td>
 <td style='text-align: right;'>23.9%</td>
 <td style='text-align: right;'>110</td>
-<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>46.7</td>
 <td style='text-align: right;'>63.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.0</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.1</span></strong></td>
 </tr>
 <tr>
 <td>銀糸織り</td>
@@ -353,9 +353,9 @@
 <td style='text-align: right;'>42.4%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>99</td>
-<td style='text-align: right;'>51.6</td>
+<td style='text-align: right;'>51.3</td>
 <td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>99.7</td>
+<td style='text-align: right;'>99.4</td>
 </tr>
 <tr>
 <td>チェンジリングマジック</td>
@@ -363,8 +363,8 @@
 <td style='text-align: right;'>40.6%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>330</td>
-<td style='text-align: right;'>55.8</td>
-<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>55.5</td>
+<td style='text-align: right;'>53.6</td>
 <td style='text-align: right;'>109.1</td>
 </tr>
 <tr>
@@ -413,9 +413,9 @@
 <td style='text-align: right;'>40.5%</td>
 <td style='text-align: right;'>24.2%</td>
 <td style='text-align: right;'>84</td>
-<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>47.9</td>
 <td style='text-align: right;'>53.9</td>
-<td style='text-align: right;'>102.1</td>
+<td style='text-align: right;'>101.8</td>
 </tr>
 <tr>
 <td>ジャック・ザ・ルドビレ</td>
@@ -423,9 +423,9 @@
 <td style='text-align: right;'>41.9%</td>
 <td style='text-align: right;'>24.4%</td>
 <td style='text-align: right;'>43</td>
-<td style='text-align: right;'>47.9</td>
+<td style='text-align: right;'>47.6</td>
 <td style='text-align: right;'>55.5</td>
-<td style='text-align: right;'>103.3</td>
+<td style='text-align: right;'>103.1</td>
 </tr>
 <tr>
 <td>イマジナリバーチカルタイム</td>
@@ -454,8 +454,8 @@
 <td style='text-align: right;'>23.5%</td>
 <td style='text-align: right;'>196</td>
 <td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>51.0</td>
-<td style='text-align: right;'>100.6</td>
+<td style='text-align: right;'>51.3</td>
+<td style='text-align: right;'>100.8</td>
 </tr>
 </tbody>
 </table>
@@ -479,25 +479,25 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">クリーンエネルギー</span>: 10回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 8回</li>
 <li><span class="text-purchase">歴史喰い</span>: 8回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 8回</li>
 <li><span class="text-purchase">危険な手品師</span>: 7回</li>
-<li><span class="text-purchase">準備</span>: 6回</li>
 <li><span class="text-purchase">部屋掃除</span>: 6回</li>
+<li><span class="text-purchase">準備</span>: 6回</li>
 <li><span class="text-purchase">ディフレクション</span>: 5回</li>
 <li><span class="text-purchase">ダモクレスの刃</span>: 4回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 4回</li>
 <li><span class="text-purchase">降雪決行</span>: 4回</li>
 <li><span class="text-purchase">月相</span>: 3回</li>
 <li><span class="text-purchase">水遊び</span>: 3回</li>
-<li><span class="text-purchase">イマジナリバーチカルタイム</span>: 3回</li>
-<li><span class="text-purchase">時間厳守</span>: 3回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 3回</li>
+<li><span class="text-purchase">イマジナリバーチカルタイム</span>: 3回</li>
 <li><span class="text-purchase">捏造報道</span>: 3回</li>
+<li><span class="text-purchase">時間厳守</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">ウォーターカーペット</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
 <li><span class="text-purchase">タオ胎動</span>: 2回</li>
-<li><span class="text-purchase">ウォーターカーペット</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -525,9 +525,9 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 27回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 26回</li>
 <li><span class="text-purchase">部屋掃除</span>: 24回</li>
-<li><span class="text-purchase">歴史喰い</span>: 22回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 22回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 22回</li>
+<li><span class="text-purchase">歴史喰い</span>: 22回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 20回</li>
 <li><span class="text-purchase">時間厳守</span>: 19回</li>
 <li><span class="text-purchase">危険な手品師</span>: 16回</li>
@@ -537,8 +537,8 @@
 <li><span class="text-purchase">イマジナリバーチカルタイム</span>: 12回</li>
 <li><span class="text-purchase">拘束時間</span>: 12回</li>
 <li><span class="text-purchase">準備</span>: 11回</li>
-<li><span class="text-purchase">銀色のアナザーディメンジョン</span>: 10回</li>
 <li><span class="text-purchase">ダモクレスの刃</span>: 10回</li>
+<li><span class="text-purchase">銀色のアナザーディメンジョン</span>: 10回</li>
 <li><span class="text-purchase">浄化活動</span>: 9回</li>
 <li><span class="text-purchase">水遊び</span>: 9回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 9回</li>
@@ -554,18 +554,18 @@
 <li><span class="text-exhibit">空き瓶</span>: 4回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 3回</li>
 <li><span class="text-exhibit">おみくじ</span>: 3回</li>
-<li><span class="text-exhibit">天狗の羽団扇</span>: 3回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 3回</li>
+<li><span class="text-exhibit">天狗の羽団扇</span>: 3回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 2回</li>
 <li><span class="text-exhibit">芍薬</span>: 2回</li>
 <li><span class="text-exhibit">魔導書</span>: 1回</li>
 <li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">重低音バスドラム</span>: 1回</li>
-<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">守矢の御幣</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
-<li><span class="text-exhibit">プラモデル</span>: 1回</li>
+<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
+<li><span class="text-exhibit">プラモデル</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -576,8 +576,8 @@
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 20回</li>
 <li><span class="text-remove">危険予知</span>: 13回</li>
 <li><span class="text-remove">結界</span>: 4回</li>
-<li><span class="text-remove">跳弾するナイフ</span>: 1回</li>
 <li><span class="text-remove">🌀 嫉妬</span>: 1回</li>
+<li><span class="text-remove">跳弾するナイフ</span>: 1回</li>
 <li><span class="text-remove">🌀 不幸</span>: 1回</li>
 </ul>
 </div>
@@ -591,49 +591,49 @@
 <ul>
 <li><span class="text-purchase">🧰 缶詰</span>: 20回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 8回</li>
-<li><span class="text-purchase">チェンジリングマジック</span>: 5回</li>
-<li><span class="text-purchase">準備</span>: 5回</li>
 <li><span class="text-purchase">シルバープッシュ</span>: 5回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
+<li><span class="text-purchase">チェンジリングマジック</span>: 5回</li>
+<li><span class="text-purchase">準備</span>: 5回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 5回</li>
-<li><span class="text-purchase">部屋掃除</span>: 4回</li>
 <li><span class="text-purchase">🧰 エナジードリンク</span>: 4回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
-<li><span class="text-purchase">プリンセスウンディネ</span>: 4回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 4回</li>
-<li><span class="text-purchase">水遊び</span>: 3回</li>
+<li><span class="text-purchase">プリンセスウンディネ</span>: 4回</li>
+<li><span class="text-purchase">部屋掃除</span>: 4回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 4回</li>
 <li><span class="text-purchase">星剣の舞</span>: 3回</li>
 <li><span class="text-purchase">デジャヴ</span>: 3回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 3回</li>
+<li><span class="text-purchase">水遊び</span>: 3回</li>
 <li><span class="text-purchase">歴史喰い</span>: 3回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
 <li><span class="text-purchase">イカサマ</span>: 2回</li>
 <li><span class="text-purchase">🧰 フロッピーディスク</span>: 2回</li>
+<li><span class="text-purchase">時間厳守</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> よく購入される展示品 Top 20
 <ul>
 <li><span class="text-exhibit">実験器具</span>: 7回</li>
-<li><span class="text-exhibit">リボン</span>: 4回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 4回</li>
+<li><span class="text-exhibit">リボン</span>: 4回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 4回</li>
+<li><span class="text-exhibit">プラモデル</span>: 2回</li>
 <li><span class="text-exhibit">楼観剣</span>: 2回</li>
+<li><span class="text-exhibit">おいしいクッキー</span>: 2回</li>
 <li><span class="text-exhibit">会員証</span>: 2回</li>
 <li><span class="text-exhibit">唐傘</span>: 2回</li>
-<li><span class="text-exhibit">プラモデル</span>: 2回</li>
-<li><span class="text-exhibit">おいしいクッキー</span>: 2回</li>
-<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
-<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">ぶどう</span>: 1回</li>
 <li><span class="text-exhibit">空き瓶</span>: 1回</li>
-<li><span class="text-exhibit">スマートスピーカー</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
+<li><span class="text-exhibit">スマートスピーカー</span>: 1回</li>
+<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">芍薬</span>: 1回</li>
 <li><span class="text-exhibit">宝魂石</span>: 1回</li>
 <li><span class="text-exhibit">精巧なティーセット</span>: 1回</li>
 <li><span class="text-exhibit">ライトセイバー</span>: 1回</li>
+<li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

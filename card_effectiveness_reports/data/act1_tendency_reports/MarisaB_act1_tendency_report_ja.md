@@ -20,22 +20,22 @@
 <li>シュート・ザ・ムーン: 28回</li>
 <li>アステロイドベルト: 25回</li>
 <li>ヤコウタケ: 19回</li>
-<li>スターダスト・シャワー: 18回</li>
 <li>スピードバトル: 18回</li>
+<li>スターダスト・シャワー: 18回</li>
 <li>マジックコンバーター: 17回</li>
 <li>悪魔の典籍: 15回</li>
 </ul></div>
 <div class="column"><ul>
 <li>紅内勁: 10回</li>
 <li>アリオト: 9回</li>
+<li>満月の咆哮: 7回</li>
 <li>ファイナルスパーク: 7回</li>
 <li>原因不明の熱病: 7回</li>
-<li>満月の咆哮: 7回</li>
 <li>スターダストレヴァリエ: 7回</li>
-<li>逆張り: 6回</li>
 <li>チャージ: 6回</li>
 <li>冬日和: 6回</li>
-<li>無差別発火の符: 5回</li>
+<li>逆張り: 6回</li>
+<li>重低音バスドラム: 5回</li>
 </ul></div>
 </div>
 <h3>2. エリートマスへの挑戦傾向</h3>
@@ -278,16 +278,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr>
-<td>蛍光の森</td>
-<td style='text-align: right;'>+15.46</td>
-<td style='text-align: right;'>45.5%</td>
-<td style='text-align: right;'>22.1%</td>
-<td style='text-align: right;'>22</td>
-<td style='text-align: right;'>47.5</td>
-<td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>95.7</td>
-</tr>
-<tr>
 <td>咲いた心</td>
 <td style='text-align: right;'>+15.46</td>
 <td style='text-align: right;'>45.5%</td>
@@ -296,6 +286,16 @@
 <td style='text-align: right;'>49.2</td>
 <td style='text-align: right;'>33.7</td>
 <td style='text-align: right;'>82.9</td>
+</tr>
+<tr>
+<td>蛍光の森</td>
+<td style='text-align: right;'>+15.46</td>
+<td style='text-align: right;'>45.5%</td>
+<td style='text-align: right;'>22.1%</td>
+<td style='text-align: right;'>22</td>
+<td style='text-align: right;'>47.5</td>
+<td style='text-align: right;'>48.2</td>
+<td style='text-align: right;'>95.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 冬日和</strong></td>
@@ -407,16 +407,6 @@
 <td style='text-align: right;'>50.2</td>
 <td style='text-align: right;'>100.3</td>
 </tr>
-<tr>
-<td>遮光</td>
-<td style='text-align: right;'>+11.71</td>
-<td style='text-align: right;'>38.5%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>26</td>
-<td style='text-align: right;'>45.1</td>
-<td style='text-align: right;'>53.1</td>
-<td style='text-align: right;'>98.2</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 レインボースターインパクト</strong></td>
 <td style='text-align: right;'>+11.71</td>
@@ -426,6 +416,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>63.4</span></strong></td>
 <td style='text-align: right;'>52.8</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.2</span></strong></td>
+</tr>
+<tr>
+<td>遮光</td>
+<td style='text-align: right;'>+11.71</td>
+<td style='text-align: right;'>38.5%</td>
+<td style='text-align: right;'>22.2%</td>
+<td style='text-align: right;'>26</td>
+<td style='text-align: right;'>45.1</td>
+<td style='text-align: right;'>53.1</td>
+<td style='text-align: right;'>98.2</td>
 </tr>
 <tr>
 <td>一攫千金</td>
@@ -480,24 +480,24 @@
 <ul>
 <li><span class="text-purchase">ロケットブルーム</span>: 4回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 3回</li>
-<li><span class="text-purchase">ダンマクノート</span>: 3回</li>
 <li><span class="text-purchase">スピードバトル</span>: 3回</li>
 <li><span class="text-purchase">シュート・ザ・ムーン</span>: 3回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 3回</li>
+<li><span class="text-purchase">ダンマクノート</span>: 3回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 2回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 2回</li>
-<li><span class="text-purchase">借りてくぜ</span>: 2回</li>
-<li><span class="text-purchase">悪魔の典籍</span>: 2回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 2回</li>
+<li><span class="text-purchase">借りてくぜ</span>: 2回</li>
 <li><span class="text-purchase">焦燥</span>: 2回</li>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 1回</li>
+<li><span class="text-purchase">悪魔の典籍</span>: 2回</li>
+<li><span class="text-purchase">鳳翼天翔</span>: 1回</li>
+<li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">ヤコウタケ</span>: 1回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 1回</li>
 <li><span class="text-purchase">逆張り</span>: 1回</li>
 <li><span class="text-purchase">浮世の関を超える山姥</span>: 1回</li>
-<li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">冬日和</span>: 1回</li>
-<li><span class="text-purchase">鳳翼天翔</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -530,16 +530,16 @@
 <li><span class="text-purchase">ロケットブルーム</span>: 7回</li>
 <li><span class="text-purchase">チャージ</span>: 7回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 5回</li>
-<li><span class="text-purchase">原因不明の熱病</span>: 5回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 5回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 5回</li>
 <li><span class="text-purchase">エマージェンシーディフェンス</span>: 5回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 5回</li>
-<li><span class="text-purchase">🧰 エナジードリンク</span>: 4回</li>
+<li><span class="text-purchase">原因不明の熱病</span>: 5回</li>
 <li><span class="text-purchase">スターダスト・シャワー</span>: 4回</li>
-<li><span class="text-purchase">悪魔の典籍</span>: 4回</li>
-<li><span class="text-purchase">冬日和</span>: 4回</li>
 <li><span class="text-purchase">逆張り</span>: 4回</li>
+<li><span class="text-purchase">悪魔の典籍</span>: 4回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 4回</li>
+<li><span class="text-purchase">冬日和</span>: 4回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 3回</li>
 </ul>
 </div>
@@ -548,14 +548,14 @@
 <ul>
 <li><span class="text-exhibit">博麗アミュレット</span>: 5回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
-<li><span class="text-exhibit">雛人形</span>: 2回</li>
 <li><span class="text-exhibit">竹取コプター</span>: 2回</li>
+<li><span class="text-exhibit">雛人形</span>: 2回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
-<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
-<li><span class="text-exhibit">黒のノート</span>: 1回</li>
+<li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">リボン</span>: 1回</li>
+<li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">日傘</span>: 1回</li>
 </ul>
 </div>
@@ -578,25 +578,25 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
-<li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
 <li><span class="text-purchase">マジックコンバーター</span>: 2回</li>
 <li><span class="text-purchase">逆張り</span>: 2回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 2回</li>
 <li><span class="text-purchase">ロケットブルーム</span>: 2回</li>
+<li><span class="text-purchase">スターダスト・シャワー</span>: 2回</li>
 <li><span class="text-purchase">借りてくぜ</span>: 2回</li>
 <li><span class="text-purchase">スピードバトル</span>: 1回</li>
 <li><span class="text-purchase">スターダストレヴァリエ</span>: 1回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 1回</li>
+<li><span class="text-purchase">原因不明の熱病</span>: 1回</li>
 <li><span class="text-purchase">そして誰もいなくなるか？</span>: 1回</li>
 <li><span class="text-purchase">冬日和</span>: 1回</li>
-<li><span class="text-purchase">原因不明の熱病</span>: 1回</li>
 <li><span class="text-purchase">太陽系儀</span>: 1回</li>
 <li><span class="text-purchase">エマージェンシーディフェンス</span>: 1回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">レッドドワーフ・エクスプロージョン</span>: 1回</li>
 <li><span class="text-purchase">ルナサ・ソロライブ</span>: 1回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
-<li><span class="text-purchase">アステロイドベルト</span>: 1回</li>
 <li><span class="text-purchase">火力全開</span>: 1回</li>
 </ul>
 </div>
@@ -607,8 +607,8 @@
 <li><span class="text-exhibit">会員証</span>: 2回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
-<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
+<li><span class="text-exhibit">銀の懐中時計</span>: 1回</li>
 <li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">要石</span>: 1回</li>
 <li><span class="text-exhibit">ガムテープ</span>: 1回</li>
@@ -617,8 +617,8 @@
 <div class="shop-item-sub-column">
 <h5> よく削除されるカード Top 20
 <ul>
-<li><span class="text-remove">🌀 不幸</span>: 4回</li>
 <li><span class="text-remove">スターインパクト</span>: 4回</li>
+<li><span class="text-remove">🌀 不幸</span>: 4回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
 <li><span class="text-remove">スターダストディフェンス</span>: 1回</li>
 </ul>

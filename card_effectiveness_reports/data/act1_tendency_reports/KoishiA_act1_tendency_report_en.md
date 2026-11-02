@@ -157,16 +157,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Cage of Roses</strong></td>
-<td style='text-align: right;'>+21.51</td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>24.8%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'><strong><span style='color: red;'>70.4</span></strong></td>
-<td style='text-align: right;'>52.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.3</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Tarot: The Chariot</strong></td>
 <td style='text-align: right;'>+21.51</td>
 <td style='text-align: right;'>47.7%</td>
@@ -175,6 +165,16 @@
 <td style='text-align: right;'>58.5</td>
 <td style='text-align: right;'>57.8</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.3</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Cage of Roses</strong></td>
+<td style='text-align: right;'>+21.51</td>
+<td style='text-align: right;'>47.7%</td>
+<td style='text-align: right;'>24.8%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'><strong><span style='color: red;'>70.4</span></strong></td>
+<td style='text-align: right;'>52.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.3</span></strong></td>
 </tr>
 <tr>
 <td>Clean Energy</td>
@@ -387,16 +387,6 @@
 <td style='text-align: right;'>93.9</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Tarot: The Fool</strong></td>
-<td style='text-align: right;'>+16.47</td>
-<td style='text-align: right;'>43.6%</td>
-<td style='text-align: right;'>24.9%</td>
-<td style='text-align: right;'>39</td>
-<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
-<td style='text-align: right;'>58.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>127.5</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Air Kiss</strong></td>
 <td style='text-align: right;'>+16.47</td>
 <td style='text-align: right;'>43.6%</td>
@@ -405,6 +395,16 @@
 <td style='text-align: right;'>52.6</td>
 <td style='text-align: right;'>65.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.0</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Tarot: The Fool</strong></td>
+<td style='text-align: right;'>+16.47</td>
+<td style='text-align: right;'>43.6%</td>
+<td style='text-align: right;'>24.9%</td>
+<td style='text-align: right;'>39</td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
+<td style='text-align: right;'>58.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>127.5</span></strong></td>
 </tr>
 <tr>
 <td>DNA's Flaw</td>
@@ -478,25 +478,25 @@
 <h5> Top 20 Most Purchased Cards
 <ul>
 <li><span class="text-purchase">Talk Through the Hat</span>: 9</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 4</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 4</li>
+<li><span class="text-purchase">Lovesickness</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">Withering Dreams</span>: 3</li>
 <li><span class="text-purchase">Devil's Codex</span>: 3</li>
-<li><span class="text-purchase">Lovesickness</span>: 3</li>
+<li><span class="text-purchase">Springtime Vacation</span>: 2</li>
 <li><span class="text-purchase">Beauties of Nature</span>: 2</li>
 <li><span class="text-purchase">Tarot: The Hermit</span>: 2</li>
-<li><span class="text-purchase">Springtime Vacation</span>: 2</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 2</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 2</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 2</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
-<li><span class="text-purchase">Luminescent Night</span>: 1</li>
 <li><span class="text-purchase">Seeping Miasma</span>: 1</li>
 <li><span class="text-purchase">Forest Depths</span>: 1</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 1</li>
-<li><span class="text-purchase">Transference Blade</span>: 1</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 1</li>
+<li><span class="text-purchase">Luminescent Night</span>: 1</li>
 <li><span class="text-purchase">Flash of Inspiration</span>: 1</li>
+<li><span class="text-purchase">Transference Blade</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -530,17 +530,17 @@
 <li><span class="text-purchase">Unexplained Fever</span>: 13</li>
 <li><span class="text-purchase">Devil's Codex</span>: 12</li>
 <li><span class="text-purchase">Closed Heart</span>: 11</li>
-<li><span class="text-purchase">Cucumber Missile</span>: 10</li>
 <li><span class="text-purchase">Lonely Heart</span>: 10</li>
+<li><span class="text-purchase">Cucumber Missile</span>: 10</li>
 <li><span class="text-purchase">Lovesickness</span>: 7</li>
 <li><span class="text-purchase">Curiosity</span>: 6</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 6</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 5</li>
-<li><span class="text-purchase">Calm Mind</span>: 5</li>
 <li><span class="text-purchase">Transference Blade</span>: 5</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 5</li>
 <li><span class="text-purchase">Instinctive Love</span>: 5</li>
+<li><span class="text-purchase">Calm Mind</span>: 5</li>
 <li><span class="text-purchase">Persecutory Delusions</span>: 5</li>
-<li><span class="text-purchase">Melancholic Garden</span>: 4</li>
+<li><span class="text-purchase">🧰 Flashlight</span>: 4</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -550,19 +550,19 @@
 <li><span class="text-exhibit">Membership Card</span>: 8</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 5</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 3</li>
-<li><span class="text-exhibit">Black Notebook</span>: 2</li>
 <li><span class="text-exhibit">Bottle</span>: 2</li>
+<li><span class="text-exhibit">Black Notebook</span>: 2</li>
 <li><span class="text-exhibit">Leaf</span>: 2</li>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 2</li>
 <li><span class="text-exhibit">Magic Guide Book</span>: 1</li>
-<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
-<li><span class="text-exhibit">Take-Copter</span>: 1</li>
-<li><span class="text-exhibit">Parasol</span>: 1</li>
 <li><span class="text-exhibit">Secret Cloak</span>: 1</li>
 <li><span class="text-exhibit">Hina Doll</span>: 1</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 <li><span class="text-exhibit">Robot Model</span>: 1</li>
+<li><span class="text-exhibit">Tengu's Fan</span>: 1</li>
+<li><span class="text-exhibit">Take-Copter</span>: 1</li>
+<li><span class="text-exhibit">Parasol</span>: 1</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -584,26 +584,26 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
 <ul>
-<li><span class="text-purchase">Clean Energy</span>: 6</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 6</li>
-<li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
+<li><span class="text-purchase">Clean Energy</span>: 6</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
+<li><span class="text-purchase">🧰 Canned Food</span>: 4</li>
+<li><span class="text-purchase">Lonely Heart</span>: 3</li>
 <li><span class="text-purchase">Unexplained Fever</span>: 3</li>
 <li><span class="text-purchase">Sweet Sweet Potato</span>: 3</li>
-<li><span class="text-purchase">Lonely Heart</span>: 3</li>
 <li><span class="text-purchase">Persecutory Delusions</span>: 3</li>
 <li><span class="text-purchase">Closed Heart</span>: 2</li>
-<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
-<li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
-<li><span class="text-purchase">Talk Through the Hat</span>: 2</li>
-<li><span class="text-purchase">Withering Dreams</span>: 2</li>
-<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
-<li><span class="text-purchase">Luminescent Night</span>: 2</li>
 <li><span class="text-purchase">A.T. Field</span>: 2</li>
+<li><span class="text-purchase">Luminescent Night</span>: 2</li>
+<li><span class="text-purchase">🧰 Supply Backpack</span>: 2</li>
 <li><span class="text-purchase">Slipping Consciousness</span>: 2</li>
-<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 2</li>
+<li><span class="text-purchase">Autumnal Harvest</span>: 2</li>
+<li><span class="text-purchase">🧰 Energy Drink</span>: 2</li>
 <li><span class="text-purchase">Devil's Codex</span>: 2</li>
-<li><span class="text-purchase">DNA's Flaw</span>: 1</li>
+<li><span class="text-purchase">Withering Dreams</span>: 2</li>
+<li><span class="text-purchase">Talk Through the Hat</span>: 2</li>
+<li><span class="text-purchase">Rainbow Danmaku Dupion</span>: 2</li>
+<li><span class="text-purchase">Springtime Vacation</span>: 1</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

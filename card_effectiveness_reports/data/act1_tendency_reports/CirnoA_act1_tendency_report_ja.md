@@ -32,8 +32,8 @@
 <li>冬の忘れ物、レティ: 18回</li>
 <li>凍てつく玉座: 15回</li>
 <li>激流: 15回</li>
-<li>薄氷を踏む: 14回</li>
 <li>桜色の海: 14回</li>
+<li>薄氷を踏む: 14回</li>
 <li>氷槍術: 14回</li>
 <li>夏の爽風: 12回</li>
 </ul></div>
@@ -481,23 +481,23 @@
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 4回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 4回</li>
-<li><span class="text-purchase">激流</span>: 3回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 3回</li>
+<li><span class="text-purchase">激流</span>: 3回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 3回</li>
-<li><span class="text-purchase">猛吹雪</span>: 3回</li>
 <li><span class="text-purchase">絶対零度</span>: 3回</li>
-<li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
+<li><span class="text-purchase">猛吹雪</span>: 3回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 2回</li>
-<li><span class="text-purchase">かき氷の売り子、大妖精</span>: 2回</li>
+<li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">氷上の妖精</span>: 2回</li>
-<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 1回</li>
-<li><span class="text-purchase">水遊び</span>: 1回</li>
-<li><span class="text-purchase">極彩沛雨</span>: 1回</li>
-<li><span class="text-purchase">タオ胎動</span>: 1回</li>
+<li><span class="text-purchase">かき氷の売り子、大妖精</span>: 2回</li>
 <li><span class="text-purchase">凍てつく玉座</span>: 1回</li>
+<li><span class="text-purchase">アイスシールド</span>: 1回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 1回</li>
+<li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">水遊び</span>: 1回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 1回</li>
+<li><span class="text-purchase">友を呼ぶ</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -522,26 +522,26 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">🧰 缶詰</span>: 17回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 17回</li>
 <li><span class="text-purchase">絶対零度</span>: 17回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 17回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 13回</li>
-<li><span class="text-purchase">クリーンエネルギー</span>: 12回</li>
 <li><span class="text-purchase">猛吹雪</span>: 12回</li>
-<li><span class="text-purchase">水遊び</span>: 8回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 12回</li>
 <li><span class="text-purchase">真夏の妖精の夢、ラルバ</span>: 8回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 8回</li>
+<li><span class="text-purchase">水遊び</span>: 8回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 8回</li>
 <li><span class="text-purchase">プリンセスウンディネ</span>: 7回</li>
 <li><span class="text-purchase">アイスシールド</span>: 7回</li>
 <li><span class="text-purchase">メイド妖精、カスミ</span>: 6回</li>
 <li><span class="text-purchase">氷漬けの標本</span>: 6回</li>
 <li><span class="text-purchase">友を呼ぶ</span>: 6回</li>
-<li><span class="text-purchase">春植えざれば秋実らず</span>: 5回</li>
 <li><span class="text-purchase">冬の忘れ物、レティ</span>: 5回</li>
+<li><span class="text-purchase">春植えざれば秋実らず</span>: 5回</li>
 <li><span class="text-purchase">かき氷の売り子、大妖精</span>: 5回</li>
-<li><span class="text-purchase">タオ胎動</span>: 4回</li>
 <li><span class="text-purchase">賢者の帰依</span>: 4回</li>
+<li><span class="text-purchase">タオ胎動</span>: 4回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -551,8 +551,8 @@
 <li><span class="text-exhibit">銀の懐中時計</span>: 4回</li>
 <li><span class="text-exhibit">会員証</span>: 3回</li>
 <li><span class="text-exhibit">実験器具</span>: 1回</li>
-<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">葉っぱ</span>: 1回</li>
+<li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
 <li><span class="text-exhibit">レコード</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
@@ -580,24 +580,24 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 6回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 5回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 5回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 5回</li>
 <li><span class="text-purchase">ウォーターカーペット</span>: 4回</li>
 <li><span class="text-purchase">タイニーグレイシャー</span>: 3回</li>
-<li><span class="text-purchase">水遊び</span>: 2回</li>
-<li><span class="text-purchase">冬の忘れ物、レティ</span>: 2回</li>
 <li><span class="text-purchase">絶対零度</span>: 2回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
 <li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">フルーツクラッシュアイス</span>: 2回</li>
+<li><span class="text-purchase">冬の忘れ物、レティ</span>: 2回</li>
+<li><span class="text-purchase">水遊び</span>: 2回</li>
 <li><span class="text-purchase">猛吹雪</span>: 2回</li>
-<li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
+<li><span class="text-purchase">完璧な偽装</span>: 1回</li>
 <li><span class="text-purchase">氷鏡反射</span>: 1回</li>
 <li><span class="text-purchase">花鳥風月</span>: 1回</li>
 <li><span class="text-purchase">妖精の目覚め</span>: 1回</li>
-<li><span class="text-purchase">完璧な偽装</span>: 1回</li>
-<li><span class="text-purchase">🧰 ロボット掃除機</span>: 1回</li>
 <li><span class="text-purchase">夏の爽風</span>: 1回</li>
+<li><span class="text-purchase">弾幕の玉繭</span>: 1回</li>
+<li><span class="text-purchase">氷漬けの標本</span>: 1回</li>
 <li><span class="text-purchase">アイスシールド</span>: 1回</li>
 </ul>
 </div>
@@ -609,17 +609,17 @@
 <li><span class="text-exhibit">空き瓶</span>: 3回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 2回</li>
-<li><span class="text-exhibit">ヘッドフォン</span>: 1回</li>
-<li><span class="text-exhibit">実験器具</span>: 1回</li>
-<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
-<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
-<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">おみくじ</span>: 1回</li>
+<li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">お団子</span>: 1回</li>
 <li><span class="text-exhibit">憂曇華の盆栽</span>: 1回</li>
+<li><span class="text-exhibit">ヘッドフォン</span>: 1回</li>
+<li><span class="text-exhibit">鴉天狗の羽根</span>: 1回</li>
 <li><span class="text-exhibit">ブラック・ロータス</span>: 1回</li>
-<li><span class="text-exhibit">腕時計</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
+<li><span class="text-exhibit">実験器具</span>: 1回</li>
+<li><span class="text-exhibit">腕時計</span>: 1回</li>
+<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>
@@ -633,8 +633,8 @@
 <li><span class="text-remove">ショット</span>: 4回</li>
 <li><span class="text-remove">🌀 不幸</span>: 3回</li>
 <li><span class="text-remove">結界</span>: 1回</li>
-<li><span class="text-remove">グリーンカバー</span>: 1回</li>
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 1回</li>
+<li><span class="text-remove">グリーンカバー</span>: 1回</li>
 </ul>
 </div>
 </div>

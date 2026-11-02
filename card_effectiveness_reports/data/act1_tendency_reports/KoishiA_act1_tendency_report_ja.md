@@ -158,16 +158,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 ローズケージ</strong></td>
-<td style='text-align: right;'>+21.51</td>
-<td style='text-align: right;'>47.7%</td>
-<td style='text-align: right;'>24.8%</td>
-<td style='text-align: right;'>44</td>
-<td style='text-align: right;'><strong><span style='color: red;'>70.4</span></strong></td>
-<td style='text-align: right;'>52.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>123.3</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 戦車のタロット</strong></td>
 <td style='text-align: right;'>+21.51</td>
 <td style='text-align: right;'>47.7%</td>
@@ -176,6 +166,16 @@
 <td style='text-align: right;'>58.5</td>
 <td style='text-align: right;'>57.8</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.3</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 ローズケージ</strong></td>
+<td style='text-align: right;'>+21.51</td>
+<td style='text-align: right;'>47.7%</td>
+<td style='text-align: right;'>24.8%</td>
+<td style='text-align: right;'>44</td>
+<td style='text-align: right;'><strong><span style='color: red;'>70.4</span></strong></td>
+<td style='text-align: right;'>52.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>123.3</span></strong></td>
 </tr>
 <tr>
 <td>クリーンエネルギー</td>
@@ -388,16 +388,6 @@
 <td style='text-align: right;'>93.9</td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 愚者のタロット</strong></td>
-<td style='text-align: right;'>+16.47</td>
-<td style='text-align: right;'>43.6%</td>
-<td style='text-align: right;'>24.9%</td>
-<td style='text-align: right;'>39</td>
-<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
-<td style='text-align: right;'>58.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>127.5</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 投げキッス</strong></td>
 <td style='text-align: right;'>+16.47</td>
 <td style='text-align: right;'>43.6%</td>
@@ -406,6 +396,16 @@
 <td style='text-align: right;'>52.6</td>
 <td style='text-align: right;'>65.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>118.0</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 愚者のタロット</strong></td>
+<td style='text-align: right;'>+16.47</td>
+<td style='text-align: right;'>43.6%</td>
+<td style='text-align: right;'>24.9%</td>
+<td style='text-align: right;'>39</td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
+<td style='text-align: right;'>58.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>127.5</span></strong></td>
 </tr>
 <tr>
 <td>DNAの瑕</td>
@@ -479,25 +479,25 @@
 <h5> よく購入されるカード Top 20
 <ul>
 <li><span class="text-purchase">出まかせ</span>: 9回</li>
-<li><span class="text-purchase">原因不明の熱病</span>: 4回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">原因不明の熱病</span>: 4回</li>
+<li><span class="text-purchase">両思いの恋煩い</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">色褪せた夢</span>: 3回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 3回</li>
-<li><span class="text-purchase">両思いの恋煩い</span>: 3回</li>
+<li><span class="text-purchase">春の野遊び</span>: 2回</li>
 <li><span class="text-purchase">花鳥風月</span>: 2回</li>
 <li><span class="text-purchase">隠者のタロット</span>: 2回</li>
-<li><span class="text-purchase">春の野遊び</span>: 2回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
-<li><span class="text-purchase">蛍光の夜</span>: 1回</li>
 <li><span class="text-purchase">フィルドミアズマ</span>: 1回</li>
 <li><span class="text-purchase">最奥の森域</span>: 1回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 1回</li>
-<li><span class="text-purchase">心変わりの刃</span>: 1回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 1回</li>
+<li><span class="text-purchase">蛍光の夜</span>: 1回</li>
 <li><span class="text-purchase">天啓</span>: 1回</li>
+<li><span class="text-purchase">心変わりの刃</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -531,17 +531,17 @@
 <li><span class="text-purchase">原因不明の熱病</span>: 13回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 12回</li>
 <li><span class="text-purchase">閉じた心</span>: 11回</li>
-<li><span class="text-purchase">きゅうりミサイル</span>: 10回</li>
 <li><span class="text-purchase">孤独な心</span>: 10回</li>
+<li><span class="text-purchase">きゅうりミサイル</span>: 10回</li>
 <li><span class="text-purchase">両思いの恋煩い</span>: 7回</li>
 <li><span class="text-purchase">好奇心</span>: 6回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 6回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 5回</li>
-<li><span class="text-purchase">無の心</span>: 5回</li>
 <li><span class="text-purchase">心変わりの刃</span>: 5回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 5回</li>
 <li><span class="text-purchase">本能の愛</span>: 5回</li>
+<li><span class="text-purchase">無の心</span>: 5回</li>
 <li><span class="text-purchase">被害妄想</span>: 5回</li>
-<li><span class="text-purchase">鈴蘭の花園</span>: 4回</li>
+<li><span class="text-purchase">🧰 フラッシュ</span>: 4回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -551,19 +551,19 @@
 <li><span class="text-exhibit">会員証</span>: 8回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 5回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 3回</li>
-<li><span class="text-exhibit">黒のノート</span>: 2回</li>
 <li><span class="text-exhibit">空き瓶</span>: 2回</li>
+<li><span class="text-exhibit">黒のノート</span>: 2回</li>
 <li><span class="text-exhibit">葉っぱ</span>: 2回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">魔導書</span>: 1回</li>
-<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
-<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
-<li><span class="text-exhibit">日傘</span>: 1回</li>
 <li><span class="text-exhibit">ひみつのマント</span>: 1回</li>
 <li><span class="text-exhibit">雛人形</span>: 1回</li>
-<li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 <li><span class="text-exhibit">プラモデル</span>: 1回</li>
+<li><span class="text-exhibit">天狗の羽団扇</span>: 1回</li>
+<li><span class="text-exhibit">竹取コプター</span>: 1回</li>
+<li><span class="text-exhibit">日傘</span>: 1回</li>
+<li><span class="text-exhibit">ドリームキャッチャー</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -585,26 +585,26 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">クリーンエネルギー</span>: 6回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 6回</li>
-<li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
+<li><span class="text-purchase">クリーンエネルギー</span>: 6回</li>
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
+<li><span class="text-purchase">🧰 缶詰</span>: 4回</li>
+<li><span class="text-purchase">孤独な心</span>: 3回</li>
 <li><span class="text-purchase">原因不明の熱病</span>: 3回</li>
 <li><span class="text-purchase">スイートポテトルーム</span>: 3回</li>
-<li><span class="text-purchase">孤独な心</span>: 3回</li>
 <li><span class="text-purchase">被害妄想</span>: 3回</li>
 <li><span class="text-purchase">閉じた心</span>: 2回</li>
-<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
-<li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
-<li><span class="text-purchase">出まかせ</span>: 2回</li>
-<li><span class="text-purchase">色褪せた夢</span>: 2回</li>
-<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
-<li><span class="text-purchase">蛍光の夜</span>: 2回</li>
 <li><span class="text-purchase">A.T.フィールド</span>: 2回</li>
+<li><span class="text-purchase">蛍光の夜</span>: 2回</li>
+<li><span class="text-purchase">🧰 バックパック</span>: 2回</li>
 <li><span class="text-purchase">零れ落ちる意識</span>: 2回</li>
-<li><span class="text-purchase">弾幕の玉繭</span>: 2回</li>
+<li><span class="text-purchase">春植えざれば秋実らず</span>: 2回</li>
+<li><span class="text-purchase">🧰 エナジードリンク</span>: 2回</li>
 <li><span class="text-purchase">悪魔の典籍</span>: 2回</li>
-<li><span class="text-purchase">DNAの瑕</span>: 1回</li>
+<li><span class="text-purchase">色褪せた夢</span>: 2回</li>
+<li><span class="text-purchase">出まかせ</span>: 2回</li>
+<li><span class="text-purchase">弾幕の玉繭</span>: 2回</li>
+<li><span class="text-purchase">春の野遊び</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

@@ -29,8 +29,8 @@
 <li>護身の霊符: 37回</li>
 <li>龍殺陣: 36回</li>
 <li>浄化活動: 36回</li>
-<li>常置陣: 28回</li>
 <li>ホーミングアミュレット: 28回</li>
+<li>常置陣: 28回</li>
 <li>弾幕護符: 24回</li>
 <li>作戦姿勢: 22回</li>
 <li>聖人化: 20回</li>
@@ -64,8 +64,8 @@
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>48</td>
 <td style='text-align: right;'>45.0</td>
-<td style='text-align: right;'>57.8</td>
-<td style='text-align: right;'>102.8</td>
+<td style='text-align: right;'>58.1</td>
+<td style='text-align: right;'>103.1</td>
 </tr>
 <tr>
 <td>厄祓い</td>
@@ -94,8 +94,8 @@
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>91</td>
 <td style='text-align: right;'>44.7</td>
-<td style='text-align: right;'>38.7</td>
-<td style='text-align: right;'>83.3</td>
+<td style='text-align: right;'>39.1</td>
+<td style='text-align: right;'>83.8</td>
 </tr>
 <tr>
 <td>桜の舞</td>
@@ -103,9 +103,9 @@
 <td style='text-align: right;'>47.8%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>182</td>
-<td style='text-align: right;'>58.1</td>
-<td style='text-align: right;'>40.4</td>
-<td style='text-align: right;'>98.5</td>
+<td style='text-align: right;'>57.8</td>
+<td style='text-align: right;'>40.8</td>
+<td style='text-align: right;'>98.6</td>
 </tr>
 <tr>
 <td>宝塔の威光</td>
@@ -124,8 +124,8 @@
 <td style='text-align: right;'>24.4%</td>
 <td style='text-align: right;'>409</td>
 <td style='text-align: right;'>42.2</td>
-<td style='text-align: right;'>64.1</td>
-<td style='text-align: right;'>106.3</td>
+<td style='text-align: right;'>64.8</td>
+<td style='text-align: right;'>107.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 均衡の玉</strong></td>
@@ -144,8 +144,8 @@
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>284</td>
 <td style='text-align: right;'>48.4</td>
-<td style='text-align: right;'>53.7</td>
-<td style='text-align: right;'>102.1</td>
+<td style='text-align: right;'>53.4</td>
+<td style='text-align: right;'>101.8</td>
 </tr>
 <tr>
 <td>緊縛陣</td>
@@ -154,8 +154,8 @@
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>113</td>
 <td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>37.1</td>
-<td style='text-align: right;'>86.8</td>
+<td style='text-align: right;'>37.7</td>
+<td style='text-align: right;'>87.3</td>
 </tr>
 <tr>
 <td>自由自在</td>
@@ -164,18 +164,8 @@
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>145</td>
 <td style='text-align: right;'>38.7</td>
-<td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'>92.9</td>
-</tr>
-<tr>
-<td>太極から両儀に</td>
-<td style='text-align: right;'>+21.57</td>
-<td style='text-align: right;'>48.0%</td>
-<td style='text-align: right;'>26.4%</td>
-<td style='text-align: right;'>50</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>44.7</td>
-<td style='text-align: right;'>94.8</td>
+<td style='text-align: right;'>53.9</td>
+<td style='text-align: right;'>92.6</td>
 </tr>
 <tr>
 <td>逆転結界</td>
@@ -184,8 +174,18 @@
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>50</td>
 <td style='text-align: right;'>46.6</td>
-<td style='text-align: right;'>45.8</td>
-<td style='text-align: right;'>92.4</td>
+<td style='text-align: right;'>45.5</td>
+<td style='text-align: right;'>92.1</td>
+</tr>
+<tr>
+<td>太極から両儀に</td>
+<td style='text-align: right;'>+21.57</td>
+<td style='text-align: right;'>48.0%</td>
+<td style='text-align: right;'>26.4%</td>
+<td style='text-align: right;'>50</td>
+<td style='text-align: right;'>49.9</td>
+<td style='text-align: right;'>45.0</td>
+<td style='text-align: right;'>94.8</td>
 </tr>
 <tr>
 <td>護身の霊符</td>
@@ -204,8 +204,8 @@
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>69</td>
 <td style='text-align: right;'>56.2</td>
-<td style='text-align: right;'>47.4</td>
-<td style='text-align: right;'>103.6</td>
+<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>103.8</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 龍殺陣</strong></td>
@@ -244,8 +244,8 @@
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>86</td>
 <td style='text-align: right;'><strong><span style='color: red;'>60.0</span></strong></td>
-<td style='text-align: right;'>60.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>120.4</span></strong></td>
+<td style='text-align: right;'>56.8</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.8</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🌀 嫉妬</strong></td>
@@ -264,8 +264,8 @@
 <td style='text-align: right;'>26.1%</td>
 <td style='text-align: right;'>120</td>
 <td style='text-align: right;'>50.4</td>
-<td style='text-align: right;'>41.9</td>
-<td style='text-align: right;'>92.2</td>
+<td style='text-align: right;'>42.5</td>
+<td style='text-align: right;'>92.9</td>
 </tr>
 <tr>
 <td>博麗神拳</td>
@@ -294,8 +294,8 @@
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>236</td>
 <td style='text-align: right;'>40.4</td>
-<td style='text-align: right;'>58.8</td>
-<td style='text-align: right;'>99.2</td>
+<td style='text-align: right;'>59.2</td>
+<td style='text-align: right;'>99.6</td>
 </tr>
 <tr>
 <td>開運御札</td>
@@ -324,8 +324,8 @@
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>154</td>
 <td style='text-align: right;'>44.4</td>
-<td style='text-align: right;'>43.2</td>
-<td style='text-align: right;'>87.6</td>
+<td style='text-align: right;'>43.8</td>
+<td style='text-align: right;'>88.2</td>
 </tr>
 <tr>
 <td>サモンタケミナカタ</td>
@@ -334,8 +334,8 @@
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>53</td>
 <td style='text-align: right;'>54.8</td>
-<td style='text-align: right;'>46.6</td>
-<td style='text-align: right;'>101.4</td>
+<td style='text-align: right;'>46.8</td>
+<td style='text-align: right;'>101.6</td>
 </tr>
 <tr>
 <td>🧰 今泉影狼の毛</td>
@@ -344,8 +344,8 @@
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>275</td>
 <td style='text-align: right;'>51.4</td>
-<td style='text-align: right;'>37.7</td>
-<td style='text-align: right;'>89.0</td>
+<td style='text-align: right;'>38.2</td>
+<td style='text-align: right;'>89.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ホーミングアミュレット</strong></td>
@@ -354,8 +354,8 @@
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>224</td>
 <td style='text-align: right;'><strong><span style='color: red;'>63.5</span></strong></td>
-<td style='text-align: right;'>55.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>119.1</span></strong></td>
+<td style='text-align: right;'>55.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>119.4</span></strong></td>
 </tr>
 <tr>
 <td>幻想辺境</td>
@@ -364,8 +364,8 @@
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>22</td>
 <td style='text-align: right;'>33.5</td>
-<td style='text-align: right;'>54.5</td>
-<td style='text-align: right;'>88.0</td>
+<td style='text-align: right;'>54.2</td>
+<td style='text-align: right;'>87.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 作戦姿勢</strong></td>
@@ -374,8 +374,8 @@
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>250</td>
 <td style='text-align: right;'>52.6</td>
-<td style='text-align: right;'>58.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.8</span></strong></td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.1</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 境界上空</strong></td>
@@ -384,8 +384,8 @@
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>183</td>
 <td style='text-align: right;'><strong><span style='color: red;'>60.4</span></strong></td>
-<td style='text-align: right;'>60.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>120.4</span></strong></td>
+<td style='text-align: right;'>60.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>120.9</span></strong></td>
 </tr>
 <tr>
 <td>亜空点穴</td>
@@ -394,8 +394,8 @@
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>329</td>
 <td style='text-align: right;'>52.9</td>
-<td style='text-align: right;'>53.9</td>
-<td style='text-align: right;'>106.8</td>
+<td style='text-align: right;'>53.7</td>
+<td style='text-align: right;'>106.6</td>
 </tr>
 <tr>
 <td>御神酒</td>
@@ -404,8 +404,8 @@
 <td style='text-align: right;'>26.0%</td>
 <td style='text-align: right;'>142</td>
 <td style='text-align: right;'>37.1</td>
-<td style='text-align: right;'>43.5</td>
-<td style='text-align: right;'>80.6</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>81.2</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 当たり判定・小</strong></td>
@@ -434,8 +434,8 @@
 <td style='text-align: right;'>26.5%</td>
 <td style='text-align: right;'>30</td>
 <td style='text-align: right;'>47.6</td>
-<td style='text-align: right;'>42.2</td>
-<td style='text-align: right;'>89.8</td>
+<td style='text-align: right;'>42.9</td>
+<td style='text-align: right;'>90.5</td>
 </tr>
 <tr>
 <td>天人飛翔</td>
@@ -444,8 +444,8 @@
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>180</td>
 <td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'>45.5</td>
-<td style='text-align: right;'>100.6</td>
+<td style='text-align: right;'>45.8</td>
+<td style='text-align: right;'>100.8</td>
 </tr>
 <tr>
 <td>静穏</td>
@@ -488,16 +488,16 @@
 <li><span class="text-purchase">きゅうりミサイル</span>: 5回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 5回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 4回</li>
-<li><span class="text-purchase">紅内勁</span>: 4回</li>
 <li><span class="text-purchase">住吉三神</span>: 4回</li>
+<li><span class="text-purchase">紅内勁</span>: 4回</li>
 <li><span class="text-purchase">二重大結界</span>: 4回</li>
 <li><span class="text-purchase">境界遊行</span>: 2回</li>
 <li><span class="text-purchase">厄祓い</span>: 2回</li>
-<li><span class="text-purchase">開運御札</span>: 2回</li>
-<li><span class="text-purchase">護身の霊符</span>: 2回</li>
 <li><span class="text-purchase">魔浄閃結</span>: 2回</li>
 <li><span class="text-purchase">亜空点穴</span>: 2回</li>
-<li><span class="text-purchase">作戦姿勢</span>: 2回</li>
+<li><span class="text-purchase">開運御札</span>: 2回</li>
+<li><span class="text-purchase">務光の雷弾</span>: 2回</li>
+<li><span class="text-purchase">護身の霊符</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -527,21 +527,21 @@
 <li><span class="text-purchase">🧰 ライオットシールド</span>: 14回</li>
 <li><span class="text-purchase">昇天脚</span>: 14回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 12回</li>
-<li><span class="text-purchase">長袖善舞</span>: 11回</li>
-<li><span class="text-purchase">聖地巡礼</span>: 11回</li>
 <li><span class="text-purchase">清めの儀式</span>: 11回</li>
+<li><span class="text-purchase">聖地巡礼</span>: 11回</li>
+<li><span class="text-purchase">長袖善舞</span>: 11回</li>
 <li><span class="text-purchase">護身の霊符</span>: 10回</li>
 <li><span class="text-purchase">常置陣</span>: 9回</li>
 <li><span class="text-purchase">二重大結界</span>: 7回</li>
-<li><span class="text-purchase">紅内勁</span>: 7回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 7回</li>
+<li><span class="text-purchase">紅内勁</span>: 7回</li>
 <li><span class="text-purchase">満月の咆哮</span>: 6回</li>
-<li><span class="text-purchase">自由自在</span>: 6回</li>
 <li><span class="text-purchase">作戦姿勢</span>: 6回</li>
+<li><span class="text-purchase">自由自在</span>: 6回</li>
 <li><span class="text-purchase">住吉三神</span>: 5回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 5回</li>
 <li><span class="text-purchase">浄化活動</span>: 5回</li>
-<li><span class="text-purchase">夢想封印　寂</span>: 4回</li>
+<li><span class="text-purchase">🧰 フロッピーディスク</span>: 4回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -556,11 +556,11 @@
 <li><span class="text-exhibit">竹取コプター</span>: 1回</li>
 <li><span class="text-exhibit">白狼天狗の盾</span>: 1回</li>
 <li><span class="text-exhibit">魔人経巻</span>: 1回</li>
-<li><span class="text-exhibit">おみくじ</span>: 1回</li>
-<li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">ひらり布</span>: 1回</li>
 <li><span class="text-exhibit">唐傘</span>: 1回</li>
+<li><span class="text-exhibit">博麗アミュレット</span>: 1回</li>
+<li><span class="text-exhibit">おみくじ</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
@@ -568,8 +568,8 @@
 <ul>
 <li><span class="text-remove">博麗アミュレット</span>: 101回</li>
 <li><span class="text-remove">🌀 忍び寄る飢餓</span>: 16回</li>
-<li><span class="text-remove">弾幕護符</span>: 12回</li>
 <li><span class="text-remove">ショット</span>: 12回</li>
+<li><span class="text-remove">弾幕護符</span>: 12回</li>
 <li><span class="text-remove">結界</span>: 7回</li>
 <li><span class="text-remove">🌀 不幸</span>: 2回</li>
 <li><span class="text-remove">封魔陣</span>: 1回</li>
@@ -583,33 +583,33 @@
 <div class="shop-item-sub-column">
 <h5> よく購入されるカード Top 20
 <ul>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
 <li><span class="text-purchase">長袖善舞</span>: 5回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 5回</li>
 <li><span class="text-purchase">自由自在</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">博麗縁日</span>: 3回</li>
 <li><span class="text-purchase">🧰 フロッピーディスク</span>: 2回</li>
 <li><span class="text-purchase">🧰 フラッシュ</span>: 2回</li>
-<li><span class="text-purchase">満月の咆哮</span>: 2回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 2回</li>
+<li><span class="text-purchase">満月の咆哮</span>: 2回</li>
 <li><span class="text-purchase">🧰 缶詰</span>: 2回</li>
-<li><span class="text-purchase">龍殺陣</span>: 1回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 1回</li>
 <li><span class="text-purchase">🧰 救急箱</span>: 1回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 1回</li>
+<li><span class="text-purchase">龍殺陣</span>: 1回</li>
 <li><span class="text-purchase">明珠暗投</span>: 1回</li>
 <li><span class="text-purchase">幻想一重</span>: 1回</li>
 <li><span class="text-purchase">聖人化</span>: 1回</li>
+<li><span class="text-purchase">陰陽宝玉</span>: 1回</li>
 <li><span class="text-purchase">金剛身</span>: 1回</li>
-<li><span class="text-purchase">肉体強化</span>: 1回</li>
-<li><span class="text-purchase">開運御札</span>: 1回</li>
+<li><span class="text-purchase">常置陣</span>: 1回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">
 <h5> よく購入される展示品 Top 20
 <ul>
-<li><span class="text-exhibit">リボン</span>: 5回</li>
 <li><span class="text-exhibit">プラモデル</span>: 5回</li>
+<li><span class="text-exhibit">リボン</span>: 5回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 2回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 2回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>
