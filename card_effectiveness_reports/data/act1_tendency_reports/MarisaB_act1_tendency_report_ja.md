@@ -548,9 +548,9 @@
 <ul>
 <li><span class="text-exhibit">博麗アミュレット</span>: 5回</li>
 <li><span class="text-exhibit">銀の懐中時計</span>: 3回</li>
-<li><span class="text-exhibit">リボン</span>: 2回</li>
 <li><span class="text-exhibit">雛人形</span>: 2回</li>
 <li><span class="text-exhibit">竹取コプター</span>: 2回</li>
+<li><span class="text-exhibit">リボン</span>: 2回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 1回</li>
 <li><span class="text-exhibit">会員証</span>: 1回</li>

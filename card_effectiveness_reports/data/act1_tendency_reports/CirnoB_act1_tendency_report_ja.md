@@ -123,9 +123,9 @@
 <td style='text-align: right;'>43.7%</td>
 <td style='text-align: right;'>21.7%</td>
 <td style='text-align: right;'>71</td>
-<td style='text-align: right;'>40.6</td>
-<td style='text-align: right;'>47.5</td>
-<td style='text-align: right;'>88.1</td>
+<td style='text-align: right;'>40.1</td>
+<td style='text-align: right;'>47.8</td>
+<td style='text-align: right;'>87.9</td>
 </tr>
 <tr>
 <td>社交的な妖精</td>
@@ -134,8 +134,8 @@
 <td style='text-align: right;'>20.9%</td>
 <td style='text-align: right;'>163</td>
 <td style='text-align: right;'>38.0</td>
-<td style='text-align: right;'>53.7</td>
-<td style='text-align: right;'>91.7</td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'>90.5</td>
 </tr>
 <tr>
 <td>清涼なるパーティー</td>
@@ -143,9 +143,9 @@
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>21.8%</td>
 <td style='text-align: right;'>73</td>
-<td style='text-align: right;'>41.8</td>
-<td style='text-align: right;'>59.4</td>
-<td style='text-align: right;'>101.3</td>
+<td style='text-align: right;'>42.2</td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>98.9</td>
 </tr>
 <tr>
 <td>審念熟慮</td>
@@ -164,18 +164,18 @@
 <td style='text-align: right;'>22.0%</td>
 <td style='text-align: right;'>43</td>
 <td style='text-align: right;'>48.7</td>
-<td style='text-align: right;'>48.1</td>
-<td style='text-align: right;'>96.8</td>
+<td style='text-align: right;'>48.4</td>
+<td style='text-align: right;'>97.1</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 桜色の海</strong></td>
+<tr>
+<td>桜色の海</td>
 <td style='text-align: right;'>+20.42</td>
 <td style='text-align: right;'>41.4%</td>
 <td style='text-align: right;'>20.9%</td>
 <td style='text-align: right;'>162</td>
 <td style='text-align: right;'>53.1</td>
-<td style='text-align: right;'>57.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.1</span></strong></td>
+<td style='text-align: right;'>54.3</td>
+<td style='text-align: right;'>107.4</td>
 </tr>
 <tr>
 <td>友を呼ぶ</td>
@@ -184,8 +184,8 @@
 <td style='text-align: right;'>20.1%</td>
 <td style='text-align: right;'>252</td>
 <td style='text-align: right;'>43.3</td>
-<td style='text-align: right;'>52.8</td>
-<td style='text-align: right;'>96.1</td>
+<td style='text-align: right;'>53.4</td>
+<td style='text-align: right;'>96.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 スイートポテトルーム</strong></td>
@@ -204,8 +204,8 @@
 <td style='text-align: right;'>20.4%</td>
 <td style='text-align: right;'>221</td>
 <td style='text-align: right;'>48.4</td>
-<td style='text-align: right;'>58.6</td>
-<td style='text-align: right;'>107.0</td>
+<td style='text-align: right;'>59.0</td>
+<td style='text-align: right;'>107.4</td>
 </tr>
 <tr>
 <td>クールな登場</td>
@@ -223,9 +223,9 @@
 <td style='text-align: right;'>40.9%</td>
 <td style='text-align: right;'>21.3%</td>
 <td style='text-align: right;'>132</td>
-<td style='text-align: right;'>41.4</td>
-<td style='text-align: right;'>36.7</td>
-<td style='text-align: right;'>78.1</td>
+<td style='text-align: right;'>41.8</td>
+<td style='text-align: right;'>35.2</td>
+<td style='text-align: right;'>77.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 自然の怒り</strong></td>
@@ -234,8 +234,8 @@
 <td style='text-align: right;'>20.7%</td>
 <td style='text-align: right;'>199</td>
 <td style='text-align: right;'><strong><span style='color: red;'>60.4</span></strong></td>
-<td style='text-align: right;'>43.3</td>
-<td style='text-align: right;'>103.7</td>
+<td style='text-align: right;'>43.7</td>
+<td style='text-align: right;'>104.1</td>
 </tr>
 <tr>
 <td>薄氷を踏む</td>
@@ -244,8 +244,8 @@
 <td style='text-align: right;'>21.5%</td>
 <td style='text-align: right;'>110</td>
 <td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>56.3</td>
-<td style='text-align: right;'>105.9</td>
+<td style='text-align: right;'>57.0</td>
+<td style='text-align: right;'>106.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 猛吹雪</strong></td>
@@ -254,8 +254,8 @@
 <td style='text-align: right;'>20.9%</td>
 <td style='text-align: right;'>192</td>
 <td style='text-align: right;'><strong><span style='color: red;'>62.0</span></strong></td>
-<td style='text-align: right;'>54.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.6</span></strong></td>
+<td style='text-align: right;'>54.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.0</span></strong></td>
 </tr>
 <tr>
 <td>花鳥風月</td>
@@ -324,8 +324,8 @@
 <td style='text-align: right;'>21.5%</td>
 <td style='text-align: right;'>129</td>
 <td style='text-align: right;'><strong><span style='color: red;'>70.0</span></strong></td>
-<td style='text-align: right;'>49.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>119.8</span></strong></td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>120.1</span></strong></td>
 </tr>
 <tr>
 <td>捏造報道</td>
@@ -334,8 +334,8 @@
 <td style='text-align: right;'>22.1%</td>
 <td style='text-align: right;'>52</td>
 <td style='text-align: right;'>43.0</td>
-<td style='text-align: right;'>59.0</td>
-<td style='text-align: right;'>102.0</td>
+<td style='text-align: right;'>59.4</td>
+<td style='text-align: right;'>102.4</td>
 </tr>
 <tr>
 <td>真円造形術</td>
@@ -354,8 +354,8 @@
 <td style='text-align: right;'>21.8%</td>
 <td style='text-align: right;'>87</td>
 <td style='text-align: right;'><strong><span style='color: red;'>62.6</span></strong></td>
-<td style='text-align: right;'>55.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>118.2</span></strong></td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
 </tr>
 <tr>
 <td>氷鏡反射</td>
@@ -374,8 +374,8 @@
 <td style='text-align: right;'>20.5%</td>
 <td style='text-align: right;'>271</td>
 <td style='text-align: right;'>55.6</td>
-<td style='text-align: right;'>56.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
+<td style='text-align: right;'>56.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.9</span></strong></td>
 </tr>
 <tr>
 <td>氷上の妖精</td>
@@ -384,8 +384,8 @@
 <td style='text-align: right;'>21.4%</td>
 <td style='text-align: right;'>152</td>
 <td style='text-align: right;'>43.7</td>
-<td style='text-align: right;'>54.9</td>
-<td style='text-align: right;'>98.6</td>
+<td style='text-align: right;'>55.6</td>
+<td style='text-align: right;'>99.3</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 真夏の妖精の夢、ラルバ</strong></td>
@@ -393,9 +393,9 @@
 <td style='text-align: right;'>35.4%</td>
 <td style='text-align: right;'>20.0%</td>
 <td style='text-align: right;'>347</td>
+<td style='text-align: right;'>57.8</td>
 <td style='text-align: right;'>58.2</td>
-<td style='text-align: right;'>57.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>115.6</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>115.9</span></strong></td>
 </tr>
 <tr>
 <td>春告精、リリーホワイト</td>
@@ -404,8 +404,8 @@
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>122</td>
 <td style='text-align: right;'>57.4</td>
-<td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>108.1</td>
+<td style='text-align: right;'>51.0</td>
+<td style='text-align: right;'>108.4</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 逆鱗の荒波</strong></td>
@@ -532,12 +532,12 @@
 <li><span class="text-purchase">クリーンエネルギー</span>: 8回</li>
 <li><span class="text-purchase">春植えざれば秋実らず</span>: 7回</li>
 <li><span class="text-purchase">タオ胎動</span>: 7回</li>
-<li><span class="text-purchase">完璧な偽装</span>: 6回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 6回</li>
+<li><span class="text-purchase">完璧な偽装</span>: 6回</li>
 <li><span class="text-purchase">社交的な妖精</span>: 6回</li>
-<li><span class="text-purchase">プリンセスウンディネ</span>: 4回</li>
 <li><span class="text-purchase">桜色の海</span>: 4回</li>
 <li><span class="text-purchase">猛吹雪</span>: 4回</li>
+<li><span class="text-purchase">プリンセスウンディネ</span>: 4回</li>
 <li><span class="text-purchase">アイスシールド</span>: 4回</li>
 <li><span class="text-purchase">逆鱗の荒波</span>: 3回</li>
 <li><span class="text-purchase">弾幕の玉繭</span>: 3回</li>

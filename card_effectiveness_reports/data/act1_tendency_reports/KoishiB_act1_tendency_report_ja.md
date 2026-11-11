@@ -14,8 +14,8 @@
 <h4>Gap/Shopでの優先強化カード Top 20</h4>
 <div class="two-column-container">
 <div class="column"><ul>
-<li>投げキッス: 135回</li>
 <li>本能の愛: 135回</li>
+<li>投げキッス: 135回</li>
 <li>孤独な心: 89回</li>
 <li>悪魔の典籍: 50回</li>
 <li>出まかせ: 38回</li>
@@ -63,9 +63,9 @@
 <td style='text-align: right;'>54.8%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>62</td>
-<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>49.2</td>
 <td style='text-align: right;'>61.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.0</span></strong></td>
 </tr>
 <tr>
 <td>無我</td>
@@ -84,8 +84,8 @@
 <td style='text-align: right;'>24.8%</td>
 <td style='text-align: right;'>187</td>
 <td style='text-align: right;'>40.5</td>
-<td style='text-align: right;'>59.2</td>
-<td style='text-align: right;'>99.6</td>
+<td style='text-align: right;'>59.5</td>
+<td style='text-align: right;'>100.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 水鉄砲</strong></td>
@@ -104,8 +104,8 @@
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>68</td>
 <td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>48.5</td>
-<td style='text-align: right;'>102.9</td>
+<td style='text-align: right;'>48.7</td>
+<td style='text-align: right;'>103.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 スイートポテトルーム</strong></td>
@@ -123,9 +123,9 @@
 <td style='text-align: right;'>47.8%</td>
 <td style='text-align: right;'>24.7%</td>
 <td style='text-align: right;'>230</td>
-<td style='text-align: right;'><strong><span style='color: red;'>67.5</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.8</span></strong></td>
 <td style='text-align: right;'>47.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>114.7</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.0</span></strong></td>
 </tr>
 <tr>
 <td>疑惑のティーパーティー</td>
@@ -143,9 +143,9 @@
 <td style='text-align: right;'>49.2%</td>
 <td style='text-align: right;'>26.4%</td>
 <td style='text-align: right;'>65</td>
-<td style='text-align: right;'>49.5</td>
-<td style='text-align: right;'>48.7</td>
-<td style='text-align: right;'>98.2</td>
+<td style='text-align: right;'>49.7</td>
+<td style='text-align: right;'>49.0</td>
+<td style='text-align: right;'>98.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ルナサ・ソロライブ</strong></td>
@@ -173,9 +173,9 @@
 <td style='text-align: right;'>47.8%</td>
 <td style='text-align: right;'>25.7%</td>
 <td style='text-align: right;'>134</td>
-<td style='text-align: right;'>42.6</td>
+<td style='text-align: right;'>42.3</td>
 <td style='text-align: right;'>50.5</td>
-<td style='text-align: right;'>93.1</td>
+<td style='text-align: right;'>92.8</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 夢枕にご先祖総立ち</strong></td>
@@ -183,9 +183,9 @@
 <td style='text-align: right;'>47.4%</td>
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>154</td>
-<td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'>56.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>112.9</span></strong></td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>56.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>114.2</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 ミスフォーチュンズホイール</strong></td>
@@ -218,6 +218,16 @@
 <td style='text-align: right;'>74.4</td>
 </tr>
 <tr>
+<td>ロマンスの夜のラストコール</td>
+<td style='text-align: right;'>+20.91</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>40</td>
+<td style='text-align: right;'>50.5</td>
+<td style='text-align: right;'>38.7</td>
+<td style='text-align: right;'>89.2</td>
+</tr>
+<tr>
 <td>遮光</td>
 <td style='text-align: right;'>+20.91</td>
 <td style='text-align: right;'>50.0%</td>
@@ -226,16 +236,6 @@
 <td style='text-align: right;'>38.7</td>
 <td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>96.5</td>
-</tr>
-<tr>
-<td>ロマンスの夜のラストコール</td>
-<td style='text-align: right;'>+20.91</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>40</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>38.7</td>
-<td style='text-align: right;'>89.0</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 戦車のタロット</strong></td>
@@ -294,8 +294,8 @@
 <td style='text-align: right;'>26.7%</td>
 <td style='text-align: right;'>29</td>
 <td style='text-align: right;'>40.8</td>
-<td style='text-align: right;'>44.5</td>
-<td style='text-align: right;'>85.3</td>
+<td style='text-align: right;'>44.8</td>
+<td style='text-align: right;'>85.6</td>
 </tr>
 <tr>
 <td>暗闇演舞</td>
@@ -313,9 +313,9 @@
 <td style='text-align: right;'>44.2%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>199</td>
-<td style='text-align: right;'>41.9</td>
+<td style='text-align: right;'>42.9</td>
 <td style='text-align: right;'>46.4</td>
-<td style='text-align: right;'>88.4</td>
+<td style='text-align: right;'>89.4</td>
 </tr>
 <tr>
 <td>咲いた心</td>
@@ -324,8 +324,8 @@
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>98</td>
 <td style='text-align: right;'>55.5</td>
-<td style='text-align: right;'>54.1</td>
-<td style='text-align: right;'>109.7</td>
+<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>108.9</td>
 </tr>
 <tr>
 <td>🌀 嫉妬</td>
@@ -354,8 +354,8 @@
 <td style='text-align: right;'>25.5%</td>
 <td style='text-align: right;'>189</td>
 <td style='text-align: right;'>46.7</td>
-<td style='text-align: right;'>60.4</td>
-<td style='text-align: right;'>107.0</td>
+<td style='text-align: right;'>60.8</td>
+<td style='text-align: right;'>107.5</td>
 </tr>
 <tr>
 <td>🧰 今泉影狼の毛</td>
@@ -363,9 +363,9 @@
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>25.4%</td>
 <td style='text-align: right;'>213</td>
-<td style='text-align: right;'>42.3</td>
+<td style='text-align: right;'>41.9</td>
 <td style='text-align: right;'>37.2</td>
-<td style='text-align: right;'>79.5</td>
+<td style='text-align: right;'>79.1</td>
 </tr>
 <tr>
 <td>最奥の森域</td>
@@ -414,8 +414,8 @@
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>115</td>
 <td style='text-align: right;'>44.8</td>
-<td style='text-align: right;'>51.8</td>
-<td style='text-align: right;'>96.5</td>
+<td style='text-align: right;'>52.0</td>
+<td style='text-align: right;'>96.8</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 鈴蘭の花園</strong></td>
@@ -549,8 +549,8 @@
 <div class="shop-item-sub-column">
 <h5> よく購入される展示品 Top 20
 <ul>
-<li><span class="text-exhibit">リボン</span>: 6回</li>
 <li><span class="text-exhibit">博麗アミュレット</span>: 6回</li>
+<li><span class="text-exhibit">リボン</span>: 6回</li>
 <li><span class="text-exhibit">会員証</span>: 5回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 4回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>

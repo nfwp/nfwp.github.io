@@ -547,9 +547,9 @@
 <ul>
 <li><span class="text-exhibit">Hakurei Amulet</span>: 5</li>
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 3</li>
-<li><span class="text-exhibit">Ribbon</span>: 2</li>
 <li><span class="text-exhibit">Hina Doll</span>: 2</li>
 <li><span class="text-exhibit">Take-Copter</span>: 2</li>
+<li><span class="text-exhibit">Ribbon</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 1</li>
 <li><span class="text-exhibit">Membership Card</span>: 1</li>
