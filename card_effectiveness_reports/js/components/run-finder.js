@@ -2524,52 +2524,28 @@ function sortAndDisplayRuns(searchCriteria = {}) {
     });
     const actFilter = document.getElementById('act-filter').value;
     const levelFilter = document.getElementById('level-filter').value;
-    //displayRunFinderResults(sortedRuns, actFilter, levelFilter);
-    displayRunFinderResults(sortedRuns, searchCriteria, actFilter, levelFilter);
+    // 分割描画: 全ソート結果を保持し、先頭 RF_PAGE_SIZE 件のみ DOM 化する
+    rfAllSortedRuns = sortedRuns;
+    displayRunFinderResults(sortedRuns.slice(0, RF_PAGE_SIZE), searchCriteria, actFilter, levelFilter);
 }
 
 
-function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, levelFilter = null) {
-    const resultsContainer = document.getElementById('run-finder-results');
-    const toggleContainer = document.getElementById('column-toggle-container');
-    if (toggleContainer) {
-        toggleContainer.style.display = (runs && runs.length > 0) ? 'block' : 'none';
-    }
+// --- 結果テーブルの分割描画 (大件数検索の負荷対策・2026-11-02) ---
+// 初回レンダリングは先頭 RF_PAGE_SIZE 件のみ DOM 化し、残りは「さらに表示」ボタン /
+// スクロール検知 (IntersectionObserver) で追加する。全データは rfAllSortedRuns に保持するため、
+// 件数表示・ソート・共有リンクは従来全景 (全件) が分母のまま。
+const RF_PAGE_SIZE = 500;
+let rfAllSortedRuns = [];
+let rfShownRows = 0;
+let rfCurrentActFilter = null;
+let rfCurrentLevelFilter = null;
+let rfMoreObserver = null;
+const rfNodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
+
+// 1ラン分の行HTML生成 (旧 displayRunFinderResults 内の行ビルダを流用したもの)
+function rfRowHtml(run, actFilter, levelFilter) {
     const texts = UI_TEXT.run_finder;
-    const nodeIcons = { 'EliteEnemy': '👿', 'Shop': '🛒', 'Gap': '🔥' };
-
-    if (!runs || runs.length === 0) {
-        resultsContainer.innerHTML = `<p>${texts.search_no_results}</p>`;
-        return;
-    }
-
-    let criteriaHtml = '';
-    if (searchCriteria && Object.values(searchCriteria).some(v => v !== null)) {
-        const criteriaList = [];
-        const critLabel = (key, fallback) => UI_TEXT.run_finder[`crit_${key}`] || fallback;
-        const crit = (label, value) => `<span class="search-criterion"><strong>${label}:</strong> ${value}</span>`;
-
-        if (searchCriteria.character) criteriaList.push(crit(critLabel('char', 'Char'), searchCriteria.character));
-        if (searchCriteria.playerName) criteriaList.push(crit(critLabel('player', 'Player'), searchCriteria.playerName));
-        if (searchCriteria.act) criteriaList.push(crit(critLabel('act', 'Act'), searchCriteria.act));
-        if (searchCriteria.level) criteriaList.push(crit(critLabel('level', 'Level'), searchCriteria.level));
-        if (searchCriteria.deckSize) {
-            const op = searchCriteria.deckSize.operator === 'lte' ? '<=' : '>=';
-            criteriaList.push(crit(critLabel('deck', 'Deck'), `${op} ${searchCriteria.deckSize.value}`));
-        }
-        if (searchCriteria.includeItems) criteriaList.push(crit(critLabel('include', 'Include'), `${searchCriteria.includeItems.items.join(', ')} (${searchCriteria.includeItems.logic})`));
-        if (searchCriteria.excludeItems) criteriaList.push(crit(critLabel('exclude', 'Exclude'), searchCriteria.excludeItems.join(', ')));
-        if (searchCriteria.includeEnemies) criteriaList.push(crit(critLabel('enemies', 'Include enemies'), `${(searchCriteria.includeEnemies.enemies || []).join(', ')} (${searchCriteria.includeEnemies.logic})`));
-        if (searchCriteria.excludeEnemies) criteriaList.push(crit(critLabel('ex_enemies', 'Exclude enemies'), searchCriteria.excludeEnemies.join(', ')));
-        if (searchCriteria.includeNs) criteriaList.push(crit(critLabel('ns', 'Non-stat'), UI_TEXT.run_finder.ns_crit_value || 'ON'));
-
-        if (criteriaList.length > 0) {
-            criteriaHtml = `<div class="search-criteria-summary">${criteriaList.join('')}</div>`;
-        }
-    }
-
-    const runRows = runs.map(run => {
-        try {
+    try {
             const baseUrl = `https://lbol-logs.github.io/${run.version}/${run.run_id}`;
             const params = [];
             if (actFilter) params.push(`a=${actFilter}`);
@@ -2589,7 +2565,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                         const key = `Act${actNum} ${stage}`;
                         const nodesInStage = run.path_summary[key] || [];
                         const stageHtml = nodesInStage.map(node => {
-                            const icon = nodeIcons[node.type] || null;
+                            const icon = rfNodeIcons[node.type] || null;
                             if (!icon) return null;
                             const nodeUrl = `${baseUrl}?a=${actNum}&l=${node.level}`;
                             const stationMapKey = `${actNum}-${node.level}`;
@@ -2642,11 +2618,117 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                 <td class="path-summary-cell col-act3">${pathCells.act3.boss}</td>
             </tr>`;
 
-        } catch (error) {
-            console.error(`[ERROR] Failed to process run HTML for run_id: ${run ? run.run_id : 'unknown'}.`, error, run);
-            return '';
+    } catch (error) {
+        console.error(`[ERROR] Failed to process run HTML for run_id: ${run ? run.run_id : 'unknown'}.`, error, run);
+        return '';
+    }
+}
+
+function rfRowsHtml(slice, actFilter, levelFilter) {
+    return slice.map(run => rfRowHtml(run, actFilter, levelFilter)).join('');
+}
+
+// 「さらに表示」: 続きの RF_PAGE_SIZE 件を tbody 末尾に追加する
+function rfShowMoreRuns() {
+    const tbody = document.querySelector('#run-finder-results table.run-finder-results-table tbody');
+    if (!tbody || rfShownRows >= rfAllSortedRuns.length) { rfUpdateMoreControls(); return; }
+    const slice = rfAllSortedRuns.slice(rfShownRows, rfShownRows + RF_PAGE_SIZE);
+    tbody.insertAdjacentHTML('beforeend', rfRowsHtml(slice, rfCurrentActFilter, rfCurrentLevelFilter));
+    rfShownRows += slice.length;
+    rfUpdateMoreControls();
+}
+
+// 「さらに表示」ボタンの文言 (残件数) と表示状態を更新
+function rfUpdateMoreControls() {
+    const holder = document.getElementById('rf-more-holder');
+    if (!holder) return;
+    const remain = rfAllSortedRuns.length - rfShownRows;
+    const isJa = (typeof LANG !== 'undefined' && LANG === 'ja');
+    if (remain <= 0) {
+        holder.style.display = 'none';
+        holder.innerHTML = '';
+        return;
+    }
+    holder.style.display = '';
+    holder.innerHTML = `<button id="rf-more-btn" class="copy-share-link">${isJa ? `さらに表示 (残り ${remain.toLocaleString()} 件)` : `Show more (${remain.toLocaleString()} remaining)`}</button>`;
+    const moreBtn = document.getElementById('rf-more-btn');
+    if (moreBtn) moreBtn.onclick = () => rfShowMoreRuns();
+}
+
+// 無限スクロール検知: 残件ボタンが視野近くに入ったら自動追加 (非対応環境はボタンのみ)
+function rfBindMoreControls() {
+    if (rfMoreObserver) { rfMoreObserver.disconnect(); rfMoreObserver = null; }
+    const holder = document.getElementById('rf-more-holder');
+    if (!holder || typeof IntersectionObserver === 'undefined') return;
+    rfMoreObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+            if (e.isIntersecting) { rfShowMoreRuns(); break; }
         }
-    }).join('');
+    }, { rootMargin: '800px 0px' });
+    rfMoreObserver.observe(holder);
+}
+
+// --- 重い Plotly の遭遇棒グラフを、テーブル描画完了後に遅延実行 ---
+//   (検索結果の表が先に出る。アイドル時 or 最長 2 秒後 — 二重実行はタイマの差し替えで回避)
+let rfEncBarsTimer = null;
+function rfScheduleEncounterBars(runs, searchCriteria) {
+    if (rfEncBarsTimer !== null) {
+        if (typeof window.cancelIdleCallback === 'function' && typeof rfEncBarsTimer === 'number') window.cancelIdleCallback(rfEncBarsTimer);
+        else clearTimeout(rfEncBarsTimer);
+        rfEncBarsTimer = null;
+    }
+    const schedule = (typeof window.requestIdleCallback === 'function')
+        ? (fn) => { rfEncBarsTimer = window.requestIdleCallback(fn, { timeout: 2000 }); }
+        : (fn) => { rfEncBarsTimer = setTimeout(fn, 500); };
+    schedule(() => {
+        rfEncBarsTimer = null;
+        renderEncounterBars(runs, searchCriteria);
+    });
+}
+
+function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, levelFilter = null) {
+    const resultsContainer = document.getElementById('run-finder-results');
+    const toggleContainer = document.getElementById('column-toggle-container');
+    if (toggleContainer) {
+        toggleContainer.style.display = (runs && runs.length > 0) ? 'block' : 'none';
+    }
+    const texts = UI_TEXT.run_finder;
+
+    if (!runs || runs.length === 0) {
+        resultsContainer.innerHTML = `<p>${texts.search_no_results}</p>`;
+        return;
+    }
+
+    let criteriaHtml = '';
+    if (searchCriteria && Object.values(searchCriteria).some(v => v !== null)) {
+        const criteriaList = [];
+        const critLabel = (key, fallback) => UI_TEXT.run_finder[`crit_${key}`] || fallback;
+        const crit = (label, value) => `<span class="search-criterion"><strong>${label}:</strong> ${value}</span>`;
+
+        if (searchCriteria.character) criteriaList.push(crit(critLabel('char', 'Char'), searchCriteria.character));
+        if (searchCriteria.playerName) criteriaList.push(crit(critLabel('player', 'Player'), searchCriteria.playerName));
+        if (searchCriteria.act) criteriaList.push(crit(critLabel('act', 'Act'), searchCriteria.act));
+        if (searchCriteria.level) criteriaList.push(crit(critLabel('level', 'Level'), searchCriteria.level));
+        if (searchCriteria.deckSize) {
+            const op = searchCriteria.deckSize.operator === 'lte' ? '<=' : '>=';
+            criteriaList.push(crit(critLabel('deck', 'Deck'), `${op} ${searchCriteria.deckSize.value}`));
+        }
+        if (searchCriteria.includeItems) criteriaList.push(crit(critLabel('include', 'Include'), `${searchCriteria.includeItems.items.join(', ')} (${searchCriteria.includeItems.logic})`));
+        if (searchCriteria.excludeItems) criteriaList.push(crit(critLabel('exclude', 'Exclude'), searchCriteria.excludeItems.join(', ')));
+        if (searchCriteria.includeEnemies) criteriaList.push(crit(critLabel('enemies', 'Include enemies'), `${(searchCriteria.includeEnemies.enemies || []).join(', ')} (${searchCriteria.includeEnemies.logic})`));
+        if (searchCriteria.excludeEnemies) criteriaList.push(crit(critLabel('ex_enemies', 'Exclude enemies'), searchCriteria.excludeEnemies.join(', ')));
+        if (searchCriteria.includeNs) criteriaList.push(crit(critLabel('ns', 'Non-stat'), UI_TEXT.run_finder.ns_crit_value || 'ON'));
+
+        if (criteriaList.length > 0) {
+            criteriaHtml = `<div class="search-criteria-summary">${criteriaList.join('')}</div>`;
+        }
+    }
+
+    // 分割描画 (A案): 初回は先頭 RF_PAGE_SIZE 件のみ行を生成 (続行は rfShowMoreRuns が追加)
+    rfCurrentActFilter = actFilter;
+    rfCurrentLevelFilter = levelFilter;
+    rfShownRows = Math.min(RF_PAGE_SIZE, runs.length);
+    const runRows = rfRowsHtml(runs.slice(0, rfShownRows), actFilter, levelFilter);
 
 
     const getSortIndicator = (key) => {
@@ -2657,7 +2739,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
     // ★修正箇所: テーブル全体を <div class="table-wrapper"> で囲む
     resultsContainer.innerHTML = `
         <div class="results-header">
-            <h4>${texts.search_results_title.replace('{count}', runs.length)}</h4>
+            <h4>${texts.search_results_title.replace('{count}', rfAllSortedRuns.length)}</h4>
             <button onclick="generateAndCopyShareLink()" class="copy-share-link">${texts.share_link_button}</button>
             <button onclick="rfJumpToHistory()" class="copy-share-link" title="${texts.hist_jump_title || ''}">${texts.hist_jump || 'Search history comparison'}</button>
         </div>
@@ -2686,6 +2768,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
                 </tbody>
             </table>
         </div>
+        <div id="rf-more-holder" style="display:none; text-align:center; margin:14px 0;"></div>
         <div id="run-finder-hardfights-chart" style="max-width: 1600px; margin: 0 auto; width: 100%;"></div>
         <div style="max-width: 1600px; margin: 26px auto 0;">
             <div class="results-header">
@@ -2697,8 +2780,10 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
         </div>
     `;
 
-    // --- 検索結果末尾の棒グラフ (検索結果全体の 敵ごと遭遇回数・苦戦の濃淡) ---
-    renderEncounterBars(runs, searchCriteria);
+    // --- 分割描画コントロール + 棒グラフ (重い Plotly 描画) はテーブル表示後に遅延実行 ---
+    rfUpdateMoreControls();
+    rfBindMoreControls();
+    rfScheduleEncounterBars(rfAllSortedRuns, searchCriteria);
 
 }
 
