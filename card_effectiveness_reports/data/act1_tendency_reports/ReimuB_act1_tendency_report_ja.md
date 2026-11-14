@@ -198,16 +198,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 博麗縁日</strong></td>
-<td style='text-align: right;'>+20.27</td>
-<td style='text-align: right;'>44.2%</td>
-<td style='text-align: right;'>24.0%</td>
-<td style='text-align: right;'>52</td>
-<td style='text-align: right;'>59.3</td>
-<td style='text-align: right;'>52.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 宝塔の威光</strong></td>
 <td style='text-align: right;'>+20.27</td>
 <td style='text-align: right;'>44.2%</td>
@@ -216,6 +206,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>66.3</span></strong></td>
 <td style='text-align: right;'>50.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.4</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 博麗縁日</strong></td>
+<td style='text-align: right;'>+20.27</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>52</td>
+<td style='text-align: right;'>59.3</td>
+<td style='text-align: right;'>52.2</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
 </tr>
 <tr>
 <td>陰陽宝玉</td>
@@ -248,16 +248,6 @@
 <td style='text-align: right;'>103.0</td>
 </tr>
 <tr>
-<td>幻想一重</td>
-<td style='text-align: right;'>+19.36</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>44.1</td>
-<td style='text-align: right;'>98.5</td>
-</tr>
-<tr>
 <td>二色蓮花蝶</td>
 <td style='text-align: right;'>+19.36</td>
 <td style='text-align: right;'>50.0%</td>
@@ -266,6 +256,16 @@
 <td style='text-align: right;'>55.3</td>
 <td style='text-align: right;'>39.8</td>
 <td style='text-align: right;'>95.1</td>
+</tr>
+<tr>
+<td>幻想一重</td>
+<td style='text-align: right;'>+19.36</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>54.4</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>98.5</td>
 </tr>
 <tr>
 <td>満月の咆哮</td>
@@ -481,9 +481,9 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 5回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 5回</li>
 <li><span class="text-purchase">昇天脚</span>: 5回</li>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">長袖善舞</span>: 4回</li>
 <li><span class="text-purchase">清めの儀式</span>: 4回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 4回</li>
 <li><span class="text-purchase">心抄斬</span>: 3回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 3回</li>
 <li><span class="text-purchase">🧰 電子ドラム</span>: 3回</li>

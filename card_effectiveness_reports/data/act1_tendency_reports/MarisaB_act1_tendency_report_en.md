@@ -306,16 +306,6 @@
 <td style='text-align: right;'>44.3</td>
 <td style='text-align: right;'>97.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 🧰 Charged Tambourine</strong></td>
-<td style='text-align: right;'>+14.52</td>
-<td style='text-align: right;'>43.5%</td>
-<td style='text-align: right;'>22.1%</td>
-<td style='text-align: right;'>23</td>
-<td style='text-align: right;'>56.0</td>
-<td style='text-align: right;'>61.3</td>
-<td style='text-align: right;'><strong><span style='color: red;'>117.3</span></strong></td>
-</tr>
 <tr>
 <td>Fluorescent Forest</td>
 <td style='text-align: right;'>+14.52</td>
@@ -325,6 +315,16 @@
 <td style='text-align: right;'>47.5</td>
 <td style='text-align: right;'>48.2</td>
 <td style='text-align: right;'>95.7</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 🧰 Charged Tambourine</strong></td>
+<td style='text-align: right;'>+14.52</td>
+<td style='text-align: right;'>43.5%</td>
+<td style='text-align: right;'>22.1%</td>
+<td style='text-align: right;'>23</td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'>61.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.3</span></strong></td>
 </tr>
 <tr>
 <td>Rocket Broom</td>

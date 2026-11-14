@@ -25,6 +25,8 @@ async function loadAndShowCardList(character, language) {
         contentWrapper.innerHTML = htmlContent;
 
         await ensurePickDetailsCache();
+        // (P-03) 母数表示用の run_details.json を裏で先読み (詳細展開時に await される)
+        if (window.ensureRunDetailsLoaded) window.ensureRunDetailsLoaded();
         applyCardIcons();
         setupCardFilters();
         setupTableSorting();
@@ -42,14 +44,22 @@ async function loadAndShowCardList(character, language) {
 async function ensurePickDetailsCache() {
     if (pickDetailsAllCache) return;
     const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
-    const jsonPath = `card_lists/pick_details_all.json${vParam}`;
+    // (P-03) pick_details はキャラ別ファイル (~470KB) のみ取得。失敗時のみ旧 all ファイルにフォールバック。
+    // キャッシュは従来どおり { キャラ名: { cardId: {...} } } 形で保持する。
     try {
-        const response = await fetch(jsonPath);
+        const response = await fetch(`card_lists/pick_details_${CURRENT_CHAR}.json${vParam}`);
+        if (response.ok) {
+            pickDetailsAllCache = { [CURRENT_CHAR]: await response.json() };
+            return;
+        }
+    } catch (err) { /* フォールバックへ */ }
+    try {
+        const response = await fetch(`card_lists/pick_details_all.json${vParam}`);
         if (response.ok) {
             pickDetailsAllCache = await response.json();
         }
     } catch (err) {
-        console.error("Failed to pre-fetch pick_details_all.json:", err);
+        console.error("Failed to pre-fetch pick details:", err);
     }
 }
 
@@ -420,7 +430,6 @@ function applyFilterLogic() {
             } else if (gapSelectVal === 'lt0.8') {
                 matchGap = (gapRatio < 0.8 && pFirst > 0.001);
             }
-            console.log("DEBUG typeText:", JSON.stringify(typeText));
             const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
 
             // フィルター側と完全に同じ条件に統一
@@ -529,6 +538,8 @@ async function toggleCardDetail(btnElement) {
             </td>
         `;
     } else {
+        // (P-03) 母数表示に run_details.json を使う。未ロードならここで完了を待つ (初回のみ)
+        if (window.ensureRunDetailsLoaded) await window.ensureRunDetailsLoaded();
         let totalN = 0;
         if (typeof ALL_RUN_DETAILS !== 'undefined' && Array.isArray(ALL_RUN_DETAILS)) {
             const charSearchTag = CURRENT_CHAR ? `${CURRENT_CHAR.slice(0, -1)}_${CURRENT_CHAR.slice(-1)}` : '';

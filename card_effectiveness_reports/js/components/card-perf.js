@@ -31,10 +31,16 @@ let CP_pickDetailsCache = null;   // 読み込み済み: object / 失敗: false 
 function ensureCardPickDetails() {
     if (CP_pickDetailsCache !== null) return Promise.resolve(CP_pickDetailsCache);
     const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
-    return fetch(`card_lists/pick_details_all.json${vParam}`)
-        .then(r => (r.ok ? r.json() : null))
-        .then(j => { CP_pickDetailsCache = j || false; return CP_pickDetailsCache; })
-        .catch(() => { CP_pickDetailsCache = false; return false; });
+    // (P-03) pick_details はキャラ別ファイル (~470KB) のみ取得。失敗時のみ旧 all ファイルにフォールバック。
+    // キャッシュは card-list.js と同じ { キャラ名: { cardId: {...} } } 形で保持する。
+    const charAtFetch = CURRENT_CHAR;
+    return fetch(`card_lists/pick_details_${charAtFetch}.json${vParam}`)
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then(j => { CP_pickDetailsCache = { [charAtFetch]: j }; return CP_pickDetailsCache; })
+        .catch(() => fetch(`card_lists/pick_details_all.json${vParam}`)
+            .then(r => (r.ok ? r.json() : null))
+            .then(j => { CP_pickDetailsCache = j || false; return CP_pickDetailsCache; })
+            .catch(() => { CP_pickDetailsCache = false; return false; }));
 }
 
 function _getPickInfo(cardId) {

@@ -197,16 +197,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Hakurei Temple Fair</strong></td>
-<td style='text-align: right;'>+20.27</td>
-<td style='text-align: right;'>44.2%</td>
-<td style='text-align: right;'>24.0%</td>
-<td style='text-align: right;'>52</td>
-<td style='text-align: right;'>59.3</td>
-<td style='text-align: right;'>52.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Pagoda's Glare</strong></td>
 <td style='text-align: right;'>+20.27</td>
 <td style='text-align: right;'>44.2%</td>
@@ -215,6 +205,16 @@
 <td style='text-align: right;'><strong><span style='color: red;'>66.3</span></strong></td>
 <td style='text-align: right;'>50.1</td>
 <td style='text-align: right;'><strong><span style='color: red;'>116.4</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Hakurei Temple Fair</strong></td>
+<td style='text-align: right;'>+20.27</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>52</td>
+<td style='text-align: right;'>59.3</td>
+<td style='text-align: right;'>52.2</td>
+<td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
 </tr>
 <tr>
 <td>Orb of Duality</td>
@@ -247,16 +247,6 @@
 <td style='text-align: right;'>103.0</td>
 </tr>
 <tr>
-<td>Fleeting Fantasy</td>
-<td style='text-align: right;'>+19.36</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.1%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>44.1</td>
-<td style='text-align: right;'>98.5</td>
-</tr>
-<tr>
 <td>Dichromatic Lotus Butterfly</td>
 <td style='text-align: right;'>+19.36</td>
 <td style='text-align: right;'>50.0%</td>
@@ -265,6 +255,16 @@
 <td style='text-align: right;'>55.3</td>
 <td style='text-align: right;'>39.8</td>
 <td style='text-align: right;'>95.1</td>
+</tr>
+<tr>
+<td>Fleeting Fantasy</td>
+<td style='text-align: right;'>+19.36</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.1%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>54.4</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>98.5</td>
 </tr>
 <tr>
 <td>Full Moon Howl</td>
@@ -480,9 +480,9 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 5</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 5</li>
 <li><span class="text-purchase">Ascension Kick</span>: 5</li>
-<li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
 <li><span class="text-purchase">Maiden's Waltz</span>: 4</li>
 <li><span class="text-purchase">Cleansing Ritual</span>: 4</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 4</li>
 <li><span class="text-purchase">Heart Excerpt Slash</span>: 3</li>
 <li><span class="text-purchase">Clean Energy</span>: 3</li>
 <li><span class="text-purchase">🧰 Charged Tambourine</span>: 3</li>

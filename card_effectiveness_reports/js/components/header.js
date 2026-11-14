@@ -63,7 +63,9 @@ function setupNavigation() {
 
     tabsConfig.forEach(tabConfig => {
         const label = UI_TEXT.tabs[tabConfig.key];
-        if (!label || (tabConfig.id === 'run-finder-tab' && ALL_RUN_DETAILS.length === 0)) {
+        // (P-03) run_details.json はレイジーロードになったため、タブ表示の判定から外した。
+        //   ロードに失敗した場合はラン検索タブ内でエラー表示になる。
+        if (!label) {
             return;
         }
 

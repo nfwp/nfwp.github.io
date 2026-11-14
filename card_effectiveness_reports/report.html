@@ -7,7 +7,7 @@
     
     <!-- 外部ライブラリと自作CSS/JSを読み込む -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=1794410487">
+    <link rel="stylesheet" href="style.css?v=1794665642">
 
     <script src="https://cdn.plot.ly/plotly-2.29.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
@@ -103,6 +103,17 @@
     const errorText = (lang === 'en') ? 'Update info not available' : '更新情報なし';
     const failText = (lang === 'en') ? 'Failed to get update info' : '更新情報の取得に失敗';
 
+    // 表示の合流点 (script.dev.js 側のラン数サフィックスと合流するため renderHeaderMeta 経由で書く)
+    window.__lastUpdateText = null;
+    window.renderHeaderMeta = function () {
+        if (window.__lastUpdateText == null) return;
+        const displayText = `${window.__lastUpdateText}${window.__runCountSuffix || ''}`;
+        const el = document.getElementById("last-update");
+        const elM = document.getElementById("last-update-mobile");
+        if (el) el.textContent = displayText;
+        if (elM) elM.textContent = displayText;
+    };
+
     // 3. GitHub APIを叩く
     fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
       .then(res => res.json())
@@ -118,19 +129,17 @@
             });
 
             // 4. コミットメッセージを含めずに、日付だけで表示を更新
-            const displayText = `${updateText} ${formattedDate}`;
-            document.getElementById("last-update").textContent = displayText;
-            document.getElementById("last-update-mobile").textContent = displayText;
-
+            window.__lastUpdateText = `${updateText} ${formattedDate}`;
+            window.renderHeaderMeta();
         } else {
-            document.getElementById("last-update").textContent = errorText;
-            document.getElementById("last-update-mobile").textContent = errorText;
+            window.__lastUpdateText = errorText;
+            window.renderHeaderMeta();
         }
       })
       .catch(err => {
         console.error("Failed to fetch commit data:", err);
-        document.getElementById("last-update").textContent = failText;
-        document.getElementById("last-update-mobile").textContent = failText;
+        window.__lastUpdateText = failText;
+        window.renderHeaderMeta();
       });
     </script>
 

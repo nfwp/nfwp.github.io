@@ -1,3 +1,10 @@
+// 敵別戦績タブのキャラ切替 (全キャラ分のテーブルを事前描画し、表示だけを切替える)
+function switchEnemyAnalysisCharacter(charOption) {
+    document.querySelectorAll('.enemy-analysis-char-table').forEach(el => {
+        el.style.display = (el.id === `enemy-table-${charOption}`) ? 'block' : 'none';
+    });
+}
+
 function renderEnemyAnalysisTab(char, lang) {
     const container = document.getElementById('enemy-analysis-tab');
     if (!container) return;
@@ -205,10 +212,10 @@ function renderEnemyAnalysisTab(char, lang) {
             const checkbox = event.target;
             if (checkbox.classList.contains('enemy-column-toggle')) {
                 const colName = checkbox.dataset.col;
-                const charTable = checkbox.closest('.analysis-section').querySelector('.enemy-analysis-char-table');
-                if (charTable) {
+                // 全キャラ分のテーブルに同じ列表示状態を適用 (キャラ切替後も状態を維持)
+                checkbox.closest('.analysis-section').querySelectorAll('.enemy-analysis-char-table').forEach(charTable => {
                     charTable.classList.toggle(`hide-${colName}`, !checkbox.checked);
-                }
+                });
             }
         });
     }

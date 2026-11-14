@@ -14,17 +14,30 @@ window.addEventListener('DOMContentLoaded', async () => {
         const versionData = await versionResponse.json();
         DATA_VERSION = versionData.version; // グローバル変数に設定
         console.log(`Using data version: ${DATA_VERSION}`);
+
+        // 全体ラン数 (+ 前回からの増分) をヘッダーの最終更新の後ろに表示する。
+        // data_version.json の run_count (stat) / run_count_prev / run_count_ns はパイプラインが書き込む。
+        try {
+            const rc = versionData.run_count;
+            if (typeof rc === 'number' && rc > 0) {
+                const prev = versionData.run_count_prev;
+                const fmt = (n) => n.toLocaleString(LANG === 'en' ? 'en-US' : 'ja-JP');
+                let suffix = (LANG === 'en') ? ` · Runs: ${fmt(rc)}` : ` ・ 全体ラン: ${fmt(rc)}`;
+                if (typeof prev === 'number' && prev > 0 && rc > prev) suffix += ` (+${fmt(rc - prev)})`;
+                window.__runCountSuffix = suffix;
+                if (window.renderHeaderMeta) window.renderHeaderMeta();
+                console.log(`Run count: ${rc} (prev: ${prev}, ns: ${versionData.run_count_ns})`);
+            }
+        } catch (e) { /* 表示のみの機能なので失敗は無視 */ }
         // データを並行して読み込む
 
         const [
-            runsResponse,
             timelineResponse,
             charDataResponse,
             adventureEventsResponse,
             lookupDataResponse,
             uiTextResponse // UIテキストの読み込みを追加
         ] = await Promise.all([
-            fetch(`./data/run_details.json?v=${DATA_VERSION}`),
             fetch(`./data/run_decks_by_station.json?v=${DATA_VERSION}`),
             fetch(`data/${charToLoad}_data.json?v=${DATA_VERSION}`),
             fetch(`data/adventure_events_data.json?v=${DATA_VERSION}`),
@@ -43,39 +56,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
 
 
-        if (runsResponse.ok) {
-            const runDetailsData = await runsResponse.json();
-            ALL_RUN_DETAILS = runDetailsData.runs;
-            // path_summary 圧縮形式 (9要素配列 "E1E2A3G4"...) を旧形式へデコード。
-            // スロット順: [Act1 Early, Act1 Mid, Act1 Late, Act2 ... , Act3 Late]
-            // 旧形式 (dict) はそのまま (ロード時のデータ/JS混在に対応)。
-            // ★ window 経由で run-finder.js (ns データのロード時) からも使えるよう公開
-            const PATH_STAGE_ORDER = [[1, 'Early'], [1, 'Mid'], [1, 'Late'], [2, 'Early'], [2, 'Mid'], [2, 'Late'], [3, 'Early'], [3, 'Mid'], [3, 'Late']];
-            const PATH_TYPE_MAP = { E: 'Enemy', X: 'EliteEnemy', A: 'Adventure', G: 'Gap', S: 'Shop' };
-            const decodeRunPathSummary = (run) => {
-                if (!run || !Array.isArray(run.path_summary)) return run;
-                const out = {};
-                run.path_summary.forEach((code, i) => {
-                    if (!code) return;
-                    const slot = PATH_STAGE_ORDER[i];
-                    if (!slot) return;
-                    const nodes = [];
-                    const re = /([EGSAX])(\d+)/g;
-                    let m;
-                    while ((m = re.exec(code)) !== null) {
-                        nodes.push({ type: PATH_TYPE_MAP[m[1]], level: parseInt(m[2], 10) });
-                    }
-                    if (nodes.length) out[`Act${slot[0]} ${slot[1]}`] = nodes;
-                });
-                run.path_summary = out;
-                return run;
-            };
-            window.decodeRunPathSummary = decodeRunPathSummary;
-            ALL_RUN_DETAILS.forEach(decodeRunPathSummary);
-            console.log(`Loaded run_details.json generated at: ${runDetailsData.metadata?.generated_at || 'N/A'}`);
-        } else {
-            console.error('run_details.json のロードに失敗しました。検索機能は無効になります。');
-        }
+        // (P-03) run_details.json (~3.6MB) はレイジーロードに変更。
+        //   ラン検索タブ訪問時 / 検索実行時 / カード一覧の母数表示時に
+        //   window.ensureRunDetailsLoaded() 経由で取得する (ファイル末尾に定義)。
 
         if (timelineResponse.ok) {
             const timelineData = await timelineResponse.json();
@@ -223,6 +206,9 @@ function switchTab(tabId, autoSearch = false) {
         }
 
         if (tabId === 'run-finder-tab') {
+            // (P-03) run_details.json はレイジーロード。タブ訪問時に先読みしておくと
+            //   初回検索の待ち時間が短くなる (検索実行時にも await される)。
+            window.ensureRunDetailsLoaded();
             const uiPopulated = populateUiFromUrlParams();
             if (autoSearch && uiPopulated) {
                 console.log("自動検索を実行します...");
@@ -251,3 +237,60 @@ function switchTab(tabId, autoSearch = false) {
         mobileTabSelector.value = tabId;
     }
 }
+
+
+// =================================================================
+// run_details.json のレイジーロード (P-03: 初期ロード削減)
+//   初期ロードは ~12.4MB → ~8.8MB。ラン検索 (run-finder) 初回利用時 /
+//   card-list の母数表示時に取得する。
+//   失敗時は ALL_RUN_DETAILS = [] で戻る (検索は「データなし」として動作)。
+// =================================================================
+// path_summary 圧縮形式 (9要素配列 "E1E2A3G4"...) を旧形式へデコード。
+// スロット順: [Act1 Early, Act1 Mid, Act1 Late, Act2 ... , Act3 Late]
+// 旧形式 (dict) はそのまま (ロード時のデータ/JS混在に対応)。
+// ★ window 経由で run-finder.js (ns データのロード時) からも使えるよう公開
+const PATH_STAGE_ORDER = [[1, 'Early'], [1, 'Mid'], [1, 'Late'], [2, 'Early'], [2, 'Mid'], [2, 'Late'], [3, 'Early'], [3, 'Mid'], [3, 'Late']];
+const PATH_TYPE_MAP = { E: 'Enemy', X: 'EliteEnemy', A: 'Adventure', G: 'Gap', S: 'Shop' };
+const decodeRunPathSummary = (run) => {
+    if (!run || !Array.isArray(run.path_summary)) return run;
+    const out = {};
+    run.path_summary.forEach((code, i) => {
+        if (!code) return;
+        const slot = PATH_STAGE_ORDER[i];
+        if (!slot) return;
+        const nodes = [];
+        const re = /([EGSAX])(\d+)/g;
+        let m;
+        while ((m = re.exec(code)) !== null) {
+            nodes.push({ type: PATH_TYPE_MAP[m[1]], level: parseInt(m[2], 10) });
+        }
+        if (nodes.length) out[`Act${slot[0]} ${slot[1]}`] = nodes;
+    });
+    run.path_summary = out;
+    return run;
+};
+window.decodeRunPathSummary = decodeRunPathSummary;
+
+let _runDetailsPromise = null;
+window.ensureRunDetailsLoaded = function () {
+    if (ALL_RUN_DETAILS && ALL_RUN_DETAILS.length) return Promise.resolve(ALL_RUN_DETAILS);
+    if (_runDetailsPromise) return _runDetailsPromise;
+    const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
+    console.log('[LazyLoad] run_details.json を読み込みます (~3.6MB / 初回のみ)');
+    if (window.rfDataLoadBegin) window.rfDataLoadBegin('ラン詳細データ (run_details.json) を読み込み中… (初回のみ)');
+    _runDetailsPromise = fetch(`./data/run_details.json${vParam}`)
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then(runDetailsData => {
+            ALL_RUN_DETAILS = runDetailsData.runs || [];
+            ALL_RUN_DETAILS.forEach(decodeRunPathSummary);
+            console.log(`Loaded run_details.json generated at: ${runDetailsData.metadata?.generated_at || 'N/A'} (${ALL_RUN_DETAILS.length} runs)`);
+            return ALL_RUN_DETAILS;
+        })
+        .catch(err => {
+            console.error('run_details.json のロードに失敗しました。検索機能は無効になります。', err);
+            ALL_RUN_DETAILS = [];
+            return ALL_RUN_DETAILS;
+        })
+        .finally(() => { if (window.rfDataLoadEnd) window.rfDataLoadEnd(); });
+    return _runDetailsPromise;
+};

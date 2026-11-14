@@ -181,6 +181,8 @@ function renderRunFinderTab() {
             <div id="run-finder-results" style="margin-top: 20px;">
                 <p>${texts.initial_prompt}</p>
             </div>
+            <!-- レイジーロード中の進捗表示 (P-04) -->
+            <div id="rf-data-status" style="display: none; margin: 8px 0; font-size: 0.9em; color: #475569;"></div>
         </div>
         <datalist id="all-items-datalist">${datalistOptions}</datalist>
         <datalist id="player-name-datalist"></datalist>
@@ -1340,11 +1342,29 @@ let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功し
 const hardFightsNsRunIds = new Set();
 let hoveredTooltipLink = null; // マウスが乗っているリンク (遅延ロード後の再描画でのみ参照)
 
+// --- レイジーロード中の進捗表示 (P-04) ---
+// 重い JSON (hard_fights / run_details / ns系) の取得中、検索フォーム下に状況を表示する。
+// 複数ロードが並走してもカウンタで管理し、全完了で消える。
+let _rfPendingDataLoads = 0;
+window.rfDataLoadBegin = function (text) {
+    _rfPendingDataLoads++;
+    const el = document.getElementById('rf-data-status');
+    if (el && text) { el.textContent = '⏳ ' + text; el.style.display = 'inline-block'; }
+};
+window.rfDataLoadEnd = function () {
+    _rfPendingDataLoads = Math.max(0, _rfPendingDataLoads - 1);
+    if (_rfPendingDataLoads === 0) {
+        const el = document.getElementById('rf-data-status');
+        if (el) el.style.display = 'none';
+    }
+};
+
 function loadHardFights(force) {
     if (hardFightsPromise && !force) return hardFightsPromise;
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
     const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
+    if (window.rfDataLoadBegin) window.rfDataLoadBegin('遭遇データ (hard_fights.json ~4.6MB) を読み込み中… (初回のみ)');
     hardFightsPromise = fetch(`${basePath}hard_fights.json?v=${ver}`)
         .then(response => (response.ok ? response.json() : null))
         .then(data => {
@@ -1360,7 +1380,8 @@ function loadHardFights(force) {
             console.error('[ERROR] Failed to fetch hard_fights.json:', error);
             hardFightsByChar.__loaded = true; // 失敗時は次の検索で再試行
             return hardFightsByChar;
-        });
+        })
+        .finally(() => { if (window.rfDataLoadEnd) window.rfDataLoadEnd(); });
     return hardFightsPromise;
 }
 
@@ -1389,6 +1410,7 @@ function ensureNsAssetsLoaded() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
     const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
+    if (window.rfDataLoadBegin) window.rfDataLoadBegin('統計外ランのデータ (ns系 ~4.3MB) を読み込み中… (初回のみ)');
     nsAssetsPromise = Promise.all([
         fetch(`${basePath}run_details_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
         fetch(`${basePath}hard_fights_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
@@ -1430,7 +1452,7 @@ function ensureNsAssetsLoaded() {
         console.error('[ERROR] NS assets load failed:', err);
         ALL_RUN_DETAILS_NS = [];
         return ALL_RUN_DETAILS_NS;
-    });
+    }).finally(() => { if (window.rfDataLoadEnd) window.rfDataLoadEnd(); });
     return nsAssetsPromise;
 }
 
@@ -1578,6 +1600,10 @@ async function performAdvancedSearch() {
         // --- 0.5 サンプリング除外ラン (チェックボックスON時のみレイジーロード) ---
         const includeNs = isNsEnabled();
         if (includeNs) await ensureNsAssetsLoaded();
+
+        // --- 0.7 ラン詳細 (run_details.json ~3.6MB) のレイジーロード (P-03) ---
+        //   プレイヤー名の入力補完や検索母集団の前に必ず完了させておく。
+        await window.ensureRunDetailsLoaded();
 
         // --- 1. Get all filter values from UI ---
         rfPopulatePlayerDatalist();   // プレイヤー名の入力補完 (自動検索でもここで更新される)
@@ -2884,13 +2910,21 @@ async function rfCopyToClipboard(text) {
  */
 function attemptAutoSearch() {
     // performAdvancedSearchの先頭にあるのと同じデータ準備チェック
-    if (!ALL_RUN_DETAILS || Object.keys(ALL_RUN_DETAILS).length === 0 || !ALL_DATA.lookup_tables) {
+    if (!ALL_DATA.lookup_tables) {
         console.log("自動検索: データがまだ準備できていません。200ms後に再試行します。");
         setTimeout(attemptAutoSearch, 200); // 待機して再試行
-    } else {
-        console.log("自動検索: データ準備完了。検索を実行します。");
-        performAdvancedSearch();
+        return;
     }
+    // (P-03) run_details.json はレイジーロード → 完了を待ってから1回だけ検索
+    (window.ensureRunDetailsLoaded ? window.ensureRunDetailsLoaded() : Promise.resolve())
+        .then(() => {
+            if (ALL_RUN_DETAILS && ALL_RUN_DETAILS.length) {
+                console.log("自動検索: データ準備完了。検索を実行します。");
+                performAdvancedSearch();
+            } else {
+                console.error("自動検索: run_details.json が利用できないため中止します。");
+            }
+        });
 }
 
 function populateUiFromUrlParams() {

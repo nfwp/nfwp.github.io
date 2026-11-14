@@ -19,8 +19,8 @@
 <li>Dangerous Illusionist: 45</li>
 <li>Jack the Ludo Bile: 35</li>
 <li>Changeling Magic: 34</li>
-<li>Starry Sword Dance: 30</li>
 <li>Sight of Distant Blade: 30</li>
+<li>Starry Sword Dance: 30</li>
 <li>Purify the Land: 27</li>
 <li>News Fabrication: 26</li>
 <li>Princess Undine: 25</li>
@@ -525,18 +525,18 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 26</li>
 <li><span class="text-purchase">C. Ricochet</span>: 23</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 20</li>
-<li><span class="text-purchase">🧰 Ballistic Shield</span>: 17</li>
 <li><span class="text-purchase">Imaginary Timeline</span>: 17</li>
+<li><span class="text-purchase">🧰 Ballistic Shield</span>: 17</li>
 <li><span class="text-purchase">Dangerous Illusionist</span>: 17</li>
 <li><span class="text-purchase">Wandering Heaven</span>: 16</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 15</li>
-<li><span class="text-purchase">Starry Sword Dance</span>: 13</li>
 <li><span class="text-purchase">Play With Water</span>: 13</li>
+<li><span class="text-purchase">Starry Sword Dance</span>: 13</li>
 <li><span class="text-purchase">Clean Energy</span>: 12</li>
 <li><span class="text-purchase">Travel Preparation</span>: 11</li>
 <li><span class="text-purchase">Lunar Cycle</span>: 11</li>
-<li><span class="text-purchase">Princess Undine</span>: 9</li>
 <li><span class="text-purchase">Ship's Phantom</span>: 9</li>
+<li><span class="text-purchase">Princess Undine</span>: 9</li>
 <li><span class="text-purchase">Purify the Land</span>: 8</li>
 <li><span class="text-purchase">Time Magic</span>: 8</li>
 <li><span class="text-purchase">Guard Up</span>: 8</li>
@@ -552,11 +552,11 @@
 <li><span class="text-exhibit">Bottle</span>: 3</li>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
 <li><span class="text-exhibit">Ice Cube</span>: 3</li>
-<li><span class="text-exhibit">Secret Cloak</span>: 2</li>
 <li><span class="text-exhibit">Dream Catcher</span>: 2</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>
 <li><span class="text-exhibit">Delicious Cookie</span>: 2</li>
 <li><span class="text-exhibit">Take-Copter</span>: 2</li>
+<li><span class="text-exhibit">Secret Cloak</span>: 2</li>
 <li><span class="text-exhibit">Anesthesia Gun Watch</span>: 1</li>
 <li><span class="text-exhibit">Tengu's Cellphone</span>: 1</li>
 <li><span class="text-exhibit">Black Notebook</span>: 1</li>

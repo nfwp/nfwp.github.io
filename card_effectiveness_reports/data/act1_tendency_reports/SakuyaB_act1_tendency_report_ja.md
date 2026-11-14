@@ -19,8 +19,8 @@
 <li>危険な手品師: 45回</li>
 <li>ジャック・ザ・ルドビレ: 35回</li>
 <li>チェンジリングマジック: 34回</li>
-<li>星剣の舞: 30回</li>
 <li>離剣乱舞: 30回</li>
+<li>星剣の舞: 30回</li>
 <li>浄化活動: 27回</li>
 <li>捏造報道: 26回</li>
 <li>プリンセスウンディネ: 25回</li>
@@ -526,18 +526,18 @@
 <li><span class="text-purchase">🧰 缶詰</span>: 26回</li>
 <li><span class="text-purchase">Ｃ．リコシェ</span>: 23回</li>
 <li><span class="text-purchase">🧰 水鉄砲</span>: 20回</li>
-<li><span class="text-purchase">🧰 ライオットシールド</span>: 17回</li>
 <li><span class="text-purchase">イマジナリバーチカルタイム</span>: 17回</li>
+<li><span class="text-purchase">🧰 ライオットシールド</span>: 17回</li>
 <li><span class="text-purchase">危険な手品師</span>: 17回</li>
 <li><span class="text-purchase">聖地巡礼</span>: 16回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 15回</li>
-<li><span class="text-purchase">星剣の舞</span>: 13回</li>
 <li><span class="text-purchase">水遊び</span>: 13回</li>
+<li><span class="text-purchase">星剣の舞</span>: 13回</li>
 <li><span class="text-purchase">クリーンエネルギー</span>: 12回</li>
 <li><span class="text-purchase">準備</span>: 11回</li>
 <li><span class="text-purchase">月相</span>: 11回</li>
-<li><span class="text-purchase">プリンセスウンディネ</span>: 9回</li>
 <li><span class="text-purchase">船底の念縛霊</span>: 9回</li>
+<li><span class="text-purchase">プリンセスウンディネ</span>: 9回</li>
 <li><span class="text-purchase">浄化活動</span>: 8回</li>
 <li><span class="text-purchase">タイムマジック</span>: 8回</li>
 <li><span class="text-purchase">時間厳守</span>: 8回</li>
@@ -553,11 +553,11 @@
 <li><span class="text-exhibit">空き瓶</span>: 3回</li>
 <li><span class="text-exhibit">会員証</span>: 3回</li>
 <li><span class="text-exhibit">ブロックアイス</span>: 3回</li>
-<li><span class="text-exhibit">ひみつのマント</span>: 2回</li>
 <li><span class="text-exhibit">ドリームキャッチャー</span>: 2回</li>
 <li><span class="text-exhibit">天狗の羽団扇</span>: 2回</li>
 <li><span class="text-exhibit">おいしいクッキー</span>: 2回</li>
 <li><span class="text-exhibit">竹取コプター</span>: 2回</li>
+<li><span class="text-exhibit">ひみつのマント</span>: 2回</li>
 <li><span class="text-exhibit">腕時計型麻酔銃</span>: 1回</li>
 <li><span class="text-exhibit">天狗の携帯</span>: 1回</li>
 <li><span class="text-exhibit">黒のノート</span>: 1回</li>
