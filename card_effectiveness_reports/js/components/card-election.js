@@ -329,19 +329,18 @@ function ceDrawDetail() {
     const pickTotal = pvD ? (pvD[0] + pvD[1] + pvD[2]) : null;
     const pickRate = (pvD && pickTotal) ? Math.round(pvD[0] / pickTotal * 1000) / 10 : null;
     const rowsHtml =
-        // 上 3 行: 左 = ドラフト (ペア) 基準 / 右 = マス基準
         `<tr>${c(CET('d_prate', 'Pレート (BT-Elo)'), r[1] != null ? r[1] : CET('d_nocalc', '未算出 (同時提示なし)'), 1)}` +
         `${c(CET('perf_fpk', '初回ピック率'), pf && pf.fpk != null ? pf.fpk + "%" : "—", 1)}</tr>` +
         `<tr>${c(CET('d_deci', 'D回数 (対戦数)'), r[9] > 0 ? r[9] : "—", 1)}` +
-        `${c(CET('d_pick', 'ピック率'), pickRate != null ? pickRate + "%" : "—")}</tr>` +
+        `${c(CET('d_n', '提示回数'), r[2] || "—")}</tr>` +
         `<tr>${c(CET('d_draft', 'ドラフト勝率'), r[3] != null ? r[3] + "%" : "—", 1)}` +
-        `${c(CET('d_n_avail', 'うち選択可能提示n'), availN != null ? availN : "—")}</tr>` +
-        // 下 3 行: ラン単位の結果 + 合成
-        `<tr>${c(CET('d_n', '提示回数'), r[2] || "—")}${c(CET('d_adopt', '実質採用率'), r[4] + "%")}</tr>` +
+        `${c(CET('d_n_avail', 'うち選択可能提示n'), availN != null ? availN : "—", 1)}</tr>` +
         `<tr>${c(CET('d_score', '合成Pスコア'), r[7] != null ? r[7] : "—", 1)}` +
-        `${c(CET('d_final', '最終採用率'), r[8] != null ? r[8] + "%" : "—", 1)}</tr>` +
-        `<tr>${c(CET('perf_ac', '採用時平均枚数'), pf && pf.ac != null ? pf.ac : "—", 1)}` +
-        `${c(CET('perf_au', '平均強化率'), pf && pf.au != null ? pf.au + "%" : "—")}</tr>`;
+        `${c(CET('d_pick', 'ピック率'), pickRate != null ? pickRate + "%" : "—")}</tr>` +
+        `<tr>${c(CET('perf_ac', '採用時平均枚数'), pf && pf.ac != null ? pf.ac : "—")}` +
+        `${c(CET('d_adopt', '実質採用率'), r[4] + "%")}</tr>` +
+        `<tr>${c(CET('perf_au', '平均強化率'), pf && pf.au != null ? pf.au + "%" : "—")}` +
+        `${c(CET('d_final', '最終採用率'), r[8] != null ? r[8] + "%" : "—", 1)}</tr>`;
     const statsHtml = `<div style="flex:1.25;min-width:340px"><table><tbody>${rowsHtml}</tbody></table></div>`;
     // --- 上段右: よく負けた相手 Top5 (クリックでそのカードに選択切替) ---
     const lost = (CE_CUR.lost && CE_CUR.lost[CE_SEL]) ? CE_CUR.lost[CE_SEL] : null;

@@ -128,24 +128,37 @@
 			An Elo-style rating (&quot;beating a stronger opponent counts more&quot;) is applied to those results to score each card (<b>mean = 1000</b>).<br>
 			Cells where another card was picked, or where the player passed, are not counted. Only cards offered simultaneously 10 or more times are rated.<br>
 			Example: if A is always picked while B is almost always discarded, A's rate rises a lot. Conversely, losing to weak opponents won't lower the rate too much.</dd>
-            <dt>Offering flow</dt><dd>Shown in the detail panel. Pick rates when the card was offered for the <b>1st / 2nd / 3rd+ time</b> in a run (not-owned / owned separately).<br>
-			Shows whether players who skipped the 1st offer pick it on the 2nd, and whether players who picked it stack more copies later. 1st offer &times; not-owned = the First Pick Rate.</dd>
+            
+            <dt>Duels</dt><dd>The denominator of the Draft win rate (decided pair count).</dd>
+            
+            <dt>Draft win rate</dt><dd>Win rate at cells where &quot;A or B was picked&quot; (decisions only). <b>The unit is pairs, not cells</b> — a cell with 3+ cards yields multiple pairs (picking in a 10-card shop = 9 duels). Cells where another card was chosen or the player passed are not counted.</dd>
+            
             <dt>Pick rate</dt><dd>Shown in the detail panel. The share of offering cells where this card was picked (passes included = card vs everything else).<br>
 			Differs from the Draft win rate (decided matchups only) in its denominator. Cards often passed over have a high win rate but a lower pick rate.</dd>
+            
+            <dt>Offering flow</dt><dd>Shown in the detail panel. Pick rates when the card was offered for the <b>1st / 2nd / 3rd+ time</b> in a run (not-owned / owned separately).<br>
+			Shows whether players who skipped the 1st offer pick it on the 2nd, and whether players who picked it stack more copies later. 1st offer &times; not-owned = the First Pick Rate.</dd>
+            
+            <dt>Selectable offerings</dt><dd>Offerings where the card was actually selectable (in shops: bought or affordable with the displayed money). Pick rate = the share picked among them (passes included).</dd>
+            
             <dt>Real adoption</dt><dd>The share of runs in which the card was <b>acquired at least once</b> (Cards_log Add base) — an <b>effective acquisition rate</b>. Includes cards obtained outside drafts (events, trades, etc.) and cards that vanish upon use (e.g. Devour History).</dd>
+            
             <dt>Final adoption</dt><dd>The share still in the deck at the end of the run (<b>same definition as the &quot;Adoption rate&quot; in the Card List tab</b>).<br>
 			The difference from Real adoption = cards acquired but used up, vanished, or removed.</dd>
-            <dt>Selectable offerings</dt><dd>Offerings where the card was actually selectable (in shops: bought or affordable with the displayed money). Pick rate = the share picked among them (passes included).</dd>
-            <dt>Draft win rate</dt><dd>Win rate at cells where &quot;A or B was picked&quot; (decisions only). <b>The unit is pairs, not cells</b> — a cell with 3+ cards yields multiple pairs (picking in a 10-card shop = 9 duels). Cells where another card was chosen or the player passed are not counted.</dd>
-            <dt>Duels</dt><dd>The denominator of the Draft win rate (decided pair count).</dd>
-            <dt>Avg. copies</dt><dd>Average number of copies in runs that acquired the card</dd>
-            <dt>2+ copies rate</dt><dd>Share of runs with 2 or more copies (higher for cards with a &quot;stacking&quot; culture)</dd>
-            <dt>Pick rate by Act</dt><dd><b>Not-owned pick rate</b> per Act (* = pick rate when already owned). Cell n (= picks / offerings) is the sample size. Shows how picks change as the run progresses.</dd>
-            <dt>Selectable offerings</dt><dd>Out of the offering count, how many were actually selectable under the same rule as the Card List tab (in shops: bought or affordable with the displayed money).<br>
-			The offering count is shelf-based (for the P-rate), so the difference = unaffordable shop offerings.</dd>
+            
             <dt>P-score</dt><dd><b>P-rate &divide; 1000 × (1 + 2+ copies rate &divide; 100)</b>.<br>
 			Cards that are <b>both strong and stacked in multiple copies</b> score highest. Strong cards used as a single copy have a high P-rate but a moderate score.</dd>
-        </dl>
+        
+            <dt>Avg. copies</dt><dd>Average number of copies in runs that acquired the card</dd>
+            
+            <dt>2+ copies rate</dt><dd>Share of runs with 2 or more copies (higher for cards with a &quot;stacking&quot; culture)</dd>
+            
+            <dt>Pick rate by Act</dt><dd><b>Not-owned pick rate</b> per Act (* = pick rate when already owned). Cell n (= picks / offerings) is the sample size. Shows how picks change as the run progresses.</dd>
+            
+            <dt>Selectable offerings</dt><dd>Out of the offering count, how many were actually selectable under the same rule as the Card List tab (in shops: bought or affordable with the displayed money).<br>
+			The offering count is shelf-based (for the P-rate), so the difference = unaffordable shop offerings.</dd>
+            
+</dl>
     </div>
 
     <h2 id="sec-dd" class="c-teal">🩺 Reading the Similar Run Search tab (Test feature β)</h2>
