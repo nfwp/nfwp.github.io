@@ -1,3 +1,10 @@
+function ATT(key, ja) {
+    if (LANG !== 'en') return ja;
+    const en = UI_TEXT.act_trend ? UI_TEXT.act_trend[key] : undefined;
+    if (en == null) { console.warn('[act-trend] missing EN: ' + key); return ja; }
+    return en;
+}
+
 function renderActTrendTab(lang) {
     const container = document.getElementById('act-trend-tab');
     if (!container) return;
@@ -27,7 +34,7 @@ function renderActTrendTab(lang) {
     let subTabsHtml = '<div class="sub-tab-buttons" style="margin-bottom: 20px;">';
     acts.forEach((act, index) => {
         const activeClass = index === 0 ? 'active' : '';
-        const label = act === 'Total' ? (lang === 'ja' ? '全体 (Total)' : 'Total') : `Act ${act}`;
+        const label = act === 'Total' ? ATT('total_tab', '全体 (Total)') : `Act ${act}`;
         subTabsHtml += `<button class="filter-btn ${activeClass}" onclick="switchActTrend('${act}')">${label}</button>`;
     });
     subTabsHtml += '</div>';
@@ -48,12 +55,12 @@ function renderActTrendTab(lang) {
         if (['1', '2', '3', 'Total'].includes(String(act))) {
             categories.push({
                 key: 'Organize_Card',
-                title: (lang === 'ja' ? '整頓対象(Boss削除変化)' : 'Organized Item (Boss Removal Change)'),
+                title: ATT('organize_card', '整頓対象(Boss削除変化)'),
                 type: 'card'
             });
         }
 
-        categories.push({ key: 'Node_Visits', title: (lang === 'ja' ? '踏破マスの内訳' : 'Node Visits'), type: 'node' });
+        categories.push({ key: 'Node_Visits', title: ATT('node_visits', '踏破マスの内訳'), type: 'node' });
         let gridHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">';
 
         categories.forEach(cat => {
@@ -73,8 +80,8 @@ function renderActTrendTab(lang) {
                     categoryBlockHtml += `<p style="color: #999; text-align: center; padding: 20px 0;">${C.no_data}</p>`;
                 } else {
                     const headerRank = '#';
-                    const headerName = cat.type === 'card' ? (lang === 'ja' ? 'カード名' : 'Card Name') : (lang === 'ja' ? '展示品名' : 'Exhibit Name');
-                    const headerAvg = lang === 'ja' ? 'Avg/Run' : 'Avg/Run';
+                    const headerName = cat.type === 'card' ? ATT('header_card', 'カード名') : ATT('header_exhibit', '展示品名');
+                    const headerAvg = 'Avg/Run';
                     categoryBlockHtml += `<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;"><thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px; width: 40px;">${headerRank}</th><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 100px;">${headerAvg}</th></tr></thead><tbody>`;
 
                     sortedItems.forEach(([id, count], index) => {
@@ -119,7 +126,7 @@ function renderActTrendTab(lang) {
                             }
 
                             if (isLikelyInitial) {
-                                ratioText = lang === 'ja' ? '(初期?)' : '(Initial?)';
+                                ratioText = ATT('initial_maybe', '(初期?)');
                                 shouldBeBold = true;
                             }
 
@@ -185,13 +192,13 @@ function renderActTrendTab(lang) {
                     { label: nodeTypeLabels['Enemy'], key: 'Enemy', type: 'node' },
                     { label: nodeTypeLabels['EliteEnemy'], key: 'EliteEnemy', type: 'node' },
                     { label: nodeTypeLabels['Boss'], key: 'Boss', type: 'node' },
-                    { label: (lang === 'ja' ? 'ショップ' : 'Shop'), key: 'Shop', type: 'node' },
-                    { label: (lang === 'ja' ? '└ 削除' : '└ Remove'), key: 'Remove', type: 'shop_detail', indent: true },
-                    { label: (lang === 'ja' ? '└ 強化' : '└ Upgrade'), key: 'Upgrade', type: 'shop_detail', indent: true },
-                    { label: (lang === 'ja' ? 'スキマ' : 'Gap'), key: 'Gap', type: 'node' },
-                    { label: (lang === 'ja' ? '└ 休憩' : '└ Rest'), key: 'Rest', type: 'gap_detail', indent: true },
-                    { label: (lang === 'ja' ? '└ 強化' : '└ Upgrade'), key: 'Upgrade', type: 'gap_detail', indent: true },
-                    { label: (lang === 'ja' ? 'イベント' : 'Event'), key: 'Adventure', type: 'node' }
+                    { label: ATT('shop', 'ショップ'), key: 'Shop', type: 'node' },
+                    { label: ATT('shop_remove', '└ 削除'), key: 'Remove', type: 'shop_detail', indent: true },
+                    { label: ATT('shop_upgrade', '└ 強化'), key: 'Upgrade', type: 'shop_detail', indent: true },
+                    { label: ATT('gap', 'スキマ'), key: 'Gap', type: 'node' },
+                    { label: ATT('gap_rest', '└ 休憩'), key: 'Rest', type: 'gap_detail', indent: true },
+                    { label: ATT('gap_upgrade', '└ 強化'), key: 'Upgrade', type: 'gap_detail', indent: true },
+                    { label: ATT('adventure', 'イベント'), key: 'Adventure', type: 'node' }
                 ];
                 const getCount = (dataObj, categoryType, key) => {
                     if (!dataObj) return 0;
@@ -201,8 +208,8 @@ function renderActTrendTab(lang) {
                     return 0;
                 };
                 categoryBlockHtml += '<div style="max-height: 600px; overflow-y: auto;"><table class="act-trend-table" style="width: 100%; border-collapse: collapse;">';
-                const headerName = lang === 'ja' ? 'マス種類' : 'Node Type';
-                const headerAvg = lang === 'ja' ? 'Avg/Run (全キャラ平均)' : 'Avg/Run (Global Avg)';
+                const headerName = ATT('node_type', 'マス種類');
+                const headerAvg = ATT('avg_global', 'Avg/Run (全キャラ平均)');
                 categoryBlockHtml += `<thead><tr style="text-align: left; position: sticky; top: 0; background: #f8f8f8;"><th style="padding: 8px;">${headerName}</th><th style="padding: 8px; width: 140px;">${headerAvg}</th></tr></thead><tbody>`;
                 breakdownRows.forEach(row => {
                     const count = getCount(actData, row.type, row.key);
@@ -254,17 +261,17 @@ function renderActTrendTab(lang) {
                 return (50 + 10 * (mean - myAvg) / sd).toFixed(1);
             };
             const i18n = {
-                title: lang === 'ja' ? '性能・リソース指標' : 'Performance Metrics',
-                headerItem: lang === 'ja' ? '項目' : 'Item',
-                headerValue: lang === 'ja' ? 'スコア' : 'Score',
-                sustainability: lang === 'ja' ? '継戦能力' : 'Combat Endurance',
-                dmgLoss: lang === 'ja' ? '└ 戦闘での総被弾量' : '└ Total Combat Damage taken',
-                gapRec: lang === 'ja' ? '└ スキマでの総回復量' : '└ Total Gap Recovery',
-                cmbRec: lang === 'ja' ? '└ 戦闘終了後の純回復' : '└ Post-combat Pure Recovery',
-                vsPrefix: lang === 'ja' ? '対' : 'Vs. ',
-                vsSuffix: lang === 'ja' ? '性能' : ' Performance',
-                atkTurns: lang === 'ja' ? '└ 攻撃性能' : '└ Attack Score',
-                defLoss: lang === 'ja' ? '└ 防御性能' : '└ Defense Score'
+                title: ATT('perf_title', '性能・リソース指標'),
+                headerItem: ATT('header_item', '項目'),
+                headerValue: ATT('header_value', 'スコア'),
+                sustainability: ATT('sustainability', '継戦能力'),
+                dmgLoss: ATT('dmg_loss', '└ 戦闘での総被弾量'),
+                gapRec: ATT('gap_rec', '└ スキマでの総回復量'),
+                cmbRec: ATT('cmb_rec', '└ 戦闘終了後の純回復'),
+                vsPrefix: ATT('vs_prefix', '対'),
+                vsSuffix: ATT('vs_suffix', '性能'),
+                atkTurns: ATT('atk_turns', '└ 攻撃性能'),
+                defLoss: ATT('def_loss', '└ 防御性能')
             };
             let resourceHtml = `<div class="analysis-section" style="margin: 0;"><h4 style="margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">${i18n.title}</h4><table class="act-trend-table" style="width: 100%; border-collapse: collapse; font-size: 0.95em;"><thead><tr style="text-align: left; background: #f8f8f8; border-bottom: 2px solid #eee;"><th style="padding: 8px;">${i18n.headerItem}</th><th style="padding: 8px; text-align: right;">${i18n.headerValue}</th></tr></thead><tbody><tr><td style="padding: 8px; font-weight: bold;">${i18n.sustainability}</td><td style="padding: 8px; text-align: right; font-weight: bold;"><span style="color: ${getGradationColor(mySustain, glSustain)}; font-size: 1.1em;">${mySustain}</span><span style="color: #888; font-weight: normal; margin-left: 5px;">(${glSustain})</span></td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.dmgLoss}</td><td style="text-align: right;">${myAvgDmg.toFixed(1)} (${glAvgDmg.toFixed(1)})</td></tr><tr style="color: #666; font-size: 0.85em;"><td style="padding-left: 15px;">${i18n.gapRec}</td><td style="text-align: right;">${myAvgRec.toFixed(1)} (${glAvgRec.toFixed(1)})</td></tr><tr style="color: #27ae60; font-size: 0.85em; border-bottom: 1px solid #eee;"><td style="padding-left: 15px;">${i18n.cmbRec}</td><td style="text-align: right;">+${myAvgCmbRec.toFixed(1)} (+${glAvgCmbRec.toFixed(1)})</td></tr>${['Enemy', 'EliteEnemy', 'Boss'].map(type => { const s = perfStats[type]; const meta = devMeta[type]; if (!s || s.Count === 0 || !meta) return ''; const atkScore = calcTScore(s.Turn_Sum / s.Count, meta.turn_mean, meta.turn_sd); const defScore = calcTScore(s.HP_Loss_Sum / s.Count, meta.hp_mean, meta.hp_sd); const encountersPerRun = s.Count / totalRuns; const perfIndex = ((parseFloat(atkScore) + parseFloat(defScore)) / 2 * encountersPerRun).toFixed(1); const globalEncounters = (globalActData.Node_Visits?.[type] || 0) / totalRunsAll; const globalPerfIndex = (50 * globalEncounters).toFixed(1); const label = nodeTypeLabels[type] || type; const vsPrefix = lang === 'ja' ? '対' : 'Vs. '; const vsSuffix = lang === 'ja' ? '性能' : ' Perf.'; const indexLabel = lang === 'ja' ? '└ 指数 (性能×踏破数)' : '└ Efficiency Index'; return `<tr style="background: #fafafa;"><td colspan="2" style="padding: 4px 8px; font-weight: bold;">${vsPrefix}${label}${vsSuffix}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 攻撃 (ターン)' : '└ Attack (Turns)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(atkScore, 50)}">${atkScore}</td></tr><tr><td style="padding-left: 20px; color: #555;">${lang === 'ja' ? '└ 防御 (被弾)' : '└ Defense (Damage)'}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(defScore, 50)}">${defScore}</td></tr><tr style="border-bottom: 1px solid #eee;"><td style="padding-left: 20px; color: #333; font-weight: bold;">${indexLabel}</td><td style="text-align: right; font-weight: bold; color: ${getGradationColor(perfIndex, globalPerfIndex)}"><span style="font-size: 1.1em;">${perfIndex}</span><span style="color: #888; font-weight: normal; margin-left: 5px; font-size: 0.9em;">(${globalPerfIndex})</span></td></tr>`; }).join('')}</tbody></table></div>`;
             gridHtml += resourceHtml;

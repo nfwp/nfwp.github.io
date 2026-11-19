@@ -41,7 +41,7 @@ function renderEventAnalysisTab() {
         if (!items || items.length === 0) return C.no_change;
         return items.map(item => {
             const name = getItemName(item.id, itemType);
-            const countLabel = LANG === 'ja' ? '回' : (item.count === 1 ? ' time' : ' times');
+            const countLabel = item.count === 1 ? A.unit_time : A.unit_times;
             const link = createWikiLink(name, itemType, LANG);
             return `<span>${link} (${item.count}${countLabel})</span>`;
         }).join(', ');
@@ -52,8 +52,8 @@ function renderEventAnalysisTab() {
 
     const eventsHtml = charData.map(event => {
         const eventName = LANG === 'ja' ? event.eventNameJA : event.eventNameEN;
-        const encounterCountLabel = LANG === 'ja' ? '回' : (event.encounterCount === 1 ? ' time' : ' times');
-        const vsAllRunsLabel = LANG === 'ja' ? '対 全ラン' : 'vs. All Runs';
+        const encounterCountLabel = event.encounterCount === 1 ? A.unit_time : A.unit_times;
+        const vsAllRunsLabel = A.vs_all_runs;
         const imgSrc = `./img/events/${event.eventId}.avif`;
         const imgSrcset = `./img/events/${event.eventId}@2x.avif 2x`;
 
@@ -63,7 +63,7 @@ function renderEventAnalysisTab() {
             const fallbackLabel = choice.choiceIndex === 'N/A' ? C.no_choice_label : `${C.choice_label_prefix}${choice.choiceIndex}`;
             // 色選択 (icon 表記) は title に色名 (焼き込み)。無ければ従来のフォールバック
             const titleTxt = (LANG === 'ja' ? choice.labelTitleJA : choice.labelTitleEN) || fallbackLabel;
-            const choiceCountLabel = LANG === 'ja' ? '回' : (choice.count === 1 ? ' time' : ' times');
+            const choiceCountLabel = choice.count === 1 ? A.unit_time : A.unit_times;
 
             // 5項目ブロック: 1つでも追加/削除/強化があれば全部表示、全部ゼロなら丸ごと省略
             const hasAnyItems = ['cardsAdded', 'cardsRemoved', 'cardsUpgraded', 'exhibitsAdded', 'exhibitsRemoved']

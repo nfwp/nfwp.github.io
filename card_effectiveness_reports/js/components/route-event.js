@@ -54,7 +54,7 @@ function renderRouteEventTab(lang) {
             const level = level_key.split('-')[1];
             const node_id_base = `${act}-${level}`;
 
-            actHtmlSegment += `<div class="route-level-node"><p><b>Level ${level}</b> (Reach Rate: ${(total_visits_at_level / total_runs * 100).toFixed(1)}%)</p>`;
+            actHtmlSegment += `<div class="route-level-node"><p><b>${(T.level_label || 'Level {n}').replace('{n}', level)}</b> (${T.reach_rate || '到達率'}: ${(total_visits_at_level / total_runs * 100).toFixed(1)}%)</p>`;
             let barHtml = '<div class="node-choice-bar">';
             const sortedNodeTypes = Object.entries(level_data).filter(([key,]) => key !== 'total').sort(([, a], [, b]) => b - a);
 
@@ -144,7 +144,7 @@ function renderRouteEventTab(lang) {
                 const details_id = `details-${node_full_key}`;
                 const node_specific_details = node_details[node_full_key] || {};
 
-                let details_content = `<h4>Act ${act} - Level ${level} (${node_type}) - ${T.traversal_count}: (${visit_count} / ${total_runs}) ${(visit_count / total_runs * 100).toFixed(1)}%</h4>`;
+                let details_content = `<h4>${(T.act_node_title || 'Act {a} - Level {l}').replace('{a}', act).replace('{l}', level)} (${node_type}) - ${T.traversal_count}: (${visit_count} / ${total_runs}) ${(visit_count / total_runs * 100).toFixed(1)}%</h4>`;
                 let has_content = false;
                 let top_section_html = "";
                 let card_grid_content = "";

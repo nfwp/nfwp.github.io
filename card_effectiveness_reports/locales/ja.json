@@ -192,7 +192,8 @@
         "ex_acq_initial": "初期",
         "ex_acq_other": "その他",
         "ex_toggle_tip": "クリックで入手内訳を開閉します",
-        "ex_acq_empty": "このキャラでの入手記録なし"
+        "ex_acq_empty": "このキャラでの入手記録なし",
+        "ex_acq_need_char": "キャラを選択すると内訳が表示されます (All は集計対象外)"
     },
     "route": {
         "title": "ルート選択傾向",
@@ -206,7 +207,10 @@
         "gap_upgrade": "カード強化",
         "gap_rest": "休憩",
         "gap_other": "その他",
-        "sample_label": "サンプルラン"
+        "sample_label": "サンプルラン",
+        "reach_rate": "到達率",
+        "level_label": "Level {n}",
+        "act_node_title": "Act {a} - Level {l}"
     },
     "enemy": {
         "title": "敵別戦績",
@@ -219,13 +223,16 @@
             "rate": "出現率",
             "avg_t": "平均ターン",
             "hp": "平均HPロス",
-            "p": "平均P変化"
+            "p": "平均P変化",
+            "item_header": "項目",
+            "value_header": "各種変化"
         },
         "combat_types": {
             "Enemy": "通常敵",
             "EliteEnemy": "エリート",
             "Boss": "ボス"
-        }
+        },
+        "toggle_title": "表示項目"
     },
     "run_finder": {
         "title": "プレイ履歴検索",
@@ -449,6 +456,9 @@
             "card_upg": "カード強化",
             "exh_add": "展示品追加",
             "exh_rem": "展示品削除"
-        }
+        },
+        "unit_time": "回",
+        "unit_times": "回",
+        "vs_all_runs": "対 全ラン"
     }
 }

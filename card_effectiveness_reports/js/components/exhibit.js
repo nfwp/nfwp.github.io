@@ -110,7 +110,7 @@ function computeExhAcquisition() {
         }
         EXH_ACQ_CACHE[char] = perEx;
         return perEx;
-    }).catch(() => { EXH_ACQ_CACHE[char] = {}; return EXH_ACQ_CACHE[char]; });
+    }).catch(() => { return {}; });   // 失敗時はキャッシュしない (再試行可能に)
 }
 
 function _exhAcqLabel(type) {
@@ -120,7 +120,12 @@ function _exhAcqLabel(type) {
 }
 
 function exhAcqDetailHtml(perEx, exid) {
-    const e = perEx[exid];
+    const e = perEx && perEx[exid];
+    // キャラ未選択 (?char=All) の場合はキャラ固有データがないため案内を表示
+    if (CURRENT_CHAR === 'All') {
+        const T = UI_TEXT.exhibit || {};
+        return `<span class="rf-mana-note">${T.ex_acq_need_char || 'キャラを選択すると内訳が表示されます (All は集計対象外)'}</span>`;
+    }
     if (!e || !e.total) return `<span class="rf-mana-note">${(UI_TEXT.exhibit || {}).ex_acq_empty || '-'}</span>`;
     const icons = { Enemy: '⚔️', EliteEnemy: '👹', Adventure: '✨', Shop: '🛒', Gap: '🔥', Boss: '🔴', Trade: '🔁', Supply: '📦', initial: '🎁' };
     const colors = { Enemy: '#94a3b8', EliteEnemy: '#a78bfa', Adventure: '#fbbf24', Shop: '#4ade80', Gap: '#fb923c', Boss: '#f87171', Trade: '#f472b6', Supply: '#38bdf8', initial: '#cbd5e1' };

@@ -192,7 +192,8 @@
         "ex_acq_initial": "Initial",
         "ex_acq_other": "Other",
         "ex_toggle_tip": "Click to toggle the acquisition breakdown",
-        "ex_acq_empty": "No acquisition records for this character"
+        "ex_acq_empty": "No acquisition records for this character",
+        "ex_acq_need_char": "Select a character to see the breakdown (All is not aggregated)"
     },
     "route": {
         "title": "Route Selection Tendency",
@@ -206,7 +207,10 @@
         "gap_upgrade": "Upgrade",
         "gap_rest": "Rest",
         "gap_other": "Other",
-        "sample_label": "Sample runs"
+        "sample_label": "Sample runs",
+        "reach_rate": "Reach Rate",
+        "level_label": "Level {n}",
+        "act_node_title": "Act {a} - Level {l}"
     },
     "enemy": {
         "title": "Enemy Combat Analysis",
@@ -219,13 +223,16 @@
             "rate": "Rate",
             "avg_t": "Avg. T",
             "hp": "Avg HP Loss",
-            "p": "Avg P Change"
+            "p": "Avg P Change",
+            "item_header": "Item",
+            "value_header": "Value"
         },
         "combat_types": {
             "Enemy": "Enemy",
             "EliteEnemy": "Elite",
             "Boss": "Boss"
-        }
+        },
+        "toggle_title": "Show columns"
     },
     "run_finder": {
         "title": "Run Finder",
@@ -438,7 +445,33 @@
             "upgrade_exhibit": "Exhibit Upgrade",
             "organized_card_boss_removal": "Organized Item (Boss Removal Change)"
         },
-        "boss_organized_card_note": "Note: For boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated."
+        "boss_organized_card_note": "Note: For boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated.",
+        "total_tab": "Total",
+        "organize_card": "Organized Item (Boss Removal Change)",
+        "node_visits": "Node Visits",
+        "header_card": "Card Name",
+        "header_exhibit": "Exhibit Name",
+        "initial_maybe": "(Initial?)",
+        "shop": "Shop",
+        "shop_remove": "└ Remove",
+        "shop_upgrade": "└ Upgrade",
+        "gap": "Gap",
+        "gap_rest": "└ Rest",
+        "gap_upgrade": "└ Upgrade",
+        "adventure": "Event",
+        "node_type": "Node Type",
+        "avg_global": "Avg/Run (Global Avg)",
+        "perf_title": "Performance Metrics",
+        "header_item": "Item",
+        "header_value": "Score",
+        "sustainability": "Combat Endurance",
+        "dmg_loss": "└ Total Combat Damage taken",
+        "gap_rec": "└ Total Gap Recovery",
+        "cmb_rec": "└ Post-combat Pure Recovery",
+        "vs_prefix": "Vs. ",
+        "vs_suffix": " Performance",
+        "atk_turns": "└ Attack Score",
+        "def_loss": "└ Defense Score"
     },
     "event_analysis": {
         "desc": "Aggregated data for events on '?' nodes. Events are ordered chronologically. <br>⚠️Choice tracking is simplified due to complexity.",
@@ -449,7 +482,10 @@
             "card_upg": "Cards Upgraded",
             "exh_add": "Exhibits Added",
             "exh_rem": "Exhibits Removed"
-        }
+        },
+        "unit_time": " time",
+        "unit_times": " times",
+        "vs_all_runs": "vs. All Runs"
     },
     "deck_diagnosis": {
         "title": "Similar Run Search",
