@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドーナッツにはなぜ穴があいているのか</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.8;
+    }
+    h1 { text-align: center; margin-bottom: 1.5em; }
+    h2 { margin-top: 2em; border-bottom: 2px solid #ccc; padding-bottom: 4px; }
+    a { text-decoration: none; color: #0070f3; }
+    a:hover { text-decoration: underline; }
+    .section-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1.2em;
+      margin-top: 2em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* グラフテーブル */
+    .styled-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 1em;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .styled-table thead tr {
+      background-color: #009879;
+      color: #fff;
+      text-align: left;
+    }
+    .styled-table th, .styled-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+
+    /* 翻訳カード */
+    .translation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 1em;
+    }
+    .translation-grid a {
+      display: block;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .translation-grid a:hover {
+      background: #e9f5ff;
+      border-color: #0070f3;
+    }
+
+    /* 改行を反映 */
+    p {
+      white-space: pre-line;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 3em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>試作ホットケーキ第一号</h1>
+
+<!-- 🟦 グラフセクション -->
+<div class="section-box">
+  <h2>📊 グラフ / Graph Links</h2>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>怪しいグラフ (Ja ver)</th>
+        <th>potato graph (En ver)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lbol Bubble Charts</td>
+        <td><a href="card_effectiveness_reports/report.html?lang=ja">リンク</a></td>
+        <td><a href="card_effectiveness_reports/report.html?lang=en">Link</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="last-update">読み込み中...</p>
+</div>
+
+<!-- 🕒 更新履歴 -->
+<div class="section-box">
+  <h2>🕒 グラフ更新履歴 / Graph Change Log</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <ul>
+      <li><strong>2026-11-19:</strong> カード総選挙タブを改善 — 「最終採用率*」を「<strong>ドラフト採用率*</strong>」に改名し、カード一覧と同じ定義の「最終採用率*」を追加。詳細に <strong>Act別ピック率</strong> (未保有時/保有時)・<strong>提示フロー</strong> (1回目/2回目以降のピック率)・<strong>ピック率</strong> (見送りを含む選択割合) を追加。<strong>Pレート・合成Pスコア</strong>をカード一覧のフィルタ/詳細・カード性能タブ (Top40 ランキング・ホバー) にも展開 (実験的機能)。</li>
+      <li><strong>2026-11-19:</strong> 類似ラン検索の<strong>ピン留め</strong>を強化 — ピンしたカードは「デッキと同じ枚数以上」所持のランのみを候補に (例: 昇天脚×2 をピン → 2 枚以上積んでいるランのみ)。</li>
+      <li><strong>2026-11-18:</strong> <strong>カード総選挙タブ</strong> (テスト機能 β) を追加 — カード一覧タブの次に入っています。A vs B で同時に提示されたカードの選択を「総選挙 (対戦)」とみなし、<strong>Pレート</strong> (Elo 方式のレート・平均 1000) と積み指標 (最終採用率*・平均枚数・2枚以上率) から<strong>合成Pスコア</strong>を算出。散布図・カード表・クリック詳細 (ドラフト勝率・よく負けた相手 Top5・カード性能の箱ひげ) 付き。*付きの数値は歴史喰いのような使用時消滅カードも含む実質値。キャラごとに独立推定のためキャラ間の数値は直接比較不可。詳しくは使い方タブへ。英語版 ( locales) も同時対応。</li>
+      <li><strong>2026-11-17:</strong> ラン検索を強化 — ①展示品タブの<strong>入手内訳をクリックで詳細表示</strong> (分類ごとの %・件数・積み上げバー)。②敵グループフィルターの表示名解決を<strong>同名コードすべて</strong>に拡張し、<strong>「Act/Lv を指定した場合、その Act/Lv での遭遇のみに限定する」チェックボックス</strong>を追加 — 戦闘レコードにノード位置 (Act・Level) を記録するパイプライン拡張により、Act+Level+敵グループの厳密指定が可能になりました (ルート選択の敵 🔍 リンクは厳密モード)。③最終デッキ条件がマナ条件未指定時に効かない不具合を修正。いずれも検索履歴・共有リンク対応。</li>
+      <li><strong>2026-11-16:</strong> ラン検索に<strong>「ルート条件」フィルター</strong>を追加 — Act別・マス種別 (敵/エリート/イベント/ショップ/ギャップ) の通過回数 (以上/以下/一致) で絞り込み。検索履歴と共有リンクにも含まれます。詳しくは使い方タブへ。</li>
+      <li><strong>2026-11-15:</strong> <strong>類似ラン検索タブ</strong> (β) を追加 — デッキ・展示品・📌必須・終了時マナ基盤の条件で似たランを検索し、成績・ルート傾向・補強候補カード・類似ラン一覧を表示。ラン検索結果の 🔍 からも投入できます。ラン検索にも終了時マナ基盤の条件と表示列を追加。詳しくは使い方タブへ。</li>
+      <li><strong>2026-11-01:</strong> ラン検索に<strong>「統計外も含める」チェックボックス</strong>を追加 (サンプリングで除外されたランも検索・比較可能に。初回ON時のみ追加ロード)。比較テーブルに<strong>「グラフ」列</strong>を追加。旧履歴フィルターは敵グループフィルターに統合し、カード・展示品フィルターを<strong>「含む / 含まない」方式</strong>に統一 (PCでは左右2列)。エリートアイコンのホバーに敵グループ名を表示、履歴の削除ボタンを押しやすくする等の改善。統計外ランでもルートアイコン・苦戦グラフ等を表示。</li>
+      <li><strong>2026-10-31:</strong> 比較グラフの<strong>既定表示を「区間別ライフ / 区間別ターン」のみ</strong>に変更 (PCでは1〜2枚のとき縦2倍で表示)。「遭遇した戦闘 (敵ごと)」グラフのホバーに<strong>敵ごとの HP損失・ターン数の箱ひげ (IQR・中央値)</strong>を追加 — 同じ Act×敵種別内で軸を共通化し、行背景を区間 (序盤/中盤/終盤/エリート/ボス) で色分け。キャラ指定時はそのキャラ全ランの平均を参考値で併記。</li>
+      <li><strong>2026-10-28:</strong> ラン検索に<strong>プレイヤー名フィルター</strong>を追加 (部分一致・入力補完・共有リンク対応)。比較グラフのホバーに <strong>IQR 帯と中央値</strong>を追加。検索履歴に<strong>ばらつきグラフ (区間別 IQR幅)</strong>を追加し、グラフの枚数選択・クリック拡大に対応。</li>
+      <li><strong>2026-10-27:</strong> イベント分析を刷新: 選択肢にカード・展示品の<strong>実名ラベル</strong>を表示し、イベントごとの<strong>カード追加/削除/強化・展示品追加/削除の Top10</strong> を追加。ラン検索の区間ライフと敵別戦績のライフ喪失を「回復込みの純損失」に統一。</li>
+      <li><strong>2026-10-19:</strong> ラン検索に「遭遇した戦闘 (敵ごと)」の集計グラフを追加 (遭遇回数 / 苦戦割合、切替対応)。※ボスのスペルカード判定は推定値。詳しくは使い方タブへ。</li>
+      <li><strong>2026-10-19:</strong>統計内に使い方を追加。</li>
+      <li><strong>2026-09-27:</strong>カード一覧のカード名に詳細タブを追加。</li>
+      <li><strong>2026-09-23:</strong>LBOL MP除外のために正邪のライフが999より多いものを除外するように変更。</li>
+      <li><strong>2026-09-22:</strong>対象範囲v1.6.1~1.8.1に変更。StsMapは除外。</li>
+      <li><strong>2026-07-05:</strong>イベント分析のタブを追加。</li>
+      <li><strong>2026-07-04:</strong>ACT別トレンド→ACT1に<strong>より詳細な行動傾向レポート</strong>を追加。</li>
+      <li><strong>2026-06-27:</strong>【試験的な機能】ラン検索を実装しました。実験中なので不具合がある可能性もあります。lbol logsのすべてのデータを検索できるわけではないです。</li>
+      <li><strong>2026-06-07:</strong>Act別トレンド分析に整頓項目を追加。ボス戦闘後の変化削除までしかわからないため、厳密な整頓ではないです。</li>
+      <li><strong>2026-05-07:</strong>Act別トレンド分析を拡張。踏破マスの内訳をより詳細に。性能・リソース指標項目を追加。継戦能力は100から「戦闘での被弾」と「スキマでの回復」を引いた値です。スキマでの回復は、強化機会の喪失（ペナルティ）として計算されます。</li>
+      <li><strong>2026-04-03:</strong>ACT3 boss/ACT4 bossの状況別使用率がおかしかったのを修正。総合タブや使用率に影響はないです。</li>
+      <li><strong>2026-02-24:</strong>ACT別トレンド分析のタブを追加。各ACTでどのカードが追加強化削除されてるか等がわかりやすく把握できます。</li>
+      <li><strong>2025-11-24:</strong>キャラMOD適用済みのデータに対しては、バニラには存在しないカードや展示品が選択されている場合除外するように変更しました。これにより対象サンプルデータを増やせると思います。</li>
+      <li><strong>2025-11-18:</strong>各敵遭遇時のサンプルデッキリンクを追加。(うまく飛ばないときもあるのでlevelを確認ください)。</li>
+      <li><strong>2025-11-07:</strong>傾向値の計算方法をわずかに変更(以前より極端な変動は減ると思います)</li>
+      <li><strong>2025-11-05:</strong> カードの集計方法をソフトフィルターに変更。(今までは各状況において規定回数を満たしていて5%以下は除外されていたため5%境界付近の変動が与える影響が大きかったですが、今は影響は最低限になりました。</li>
+      <li><strong>2025-11-03:</strong> 制限付きで全プレイヤーを対象に。カードタブにサンプルランを追加。</li>
+      <li><strong>2025-11-01:</strong> 1.8.0に対応。集計方法を変更。共起カードにそのカードだけ突出して高いものは★を追加。</li>
+      <li><strong>2025-10-13:</strong> カード使用率のタブを追加。</li>
+      <li><strong>2025-10-05:</strong> 初版リリース。</li>
+    </ul>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <ul>
+      <li><strong>2026-11-19:</strong> Card Election tab improvements — &quot;Final adoption*&quot; was renamed to <strong>Draft adoption*</strong>, and a new &quot;Final adoption*&quot; (same definition as the Card List tab) was added. The details now show <strong>per-Act pick rates</strong> (not-owned/owned), an <strong>offering flow</strong> (pick rates for the 1st/2nd+ offers) and the <strong>pick rate</strong> (selection share including passes). <strong>P-rate and P-score</strong> were also rolled out to the Card List tab (filter/details) and the Card Performance tab (Top 40 rankings, hover) as experimental features.</li>
+      <li><strong>2026-11-19:</strong> <strong>Pinning</strong> in Similar Run Search was enhanced — a pinned card now requires runs that own <strong>at least the same number of copies as your deck</strong> (e.g. pin Shoutenkyaku ×2 → only runs stacking 2+).</li>
+      <li><strong>2026-11-18:</strong> Added the <strong>Card Election tab</strong> (test feature β) — placed right after the Card List tab. Choices between cards offered as &quot;A or B&quot; are treated as an <strong>election (head-to-head matchup)</strong>, and a <strong>P-score</strong> is computed from the <strong>P-rate</strong> (an Elo-style rating, mean 1000) and stacking metrics (final adoption*, avg. copies, 2+ copies rate). Includes a scatter plot, card table and click-through details (draft win rate, Top 5 opponents it lost to, card performance box plots). Values marked with * are effective values that also include cards which vanish upon use (e.g. Devour History). Each character is estimated independently, so numbers cannot be compared directly between characters. See the How to Use tab for details. The English version (locales) is supported as well.</li>
+      <li><strong>2026-11-17:</strong> Run Finder enhancements &mdash; (1) the Exhibit tab now shows <strong>acquisition breakdown details on click</strong> (per-category %, counts and stacked bars). (2) The enemy group filter now resolves display names to <strong>all matching codes</strong>, and a new <strong>&quot;restrict encounters to the specified Act/Lv&quot; checkbox</strong> was added &mdash; the pipeline now records each fight&#8217;s node position (Act/Level), enabling strict Act+Level+enemy-group filtering (the enemy 🔍 links from route selection use strict mode). (3) Fixed a bug where the final-deck card condition was ignored when no mana condition was set. All included in search history and share links.</li>
+      <li><strong>2026-11-16:</strong> Added a <strong>&quot;Route conditions&quot; filter</strong> to the Run Finder &mdash; filter runs by node-type counts per Act (enemy / elite / event / shop / gap, with or more / or less / exactly). Included in search history and share links. See the How-to tab for details.</li>
+      <li><strong>2026-11-15:</strong> Added a <strong>Similar Run Search tab</strong> (β) &mdash; find runs similar to your deck + exhibits + 📌 must-haves + final mana base, and view the group&#8217;s stats, route tendencies, reinforcement candidates and the run list. Also reachable via the 🔍 icon in Run Finder results. The Run Finder also gained a final mana base condition &amp; display column. See the How-to tab for details.</li>
+      <li><strong>2026-11-01:</strong> Added an <strong>"Include non-stat runs" checkbox</strong> to the Run Finder (runs excluded by per-player sampling can now be searched; extra data loads only the first time it is enabled). Added a <strong>"Graph" column</strong> to the history comparison table. The old history filter was merged into the enemy group filter, and card/exhibit filters were unified to the <strong>include/exclude style</strong> (two columns on PC). Elite icons now show enemy group names on hover, the history delete button is easier to press, and non-stat runs show route icons / hard-fight charts as well.</li>
+      <li><strong>2026-10-31:</strong> Comparison charts now <strong>default to "Per-segment life / turns"</strong> (drawn twice as tall on PC when 1&#8211;2 charts are visible). The "Battles Fought (by Enemy)" chart now shows <strong>per-enemy HP-loss / turn box-whiskers (IQR with median)</strong> on hover &#8212; with an axis shared within each Act &#215; enemy kind and rows color-coded by group (early/mid/late/elite/boss). With a character specified, that character&#8217;s all-run average is overlaid as a reference.</li>
+      <li><strong>2026-10-28:</strong> Added a <strong>Player name filter</strong> to the Run Finder (partial match, autocomplete, share-link support). Comparison charts now show an <strong>IQR band with median</strong> on hover. Added <strong>spread charts (IQR width by segment)</strong> to the search history, with chart-count selection and click-to-zoom.</li>
+      <li><strong>2026-10-27:</strong> Reworked Event Analysis: choices now show <strong>real card/exhibit name labels</strong>, plus a <strong>Top-10 block</strong> of card/exhibit changes per event. Segment life (Run Finder) and enemy-analysis life loss were unified as net loss (heals included).</li>
+      <li><strong>2026-10-19:</strong> Added a &quot;Battles Fought (by enemy)&quot; aggregate chart to the Run Finder (encounter counts / hard-fight rates, count ⇄ percentage toggle). * Boss spell card values are estimates. See the How-to tab for details.</li>
+      <li><strong>2026-10-19:</strong>Added How to Use Tab.</li>
+      <li><strong>2026-09-27:</strong> Added a Details tab to the card names in the card list.</li>
+      <li><strong>2026-09-23:</strong> Excluded runs where Seija's HP exceeds 999 to filter out LBOL MP.</li>
+      <li><strong>2026-09-22:</strong> Scope changed to v1.6.1–1.8.1. StsMap excluded.</li>
+      <li><strong>2026-07-05:</strong>Added a tab for Event Analysis</li>
+      <li><strong>2026-07-04:</strong>Added a more detailed <strong>Act 1 Player Tendency Report</strong> to <strong>Act Trends</strong>.</li>
+      <li><strong>2026-06-27:</strong>[Experimental Feature] Run Search is now available! It's still a work in progress, so you may run into bugs. Also, not everything in lbol logs can be searched yet.</li>
+      <li><strong>2026-06-07:</strong>Added deck organization metrics to the Act-based trend analysis. Since only changes up to boss-fight removals can be tracked, this is not a strictly accurate deck organization analysis.</li>
+      <li><strong>2026-05-07:</strong>Expanded the Act-based trend analysis. Added a more detailed breakdown of traversed tiles, as well as new performance and resource metrics. Sustainability is calculated as 100 minus "Combat Damage" and "Gap Recovery". Recovery is treated as an opportunity cost (penalty) for missing upgrades.</li>
+      <li><strong>2026-04-03:</strong> Fixed incorrect situational usage rates for ACT3 and ACT4 bosses. This does not affect the Overview tab or overall usage rates.</li>
+      <li><strong>2026-02-24:</strong> Added a tab for ACT-specific trend analysis. You can easily see which cards are added, upgraded, or removed in each ACT.</li>
+      <li><strong>2025-11-24:</strong>For data with character mods applied, I changed it so that any samples selecting cards or exhibits that don’t exist in the vanilla game are now excluded. This should allow us to increase the amount of valid sample data.</li>
+      <li><strong>2025-11-18:</strong> Added sample deck links for each enemy encounter. (If the link doesn’t jump correctly, please check the level.) Fixed some leftover Japanese text in the English version.</li>
+
+      <li><strong>2025-11-07:</strong> Made a slight adjustment to the trend calculation method (this should reduce extreme fluctuations compared to before).</li>
+      <li><strong>2025-11-05:</strong> Changed the card aggregation method to a soft filter. (Previously, cards were excluded if they appeared in less than 5% of cases that met the required count for each situation, which caused large fluctuations near the 5% threshold. Now, the impact of such fluctuations has been minimized.)</li>
+      <li><strong>2025-11-03:</strong> Now includes all players with some restrictions. Added sample runs to the card tab.</li>
+      <li><strong>2025-11-01:</strong> Updated for version 1.8.0. Changed the aggregation method. Added a ★ mark to highlight standout co-occurring cards.</li>
+      <li><strong>2025-10-13:</strong> Added a card usage tab.</li>
+      <li><strong>2025-10-05:</strong> Initial release.</li>
+    </ul>
+  </details>
+</div>
+
+<!-- 📖 概要 -->
+<div class="section-box">
+  <h2>📖 概要 / Overview</h2>
+  <details>
+    <summary>📘 日本語</summary>
+    <p>
+本グラフは、ローグライクカードゲーム <strong>『東方光耀夜 (LBoL)』</strong> における
+各カードのパフォーマンスや共起関係を可視化したものです。  
+使用率・同時採用傾向・ルート選択など分析しています。
+
+詳しい使い方等はゲーム内の<strong>使い方</strong>
+を参照ください。
+    </p>
+  </details>
+  <details>
+    <summary>📗 English</summary>
+    <p>
+This graph visualizes the performance and co-occurrence relationships of each card in the roguelike deck-building game <strong>“Touhou Lost Branch of Legend (LBoL)”</strong>.  
+It analyzes factors such as usage rate, simultaneous adoption tendencies, route selection, and so on.
+
+For detailed instructions and other information, please refer to <strong>How to Use</strong>
+ within the statistics section.
+    </p>
+  </details>
+</div>
+
+<!-- 📮 連絡先（開閉式） -->
+<details class="section-box">
+  <summary>📮 連絡先 / Contact</summary>
+
+    <p>
+      📘 <strong>日本語</strong><br>
+      ご意見・不具合報告・データに関する質問などは、以下の Discord までお願いします。
+      サーバー内の指定チャンネルでお気軽にどうぞ。普段はmod翻訳をしているので、mod関連のチャンネルか日本語チャンネルにいます。
+      Discord名: <strong>neff</strong>
+      サーバー: <strong>Touhou Lost Branch of Legend（公式 Discord）</strong>
+    </p>
+
+    <p>
+      📗 <strong>English</strong><br>
+      For feedback, bug reports, or questions about the data, please contact me on Discord.
+      Feel free to post in the designated channel on the server. I usually work on mod translations, so you can find me in the mod-related channels or the Japanese channel.
+      Discord name: <strong>neff</strong>
+      Server: <strong>Touhou Lost Branch of Legend (official Discord)</strong>
+    </p>
+
+</details>
+
+
+
+<script>
+// card_effectiveness_reports ディレクトリの最新コミット取得
+fetch("https://api.github.com/repos/nfwp/nfwp.github.io/commits?path=card_effectiveness_reports/data&per_page=1")
+  .then(res => res.json())
+  .then(data => {
+    const commit = data[0];
+    const date = new Date(commit.commit.author.date);
+    const message = commit.commit.message;
+
+    document.getElementById("last-update").textContent =
+      `${date.toLocaleString("ja-JP")} (${message})`;
+  })
+  .catch(err => {
+    document.getElementById("last-update").textContent = "取得に失敗しました";
+  });
+</script>
+
+
+<footer>
+  © 2025 nfwp.github.io |
+</footer>
+</body>
+</html>

@@ -1,0 +1,206 @@
+﻿/* =========================================================
+   使い方 (マニュアル) タブ用スタイル — ドキュメント (記事) 形式
+   WordPress / Markdown 風の見出し + 本文インデント
+   ========================================================= */
+
+.manual-doc {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 24px 60px;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: #1e293b;
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 10px;
+}
+
+.manual-intro {
+    color: #64748b;
+    font-size: 0.95em;
+    margin: 14px 0 22px;
+}
+
+/* --- 目次ボックス --- */
+.manual-toc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 0 0 30px;
+    font-size: 0.94em;
+}
+
+.manual-toc b {
+    color: #334155;
+    margin-right: 8px;
+}
+
+.manual-toc ol {
+    margin: 8px 0 0;
+    padding: 0;
+}
+
+.manual-toc li {
+    margin: 3px 0 3px 20px;
+}
+
+/* --- 大見出し (h2): 下線バー + アクセント色 --- */
+.manual-doc h2 {
+    font-size: 1.38em;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 2.2em 0 0.9em;
+    padding: 0 0 7px;
+    border-bottom: 3px solid transparent;
+    display: block;
+}
+
+/* 各セクションのアクセント色 (下線 + 文字色) */
+.manual-doc h2.c-blue   { border-bottom-color: #3b82f6; color: #1d4ed8; }
+.manual-doc h2.c-violet { border-bottom-color: #8b5cf6; color: #6d28d9; }
+.manual-doc h2.c-orange { border-bottom-color: #f97316; color: #c2410c; }
+.manual-doc h2.c-pink   { border-bottom-color: #ec4899; color: #be185d; }
+.manual-doc h2.c-teal   { border-bottom-color: #14b8a6; color: #0f766e; }
+.manual-doc h2.c-indigo { border-bottom-color: #6366f1; color: #4338ca; }
+.manual-doc h2.c-slate  { border-bottom-color: #64748b; color: #475569; }
+.manual-doc h2.c-sky    { border-bottom-color: #0ea5e9; color: #0369a1; }
+
+/* 最初の大見出しはマージンを詰める */
+.manual-doc h2:first-of-type {
+    margin-top: 0.6em;
+}
+
+/* --- 小見出し (h3) --- */
+.manual-doc h3 {
+    font-size: 1.05em;
+    font-weight: bold;
+    margin: 1.5em 0 0.5em;
+    padding-left: 10px;
+    border-left: 4px solid #cbd5e1;
+    color: #334155;
+}
+
+/* --- 本文コンテナ: インデント --- */
+.manual-content {
+    padding: 0 0 6px 18px;
+    margin: 0 0 0.6em;
+    border-left: 1px dashed #dbe3ec;
+}
+
+.manual-content p {
+    margin: 0.55em 0;
+}
+
+.manual-content ul,
+.manual-content ol {
+    margin: 0.55em 0;
+}
+
+.manual-content li {
+    margin: 0.35em 0;
+}
+
+.manual-content b {
+    color: #0f172a;
+}
+
+/* 定義リスト — 各項目の上に薄い区切り線 */
+.manual-dl dt {
+    font-weight: bold;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid #cfd8e3;
+    color: #0f172a;
+}
+
+/* 先頭の項目には線を付けない */
+.manual-dl dt:first-of-type {
+    margin-top: 0;
+    padding-top: 2px;
+    border-top: none;
+}
+
+.manual-dl dd {
+    margin: 3px 0 0 18px;
+    color: #475569;
+}
+
+.manual-note {
+    margin-top: 14px;
+    font-size: 0.9em;
+    color: #64748b;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 6px;
+}
+
+/* テーブル */
+.manual-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.93em;
+    margin: 0.5em 0;
+}
+
+.manual-table th,
+.manual-table td {
+    border: 1px solid #e2e8f0;
+    padding: 7px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.manual-table tr:nth-child(odd) td {
+    background: #fbfcfe;
+}
+
+.manual-table th {
+    background: #f1f5f9;
+    white-space: nowrap;
+}
+
+/* リンク */
+.manual-doc a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.manual-doc a:hover {
+    text-decoration: underline;
+}
+
+/* ジャンプ時のハイライト */
+.manual-flash {
+    animation: manual-flash-anim 1.5s ease;
+    border-radius: 6px;
+}
+
+@keyframes manual-flash-anim {
+    0%   { background-color: rgba(59, 130, 246, 0.22); }
+    100% { background-color: transparent; }
+}
+
+/* モバイル */
+@media (max-width: 768px) {
+    .manual-doc {
+        padding: 4px 12px 40px;
+        font-size: 13.5px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .manual-doc h2 {
+        font-size: 1.22em;
+        border-bottom-width: 2.5px;
+    }
+
+    .manual-content {
+        padding-left: 12px;
+    }
+
+    .manual-table {
+        font-size: 0.86em;
+    }
+}

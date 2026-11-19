@@ -1,0 +1,67 @@
+/* card-election.css — P-55 カード総選挙タブ (検証デモ score_demo2.html から移植)
+   全セレクタを #card-election-tab スコープに限定 (サイト本体に影響しないようにする) */
+#card-election-tab .ce-loading { color: #64748b; padding: 24px 8px; }
+#card-election-tab .ce-beta-badge { display: inline-block; vertical-align: middle; margin-left: 8px;
+    padding: 2px 10px; border-radius: 999px; font-size: .72em; font-weight: 700;
+    color: #92400e; background: #fef3c7; border: 1px solid #fcd34d; }
+#card-election-tab { color: #223; font-size: 14px; }
+#card-election-tab * { box-sizing: border-box; }
+#card-election-tab h2 { font-size: 16px; margin: 22px 0 6px; }
+#card-election-tab p.ce-muted { color: #667; font-size: 12px; margin: 4px 0; }
+#card-election-tab .ctrls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: #fff; border: 1px solid #dfe3ec; border-radius: 8px; padding: 10px 12px; margin: 12px 0; }
+#card-election-tab .ctrls label { font-size: 12px; color: #556; }
+#card-election-tab select, #card-election-tab input[type=text] { font-size: 13px; padding: 4px 6px; border: 1px solid #c8cddb; border-radius: 5px; background: #fff; }
+#card-election-tab input[type=text] { width: 180px; }
+#card-election-tab #ce-scatter-box { background: #fff; border: 1px solid #dfe3ec; border-radius: 8px; padding: 10px; position: relative; }
+#card-election-tab svg text { font-size: 11px; fill: #667; }
+#card-election-tab svg .grid { stroke: #eceff5; stroke-width: 1; }
+#card-election-tab svg .axis { stroke: #aab; stroke-width: 1; }
+#card-election-tab svg .guide { stroke: #b06; stroke-width: 1; stroke-dasharray: 4 3; opacity: .55; }
+#card-election-tab .bubble { stroke: #fff; stroke-width: 1; cursor: pointer; }
+#card-election-tab .bubble.sel { stroke: #223; stroke-width: 2; }
+#card-election-tab #ce-tip { position: absolute; display: none; pointer-events: none; background: #fff; color: #223; border: 1px solid #c8cddb; font-size: 12px; border-radius: 6px; padding: 6px 9px; z-index: 5; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+#card-election-tab #ce-tip img { width: 16px; height: 16px; border-radius: 3px; vertical-align: -3px; margin-right: 4px; }
+#card-election-tab #ce-detail { background: #fff; border: 1px solid #dfe3ec; border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-size: 13px; }
+#card-election-tab #ce-detail img.av { width: 28px; height: 28px; border-radius: 5px; vertical-align: -7px; margin-right: 6px; }
+#card-election-tab table { border-collapse: collapse; width: 100%; background: #fff; font-size: 13px; }
+#card-election-tab #ce-tbl { min-width: 960px; }
+#card-election-tab th, #card-election-tab td { border: 1px solid #e2e5ee; padding: 4px 5px; text-align: right; white-space: nowrap; }
+#card-election-tab th { background: #eef1f7; cursor: pointer; user-select: none; position: sticky; top: 0; }
+#card-election-tab th.l, #card-election-tab td.l { text-align: left; padding: 3px 5px; }
+#card-election-tab td img.av { width: 16px; height: 16px; border-radius: 3px; vertical-align: -4px; }
+#card-election-tab td .ownname { font-size: 11px; margin-left: 3px; }
+#card-election-tab .stchip { display: inline-block; margin: 1px 4px 1px 0; padding: 1px 6px; background: #eef2f5; border: 1px solid #dcdfe6; border-radius: 4px; font-size: 11px; }
+#card-election-tab .lchip { display: inline-block; margin: 1px 3px 1px 0; padding: 0 5px; background: #eef4ff; border: 1px solid #b9cdf3; border-radius: 4px; font-size: 10px; color: #2a62c9; text-decoration: none; }
+#card-election-tab .lchip:hover { background: #dce8fd; }
+#card-election-tab .pstack { display: flex; height: 16px; border-radius: 4px; overflow: hidden; margin-top: 4px; border: 1px solid #e2e5ee; }
+#card-election-tab .pstack .pseg { color: #fff; font-size: 10px; line-height: 14px; text-align: center; white-space: nowrap; overflow: hidden; }
+#card-election-tab .pstack .psegw { background: #4caf7d; }
+#card-election-tab .pstack .psegl { background: #d9534f; }
+#card-election-tab .pstack .psegs { background: #aab2c0; }
+#card-election-tab .acttab { width: auto; min-width: 240px; font-size: 12px; margin-top: 4px; }
+#card-election-tab .acttab th { background: #eef1f7; cursor: default; position: static; }
+#card-election-tab .acttab th, #card-election-tab .acttab td { padding: 2px 8px; }
+#card-election-tab tr.click:hover { background: #f2f6ff; cursor: pointer; }
+#card-election-tab tr.selrow { background: #fdf3d7 !important; }
+#card-election-tab #ce-detail td.imp { background: #fff8e1; }
+#card-election-tab #ce-detail td.imp.l { font-weight: 600; }
+#card-election-tab #ce-detail td.imp.num { font-weight: bold; }
+#card-election-tab .num { font-variant-numeric: tabular-nums; }
+#card-election-tab .bar { display: inline-block; height: 8px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
+#card-election-tab .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 12px; margin: 6px 0; }
+#card-election-tab .legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+#card-election-tab .ticon { width: 15px; height: 15px; vertical-align: -3px; margin-right: 3px; }
+#card-election-tab .lnk { color: #2a62c9; cursor: pointer; text-decoration: underline; }
+#card-election-tab .prow { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; padding: 1px 0; }
+#card-election-tab .prow span:first-child { color: #556; }
+#card-election-tab .prow.perfline { gap: 8px; align-items: center; }
+#card-election-tab .prow.perfline span:first-child { flex: none; min-width: 50px; color: #556; }
+#card-election-tab .prow.perfline .mboxwrap { display: inline-flex; flex-direction: column; flex: 1 1 120px; min-width: 100px; max-width: 420px; margin-left: 8px; }
+#card-election-tab .prow.perfline .mboxwrap .mbox { width: 100%; height: 22px; display: block; }
+#card-election-tab .mboxticks { position: relative; height: 11px; }
+#card-election-tab .mboxticks span { position: absolute; transform: translateX(-50%); font-size: 9px; color: #889; line-height: 11px; }
+#card-election-tab #ce-tip .prow.perfline .mbox { width: auto; height: auto; }
+#card-election-tab #ce-tip .prow.perfline { margin-top: 4px; }
+#card-election-tab #ce-tip .prow.perfline span:first-child { min-width: 26px; color: #556; }
+#card-election-tab #ce-tip .prow.perfline b { min-width: 34px; text-align: right; font-size: 11px; color: #223; }
+#card-election-tab #ce-tip .mboxticks span { color: #99a; }

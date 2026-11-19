@@ -1,0 +1,315 @@
+/* deck-diagnosis.css — P-28 デッキ診断タブ (自動生成: make_deck_diagnosis_component.py)
+   deck_diagnosis_test.py の CSS を #deck-diagnosis-tab スコープに前置したもの */
+#deck-diagnosis-tab .dd-loading { color:#64748b; padding:24px 8px; }
+/* テスト機能バッジ (要望1: ヘッダの info スタイル化 + テスト機能の強調表示) */
+#deck-diagnosis-tab .dd-beta-badge { display:inline-block; vertical-align:middle; margin-left:8px;
+    padding:2px 10px; border-radius:999px; font-size:.72em; font-weight:700;
+    color:#92400e; background:#fef3c7; border:1px solid #fcd34d; }
+#deck-diagnosis-tab {
+  --line:#d8dee9; --muted:#64748b; --accent:#2563eb;
+}
+#deck-diagnosis-tab * {
+  box-sizing: border-box;
+}
+#deck-diagnosis-tab {
+  font-family: "Segoe UI", "Meiryo", sans-serif; background:#f4f6fa; color:#1e293b;
+       max-width: 1080px; margin: 24px auto; padding: 0 16px; line-height: 1.65;
+}
+#deck-diagnosis-tab h1 {
+  font-size: 1.5em; text-align:center;
+}
+#deck-diagnosis-tab h2 {
+  font-size: 1.15em; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; margin-top: 2.2em;
+}
+#deck-diagnosis-tab .panel {
+  background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; margin-top:16px; box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+#deck-diagnosis-tab .row {
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+}
+#deck-diagnosis-tab .muted {
+  color: var(--muted); font-size: .92em;
+}
+#deck-diagnosis-tab .note {
+  background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:8px 12px; font-size:.9em; margin-top:10px;
+}
+#deck-diagnosis-tab .char-btn, #deck-diagnosis-tab .opt-btn {
+  padding:5px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; cursor:pointer; font-size:.9em;
+}
+#deck-diagnosis-tab .char-btn.active {
+  background:var(--accent); color:#fff; border-color:var(--accent);
+}
+#deck-diagnosis-tab #deck-input {
+  width: 320px; padding:6px 8px; border:1px solid var(--line); border-radius:6px;
+}
+#deck-diagnosis-tab .chip {
+  display:inline-flex; align-items:center; gap:4px; background:#eef2ff; border:1px solid #c7d2fe;
+        border-radius:14px; padding:2px 8px; font-size:.85em; margin:2px 3px 2px 0;
+}
+#deck-diagnosis-tab .chip button {
+  border:none; background:transparent; cursor:pointer; font-size:1em; padding:0 2px;
+}
+#deck-diagnosis-tab .chip.pinned {
+  background:#fff7ed; border-color:#f59e0b;
+}
+#deck-diagnosis-tab .chip .pin-mark {
+  margin-right:3px;
+}
+#deck-diagnosis-tab .chip button[data-a=pin] {
+  opacity:.5;
+}
+#deck-diagnosis-tab .chip.pinned button[data-a=pin] {
+  opacity:1;
+}
+#deck-diagnosis-tab /* チップ新UI (2026-11-15): 名前太字 + 演算ボタンを .chip-ops にまとめた */
+.chip-ops {
+  display:inline-flex; gap:3px; margin-left:5px;
+}
+#deck-diagnosis-tab .chip-ops button {
+  border:1px solid #c7d2fe; background:#fff; border-radius:6px; min-width:20px; height:20px; line-height:1; font-size:.82em; padding:0 4px;
+}
+#deck-diagnosis-tab .chip-ops button:hover {
+  background:#e0e7ff;
+}
+#deck-diagnosis-tab .chip-ops .del-btn:hover {
+  background:#fee2e2; border-color:#fca5a5; color:#b91c1c;
+}
+#deck-diagnosis-tab .chip .pin-btn {
+  border:none; background:transparent; cursor:pointer; font-size:.9em; opacity:.45; padding:0 3px;
+}
+#deck-diagnosis-tab .chip.pinned .pin-btn {
+  opacity:1;
+}
+#deck-diagnosis-tab .chip .cnt {
+  font-weight:700;
+}
+#deck-diagnosis-tab /* ⑩ 類似ラン一覧: 📌必須条件に一致した項目 (赤字・アイコンなし) */
+.hit-pin {
+  color:#dc2626; font-weight:700;
+}
+#deck-diagnosis-tab /* マナ基盤フィルタ (② 診断条件) */
+.mana-filters {
+  display:inline-flex; flex-wrap:wrap; gap:6px;
+}
+#deck-diagnosis-tab .mana-cond {
+  display:inline-flex; align-items:center; gap:2px; font-size:.92em;
+}
+#deck-diagnosis-tab .mana-cond input {
+  width:2.6em; padding:2px 4px; border:1px solid var(--line); border-radius:6px;
+}
+#deck-diagnosis-tab /* 📌 必須条件バッジ (母集団サマリー) */
+.pin-badge {
+  color:#b45309; background:#fff7ed; border:1px solid #f59e0b; border-radius:999px; padding:0 7px; font-size:.85em; font-weight:700;
+}
+#deck-diagnosis-tab /* ⑩ マナ基盤 (色ドット+個数のコンパクト表記) + プレイID幅の抑制 */
+.col-mana {
+  white-space:nowrap;
+}
+#deck-diagnosis-tab .mana-emoji {
+  letter-spacing:-1.5px; font-size:.92em;
+}
+#deck-diagnosis-tab .mana-icons {
+  display:inline-flex; gap:5px; align-items:center;
+}
+#deck-diagnosis-tab .mg {
+  display:inline-flex; align-items:center; gap:1px; font-size:.8em; color:#475569;
+}
+#deck-diagnosis-tab .mdot {
+  width:9px; height:9px; border-radius:50%; display:inline-block; flex:none;
+}
+#deck-diagnosis-tab .pid-clip {
+  display:inline-block; max-width:96px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:bottom;
+}
+#deck-diagnosis-tab .badge {
+  display:inline-block; border-radius:4px; padding:0 5px; font-size:.75em; margin-right:4px; color:#fff;
+}
+#deck-diagnosis-tab .b-Attack {
+  background:#dc2626
+}
+#deck-diagnosis-tab .b-Defense {
+  background:#2563eb
+}
+#deck-diagnosis-tab .b-Skill {
+  background:#7c3aed
+}
+#deck-diagnosis-tab .b-Ability {
+  background:#059669
+}
+#deck-diagnosis-tab .b-Friend {
+  background:#d97706
+}
+#deck-diagnosis-tab .b-Tool {
+  background:#64748b
+}
+#deck-diagnosis-tab .b-Misfortune {
+  background:#334155
+}
+#deck-diagnosis-tab .b-Unknown {
+  background:#94a3b8
+}
+#deck-diagnosis-tab .bk-e {
+  background:#64748b
+}
+#deck-diagnosis-tab .bk-x {
+  background:#dc2626
+}
+#deck-diagnosis-tab .bk-b {
+  background:#7c3aed
+}
+#deck-diagnosis-tab .bk-s {
+  background:#d97706
+}
+#deck-diagnosis-tab .stat-cards {
+  display:flex; flex-wrap:wrap; gap:10px;
+}
+#deck-diagnosis-tab .stat-card {
+  flex:1 1 130px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; padding:8px 10px; text-align:center;
+}
+#deck-diagnosis-tab .stat-card .v {
+  font-size:1.25em; font-weight:600;
+}
+#deck-diagnosis-tab .stat-card .k {
+  font-size:.8em; color:var(--muted);
+}
+#deck-diagnosis-tab table.tbl {
+  border-collapse: collapse; width:100%; font-size:.9em; background:#fff;
+}
+#deck-diagnosis-tab .tbl th, #deck-diagnosis-tab .tbl td {
+  border:1px solid var(--line); padding:4px 8px; text-align:right;
+}
+#deck-diagnosis-tab .tbl th:first-child, #deck-diagnosis-tab .tbl td:first-child {
+  text-align:left;
+}
+#deck-diagnosis-tab .tbl thead th {
+  background:#eef2f7;
+}
+#deck-diagnosis-tab .tbl tr:hover td {
+  background:#f1f5f9;
+}
+#deck-diagnosis-tab .bar-wrap {
+  background:#e2e8f0; border-radius:4px; height:16px; position:relative; overflow:hidden; min-width:220px;
+}
+#deck-diagnosis-tab .bar-seg {
+  position:absolute; top:0; height:100%;
+}
+#deck-diagnosis-tab .seg-E {
+  background:#94a3b8
+}
+#deck-diagnosis-tab .seg-X {
+  background:#dc2626
+}
+#deck-diagnosis-tab .seg-A {
+  background:#7c3aed
+}
+#deck-diagnosis-tab .seg-G {
+  background:#059669
+}
+#deck-diagnosis-tab .seg-S {
+  background:#d97706
+}
+#deck-diagnosis-tab .legend {
+  font-size:.8em; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap;
+}
+#deck-diagnosis-tab .legend span::before {
+  content:''; display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:3px; vertical-align:middle;
+}
+#deck-diagnosis-tab .lg-E::before {
+  background:#94a3b8
+}
+#deck-diagnosis-tab .lg-X::before {
+  background:#dc2626
+}
+#deck-diagnosis-tab .lg-A::before {
+  background:#7c3aed
+}
+#deck-diagnosis-tab .lg-G::before {
+  background:#059669
+}
+#deck-diagnosis-tab .lg-S::before {
+  background:#d97706
+}
+#deck-diagnosis-tab #diag-btn {
+  background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 26px; font-size:1.05em; cursor:pointer;
+}
+#deck-diagnosis-tab #diag-btn:hover {
+  background:#1d4ed8;
+}
+#deck-diagnosis-tab .result-block {
+  display:none;
+}
+#deck-diagnosis-tab tr.detail-row td {
+  background:#f8fafc;
+}
+#deck-diagnosis-tab .kbd {
+  background:#e2e8f0; border-radius:4px; padding:0 5px; font-size:.85em;
+}
+#deck-diagnosis-tab .run-id-link {
+  font-size:.78em; word-break: break-all; color:var(--accent);
+}
+#deck-diagnosis-tab .run-id-link:hover {
+  text-decoration: underline;
+}
+#deck-diagnosis-tab .en-muted {
+  font-size:.78em; color:var(--muted); font-weight: normal;
+}
+#deck-diagnosis-tab .hit-item {
+  color:#b45309; font-weight:600; background:#fff7d6; border-radius:3px; padding:0 2px;
+}
+#deck-diagnosis-tab .run-tip {
+  position:absolute; z-index:50; max-width:440px; background:#fff; border:1px solid #cbd5e1; border-radius:8px;
+           padding:8px 10px; font-size:.82em; line-height:1.6; box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+#deck-diagnosis-tab .exh-grid {
+  display:grid; gap:2px 16px;
+}
+#deck-diagnosis-tab .exh-cell {
+  border-bottom:1px dotted #e2e8f0; padding:4px 0; font-size:.88em; line-height:1.5;
+}
+#deck-diagnosis-tab .exhibit-name-shining {
+  background-color:#ffe8e8; padding:2px 4px; border-radius:3px;
+}
+#deck-diagnosis-tab .exhibit-name-rare {
+  background-color:#fff3c4; padding:2px 4px; border-radius:3px;
+}
+#deck-diagnosis-tab .exhibit-name-uncommon {
+  background-color:#e8f4ff; padding:2px 4px; border-radius:3px;
+}
+#deck-diagnosis-tab .pool-detail-row {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:6px 0; font-size:.9em;
+}
+#deck-diagnosis-tab .iqr-plot {
+  position:relative; flex:1 1 200px; min-width:160px; max-width:320px; height:22px;
+}
+#deck-diagnosis-tab .iqr-whisk {
+  position:absolute; top:10px; height:2px; background:#94a3b8;
+}
+#deck-diagnosis-tab .iqr-box {
+  position:absolute; top:4px; height:12px; background:#bfdbfe; border:1px solid #3b82f6; border-radius:3px;
+}
+#deck-diagnosis-tab .iqr-med {
+  position:absolute; top:2px; height:16px; width:2px; background:#1d4ed8;
+}
+#deck-diagnosis-tab th.sortable {
+  cursor: pointer; user-select: none; white-space: nowrap;
+}
+#deck-diagnosis-tab th.sortable:hover {
+  background:#dbe3ee;
+}
+#deck-diagnosis-tab th.sorted-asc::after {
+  content:' ▲'; font-size:.7em;
+}
+#deck-diagnosis-tab th.sorted-desc::after {
+  content:' ▼'; font-size:.7em;
+}
+
+/* 本編タブの横幅に揃える (2026-11-15 要望2): テスト版 body 由来の max-width/margin/padding を無効化 */
+#deck-diagnosis-tab { max-width: none; margin: 0; padding: 0; background: transparent; color: inherit; font-family: inherit; line-height: 1.65; }
+
+/* モバイル対応 (要望2): 横長テーブルはパネル内で横スクロール (enemy.css / run-finder.css と同方針) */
+#deck-diagnosis-tab .panel { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 768px) {
+    #deck-diagnosis-tab .panel { padding: 12px; }
+    #deck-diagnosis-tab .tbl { font-size: .82em; }
+    /* 4カラム選択時でもモバイルでは2カラムに強制 (表示崩れを防ぐ) */
+    #deck-diagnosis-tab .exh-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}

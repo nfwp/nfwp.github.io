@@ -1,0 +1,600 @@
+.run-finder-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.finder-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.control-group-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-section h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.control-group-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group-input input[type="text"],
+.control-group-input input[type="number"] {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.add-btn {
+    padding: 5px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-logic {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.search-logic label {
+    cursor: pointer;
+}
+
+.item-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 5px;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    min-height: 38px;
+}
+
+.item-tag {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.remove-tag-btn {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+}
+.remove-tag-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.primary-search-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.run-finder-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    table-layout: fixed;
+}
+
+.run-finder-results-table th,
+.run-finder-results-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.run-finder-results-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* --- ★修正箇所: PC用の列幅指定をクラスベースに変更 --- */
+/* 2026-10-28: プレイID/Ver/枚数/プレイヤーは狭めて足りない分を Act 列に振る分へ */
+.run-finder-results-table .col-run_id { width: 10%; }
+.run-finder-results-table .col-version { width: 3%; }
+.run-finder-results-table .col-character { width: 5%; }
+.run-finder-results-table .col-deck_size { width: 2.5%; }
+.run-finder-results-table .col-player_name { width: 6.5%; }
+.run-finder-results-table .act-header { width: 21.6%; }
+/* 枚数/プレイヤー/Ver は数字・短語なので折り返さず張り付かせる (auto レイアウトでの余白増殖を防ぐ) */
+.run-finder-results-table .col-version,
+.run-finder-results-table .col-deck_size,
+.run-finder-results-table .col-player_name { white-space: nowrap; }
+.run-finder-results-table .col-player_name { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+
+
+.run-finder-results-table tr:nth-child(even) { background-color: #f9f9f9; }
+.run-finder-results-table tr:hover { background-color: #f1f1f1; }
+.run-finder-results-table td a { font-weight: 500; text-decoration: none; color: #0056b3; }
+.run-finder-results-table td a:hover { text-decoration: underline; }
+
+.path-summary-cell-container { vertical-align: middle; padding: 0 !important; overflow-x: auto; }
+.path-summary-grid { display: flex; align-items: center; padding: 2px 4px; gap: 4px; white-space: nowrap; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif; font-size: 1.1em; }
+.stage-summary-part { text-align: center; letter-spacing: 0.1em; font-weight: bold; flex: 1 1 0; min-width: 0; }
+.stage-separator { color: #aaa; font-weight: normal; }
+.boss-icon-container { flex-shrink: 0; }
+.boss-icon-container img { height: 2em; display: block; margin-left: 4px; }
+
+.boss-selector-grid { display: flex; flex-wrap: wrap; gap: 6px; padding: 5px; background-color: #f0f0f0; border-radius: 4px; }
+.boss-selector-icon { height: 40px; width: 40px; border-radius: 50%; border: 2px solid #ccc; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; object-fit: cover; }
+.boss-selector-icon:hover { transform: scale(1.1); box-shadow: 0 0 8px rgba(0, 123, 255, 0.7); }
+
+.boss-filter-toggle-button { width: 100%; padding: 10px 15px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; text-align: left; font-weight: bold; cursor: pointer; user-select: none; transition: background-color 0.2s; margin-bottom: 10px; }
+.boss-filter-toggle-button:hover { background-color: #e0e0e0; }
+.boss-filter-content { max-height: 500px; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, margin 0.4s ease-in-out; display: flex; gap: 25px; }
+.boss-filter-content.collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; margin-top: -10px; }
+
+.results-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1em; }
+.results-header h3 { margin: 0; }
+.copy-share-link { font-size: 14px; font-weight: bold; color: #007bff; background-color: transparent; border: 1px solid #007bff; border-radius: 15px; padding: 4px 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: background-color 0.2s, color 0.2s; }
+.copy-share-link:hover { background-color: #007bff; color: white; }
+
+.path-icon-link { text-decoration: none; color: inherit; display: inline-block; }
+.path-icon-link:hover { transform: scale(1.2); transition: transform 0.1s ease-in-out; }
+
+/* 固定ヘッダー・固定列のスタイルを追加 --- */
+.run-finder-results-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10; /* ヘッダーがスクロールコンテンツの上に表示されるように */
+    background-color: #f2f2f2; /* ヘッダーの背景色と合わせる */
+}
+
+.run-finder-results-table th.col-run_id,
+.run-finder-results-table td.col-run_id {
+    position: sticky;
+    left: 0;
+    z-index: 9; /* 固定列が通常のセルより上に表示されるように */
+    background-color: white; /* デフォルトの背景色 */
+}
+
+/* 偶数行の固定列の背景色を調整 */
+.run-finder-results-table tr:nth-child(even) td.col-run_id {
+    background-color: #f9f9f9;
+}
+
+/* 左上の角のセル（固定ヘッダーかつ固定列）は最も高いz-index */
+.run-finder-results-table thead th.col-run_id {
+    z-index: 11;
+}
+
+
+
+@media (max-width: 1024px) {
+    .boss-filter-content { flex-direction: column; }
+
+    .table-wrapper {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .run-finder-results-table {
+        table-layout: auto;
+        width: auto;
+    }
+
+    /* --- モバイル用の列幅を最終調整 --- */
+    .run-finder-results-table th,
+    .run-finder-results-table td {
+        padding: 8px 5px;
+        width: auto !important; /* PC用のwidthをリセット */
+    }
+
+    /* PC用の大きな最小幅を!importantで確実にリセット */
+    .run-finder-results-table th:nth-child(6),
+    .run-finder-results-table th:nth-child(7),
+    .run-finder-results-table th:nth-child(8) {
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+
+    /* Group 1: 最も狭い列 */
+    .run-finder-results-table .col-version,
+    .run-finder-results-table .col-deck_size {
+        min-width: 40px;
+    }
+
+    /* プレイIDは最大幅も指定して、はみ出させる */
+    .run-finder-results-table .col-run_id {
+        min-width: 40px;
+        max-width: 60px;
+    }
+
+    /* Group 2: 少し広い列 */
+    .run-finder-results-table .col-character,
+    .run-finder-results-table .col-player_name {
+        min-width: 50px;
+    }
+
+    /* Group 3: Actの各列の幅を固定 */
+    .run-finder-results-table .path-summary-cell {
+        width: 40px;
+        min-width: 40px;
+        max-width: 55px;
+    }
+}
+
+
+
+/* --- 列表示切り替え --- */
+.column-toggle-container {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.column-toggle-container h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.column-toggle-container .toggle-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.column-toggle-container .toggle-options label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* テーブル列を非表示にするルール */
+.run-finder-results-table.hide-col-version .col-version,
+.run-finder-results-table.hide-col-character .col-character,
+.run-finder-results-table.hide-col-deck_size .col-deck_size,
+.run-finder-results-table.hide-col-player_name .col-player_name,
+.run-finder-results-table.hide-col-mana .col-mana,
+.run-finder-results-table.hide-col-act1 .col-act1,
+.run-finder-results-table.hide-col-act2 .col-act2,
+.run-finder-results-table.hide-col-act3 .col-act3 {
+    display: none;
+}
+
+/* --- final mana base (2026-11-15): search condition + display column --- */
+.rf-mana-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+.rf-mana-cond {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.92em;
+}
+.rf-mana-cond input {
+    width: 2.6em;
+    padding: 2px 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+.rf-mana-note {
+    font-size: 0.85em;
+    color: #64748b;
+}
+.run-finder-results-table .col-mana {
+    white-space: nowrap;
+}
+.mana-emoji-rf {
+    letter-spacing: -1.5px;
+    font-size: 0.95em;
+}
+.rf-mana-icons {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+}
+.rf-mg {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    font-size: 0.8em;
+    color: #475569;
+}
+.rf-mdot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex: none;
+}
+
+/* --- 検索履歴比較テーブル --- */
+.rf-history-wrapper { overflow-x: auto; }
+.run-finder-history-table { border-collapse: collapse; width: 100%; font-size: 12.5px; white-space: nowrap; }
+.run-finder-history-table th, .run-finder-history-table td {
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    text-align: right;
+}
+.run-finder-history-table thead th { position: static; background-color: #f2f2f2; text-align: center; }
+.run-finder-history-table td.col-h-q { text-align: left; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.run-finder-history-table td.col-h-n { text-align: center; }
+.run-finder-history-table td.col-h-turn { color: #666; background-color: #fafcfa; }
+.run-finder-history-table td.col-h-life { color: #b35959; background-color: #fffafa; }
+.rf-hist-num { font-weight: 600; }
+.rf-hist-charts { margin-top: 8px; }
+.rf-hist-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; max-width: 1300px; }
+/* 2026-10-28: チェックで表示が1枚だけになったグラフは全幅に拡大 */
+.rf-hist-solo { grid-column: 1 / -1; }
+.rf-hist-visbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin: 4px 0 8px; font-size: 12px; color: #555; }
+.rf-hist-visbar > span { font-weight: 600; }
+.rf-hist-visbar label { cursor: pointer; user-select: none; white-space: nowrap; }
+.rf-hist-visbar input { vertical-align: middle; margin: 0 4px 2px 0; }
+.rf-hist-visbar .rf-hist-vis-reset { cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #fafafa; color: #555; font-size: 11.5px; padding: 1px 8px; }
+.rf-hist-visbar .rf-hist-vis-reset:hover { border-color: #2a6496; color: #2a6496; }
+.rf-hist-chart { margin-bottom: 0; min-width: 0; }
+.rf-hist-sub { margin-top: 14px; max-width: none; }
+.rf-hist-svg { display: block; width: 100%; height: auto; background: #fff; border: 1px solid #e3e3e3; border-radius: 6px; }
+/* グラフクリック → ライトボックス拡大 (ポップアップ) */
+.rf-hist-chart-title { font-size: 12px; font-weight: 600; margin: 0 0 2px; color: #555; }
+.rf-hist-clickable { cursor: zoom-in; }
+.rf-hist-lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(15, 23, 42, 0.55); display: flex; align-items: center; justify-content: center; padding: 24px; }
+.rf-hist-lightbox-inner { background: #fff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); padding: 12px 16px 16px; width: min(1200px, 94vw); max-height: 94vh; overflow: auto; }
+.rf-hist-lb-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+.rf-hist-lb-head span { font-weight: 600; font-size: 14px; color: #333; }
+.rf-hist-lb-close { cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #fafafa; color: #555; font-size: 13px; line-height: 1.4; padding: 2px 10px; }
+.rf-hist-lb-close:hover { border-color: #2a6496; color: #2a6496; }
+.rf-hist-lb-legend { margin: 6px 0 10px; }
+@media (max-width: 880px) {
+    .rf-hist-grid { grid-template-columns: 1fr; }
+}
+.rf-hist-sec { margin-top: 10px; max-width: 1300px; }
+.rf-hist-sec > summary { cursor: pointer; font-weight: 600; font-size: 13px; color: #444; padding: 3px 2px; user-select: none; }
+.rf-hist-sec > summary:hover { color: #2a6496; }
+.rf-hist-legend { margin-top: 4px; max-width: 860px; padding: 4px 6px; border: 1px dashed #ddd; border-radius: 6px; font-size: 12px; line-height: 1.5; }
+.rf-hist-chip { display: inline-block; margin: 2px 6px 2px 0; padding: 1px 8px; border: 1px solid #e0e0e0; border-radius: 10px; background: #fff; cursor: pointer; }
+.rf-hist-chip.rf-hi-chip { background: #fff3cd; border-color: #e0b400; }
+.rf-hist-chip-n { color: #999; font-size: 11px; }
+.run-finder-history-table tbody tr { cursor: pointer; }
+.run-finder-history-table tr.rf-hi-row td { background: #fff3cd; }
+.run-finder-history-table td.col-h-pick { color: #555; }
+.run-finder-history-table tbody tr:hover { background-color: #f1f8f4; }
+
+
+
+/* --- 検索条件サマリー --- */
+.search-criteria-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    background-color: #eef7ff;
+    border: 1px solid #bde0ff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.search-criterion {
+    background-color: #d1eaff;
+    color: #004085;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.search-criterion strong {
+    color: #002752;
+}
+/* --- 遭遇戦闘グラフ: リッチなホバーカード (棒・敵名のどちらに乗っても同じ内容を出す 2026-10-31) --- */
+.rf-hf-card {
+    position: fixed;
+    z-index: 9998;
+    display: none;
+    pointer-events: none;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.20);
+    padding: 8px 12px 9px 12px;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.45;
+    max-width: 294px;   /* content-box 基準: + 余白24 + 枠2 でカード全体が320 → SVG は294で巾いっぱい */
+}
+.rf-hf-card .rf-hf-card-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 12.5px;
+    color: #0f172a;
+}
+/* 敵名が長いとレイアウトを圧迫するので1行に収めて省略 (…表示) する */
+.rf-hf-card .rf-hf-card-h > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+.rf-hf-card .rf-hf-card-h .rf-hf-card-sub {
+    font-weight: 400;
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.rf-hf-card .rf-hf-metric { margin-top: 7px; }
+.rf-hf-card .rf-hf-metric-t {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #475569;
+}
+.rf-hf-card .rf-hf-metric-q {
+    flex: 1;                 /* 見出しの右の余白を利用: avg を左寄りに・IQR を右端に */
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-left: 12px;
+    font-size: 10.5px;
+    color: #64748b;
+    white-space: nowrap;
+}
+.rf-hf-card .rf-hf-metric-q .q { color: #94a3b8; margin-right: 2px; }
+.rf-hf-card .rf-hf-metric-q b { color: #334155; font-weight: 600; }
+.rf-hf-card .rf-hf-metric-q .iqr { display: inline-flex; align-items: baseline; }
+.rf-hf-card .rf-hf-metric-q .iqr .qv { display: inline-flex; align-items: baseline; margin-right: 4px; }
+.rf-hf-card .rf-hf-metric-q .iqr .qv:last-child { margin-right: 2px; }
+.rf-hf-card .rf-hf-metric-q .br { color: #b4c1cb; font-size: 14px; font-weight: 500; margin: 0 2px; }
+.rf-hf-card .rf-hf-metric svg { display: block; margin-top: 2px; }
+.rf-hf-card .rf-hf-seg {
+    margin-top: 4px;
+    font-size: 10.5px;
+    color: #64748b;
+}
+.rf-hf-card .rf-hf-refhead {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 11.5px;
+    color: #334155;
+    line-height: 1.35;
+}
+.rf-hf-card .rf-hf-refhead .rf-hf-refcap { color: #94a3b8; font-weight: 600; margin-right: 1px; }
+.rf-hf-card .rf-hf-refhead b { color: #1e293b; }
+
+/* サンプリング除外ラン (統計外) バッジ — run_details_ns.json 由来 (s:0) の行に表示 */
+.rf-ns-badge {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 0 5px;
+    font-size: 10px;
+    line-height: 15px;
+    vertical-align: middle;
+    border-radius: 7px;
+    background: #eef1f4;
+    color: #5a6b7a;
+    border: 1px solid #c9d3dc;
+    white-space: nowrap;
+}
+
+/* 履歴削除セル: セル全体をタップ領域に (2段階確認つき) + 横スクロール時も右端に固定 */
+.rf-history-wrapper td.col-h-del {
+    position: sticky;
+    right: 0;
+    padding: 6px 16px;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 52px;
+    background: #ffffff;
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -6px 0 8px -6px rgba(15, 23, 42, 0.18);
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color .12s ease;
+}
+.rf-history-wrapper tr:hover td.col-h-del { background: #f4f6f8; }
+.rf-history-wrapper td.col-h-del:hover { background: #fdecec; }
+.rf-history-wrapper td.col-h-del.armed {
+    background: #f8d7da;
+    color: #b02a37;
+    font-weight: 700;
+    outline: 1px solid #f1b0b7;
+}
+
+/* 区間別テーブルの「グラフ」列: 行ごとの表示チェック (①②③…) */
+.rf-history-wrapper td.col-h-graph {
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 6px 10px;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.rf-history-wrapper td.col-h-graph label {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    margin: 0;
+}
+.rf-history-wrapper td.col-h-graph input { margin: 0; vertical-align: middle; cursor: pointer; }
+
+/* 敵グループ: 含む/含まない 2段バーのキャプション */
+.rf-bar-cap { font-size: 11px; color: #64748b; margin: 5px 0 2px; }
+
+/* 含む/含まない 2段バー: モバイルは縦積み、PC (881px以上) は左右2列 */
+.rf-bar-pair { display: block; }
+.rf-bar-group { margin-bottom: 4px; min-width: 0; }
+@media (min-width: 881px) {
+    .rf-bar-pair { display: flex; gap: 18px; align-items: flex-start; }
+    .rf-bar-group { flex: 1 1 0; margin-bottom: 0; }
+}
+.item-input-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.item-input-row input { flex: 1 1 150px; min-width: 130px; }
+.item-input-row .add-btn { flex: 0 0 auto; font-size: 12.5px; padding: 6px 10px; }
+
+/* 入力行 (敵/カード共通) コンパクト化 */
+.enemy-input-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.enemy-input-row input, .item-input-row input { font-size: 13px; padding: 4px 8px; }
+.enemy-input-row .add-btn, .item-input-row .add-btn { font-size: 12px; padding: 4px 10px; flex: 0 0 auto; }
+/* 敵グループトグルを小さく */
+.boss-filter-toggle-button { font-size: 13px; padding: 6px 10px; margin-bottom: 8px; }
+.enemy-input-row input, .item-input-row input { max-width: 320px; }
