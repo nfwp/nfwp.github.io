@@ -73,8 +73,8 @@
 <td style='text-align: right;'>17.4%</td>
 <td style='text-align: right;'>115</td>
 <td style='text-align: right;'><strong><span style='color: red;'>62.4</span></strong></td>
-<td style='text-align: right;'>54.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>117.1</span></strong></td>
+<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.4</span></strong></td>
 </tr>
 <tr>
 <td>Time Magic</td>
@@ -83,8 +83,8 @@
 <td style='text-align: right;'>18.2%</td>
 <td style='text-align: right;'>48</td>
 <td style='text-align: right;'>52.1</td>
-<td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>107.8</td>
+<td style='text-align: right;'>56.0</td>
+<td style='text-align: right;'>108.1</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 You Are Next!</strong></td>
@@ -103,8 +103,8 @@
 <td style='text-align: right;'>16.9%</td>
 <td style='text-align: right;'>166</td>
 <td style='text-align: right;'>53.0</td>
-<td style='text-align: right;'>57.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.5</span></strong></td>
+<td style='text-align: right;'>57.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.9</span></strong></td>
 </tr>
 <tr>
 <td>Jack the Ludo Bile</td>
@@ -133,8 +133,8 @@
 <td style='text-align: right;'>17.5%</td>
 <td style='text-align: right;'>128</td>
 <td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.7</span></strong></td>
+<td style='text-align: right;'>55.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>112.1</span></strong></td>
 </tr>
 <tr>
 <td>Starry Sword Dance</td>
@@ -143,8 +143,8 @@
 <td style='text-align: right;'>17.4%</td>
 <td style='text-align: right;'>137</td>
 <td style='text-align: right;'>55.7</td>
-<td style='text-align: right;'>46.7</td>
-<td style='text-align: right;'>102.3</td>
+<td style='text-align: right;'>45.7</td>
+<td style='text-align: right;'>101.4</td>
 </tr>
 <tr>
 <td>Private Square</td>
@@ -153,8 +153,8 @@
 <td style='text-align: right;'>18.2%</td>
 <td style='text-align: right;'>62</td>
 <td style='text-align: right;'>49.4</td>
-<td style='text-align: right;'>56.4</td>
-<td style='text-align: right;'>105.8</td>
+<td style='text-align: right;'>56.7</td>
+<td style='text-align: right;'>106.1</td>
 </tr>
 <tr>
 <td>Time Suppression</td>
@@ -163,8 +163,8 @@
 <td style='text-align: right;'>17.6%</td>
 <td style='text-align: right;'>122</td>
 <td style='text-align: right;'>44.3</td>
-<td style='text-align: right;'>56.7</td>
-<td style='text-align: right;'>101.1</td>
+<td style='text-align: right;'>57.1</td>
+<td style='text-align: right;'>101.5</td>
 </tr>
 <tr>
 <td>Maid's Trick</td>
@@ -172,9 +172,9 @@
 <td style='text-align: right;'>41.7%</td>
 <td style='text-align: right;'>18.4%</td>
 <td style='text-align: right;'>36</td>
-<td style='text-align: right;'>50.6</td>
+<td style='text-align: right;'>50.9</td>
 <td style='text-align: right;'>39.8</td>
-<td style='text-align: right;'>90.4</td>
+<td style='text-align: right;'>90.7</td>
 </tr>
 <tr>
 <td>Luna Clock</td>
@@ -183,8 +183,8 @@
 <td style='text-align: right;'>18.4%</td>
 <td style='text-align: right;'>30</td>
 <td style='text-align: right;'>58.1</td>
-<td style='text-align: right;'>46.3</td>
-<td style='text-align: right;'>104.5</td>
+<td style='text-align: right;'>46.7</td>
+<td style='text-align: right;'>104.8</td>
 </tr>
 <tr>
 <td>Imaginary Timeline</td>
@@ -193,8 +193,8 @@
 <td style='text-align: right;'>15.7%</td>
 <td style='text-align: right;'>350</td>
 <td style='text-align: right;'>45.0</td>
-<td style='text-align: right;'>57.9</td>
-<td style='text-align: right;'>102.9</td>
+<td style='text-align: right;'>58.8</td>
+<td style='text-align: right;'>103.8</td>
 </tr>
 <tr>
 <td>Time Walk</td>
@@ -223,8 +223,8 @@
 <td style='text-align: right;'>16.5%</td>
 <td style='text-align: right;'>266</td>
 <td style='text-align: right;'>46.0</td>
-<td style='text-align: right;'>53.0</td>
-<td style='text-align: right;'>99.0</td>
+<td style='text-align: right;'>53.3</td>
+<td style='text-align: right;'>99.4</td>
 </tr>
 <tr>
 <td>Room Cleaning</td>
@@ -383,8 +383,8 @@
 <td style='text-align: right;'>18.1%</td>
 <td style='text-align: right;'>97</td>
 <td style='text-align: right;'>42.1</td>
-<td style='text-align: right;'>53.7</td>
-<td style='text-align: right;'>95.7</td>
+<td style='text-align: right;'>52.1</td>
+<td style='text-align: right;'>94.2</td>
 </tr>
 <tr>
 <td>Apotheosis</td>
@@ -423,8 +423,8 @@
 <td style='text-align: right;'>18.4%</td>
 <td style='text-align: right;'>62</td>
 <td style='text-align: right;'><strong><span style='color: red;'>63.1</span></strong></td>
-<td style='text-align: right;'>59.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>122.3</span></strong></td>
+<td style='text-align: right;'>59.7</td>
+<td style='text-align: right;'><strong><span style='color: red;'>122.8</span></strong></td>
 </tr>
 <tr>
 <td>Melancholy Eruption</td>
@@ -433,8 +433,8 @@
 <td style='text-align: right;'>18.5%</td>
 <td style='text-align: right;'>34</td>
 <td style='text-align: right;'>41.2</td>
-<td style='text-align: right;'>53.3</td>
-<td style='text-align: right;'>94.6</td>
+<td style='text-align: right;'>53.7</td>
+<td style='text-align: right;'>94.9</td>
 </tr>
 <tr>
 <td>Lunar Cycle</td>
@@ -549,8 +549,8 @@
 <li><span class="text-exhibit">Silver Pocket Watch</span>: 10</li>
 <li><span class="text-exhibit">Ribbon</span>: 9</li>
 <li><span class="text-exhibit">Lab Apparatus</span>: 4</li>
-<li><span class="text-exhibit">Dream Catcher</span>: 3</li>
 <li><span class="text-exhibit">Bottle</span>: 3</li>
+<li><span class="text-exhibit">Dream Catcher</span>: 3</li>
 <li><span class="text-exhibit">Membership Card</span>: 3</li>
 <li><span class="text-exhibit">Ice Cube</span>: 3</li>
 <li><span class="text-exhibit">Tengu's Fan</span>: 2</li>

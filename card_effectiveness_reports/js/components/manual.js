@@ -97,7 +97,15 @@ function jumpToManualSection(secId, switchIfNeeded = true) {
     const doJump = () => {
         const el = document.getElementById(secId);
         if (!el) return;
+        const y0 = window.scrollY;
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // スムーズスクロールが無効な環境 (低モーション設定など) でも確実に移動する
+        setTimeout(() => {
+            if (Math.abs(window.scrollY - y0) < 4) {
+                const top = window.scrollY + el.getBoundingClientRect().top - 8;
+                window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+            }
+        }, 350);
         // 一瞬強調
         el.classList.add('manual-flash');
         setTimeout(() => el.classList.remove('manual-flash'), 1600);

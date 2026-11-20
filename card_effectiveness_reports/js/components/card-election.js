@@ -323,24 +323,33 @@ function ceDrawDetail() {
     const availN = pvPre ? (pvPre[0] + pvPre[1] + pvPre[2])
         : ((CE_CUR.st && CE_CUR.st[CE_SEL]) ? CE_CUR.st[CE_SEL].reduce((a, x) => a + x[1], 0) : null);
     // --- 上段左: 指標表 (横 4 列)。imp = 太字 + 色背景 (重要項目のみ・セル単位) ---
-    const c = (k, v, imp) => `<td class="l${imp ? " imp" : ""}"${imp ? ' style="font-weight:600"' : ""}>${k}</td><td class="num${imp ? " imp" : ""}"${imp ? ' style="font-weight:bold"' : ""}>${v}</td>`;
+    const ico = (id, ctx) => (window.MI ? MI.icon(id, ctx) : "");
+    const pctStr = (x) => (x == null || !isFinite(x)) ? null : (Math.round(x * 10) / 10) + "%";
+    const c = (k, v, imp, mi, miCtx) => `<td class="l${imp ? " imp" : ""}"${imp ? ' style="font-weight:600"' : ""}>${k}${mi ? ico(mi, miCtx) : ""}</td><td class="num${imp ? " imp" : ""}"${imp ? ' style="font-weight:bold"' : ""}>${v}</td>`;
     // ピック率 (マス基準)
     const pvD = (CE_CUR.pick && CE_CUR.pick[CE_SEL]) || null;
     const pickTotal = pvD ? (pvD[0] + pvD[1] + pvD[2]) : null;
     const pickRate = (pvD && pickTotal) ? Math.round(pvD[0] / pickTotal * 1000) / 10 : null;
+    // --- ③-E 計算方法ポップアップ用の実数値 ---
+    const fpkCtx = (pf && pf.fpk != null) ? { pct: pf.fpk + "%" } : null;
+    const availCtx = (availN != null && r[2]) ? { n: availN, t: r[2], pct: pctStr(availN / r[2] * 100) } : null;
+    const pickCtx = (pickRate != null) ? { w: pvD[0], l: pvD[1], s: pvD[2], t: pickTotal, pct: pickRate + "%" } : null;
+    const draftCtx = (r[3] != null && r[9] > 0) ? { w: Math.round(r[3] / 100 * r[9]), n: r[9], pct: r[3] + "%" } : null;
+    const scoreCtx = (r[1] != null && r[7] != null) ? { prate: r[1], pct2: r[6], score: r[7] } : null;
+    const avgVal = (pf && pf.ac != null) ? pf.ac : r[5];
     const rowsHtml =
-        `<tr>${c(CET('d_prate', 'Pレート (BT-Elo)'), r[1] != null ? r[1] : CET('d_nocalc', '未算出 (同時提示なし)'), 1)}` +
-        `${c(CET('perf_fpk', '初回ピック率'), pf && pf.fpk != null ? pf.fpk + "%" : "—", 1)}</tr>` +
-        `<tr>${c(CET('d_deci', 'D回数 (対戦数)'), r[9] > 0 ? r[9] : "—", 1)}` +
-        `${c(CET('d_n', '提示回数'), r[2] || "—")}</tr>` +
-        `<tr>${c(CET('d_draft', 'ドラフト勝率'), r[3] != null ? r[3] + "%" : "—", 1)}` +
-        `${c(CET('d_n_avail', 'うち選択可能提示n'), availN != null ? availN : "—", 1)}</tr>` +
-        `<tr>${c(CET('d_score', '合成Pスコア'), r[7] != null ? r[7] : "—", 1)}` +
-        `${c(CET('d_pick', 'ピック率'), pickRate != null ? pickRate + "%" : "—")}</tr>` +
-        `<tr>${c(CET('perf_ac', '採用時平均枚数'), pf && pf.ac != null ? pf.ac : "—")}` +
-        `${c(CET('d_adopt', '実質採用率'), r[4] + "%")}</tr>` +
-        `<tr>${c(CET('perf_au', '平均強化率'), pf && pf.au != null ? pf.au + "%" : "—")}` +
-        `${c(CET('d_final', '最終採用率'), r[8] != null ? r[8] + "%" : "—", 1)}</tr>`;
+        `<tr>${c(CET('d_prate', 'Pレート (BT-Elo)'), r[1] != null ? r[1] : CET('d_nocalc', '未算出 (同時提示なし)'), 1, 'prate', r[1] != null ? { v: r[1] } : null)}` +
+        `${c(CET('perf_fpk', '初回ピック率'), pf && pf.fpk != null ? pf.fpk + "%" : "—", 1, 'fpk', fpkCtx)}</tr>` +
+        `<tr>${c(CET('d_deci', 'D回数 (対戦数)'), r[9] > 0 ? r[9] : "—", 1, 'deci', r[9] > 0 ? { n: r[9] } : null)}` +
+        `${c(CET('d_n', '提示回数'), r[2] || "—", 0, 'offers', r[2] ? { n: r[2] } : null)}</tr>` +
+        `<tr>${c(CET('d_draft', 'ドラフト勝率'), r[3] != null ? r[3] + "%" : "—", 1, 'draft', draftCtx)}` +
+        `${c(CET('d_n_avail', 'うち選択可能提示n'), availN != null ? availN : "—", 1, 'availn', availCtx)}</tr>` +
+        `<tr>${c(CET('d_score', '合成Pスコア'), r[7] != null ? r[7] : "—", 1, 'score', scoreCtx)}` +
+        `${c(CET('d_pick', 'ピック率'), pickRate != null ? pickRate + "%" : "—", 0, 'pickrate', pickCtx)}</tr>` +
+        `<tr>${c(CET('perf_ac', '採用時平均枚数'), avgVal != null ? avgVal : "—", 0, 'avg', avgVal != null ? { avg: avgVal } : null)}` +
+        `${c(CET('d_adopt', '実質採用率'), r[4] + "%", 0, 'adopt', { pct: r[4] + "%" })}</tr>` +
+        `<tr>${c(CET('perf_au', '平均強化率'), pf && pf.au != null ? pf.au + "%" : "—", 0, 'au', (pf && pf.au != null) ? { pct: pf.au + "%" } : null)}` +
+        `${c(CET('d_final', '最終採用率'), r[8] != null ? r[8] + "%" : "—", 1, 'final', r[8] != null ? { pct: r[8] + "%" } : null)}</tr>`;
     const statsHtml = `<div style="flex:1.25;min-width:340px"><table><tbody>${rowsHtml}</tbody></table></div>`;
     // --- 上段右: よく負けた相手 Top5 (クリックでそのカードに選択切替) ---
     const lost = (CE_CUR.lost && CE_CUR.lost[CE_SEL]) ? CE_CUR.lost[CE_SEL] : null;
@@ -369,10 +378,10 @@ function ceDrawDetail() {
     if (!hasGraph) {
         perfCol = `<div class="ce-muted" style="font-size:12px">${CET('perf_insufficient', 'サンプル不足 — 戦闘回数が少なくカード性能のデータがありません')}</div>`;
     } else {
-        const perfLine = (label, val, box, color) =>
-            `<div class="prow perfline"><span>${label}</span><b style="min-width:34px;text-align:right">${val != null ? val : "—"}</b>${ceMiniBox(val, box, color, 300)}</div>`;
-        perfCol = perfLine(CET('perf_atk', '攻撃性能'), pf.atk, pf.atkB, "#d9534f") +
-            perfLine(CET('perf_def', '防御性能'), pf.def, pf.defB, "#4a90d9");
+        const perfLine = (label, val, box, color, mi, miCtx) =>
+            `<div class="prow perfline"><span>${label}${mi ? ico(mi, miCtx) : ""}</span><b style="min-width:34px;text-align:right">${val != null ? val : "—"}</b>${ceMiniBox(val, box, color, 300)}</div>`;
+        perfCol = perfLine(CET('perf_atk', '攻撃性能'), pf.atk, pf.atkB, "#d9534f", 'atk', pf.atk != null ? { v: pf.atk } : null) +
+            perfLine(CET('perf_def', '防御性能'), pf.def, pf.defB, "#4a90d9", 'defperf', pf.def != null ? { v: pf.def } : null);
     }
     const hlCol = (pf && (pf.medal || pf.hl))
         ? `<b>${CET('perf_hl', 'ハイライト')}:</b> ${pf.medal || ""}${pf.hl ? "<br>" + pf.hl : ""}`
@@ -408,7 +417,7 @@ function ceDrawDetail() {
             return `${rate}% <span class="ce-muted" style="font-size:11px">(${row[3]}/${row[2]})</span>`;
         };
         flowHtml =
-            `<b>${CET('flow_hdr', '提示フロー')}</b> <span class="ce-muted" style="font-size:11px">(${CET('flow_sub', 'ラン内で何回目の提示か別のピック率')})</span>` +
+            `<b>${CET('flow_hdr', '提示フロー')}</b>${ico('flow')} <span class="ce-muted" style="font-size:11px">(${CET('flow_sub', 'ラン内で何回目の提示か別のピック率')})</span>` +
             `<table class="acttab" style="margin-top:4px">` +
             `<tr><th style="text-align:left">${CET('flow_th1', '提示')}</th><th>${CET('flow_th2', '未保有時ピック率')}</th><th>${CET('flow_th3', '1枚以上保有時')}</th></tr>` +
             `<tr><td class="l" style="text-align:left">${CET('flow_ord1', '1回目')}</td><td class="num">${cell(1, 0)}</td><td class="num"><span class="ce-muted">—</span></td></tr>` +
@@ -440,7 +449,7 @@ function ceDrawDetail() {
         }).join("");
         actsHtml =
             `<div style="flex:1;min-width:290px;border-left:1px solid #e2e5ee;padding-left:14px">` +
-            `<b>${CET('acts_hdr', 'Act別ピック率')}</b> <span class="ce-muted" style="font-size:11px">(${CET('acts_note', 'ピック率 = 未保有時・* = 1枚以上保有時')})</span>` +
+            `<b>${CET('acts_hdr', 'Act別ピック率')}</b>${ico('actpick')} <span class="ce-muted" style="font-size:11px">(${CET('acts_note', 'ピック率 = 未保有時・* = 1枚以上保有時')})</span>` +
             `<table class="acttab" style="margin-top:4px"><tr><th style="text-align:left">Act</th><th>${CET('act_main', 'ピック率 (未保有)')}</th><th>${CET('act_owned', '保有時*')}</th></tr>${rows2}</table></div>`;
     }
     const midHtml = (pickHtml || flowHtml || stHtml || actsHtml)
@@ -474,10 +483,12 @@ function ceDrawDetail() {
 const CE_COLS = () => [
     { h: CET('col_name', 'カード名'), l: true }, { h: CET('col_owner', '所有者'), l: true },
     { h: CET('col_type', '種類'), l: true }, { h: CET('col_rarity', 'レアリティ'), l: true },
-    { h: CET('col_prate', 'Pレート') }, { h: CET('col_deci', 'D回数') }, { h: CET('col_draft', 'ドラフト勝率') },
-    { h: CET('col_availn', '選択可能提示n') }, { h: CET('col_pick', 'ピック率') },
-    { h: CET('col_adopt', '実質採用率') }, { h: CET('col_finaladopt', '最終採用率') },
-    { h: CET('col_avg', '平均枚数') }, { h: CET('col_score', '合成Pスコア') }, { h: CET('col_pct2', '2枚以上') },
+    { h: CET('col_prate', 'Pレート'), mi: 'prate' }, { h: CET('col_deci', 'D回数'), mi: 'deci' },
+    { h: CET('col_draft', 'ドラフト勝率'), mi: 'draft' },
+    { h: CET('col_availn', '選択可能提示n'), mi: 'availn' }, { h: CET('col_pick', 'ピック率'), mi: 'pickrate' },
+    { h: CET('col_adopt', '実質採用率'), mi: 'adopt' }, { h: CET('col_finaladopt', '最終採用率'), mi: 'final' },
+    { h: CET('col_avg', '平均枚数'), mi: 'avg' }, { h: CET('col_score', '合成Pスコア'), mi: 'score' },
+    { h: CET('col_pct2', '2枚以上'), mi: 'pct2' },
 ];
 // 各列の値 getter (null = 未算出 → 常に末尾)
 function ceGet(i, r) {
@@ -537,7 +548,7 @@ function ceDrawTable(rows) {
         return (va - vb) * (CE_SORT_ASC ? 1 : -1);
     });
     const COLS = CE_COLS();
-    let html = `<tr>${COLS.map((c, i) => `<th${c.l ? ' class="l"' : ""} data-i="${i}">${c.h}${i === CE_SORT_KEY ? (CE_SORT_ASC ? " ▲" : " ▼") : ""}</th>`).join("")}</tr>`;
+    let html = `<tr>${COLS.map((c, i) => `<th${c.l ? ' class="l"' : ""} data-i="${i}">${c.h}${c.mi && window.MI ? MI.icon(c.mi) : ""}${i === CE_SORT_KEY ? (CE_SORT_ASC ? " ▲" : " ▼") : ""}</th>`).join("")}</tr>`;
     for (const r of sorted) {
         const nm = CE_CUR.names[r[0]];
         const bar2 = r[6] != null ? `<span class="bar" style="width:${(r[6] * 0.6).toFixed(0)}px;background:${CE_GROUP_COLOR[nm[3]]}"></span>` : "";

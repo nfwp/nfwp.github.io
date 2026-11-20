@@ -197,16 +197,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Pagoda's Glare</strong></td>
-<td style='text-align: right;'>+20.27</td>
-<td style='text-align: right;'>44.2%</td>
-<td style='text-align: right;'>24.0%</td>
-<td style='text-align: right;'>52</td>
-<td style='text-align: right;'><strong><span style='color: red;'>66.3</span></strong></td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.4</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Hakurei Temple Fair</strong></td>
 <td style='text-align: right;'>+20.27</td>
 <td style='text-align: right;'>44.2%</td>
@@ -215,6 +205,16 @@
 <td style='text-align: right;'>59.3</td>
 <td style='text-align: right;'>52.2</td>
 <td style='text-align: right;'><strong><span style='color: red;'>111.6</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Pagoda's Glare</strong></td>
+<td style='text-align: right;'>+20.27</td>
+<td style='text-align: right;'>44.2%</td>
+<td style='text-align: right;'>24.0%</td>
+<td style='text-align: right;'>52</td>
+<td style='text-align: right;'><strong><span style='color: red;'>66.3</span></strong></td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.4</span></strong></td>
 </tr>
 <tr>
 <td>Orb of Duality</td>

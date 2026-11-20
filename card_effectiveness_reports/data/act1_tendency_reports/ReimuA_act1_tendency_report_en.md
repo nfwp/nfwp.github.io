@@ -122,9 +122,9 @@
 <td style='text-align: right;'>47.7%</td>
 <td style='text-align: right;'>25.8%</td>
 <td style='text-align: right;'>151</td>
-<td style='text-align: right;'>39.1</td>
+<td style='text-align: right;'>38.7</td>
 <td style='text-align: right;'>53.9</td>
-<td style='text-align: right;'>93.1</td>
+<td style='text-align: right;'>92.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🌀 Jealous</strong></td>
@@ -162,9 +162,9 @@
 <td style='text-align: right;'>47.3%</td>
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>188</td>
-<td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'>40.8</td>
-<td style='text-align: right;'>99.3</td>
+<td style='text-align: right;'>58.8</td>
+<td style='text-align: right;'>41.2</td>
+<td style='text-align: right;'>100.0</td>
 </tr>
 <tr>
 <td>Reverse Boundary</td>
@@ -262,9 +262,9 @@
 <td style='text-align: right;'>46.2%</td>
 <td style='text-align: right;'>26.2%</td>
 <td style='text-align: right;'>91</td>
+<td style='text-align: right;'>58.5</td>
 <td style='text-align: right;'>58.8</td>
-<td style='text-align: right;'>58.8</td>
-<td style='text-align: right;'><strong><span style='color: red;'>117.7</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.3</span></strong></td>
 </tr>
 <tr>
 <td>Fist of the Hakurei</td>
@@ -272,9 +272,9 @@
 <td style='text-align: right;'>46.0%</td>
 <td style='text-align: right;'>26.3%</td>
 <td style='text-align: right;'>63</td>
-<td style='text-align: right;'>52.4</td>
+<td style='text-align: right;'>52.1</td>
 <td style='text-align: right;'>53.7</td>
-<td style='text-align: right;'>106.1</td>
+<td style='text-align: right;'>105.8</td>
 </tr>
 <tr>
 <td>Exorcising Border</td>
@@ -363,8 +363,8 @@
 <td style='text-align: right;'>25.9%</td>
 <td style='text-align: right;'>159</td>
 <td style='text-align: right;'>44.7</td>
-<td style='text-align: right;'>43.2</td>
-<td style='text-align: right;'>87.8</td>
+<td style='text-align: right;'>42.9</td>
+<td style='text-align: right;'>87.5</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Tiny Hitbox</strong></td>
@@ -403,8 +403,8 @@
 <td style='text-align: right;'>25.1%</td>
 <td style='text-align: right;'>331</td>
 <td style='text-align: right;'>53.4</td>
-<td style='text-align: right;'>54.5</td>
-<td style='text-align: right;'>107.9</td>
+<td style='text-align: right;'>54.2</td>
+<td style='text-align: right;'>107.6</td>
 </tr>
 <tr>
 <td>Sake Offering</td>
@@ -423,8 +423,8 @@
 <td style='text-align: right;'>25.6%</td>
 <td style='text-align: right;'>230</td>
 <td style='text-align: right;'><strong><span style='color: red;'>62.9</span></strong></td>
-<td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>117.1</span></strong></td>
+<td style='text-align: right;'>54.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>117.4</span></strong></td>
 </tr>
 <tr>
 <td>Celestial Flight</td>

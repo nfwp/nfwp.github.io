@@ -210,7 +210,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group" id="filter-group-gap">
-                    <label>${T.gap_select_label}:</label>
+                    <label>${T.gap_select_label}${MI.icon('gap')}:</label>
                     <select id="gap-filter">
                         <option value="all">${T.select_any}</option>
                         <option value="ge1.2">${T.gap_ge1_2}</option>
@@ -223,7 +223,7 @@ function createFilterBarHtml() {
 
             <div class="filter-row" id="filter-row-pickstats">
                 <div class="filter-group">
-                    <label>${T.fpk_label}:</label>
+                    <label>${T.fpk_label}${MI.icon('fpk')}:</label>
                     <select id="fpk-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="10">10% ${T.select_over}</option>
@@ -236,7 +236,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>${T.final_label}:</label>
+                    <label>${T.final_label}${MI.icon('final')}:</label>
                     <select id="final-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="lt10">10% ${T.select_under}</option>
@@ -248,7 +248,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>${T.copies_label}:</label>
+                    <label>${T.copies_label}${MI.icon('avg')}:</label>
                     <select id="copies-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="1.1">1.1 ${T.select_over}</option>
@@ -259,7 +259,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>${T.upgrade_label}:</label>
+                    <label>${T.upgrade_label}${MI.icon('au')}:</label>
                     <select id="upgrade-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="lt20">20% ${T.select_under}</option>
@@ -270,7 +270,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>※${T.prate_label}:</label>
+                    <label>※${T.prate_label}${MI.icon('prate')}:</label>
                     <select id="prate-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="1100">1100 ${T.select_over}</option>
@@ -280,7 +280,7 @@ function createFilterBarHtml() {
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label>※${T.pscore_label}:</label>
+                    <label>※${T.pscore_label}${MI.icon('score')}:</label>
                     <select id="pscore-filter">
                         <option value="0">${T.select_any}</option>
                         <option value="lt0.8">${(LANG === 'ja') ? '0.8 未満' : '&lt; 0.8'}</option>
@@ -720,7 +720,24 @@ function createHoverText(d, lang) {
         }
     }
 
-    const tooltipHtml = `<div class='info-column'><b>${cardName}</b> ${wikiLinkHtml}<br>${UI_TEXT.common.type}: ${sourceData.Type}<br>${UI_TEXT.common.rarity}: ${sourceData.Rarity}<hr style='margin:5px 0;'>${perfHtml}${adoptionHtml}${highlightsHtml}</div><div class='info-column'>${coOccurrenceHtml}</div>`;
+    // 所有者アイコン (カード総選挙と同じ方式): 所有キャラ = アバター / 共通 (Neutral) = 色マナ絵文字
+    //   card_election_data.json は renderCardPerformanceTab で先読み済み。未ロードの間はこの行を表示しない
+    let ownerIconHtml = '';
+    const ceCd = (typeof ceGetCharData === 'function') ? ceGetCharData() : null;
+    const ceNm = (ceCd && ceCd.names && d.Card_ID) ? ceCd.names[d.Card_ID] : null;
+    if (ceNm) {
+        const ceOwner = ceNm[5], ceColor = ceNm[6] || '';
+        const ownerIcon = (ceOwner && ceOwner !== 'Neutral' && typeof ceAvImg === 'function')
+            ? `<span title="${ceOwner}">${ceAvImg(ceOwner)}</span>`
+            : (ceColor ? `<span title="${lang === 'ja' ? '共通 (Neutral)' : 'Neutral'}">${ceColor}</span>` : '');
+        if (ownerIcon) {
+            const ownerLabel = (lang === 'ja') ? '所有者'
+                : ((UI_TEXT.card_election && UI_TEXT.card_election.d_owner) || 'Owner');
+            ownerIconHtml = ` <span style="white-space:nowrap;">${ownerLabel}: ${ownerIcon}</span>`;
+        }
+    }
+
+    const tooltipHtml = `<div class='info-column'><b>${cardName}</b> ${wikiLinkHtml}<br>${UI_TEXT.common.type}: ${sourceData.Type}${ownerIconHtml}<br>${UI_TEXT.common.rarity}: ${sourceData.Rarity}<hr style='margin:5px 0;'>${perfHtml}${adoptionHtml}${highlightsHtml}</div><div class='info-column'>${coOccurrenceHtml}</div>`;
 
 
     if (isAggView) {
@@ -966,7 +983,7 @@ function updatePrateRankings(lang) {
     const perfLabel = (lang === 'ja') ? '性能' : 'Perf';
     const adoptLabel = (lang === 'ja') ? '採用率' : 'Adopt';
     const nameHeader = (lang === 'ja') ? 'カード名' : 'Card';
-    const tableHtml = (sorted, valueHeader, valueFmt) => {
+    const tableHtml = (sorted, valueHeader, valueFmt, valueId) => {
         const splitPoint = Math.ceil(sorted.length / 2);
         const cols = [sorted.slice(0, splitPoint), sorted.slice(splitPoint)];
         const mkTable = (list, startIdx) => {
@@ -984,9 +1001,9 @@ function updatePrateRankings(lang) {
                 `<tr>` +
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">#</th>` +
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9; text-align:left;">${nameHeader}</th>` +
-                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${valueHeader}</th>` +
-                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${adoptLabel}</th>` +
-                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${perfLabel}</th>` +
+                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${valueHeader}${valueId && window.MI ? MI.icon(valueId) : ''}</th>` +
+                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${adoptLabel}${window.MI ? MI.icon('final') : ''}</th>` +
+                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${perfLabel}${window.MI ? MI.icon('perf') : ''}</th>` +
                 `</tr>${rows}</table>`;
         };
         return `<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">` +
@@ -997,9 +1014,9 @@ function updatePrateRankings(lang) {
 
     box.innerHTML =
         `<div class="analysis-section"><h3>${UI_TEXT.card_perf.prate_ranking_title}</h3><p>${UI_TEXT.card_perf.prate_ranking_desc}</p>` +
-        tableHtml(prateTop, UI_TEXT.card_perf.filters.prate_label, (e) => Math.round(e.prate)) + `</div>` +
+        tableHtml(prateTop, UI_TEXT.card_perf.filters.prate_label, (e) => Math.round(e.prate), 'prate') + `</div>` +
         `<div class="analysis-section"><h3>${UI_TEXT.card_perf.pscore_ranking_title}</h3><p>${UI_TEXT.card_perf.pscore_ranking_desc}</p>` +
-        tableHtml(scoreTop, UI_TEXT.card_perf.filters.pscore_label, (e) => e.score.toFixed(2)) + `</div>`;
+        tableHtml(scoreTop, UI_TEXT.card_perf.filters.pscore_label, (e) => e.score.toFixed(2), 'score') + `</div>`;
 }
 
 function createTendencyRankingHtml(aggData, cardNameCol) {

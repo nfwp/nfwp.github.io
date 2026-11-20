@@ -81,6 +81,38 @@ window.ddPrefillFromRun = async function (character, runId, cards, exhibits) {
     runDiagnosis();
 };
 
+// --- ③-F: ログビューアの URL / プレイID からデッキを自動入力 ---
+//   プレイID の形式: 2026-09-15T07-40-09Z_Marisa_A_MarisaB_L7_TrueEnd (deck_diagnosis_data.json の runs[].id と一致)
+function __ddParseRunId(text) {
+    let s = String(text || '').trim();
+    if (!s) return '';
+    if (/^https?:\/\//i.test(s)) {
+        try { s = new URL(s).pathname; } catch (e) { /* URL 解析失敗時はそのまま */ }
+    }
+    const segs = String(s).split('/').filter(Boolean);
+    if (segs.length) s = segs[segs.length - 1];
+    s = s.replace(/[?#].*$/, '').trim();
+    const m = s.match(/(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z_\S+)/);
+    return m ? m[1] : s;
+}
+async function __loadRunFromInput() {
+    const inp = $('#runurl-input');
+    const msg = $('#runurl-msg');
+    const show = (t, ok) => { if (msg) { msg.textContent = t; msg.style.color = ok ? '#2e7d32' : '#c62828'; } };
+    show('', true);
+    const runId = __ddParseRunId(inp ? inp.value : '');
+    if (!runId) { show(DDT('url_empty','プレイID またはログ URL を貼り付けてください。'), false); return; }
+    try { await ensureDeckDiagnosisData(); } catch (e) { show(DDT('url_load_err','統計データの読み込みに失敗しました。時間をおいて再試行してください。'), false); return; }
+    const run = D.runs.find(r => r.id === runId) || D.runs.find(r => r.id.toLowerCase() === runId.toLowerCase());
+    if (!run) { show(DDT('url_not_found','このプレイID は統計データに見つかりません (統計対象外のラン・バージョン違い、または ID が違います)。'), false); return; }
+    const cards = [];
+    for (const [cid, n] of Object.entries(decodeDeck(run.deck))) for (let i = 0; i < n; i++) cards.push(cid);
+    const exhibits = decodeExh(run.exh);
+    window.ddPrefillFromRun(run.ch, run.id, cards, exhibits);
+    show(DDTF('url_loaded','読み込みました: {id}{ns}', { id: run.id, ns: run.ns ? DDT('url_tag_ns',' (統計外ラン)') : '' }), true);
+    if (inp) inp.value = '';
+}
+
 // DD_TAB_HTML は DDT() を含むため、テンプレートリテラルの評価をレンダリング時まで遅らせる
 //   (スクリプトロード時は LANG/UI_TEXT が未確定 → JA が凍結してしまう)
 let __ddTabHtmlCache = null;
@@ -103,6 +135,12 @@ function getDDTabHtml() {
     <datalist id="card-datalist"></datalist>
     <button class="opt-btn" id="btn-starter">${DDT('btn_starter','初期デッキを読み込む')}</button>
     <button class="opt-btn" id="btn-clear">${DDT('btn_clear','クリア')}</button>
+</div>
+<div class="row" style="margin-top:8px; flex-wrap:wrap; align-items:center; gap:6px;">
+    <b>${DDT('lbl_from_url','ログURLから入力:')}</b>
+    <input id="runurl-input" placeholder="${DDT('ph_runurl','ログビューアの URL または プレイID を貼り付け → 読み込み (統計登録ランのみ)')}" style="flex:1; min-width:240px; padding:6px 8px; border:1px solid var(--line); border-radius:6px;">
+    <button class="opt-btn" id="btn-load-run">${DDT('btn_load_run','読み込み')}</button>
+    <span id="runurl-msg" class="muted" style="flex-basis:100%;"></span>
 </div>
 <div id="deck-chips"></div>
 <div class="row" style="margin-top:8px; margin-bottom:6px;">
@@ -148,6 +186,12 @@ function getDDTabHtml() {
 <p class="muted" style="margin-top:8px;">
 ${DDT('metric_note','類似度はどちらも「カードの所持」ベース (コピー数は無視)。<b>Jaccard</b> = 双方のデッキ全体の重なり率 (デッキが大きいほど一致しにくい)。<b>包含率</b> = あなたのデッキが各ランの最終デッキにどれだけ含まれるか (デッキが小さいほど高くなり、初期デッキ+1枚のような入力でも判定しやすい)。しきい値指定の母集団は選択中の方式で判定します。<br>展示品を入力した場合、チェックONならカードと展示品を1つの集合にプールして類似度を計算します (展示品がビルドの型を強く反映するため、判定精度が上がります)。<br>📌 を付けたカード・展示品は<strong>必ず含める</strong>扱いになります — 類似度計算に常に含まれ (初期カード除外の対象外)、さらに📌をすべて所持しているランだけを母集団候補にします。')}
 </p>
+</div>
+
+<div class="panel" id="dd-history-panel">
+<h2>${DDT('h_history','🕘 診断履歴')}</h2>
+<div id="dd-history-body"></div>
+<p style="text-align:right; margin:4px 0 0;"><button type="button" class="opt-btn" id="dd-history-clear">${DDT('hist_clear','履歴をクリア')}</button></p>
 </div>
 
 <div id="results-anchor"></div>
@@ -437,10 +481,222 @@ function ddApplyCondition(cond) {
     renderDeck();
     return true;
 }
+
+// --- ③-G: 条件の共有フォーマット (短縮) ---
+//   新: 位置ベースのコンパクト形式 ?dd=2~<ch>~<deck>~<exh>~<pins>~<exhPins>~<flags>~<metric>~<pool>~<mana>
+//       (カード/展示品 ID は [A-Za-z0-9_] のみなので URL にそのまま乗る。枚数は id*3)
+//   旧: JSON + encodeURIComponent (#dd=%7B...) も引き続き読める
+function ddEncodeCompact(cond) {
+    if (!cond || typeof cond !== 'object') return '';
+    const f = (cond.ns ? '1' : '0') + (cond.ex === false ? '0' : '1') + (cond.noSt === false ? '0' : '1');
+    return ['2', cond.ch || '',
+        (cond.deck || []).map(pair => pair[0] + (pair[1] > 1 ? '*' + pair[1] : '')).join(','),
+        (cond.exh || []).join(','),
+        (cond.pins || []).join(','),
+        (cond.exhPins || []).join(','),
+        f, cond.metric || 'j', cond.pool || 'top100',
+        Object.entries(cond.mana || {}).map(kv => kv[0] + kv[1]).join(',')
+    ].join('~');
+}
+function ddDecodeCompact(s) {
+    if (typeof s !== 'string' || s.slice(0, 2) !== '2~') return null;
+    const p = s.split('~');
+    if (p.length < 10) return null;
+    const num = (str) => { const n = parseInt(str, 10); return isNaN(n) ? 0 : n; };
+    const ids = (str) => (str ? str.split(',').filter(x => /^\w+$/.test(x)) : []);
+    const deck = [];
+    if (p[2]) {
+        for (const tok of p[2].split(',')) {
+            const m = tok.match(/^(\w+)\*(\d+)$/);
+            if (m) deck.push([m[1], num(m[2])]);
+            else if (/^\w+$/.test(tok)) deck.push([tok, 1]);
+        }
+    }
+    const f = (p[6] || '000').padEnd(3, '0');
+    const mana = {};
+    if (p[9]) {
+        for (const tok of p[9].split(',')) {
+            const m = tok.match(/^([A-Z])(\d+)$/);
+            if (m) mana[m[1]] = num(m[2]);
+        }
+    }
+    return {
+        v: 2, ch: p[1] || '',
+        deck,
+        exh: ids(p[3]), pins: ids(p[4]), exhPins: ids(p[5]),
+        ns: f[0] === '1', ex: f[1] !== '0', noSt: f[2] !== '0',
+        metric: (p[7] === 'c') ? 'c' : 'j',
+        pool: p[8] || 'top100',
+        mana
+    };
+}
+function ddParseSharedCondition(str) {
+    if (!str) return null;
+    let s = String(str).trim();
+    try { s = decodeURIComponent(s); } catch (e) { /* そのまま */ }
+    if (s.charCodeAt(0) === 123) {
+        try { return JSON.parse(s); } catch (e) { return null; }
+    }
+    return ddDecodeCompact(s);
+}
+
+// --- ③-H: 診断履歴 (ラン検索の検索履歴と同じ考え方 / 最大 20 件) ---
+const DD_HISTORY_KEY = 'dd_history_v1';
+function ddLoadHistory() {
+    try { return JSON.parse(localStorage.getItem(DD_HISTORY_KEY) || '[]') || []; } catch (e) { return []; }
+}
+function ddSaveHistory(list) {
+    try { localStorage.setItem(DD_HISTORY_KEY, JSON.stringify(list.slice(0, 20))); } catch (e) { /* 無視 */ }
+}
+function ddRecordHistory(cond) {
+    try {
+        if (!cond || !cond.deck || !cond.deck.length) return;
+        const key = ddEncodeCompact(cond);
+        const list = ddLoadHistory().filter(h => h.k !== key);   // 同一条件は先頭へ差し替え
+        list.unshift({ t: Date.now(), k: key, cond });
+        ddSaveHistory(list);
+        ddRenderHistory();
+    } catch (e) { /* 無視 */ }
+}
+function ddHistoryLabel(cond) {
+    const deckN = (cond.deck || []).length;
+    const deckTotal = (cond.deck || []).reduce((s, pair) => s + (pair[1] || 1), 0);
+    const parts = [cond.ch || ''];
+    parts.push(DDTF('hist_cards', 'カード{a}種({b}枚)', { a: deckN, b: deckTotal }));
+    if ((cond.exh || []).length) parts.push(DDTF('hist_exh', '展示{a}', { a: cond.exh.length }));
+    const pinC = (cond.pins || []).length, pinE = (cond.exhPins || []).length;
+    if (pinC && pinE) parts.push(DDTF('hist_pins_both', '📌カード{a}・展示{b}', { a: pinC, b: pinE }));
+    else if (pinC) parts.push(DDTF('hist_pins', '📌{a}', { a: pinC }));
+    else if (pinE) parts.push(DDTF('hist_pins_exh', '📌展示{a}', { a: pinE }));
+    if (cond.ns) parts.push(DDT('hist_ns', '統計外含'));
+    parts.push((cond.metric === 'c') ? DDT('hist_metric_c', '包含率') : DDT('hist_metric_j', 'Jaccard'));
+    return parts.filter(Boolean).join(' ／ ');
+}
+// 履歴の詳細 (セクション配列) — ホバー (title) と展開表示 (HTML) の両方で使う
+function ddHistorySections(cond) {
+    const secs = [];
+    if (!cond) return secs;
+    const sep = isEN() ? ', ' : '、';
+    const deckN = (cond.deck || []).length;
+    const deckTotal = (cond.deck || []).reduce((s, pair) => s + (pair[1] || 1), 0);
+    secs.push({ hd: DDTF('hist_cards', 'カード{a}種({b}枚)', { a: deckN, b: deckTotal }),
+        bd: (cond.deck || []).map(pair => cardName(D.cards[pair[0]], pair[0]) + (pair[1] > 1 ? '×' + pair[1] : '')).join(sep) });
+    if ((cond.exh || []).length) {
+        secs.push({ hd: DDTF('hist_exh', '展示{a}', { a: cond.exh.length }),
+            bd: cond.exh.map(eid => exhName(D.exhInfo[eid], eid)).join(sep) });
+    }
+    if ((cond.pins || []).length) {
+        secs.push({ hd: DDT('hist_pins_card_hdr', '📌 必須カード (デッキと同じ枚数以上)'),
+            bd: cond.pins.map(cid => cardName(D.cards[cid], cid)).join(sep) });
+    }
+    if ((cond.exhPins || []).length) {
+        secs.push({ hd: DDT('hist_pins_exh_hdr', '📌 必須展示品'),
+            bd: cond.exhPins.map(eid => exhName(D.exhInfo[eid], eid)).join(sep) });
+    }
+    const manaKeys = Object.keys(cond.mana || {}).filter(k => cond.mana[k] > 0);
+    if (manaKeys.length) {
+        secs.push({ hd: DDT('lbl_mana', '最終マナ基盤:'),
+            bd: manaKeys.map(k => ((D.manaIcons && D.manaIcons[k]) || k) + '≥' + cond.mana[k]).join('  ') });
+    }
+    const opts = [];
+    if (cond.ns) opts.push(DDT('hist_ns', '統計外含'));
+    if (cond.ex === false) opts.push(DDT('hist_ex_off', '展示品は類似度に含めない'));
+    if (cond.noSt === false) opts.push(DDT('hist_st_incl', '初期カードも比較に含める'));
+    opts.push((cond.metric === 'c') ? DDT('hist_metric_c', '包含率') : DDT('hist_metric_j', 'Jaccard'));
+    opts.push(ddPoolLabel(cond.pool));
+    secs.push({ hd: DDT('hist_opts_hdr', '条件'), bd: opts.join(' ／ ') });
+    return secs;
+}
+function ddPoolLabel(pool) {
+    const map = { 'top100': DDT('pool_top100','類似度 上位100ラン'), 'top30': DDT('pool_top30','類似度 上位30ラン'), 'top300': DDT('pool_top300','類似度 上位300ラン'), 'th0.4': DDT('pool_th40','類似度 ≥ 40%'), 'th0.3': DDT('pool_th30','類似度 ≥ 30%') };
+    return map[pool] || (pool || 'top100');
+}
+function ddHistoryDetailText(cond) {
+    const secs = ddHistorySections(cond);
+    if (!secs.length) return DDT('hist_rerun_tip', 'クリックでこの条件を再実行');
+    return secs.map(s => s.hd + '\n' + s.bd).join('\n') + '\n' + DDT('hist_rerun_tip', 'クリックでこの条件を再実行');
+}
+function ddEscHtml(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function ddHistoryDetailHtml(cond) {
+    const secs = ddHistorySections(cond);
+    if (!secs.length) return '';
+    return secs.map(s => '<div class="dd-hist-hd">' + ddEscHtml(s.hd) + '</div><div class="dd-hist-ln">' + ddEscHtml(s.bd) + '</div>').join('');
+}
+function ddHistoryToggleDetail(btn) {
+    const t = btn.getAttribute('data-hdet');
+    const block = btn.closest('.dd-hist-block');
+    const detail = block ? block.querySelector('.dd-hist-detail') : null;
+    if (!detail) return;
+    if (detail.style.display !== 'none') {
+        detail.style.display = 'none';
+        btn.textContent = '▾';
+        btn.classList.remove('open');
+        return;
+    }
+    const h = ddLoadHistory().find(x => String(x.t) === String(t));
+    detail.innerHTML = (h && h.cond) ? ddHistoryDetailHtml(h.cond) : '';
+    detail.style.display = 'block';
+    btn.textContent = '▴';
+    btn.classList.add('open');
+}
+function ddRenderHistory() {
+    const body = document.getElementById('dd-history-body');
+    if (!body) return;
+    const list = ddLoadHistory();
+    if (!list.length) {
+        body.innerHTML = '<p class="muted" style="margin:4px 0;">' + DDT('hist_none','履歴はまだありません (診断実行で追加されます)') + '</p>';
+        return;
+    }
+    const fmtT = (t) => { const d = new Date(t); const p2 = (n) => String(n).padStart(2, '0'); return p2(d.getMonth() + 1) + '/' + p2(d.getDate()) + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); };
+    body.innerHTML = list.map((h) =>
+        '<div class="dd-hist-block">' +
+        '<div class="dd-hist-row">' +
+        '<button type="button" class="dd-hist-main" data-hrun="' + h.t + '" title="' + ddEscHtml(ddHistoryDetailText(h.cond)).replace(/\n/g, '&#10;') + '">' +
+        '<span class="dd-hist-date">' + fmtT(h.t) + '</span>' +
+        '<span class="dd-hist-label">' + ddHistoryLabel(h.cond) + '</span>' +
+        '</button>' +
+        '<button type="button" class="dd-hist-toggle" data-hdet="' + h.t + '" title="' + DDT('hist_detail_tip', '詳細を表示 / 閉じる') + '">▾</button>' +
+        '<button type="button" class="dd-hist-del" data-hdel="' + h.t + '" title="' + DDT('hist_delete','削除') + '">🗑</button>' +
+        '</div>' +
+        '<div class="dd-hist-detail" style="display:none;"></div>' +
+        '</div>'
+    ).join('');
+}
+function ddRestoreHistory(t) {
+    const h = ddLoadHistory().find(x => x.t === t);
+    if (!h || !h.cond) return;
+    ddApplyCondition(h.cond);
+    runDiagnosis();
+    const resEl = document.getElementById('results-anchor');
+    if (resEl) resEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+let _ddHistDelTimer = null;
+function ddHistoryDeleteTap(cell, t) {
+    if (cell.classList.contains('armed')) {
+        if (_ddHistDelTimer) { clearTimeout(_ddHistDelTimer); _ddHistDelTimer = null; }
+        ddSaveHistory(ddLoadHistory().filter(h => h.t !== Number(t)));
+        ddRenderHistory();
+        return;
+    }
+    document.querySelectorAll('#dd-history-body .dd-hist-del.armed').forEach(el => { el.classList.remove('armed'); el.textContent = '🗑'; });
+    cell.classList.add('armed');
+    cell.textContent = DDT('hist_delete_confirm','削除?');
+    if (_ddHistDelTimer) clearTimeout(_ddHistDelTimer);
+    _ddHistDelTimer = setTimeout(() => { cell.classList.remove('armed'); cell.textContent = '🗑'; }, 3000);
+}
 function ddPersistCondition() {
     const cond = ddSerializeCondition();
     try { localStorage.setItem('dd_last_condition_v1', JSON.stringify(cond)); } catch (e) {}
-    try { history.replaceState(null, '', '#dd=' + encodeURIComponent(JSON.stringify(cond))); } catch (e) {}
+    // ③-G: アドレスバーには条件を乗せない (短く保つ)。共有は共有ボタンの短縮リンクから。
+    //   共有リンク (?dd=) で開いた場合も、診断後にアドレスバーから外す
+    try {
+        const ddq2 = new URLSearchParams(location.search);
+        ddq2.delete('dd');
+        const ddqs = ddq2.toString();
+        history.replaceState(null, '', location.pathname + (ddqs ? '?' + ddqs : ''));
+    } catch (e) {}
     return cond;
 }
 
@@ -476,6 +732,7 @@ function runDiagnosis() {
     const userCmp = new Set([...userCmpBase, ...(includeExh ? userExh : []), ...state.exhPins]);
     if (userCmp.size === 0) { alert(DDT('err_empty_cmp','初期カード以外のカードを追加してください (類似度の計算対象が空です)。')); return; }
     ddPersistCondition();   // 条件を localStorage + URLハッシュ (#dd=) に保存 (共有可能にする)
+    ddRecordHistory(ddSerializeCondition());   // ③-H: 診断履歴に追加
     // 📌 ピン留め項目をすべて所持しているランだけを母集団候補にする
     const pinCards = [...state.pins];
     const pinExhs = [...state.exhPins];
@@ -562,13 +819,16 @@ function renderResults(scored, pool, userAll, starters, ubiq, metric, userExh, e
         ? ` <span class="pin-badge" title="${pinNames.join(', ')}">📌 ${pinNames.length}</span>` : '';
     $('#pool-summary').innerHTML = DDTF('pool_summary', `
         <p><b>母集団: {n} ラン</b> (候補 {cand} ラン中 / {char}{ns}{pins})
-        <span class="muted">類似度方式: {metric} ／ 最高値 {best}% ／ 類似度0%のランは除外</span></p>`, {
+        <span class="muted">${DDT('metric_label','類似度方式')}: <span class="dd-metric-ref">{metric}</span> ／ ${DDT('best_label','最高値')} {best}% ／ ${DDT('sim_zero','類似度0%のランは除外')}</span></p>`, {
         n: N, cand: scored.length, char: state.char,
         ns: $('#opt-ns').checked ? DDT('ns_suffix',' + 統計外') : '',
         pins: pinsHtml,
         metric: METRIC_JA[metric],
         best: fmt(scored.length ? (metric === 'j' ? scored[0].j : scored[0].c) * 100 : 0, 1),
     });
+    // ③-E: 類似度方式の ⓘ を DOM 側で差し込む (en は locales のテンプレートを使うため)
+    const mrefEl = $('#pool-summary').querySelector('.dd-metric-ref');
+    if (mrefEl && window.MI) mrefEl.insertAdjacentHTML('afterend', MI.icon(metric === 'j' ? 'jaccard' : 'coverage'));
 
     // --- サマリー stat cards ---
     const sizes = pool.map(p => Object.values(p.dk).reduce((a, b) => a + b, 0));
@@ -631,7 +891,7 @@ function renderResults(scored, pool, userAll, starters, ubiq, metric, userExh, e
         segRows += `<tr><td>Act${act} ${KIND_LOC[kind] || kind}</td><td>${fmt(tpf)}</td><td>${fmt(lpf)}</td><td>${list.length}</td></tr>`;
     }
     $('#seg-table').innerHTML = segRows
-        ? `<table class="tbl"><thead><tr><th>${DDT('seg_col_segment','区間')}</th><th>${DDT('seg_col_tpf','平均ターン/戦闘')}</th><th>${DDT('seg_col_lpf','平均ライフ損失/戦闘')}</th><th>${DDT('seg_col_sample','サンプル')}</th></tr></thead><tbody>${segRows}</tbody></table>
+        ? `<table class="tbl"><thead><tr><th>${DDT('seg_col_segment','区間')}</th><th>${DDT('seg_col_tpf','平均ターン/戦闘')}${MI.icon('tpf')}</th><th>${DDT('seg_col_lpf','平均ライフ損失/戦闘')}${MI.icon('lpf')}</th><th>${DDT('seg_col_sample','サンプル')}</th></tr></thead><tbody>${segRows}</tbody></table>
            ${DDT('seg_note','<p class="muted">ライフ損失は純損失 (回復分で負値になり得ます)。サンプル3ラン未満の区間は省略。</p>')}`
         : DDT('seg_none','<p class="muted">戦績データのあるランがありません。</p>');
 
@@ -677,8 +937,8 @@ function renderResults(scored, pool, userAll, starters, ubiq, metric, userExh, e
     };
     $('#enemy-table').innerHTML = enemyRows.length
         ? `<table class="tbl"><thead><tr><th class="sortable" data-k="chrono">${DDT('enemy_col_name','敵 (登場順)')}</th>
-           <th class="sortable" data-k="rate">${DDT('enemy_col_rate','遭遇ラン率')}</th><th class="sortable" data-k="f">${DDT('enemy_col_f','総戦闘数')}</th>
-           <th class="sortable" data-k="tpf">${DDT('enemy_col_tpf','平均ターン/戦')}</th><th class="sortable" data-k="lpf">${DDT('enemy_col_lpf','平均ライフ損失/戦')}</th>
+           <th class="sortable" data-k="rate">${DDT('enemy_col_rate','遭遇ラン率')}${MI.icon('encrate')}</th><th class="sortable" data-k="f">${DDT('enemy_col_f','総戦闘数')}</th>
+           <th class="sortable" data-k="tpf">${DDT('enemy_col_tpf','平均ターン/戦')}${MI.icon('tpf')}</th><th class="sortable" data-k="lpf">${DDT('enemy_col_lpf','平均ライフ損失/戦')}${MI.icon('lpf')}</th>
            </tr></thead><tbody id="enemy-body"></tbody></table>
            ${DDT('enemy_note','<p class="muted">既定は登場順 (Act → 種別 → Lv)。列見出しクリックで並び替え (もう一度クリックで昇順/降順反転、「敵」列クリックで登場順に戻る)。ライフ損失は純損失 (回復超過で負値)。平均ターン/平均ライフ損失の<b>括弧内はこのキャラの全ランでの平均</b> (敵別戦績ベース)。</p>')}`
         : DDT('enemy_none','<p class="muted">戦闘データのあるランがありません。</p>');
@@ -925,7 +1185,25 @@ window.__ddInit = () => {
     }
     $('#btn-starter').onclick = loadStarterDeck;
     $('#btn-clear').onclick = () => { state.deck.clear(); state.exh.clear(); state.pins.clear(); state.exhPins.clear(); renderDeck(); };
+    // ③-F: ログ URL からの読み込み
+    if ($('#runurl-input')) {
+        $('#btn-load-run').onclick = __loadRunFromInput;
+        $('#runurl-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); __loadRunFromInput(); } });
+    }
     $('#diag-btn').onclick = runDiagnosis;
+    // ③-H: 診断履歴パネル (クリック = 再実行 / 🗑 = 2 段階削除 / クリア)
+    ddRenderHistory();
+    const dhp = document.getElementById('dd-history-body');
+    if (dhp) dhp.addEventListener('click', (e) => {
+        const det = e.target.closest('[data-hdet]');
+        if (det) { ddHistoryToggleDetail(det); return; }
+        const del = e.target.closest('[data-hdel]');
+        if (del) { ddHistoryDeleteTap(del, del.getAttribute('data-hdel')); return; }
+        const row = e.target.closest('[data-hrun]');
+        if (row) ddRestoreHistory(parseFloat(row.getAttribute('data-hrun')));
+    });
+    const dhc = document.getElementById('dd-history-clear');
+    if (dhc) dhc.onclick = () => { ddSaveHistory([]); ddRenderHistory(); };
     renderDeck();
     $('#meta-line').textContent = DDTF('meta_line', '母集団: {total} ラン (統計 {stat} + 統計外 {ns}) ／ データ生成: {gen} ／ レポート生成: {rep}', {
         total: D.runs.length,
@@ -937,14 +1215,24 @@ window.__ddInit = () => {
     // --- 条件の保存・共有・リセット (URLハッシュ #dd= / localStorage) ---
     $('#dd-share-btn').onclick = () => {
         const cond = ddPersistCondition();
-        const url = location.origin + location.pathname + location.search + '#dd=' + encodeURIComponent(JSON.stringify(cond));
-        const done = () => alert(DDT('dd_copied','共有リンクをコピーしました。'));
-        const fail = () => alert(DDT('dd_share_manual','クリップボードにコピーできませんでした。アドレスバーの URL に条件が付与されているので、それをコピーしてください。'));
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(done, fail);
-        } else {
-            fail();
-        }
+        const compact = ddEncodeCompact(cond);
+        const longUrl = location.origin + location.pathname + '?dd=' + compact;
+        const fail = () => alert(DDT('dd_share_manual','クリップボードにコピーできませんでした。もう一度お試しください。'));
+        const copyLong = () => {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(longUrl).then(() => alert(DDT('dd_copied','共有リンクをコピーしました。')), fail);
+            } else fail();
+        };
+        // ③-G2: 短縮は lbolShortenUrl (結果キャッシュ + is.gd → v.gd → spoo.me) に統一。
+        //   is.gd は IP あたり 200 件/時の制限があるため、キャッシュとフォールバックで回避。
+        //   全プロバイダ失敗時は条件付き URL (?dd=...) をそのままコピー
+        const shortenP = (typeof lbolShortenUrl === 'function') ? lbolShortenUrl(longUrl) : Promise.resolve(null);
+        shortenP.then(short => {
+            if (!short || !(navigator.clipboard && navigator.clipboard.writeText)) return copyLong();
+            return navigator.clipboard.writeText(short)
+                .then(() => alert(DDT('dd_copied_short','短縮リンクをコピーしました。')))
+                .catch(copyLong);
+        }).catch(copyLong);
     };
     $('#dd-reset-btn').onclick = () => {
         state.deck.clear(); state.exh.clear(); state.pins.clear(); state.exhPins.clear();
@@ -956,11 +1244,20 @@ window.__ddInit = () => {
         renderCharButtons();
         renderDeck();
     };
-    // 条件の復元: URLハッシュ (#dd=) を優先して自動診断 / 無ければ localStorage から復元 (自動診断はしない)
+    // 条件の復元: 共有リンク (?dd= 新形式 / 旧 #dd=) を最優先で自動診断 / 無ければ localStorage から復元 (自動診断はしない)
+    //   ③-G: アドレスバー自体には条件を乗せない。共有は共有ボタンから
     let ddRestored = false;
-    if (location.hash.startsWith('#dd=')) {
+    try {
+        const ddq = new URLSearchParams(location.search);
+        if (ddq.has('dd')) {
+            const cond = ddParseSharedCondition(ddq.get('dd'));
+            ddRestored = ddApplyCondition(cond);
+            if (ddRestored) runDiagnosis();
+        }
+    } catch (e) { /* 壊れたパラメータは無視 */ }
+    if (!ddRestored && location.hash.startsWith('#dd=')) {
         try {
-            const cond = JSON.parse(decodeURIComponent(location.hash.slice(4)));
+            const cond = ddParseSharedCondition(location.hash.slice(4).split('&')[0]);
             ddRestored = ddApplyCondition(cond);
             if (ddRestored) runDiagnosis();
         } catch (e) { /* 壊れたハッシュは無視 */ }

@@ -114,6 +114,14 @@
     text-decoration: underline;
 }
 
+/* 所有者アイコン (カード総選挙と同じアバター / 共通カードは色マナ絵文字) */
+#info-box img.av {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    vertical-align: -4px;
+}
+
 #spotlight-report ul, #criteria-explanation ul {
     list-style-type: none;
     padding-left: 0;

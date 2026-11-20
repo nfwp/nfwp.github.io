@@ -347,16 +347,6 @@
 <td style='text-align: right;'>76.5</td>
 </tr>
 <tr>
-<td>Clean Energy</td>
-<td style='text-align: right;'>+18.09</td>
-<td style='text-align: right;'>45.7%</td>
-<td style='text-align: right;'>26.8%</td>
-<td style='text-align: right;'>46</td>
-<td style='text-align: right;'>50.1</td>
-<td style='text-align: right;'>39.6</td>
-<td style='text-align: right;'>89.8</td>
-</tr>
-<tr>
 <td>Lily White, Herald of Spring</td>
 <td style='text-align: right;'>+18.09</td>
 <td style='text-align: right;'>45.7%</td>
@@ -365,6 +355,16 @@
 <td style='text-align: right;'>40.6</td>
 <td style='text-align: right;'>59.4</td>
 <td style='text-align: right;'>100.0</td>
+</tr>
+<tr>
+<td>Clean Energy</td>
+<td style='text-align: right;'>+18.09</td>
+<td style='text-align: right;'>45.7%</td>
+<td style='text-align: right;'>26.8%</td>
+<td style='text-align: right;'>46</td>
+<td style='text-align: right;'>50.1</td>
+<td style='text-align: right;'>39.6</td>
+<td style='text-align: right;'>89.8</td>
 </tr>
 <tr>
 <td>Kasumi, Mansion Maid</td>

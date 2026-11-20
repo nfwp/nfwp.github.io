@@ -171,10 +171,97 @@ function ddPinShared(kind, id, label, message) {
     } catch (e) { console.warn('ddPinShared failed:', e); }
 }
 
+// --- 共有リンクの短縮ヘルパ (③-G2) ---
+//   is.gd は IP あたり 200 件/時の制限があり、同じ条件を再短縮するとすぐ制限に当たる。
+//   → 1) 結果を localStorage にキャッシュして再利用  2) is.gd → v.gd → spoo.me の順で試行
+//     (v.gd は is.gd 同一運営・spoo.me は別運営で制限も別。前回成功プロバイダを優先)
+const LBOLE_SHORT_CACHE_KEY = 'shorturl_cache_v1';
+const LBOLE_SHORT_PROVIDER_KEY = 'shorturl_provider_v1';
+
+function lbolShortCacheLoad() {
+    try { return JSON.parse(localStorage.getItem(LBOLE_SHORT_CACHE_KEY) || '{}') || {}; } catch (e) { return {}; }
+}
+
+function lbolShortCacheSave(longUrl, shortUrl) {
+    try {
+        const c = lbolShortCacheLoad();
+        c[longUrl] = shortUrl;
+        const keys = Object.keys(c);
+        while (keys.length > 100) delete c[keys.shift()];   // 上限 100 件 (古いものから削除)
+        localStorage.setItem(LBOLE_SHORT_CACHE_KEY, JSON.stringify(c));
+    } catch (e) { /* キャッシュ失敗は無視 */ }
+}
+
+// 成功時 Promise<string> / 全プロバイダ失敗時 Promise<null>
+function lbolShortenUrl(longUrl, timeoutMs) {
+    const cached = lbolShortCacheLoad()[longUrl];
+    if (cached) return Promise.resolve(cached);
+    let lastProvider = null;
+    try { lastProvider = localStorage.getItem(LBOLE_SHORT_PROVIDER_KEY); } catch (e) {}
+    const withTimeout = (p, ms) => Promise.race([
+        p,
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms || 6000)),
+    ]);
+    const viaIsGd = (host) => async () => {
+        const r = await fetch('https://' + host + '/create.php?format=json&url=' + encodeURIComponent(longUrl));
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const j = await r.json();
+        if (!j.shorturl) throw new Error('no shorturl');
+        return j.shorturl;
+    };
+    const viaSpoo = async () => {
+        const r = await fetch('https://spoo.me/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+            body: 'url=' + encodeURIComponent(longUrl),
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const j = await r.json();
+        if (!j.short_url) throw new Error('no short_url');
+        return String(j.short_url).replace(/^http:\/\//i, 'https://');
+    };
+    let chain;
+    if (lastProvider === 'spoo.me') chain = [['spoo.me', viaSpoo], ['is.gd', viaIsGd('is.gd')], ['v.gd', viaIsGd('v.gd')]];
+    else if (lastProvider === 'v.gd') chain = [['v.gd', viaIsGd('v.gd')], ['is.gd', viaIsGd('is.gd')], ['spoo.me', viaSpoo]];
+    else chain = [['is.gd', viaIsGd('is.gd')], ['v.gd', viaIsGd('v.gd')], ['spoo.me', viaSpoo]];
+    let idx = 0;
+    const attempt = () => {
+        if (idx >= chain.length) return Promise.resolve(null);
+        const entry = chain[idx++];
+        const name = entry[0], fn = entry[1];
+        return withTimeout(fn()).then((short) => {
+            try { localStorage.setItem(LBOLE_SHORT_PROVIDER_KEY, name); } catch (e) {}
+            lbolShortCacheSave(longUrl, short);
+            return short;
+        }).catch(() => attempt());
+    };
+    return attempt();
+}
+
 // ラン検索を新しいブラウザタブで開く (条件をURLに埋め込み、自動検索される)
+// ③-G: 条件が長くなる場合は localStorage 経由 (?rfq=<key>) にして URL を短く保つ。
+//   同一ブラウザ内の「持ち運び」用。他ブラウザに渡す共有はラン検索タブの 🔗 共有リンク (is.gd) を使う。
+//   しきい値以下の短い条件は従来どおり URL に直接埋め込む (他ブラウザでも開ける)。
 function openRunFinderSearch(params) {
     const p = new URLSearchParams(params || {});
     p.set('search', 'true');
-    const url = window.location.origin + window.location.pathname + '?' + p.toString();
+    let url = window.location.origin + window.location.pathname + '?' + p.toString();
+    if (url.length > 300) {
+        try {
+            const key = 'rfq' + Date.now().toString(36) + Math.floor(Math.random() * 36).toString(36);
+            localStorage.setItem(key, p.toString());
+            url = window.location.origin + window.location.pathname + '?rfq=' + key + '&search=true';
+            // 受け渡しキーの掃除 (古いものから最大 20 件まで)
+            try {
+                const keys = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    if (k && k.indexOf('rfq') === 0) keys.push(k);
+                }
+                keys.sort();
+                while (keys.length > 20) localStorage.removeItem(keys.shift());
+            } catch (e) { /* 掃除失敗は無視 */ }
+        } catch (e) { /* localStorage 失敗時は長い URL のまま開く */ }
+    }
     window.open(url, '_blank');
 }

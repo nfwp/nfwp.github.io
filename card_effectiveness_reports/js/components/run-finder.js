@@ -3227,17 +3227,13 @@ async function generateAndCopyShareLink() {
     button.textContent = '短縮中...';
 
     try {
-        // shrtco.de はサービス終了のため is.gd を使用 (失敗時は長いURLをコピー)
-        const apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
+        // ③-G2: 短縮は lbolShortenUrl (結果キャッシュ + is.gd → v.gd → spoo.me) に統一。
+        //   is.gd は IP あたり 200 件/時の制限があり、同じ条件の再短縮で制限に当たるため。
+        const shortUrl = (typeof lbolShortenUrl === 'function') ? await lbolShortenUrl(longUrl) : null;
+        if (!shortUrl) {
+            throw new Error('all shorteners failed');
         }
-        const data = await response.json();
-        if (!data.shorturl) {
-            throw new Error(`API returned an error: ${data.errormessage || 'unknown'}`);
-        }
-        await rfCopyToClipboard(data.shorturl);
+        await rfCopyToClipboard(shortUrl);
         alert(UI_TEXT.run_finder.copy_link_success_short);
 
     } catch (err) {
@@ -3301,7 +3297,19 @@ function attemptAutoSearch() {
 
 let _rfUrlParamsApplied = false;
 function populateUiFromUrlParams() {
-    const params = new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
+    // ③-G: localStorage 経由の条件 (?rfq=<key> / openRunFinderSearch の長条件受け渡し)
+    const rfqKey = params.get('rfq');
+    if (rfqKey) {
+        try {
+            const raw = localStorage.getItem(rfqKey);
+            if (raw) {
+                params = new URLSearchParams(raw);
+                params.set('search', 'true');
+            }
+        } catch (e) { /* 壊れたキーは URL パラメータにフォールバック */ }
+        try { localStorage.removeItem(rfqKey); } catch (e) {}   // 一度使った受け渡しキーは削除
+    }
     if (!params.has('search')) return false;
     if (_rfUrlParamsApplied) return false;   // タブ再訪時に再適用して条件 (アイテム/敵/ルートのタグ・行) を二重復元するのを防止
     _rfUrlParamsApplied = true;

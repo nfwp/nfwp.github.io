@@ -28,6 +28,7 @@ async function loadAndShowCardList(character, language) {
         // (P-03) 母数表示用の run_details.json を裏で先読み (詳細展開時に await される)
         if (window.ensureRunDetailsLoaded) window.ensureRunDetailsLoaded();
         applyCardIcons();
+        decorateCardListMetricInfo(contentWrapper);
         setupCardFilters();
         setupTableSorting();
         setupSampleLinks();
@@ -64,9 +65,25 @@ async function ensurePickDetailsCache() {
     }
 }
 
+// ③-E (M-6): カード一覧の静的テーブルヘッダーに ⓘ を後付けする
+function decorateCardListMetricInfo(root) {
+    if (!window.MI) return;
+    MI.decorate(root, {
+        '採用率': 'final',
+        '採用時平均枚数': 'avg',
+        '強化率': 'au',
+        '採用ギャップ': 'gap',
+        'サンプルラン': 'sample',
+        'Adoption %': 'final',
+        'Avg.Num atadoption': 'avg',
+        'Upgrade %': 'au',
+        'Adoption Gap': 'gap',
+        'Sample runs': 'sample'
+    });
+}
+
 // アイコン動的付与ロジック
-function applyCardIcons() {
-    if (!pickDetailsAllCache) return;
+function applyCardIcons() {    if (!pickDetailsAllCache) return;
     const charData = pickDetailsAllCache[CURRENT_CHAR] || {};
     const iconSpans = document.querySelectorAll('.card-pick-icon');
 

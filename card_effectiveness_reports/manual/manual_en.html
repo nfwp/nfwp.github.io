@@ -25,6 +25,9 @@
         <!-- TODO: overview body -->
         <p>Statistical data created from Lunatic7 clear runs of Touhou Kouyouya (LBOL).<br>
             It may help you get a rough grasp of the overall flow.</p>
+        <p class="manual-note">💡 Click the <b>ⓘ next to any metric name</b> to see its <b>meaning, formula and caveats</b> right where you are.
+           The formula is filled with <b>the actual numbers for the card you are looking at</b>, so you can see how the value was produced.
+           For the full explanation, use "Read more in the How-to tab →" at the bottom of the popup.</p>
     </div>
 
     <h2 id="sec-tabs" class="c-violet">🗂️ Tabs</h2>
@@ -55,7 +58,7 @@
             <dt>Rarity</dt><dd>Filter by card rarity (All/Common/Uncommon/Rare)</dd>
             <dt>Medal</dt><dd>🥇 Gold / 🥈 Silver+ / 🥉 Bronze+ / No medal<br>
 			The more impactful situations a card has, the better its medal. (Act 3 and boss fights are weighted.)</dd>
-            <dt>Adoption Gap</dt><dd>Close to 1 = the share picked at first offer and the share still in the final deck match (landing as expected).<br>
+            <dt>Adoption Gap</dt><dd>Close to 1.0 = the card picked at the first offer is still in the deck at the end (landing as expected).<br>
 			Roughly <b>Adoption Gap = Final Adoption &divide; pFirst</b>, where <b>pFirst = (offering rate) &times; (1st-pick rate at the first offering)</b>.<br>
 			1.2x or more = adopted later than planned / 0.8&ndash;1.2x = adopted as planned / under 0.8x = a card that gets trimmed away over time<br>
 			Cards landing above 1.2 come in two flavors: the <b>"late-bloomer" type</b> (low 1st Pick, adopted later) and the <b>"staple" type</b> (offered often and stacked in multiple copies). The gap alone cannot tell them apart, so also check 1st Pick and Avg. Copies.</dd>
@@ -81,13 +84,13 @@
             <dt>Adoption rate in this situation</dt><dd>Situational tab only. The adoption rate at that point in time. Not the final adoption rate.</dd>
             <p class="manual-note">* The adoption rate at that point in time. Not the final adoption rate.</p>
             <dt>1st Pick</dt><dd>Rate of being chosen as the 1st option when offered (high = popular from the start)</dd>
-            <dt>Adoption Gap coefficient</dt><dd>Close to 1 = the share picked at first offer and the share still in the final deck match (landing as expected).<br>
+            <dt>Adoption Gap coefficient</dt><dd>Close to 1.0 = the card picked at the first offer is still in the deck at the end (landing as expected).<br>
 			Roughly <b>Adoption Gap = Final Adoption &divide; pFirst</b>, where <b>pFirst = (offering rate) &times; (1st-pick rate at the first offering)</b>.<br>
 			1.2x or more = adopted later than planned / 0.8&ndash;1.2x = adopted as planned / under 0.8x = a card that gets trimmed away over time<br>
 			Cards landing above 1.2 come in two flavors: the <b>"late-bloomer" type</b> (low 1st Pick, adopted later) and the <b>"staple" type</b> (offered often and stacked in multiple copies). The gap alone cannot tell them apart, so also check 1st Pick and Avg. Copies.</dd>
             <p class="manual-note">* Adoption Gap does not function correctly for starting cards (they are never evaluated at first offer).</p>
             <dt>P-rate / P-score</dt><dd>Values from the Card Election tab (test feature β).<br>
-			P-rate = an Elo rating (mean 1000) treating card picks as head-to-head matchups between the 2 cards offered in the same cell. P-score = P-rate/1000 × (1 + 2+ copies rate).<br>
+			P-rate = an Elo rating of <b>pick strength</b> (mean 1000) treating card picks as head-to-head matchups between the 2 cards offered in the same cell. P-score = P-rate/1000 × (1 + 2+ copies rate).<br>
 			* Experimental feature. Cards without data show N/A.</dd>
             <dt>Stability</dt><dd>Smallness of the swings in Attack/Defense Perf. Cards at 50 or higher can be expected to perform consistently.<br>
                 Cards with high Attack/Defense Perf but Stability of 40 or below tend to include key combo pieces or quirky cards.</dd>
@@ -123,7 +126,7 @@
         <p class="manual-note">* This is a test feature (β). Each character is estimated <b>independently</b> using only that character's L7 TrueEnd runs, so numbers cannot be compared directly between characters. Starting cards (24 Basic cards) are excluded.</p>
         <h3>Glossary</h3>
         <dl class="manual-dl">
-            <dt>P-rate</dt><dd>A rating obtained by treating card picks (drafts) as &quot;matchups between the 2 cards offered in the same cell&quot; and applying an Elo rating system.<br>
+            <dt>P-rate</dt><dd>A rating of <b>pick strength</b> obtained by treating card picks (drafts) as &quot;matchups between the 2 cards offered in the same cell&quot; and applying an Elo rating system (this is not raw combat performance).<br>
 			Of the two cards offered together, the one actually picked is the <b>winner</b> and the other the <b>loser</b>; all cells across all runs are compiled into round-robin match results.
 			An Elo-style rating (&quot;beating a stronger opponent counts more&quot;) is applied to those results to score each card (<b>mean = 1000</b>).<br>
 			Cells where another card was picked, or where the player passed, are not counted. Only cards offered simultaneously 10 or more times are rated.<br>
@@ -147,7 +150,7 @@
 			The difference from Real adoption = cards acquired but used up, vanished, or removed.</dd>
             
             <dt>P-score</dt><dd><b>P-rate &divide; 1000 × (1 + 2+ copies rate &divide; 100)</b>.<br>
-			Cards that are <b>both strong and stacked in multiple copies</b> score highest. Strong cards used as a single copy have a high P-rate but a moderate score.</dd>
+			Cards that are <b>picked often and stacked in multiple copies</b> score highest. Cards used as a single copy have a high P-rate but a moderate score.</dd>
         
             <dt>Avg. copies</dt><dd>Average number of copies in runs that acquired the card</dd>
             
@@ -167,10 +170,14 @@
         <h3>Conditions</h3>
         <dl class="manual-dl">
             <dt>Deck composition</dt><dd>Add cards to build the search condition (with copy counts). &quot;Load starter deck&quot; starts from that character's starter deck.</dd>
+            <dt>Load from log URL</dt><dd>Paste the <b>URL or play ID</b> of the public log viewer (lbol-logs.github.io), e.g. <code>2026-09-15T07-40-09Z_Marisa_A_MarisaB_L7_TrueEnd</code>, and press &quot;Load&quot; to auto-fill that run's <b>final deck + exhibits + character</b> and run the diagnosis.<br>
+			Only runs registered in the statistics are supported (a message is shown when the ID is not found). The 🔍 button in the Run Finder results does the same.</dd>
             <dt>📌 Pinning</dt><dd>Pressing 📌 on a card makes it a required condition. <b>Only runs owning at least the number of copies set in your deck</b> qualify (e.g. pin a card ×2 → only runs stacking 2+). Exhibits qualify by ownership.</dd>
             <dt>Mana filter</dt><dd>Restrict to runs whose ending base mana satisfies the condition (e.g. blue 3+).</dd>
             <dt>Exclusion</dt><dd>Starter cards can be excluded from the similarity comparison (pinned starters are not excluded).</dd>
-            <dt>Sharing</dt><dd>&quot;🔗 Copy share link&quot; gives a URL with the condition (also kept in search history).</dd>
+            <dt>Sharing</dt><dd>&quot;🔗 Copy share link&quot; gives a <b>shortened link</b> with the condition (also kept in search history).<br>
+			The address bar itself does not carry the condition any more — use this button when sharing. Old-style links (starting with #dd=) still work.</dd>
+            <dt>🕘 Diagnosis history</dt><dd>Every diagnosis run saves its condition to the history (up to 20 entries). Click a row to restore that condition and re-run the diagnosis. Hovering a row shows the <b>card / exhibit breakdown</b>, and ▾ expands the <b>full details</b>. 🗑 deletes an entry (press twice to confirm), &quot;Clear history&quot; removes all.</dd>
         </dl>
     </div>
 
@@ -194,7 +201,8 @@
             <li><strong>If you want to search for the final deck by specifying cards or exhibits, specify <b>ACT4 / Lv4 (Lv5 or higher is also fine)</b></strong>.<br>If no ACT/Level is specified, all runs matching the conditions at any point are returned.</li>
             <li>When ACT, level, cards, exhibits, etc. are specified, the hover on the runID shown in the play ID indicates whether it is a particular state (e.g. state act1 Lv 7), the final deck, or in which situation the item appeared.</li>
             <p class="manual-note">* You can search for cards that were adopted mid-route but are not in the final result.</p>
-            <li>Pressing 🔗 Copy share link lets you share those search results.</li>
+            <li>Pressing 🔗 Copy share link lets you share those search results (shortened link).</li>
+            <li>When opened via the 🔍 buttons on the Card List / Exhibits / Route tabs, long conditions are handed over inside the browser (localStorage) to keep the address bar short. * Sending that URL to someone else will not reproduce the condition — use 🔗 Copy share link for sharing.</li>
             <li>The <b>Player name</b> field next to the deck size filters runs by that player (partial match, case-insensitive). Leave it empty for &quot;no specification&quot;. Player names appearing in the logs appear as autocomplete candidates. It is included in the share link.</li>
         </ul>
         <h3>🗺️ Route conditions filter</h3>

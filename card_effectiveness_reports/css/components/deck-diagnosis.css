@@ -302,6 +302,23 @@
   content:' ▼'; font-size:.7em;
 }
 
+/* --- ③-H: 診断履歴パネル --- */
+#deck-diagnosis-tab .dd-hist-row { display: flex; align-items: center; gap: 6px; padding: 3px 0; border-bottom: 1px dashed var(--line, #e2e8f0); }
+#deck-diagnosis-tab .dd-hist-main { flex: 1; display: flex; gap: 8px; align-items: baseline; background: transparent; border: 0; padding: 3px 6px; cursor: pointer; text-align: left; font: inherit; color: inherit; border-radius: 6px; }
+#deck-diagnosis-tab .dd-hist-main:hover { background: rgba(42, 98, 201, 0.08); }
+#deck-diagnosis-tab .dd-hist-date { flex: 0 0 auto; color: #77839a; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#deck-diagnosis-tab .dd-hist-label { flex: 1; }
+#deck-diagnosis-tab .dd-hist-toggle { flex: 0 0 auto; width: 24px; height: 24px; border: 1px solid var(--line, #e2e8f0); background: #fff; border-radius: 5px; cursor: pointer; color: #5b6b82; font-size: 12px; line-height: 1; padding: 0; }
+#deck-diagnosis-tab .dd-hist-toggle:hover { background: #f4f7fd; color: #2a62c9; }
+#deck-diagnosis-tab .dd-hist-toggle.open { background: #2a62c9; border-color: #2a62c9; color: #fff; }
+#deck-diagnosis-tab .dd-hist-del { flex: 0 0 auto; border: 0; background: transparent; cursor: pointer; opacity: .55; font-size: 13px; padding: 2px 8px; border-radius: 4px; }
+#deck-diagnosis-tab .dd-hist-del:hover { background: #fdecec; opacity: 1; }
+#deck-diagnosis-tab .dd-hist-del.armed { background: #c62828; color: #fff; opacity: 1; font-size: 11px; font-weight: bold; }
+#deck-diagnosis-tab .dd-hist-detail { margin: 2px 0 8px; padding: 8px 10px; background: #f8fafc; border: 1px solid var(--line, #e2e8f0); border-radius: 6px; font-size: 12px; line-height: 1.55; word-break: break-word; }
+#deck-diagnosis-tab .dd-hist-hd { font-weight: 700; color: #1b2a44; margin-top: 4px; }
+#deck-diagnosis-tab .dd-hist-hd:first-child { margin-top: 0; }
+#deck-diagnosis-tab .dd-hist-ln { color: #45536a; margin-bottom: 2px; }
+
 /* 本編タブの横幅に揃える (2026-11-15 要望2): テスト版 body 由来の max-width/margin/padding を無効化 */
 #deck-diagnosis-tab { max-width: none; margin: 0; padding: 0; background: transparent; color: inherit; font-family: inherit; line-height: 1.65; }
 
