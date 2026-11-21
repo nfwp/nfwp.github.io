@@ -71,3 +71,52 @@
     background: none;
     box-shadow: none;
 }
+
+/*
+ * 詳細: カード性能のミニ箱ひげ図 + ハイライト (カード総選挙タブの詳細と同様・2026-11-21)
+ * ※ 同名クラスの样式は #card-election-tab スコープで定義されているため、
+ *    カード一覧の詳細内でも同等の見た目になるようにここで提供する。
+ */
+#card-list-content-wrapper .detail-container .prow.perfline {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+    margin: 3px 0;
+    padding: 1px 0;
+    font-size: 12px;
+}
+#card-list-content-wrapper .detail-container .prow.perfline span:first-child {
+    flex: none;
+    min-width: 60px;
+    color: #556;
+}
+#card-list-content-wrapper .detail-container .prow.perfline b {
+    min-width: 34px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+#card-list-content-wrapper .detail-container .prow.perfline .mboxwrap {
+    display: inline-flex;
+    flex-direction: column;
+    flex: 1 1 120px;
+    min-width: 100px;
+    max-width: 420px;
+    margin-left: 8px;
+}
+#card-list-content-wrapper .detail-container .prow.perfline .mboxwrap .mbox {
+    width: 100%;
+    height: 22px;
+    display: block;
+}
+#card-list-content-wrapper .detail-container .mboxticks {
+    position: relative;
+    height: 11px;
+}
+#card-list-content-wrapper .detail-container .mboxticks span {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: #889;
+    line-height: 11px;
+}

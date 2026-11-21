@@ -1,21 +1,23 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    Main Stylesheet - Imports all other stylesheets
    ========================================================================== */
 
 /* 1. Base and Layout */
-@import url("css/base.css");
-@import url("css/layout.css");
+/* ※ @import には ?v= を付与 (キャッシュバスティング・P-58 の教訓)。CSS を変更したら
+      この一括版数と report.html 側の style.css?v= を同時に上げる (UI 統一 Step 1・2026-11-21)。 */
+@import url("css/base.css?v=1796900026");
+@import url("css/layout.css?v=1796900026");
 
 /* 2. Components */
-@import url("css/components/header.css");
-@import url("css/components/card-perf.css");
-@import url("css/components/exhibit.css");
-@import url("css/components/route-event.css");
-@import url("css/components/enemy.css");
-@import url("css/components/event-analysis.css");
-@import url("css/components/act-trend.css");
-@import url("css/components/card-list.css");
-@import url("css/components/run-finder.css");
-@import url("css/components/deck-diagnosis.css");
-@import url("css/components/card-election.css");
-@import url("css/components/manual.css");
+@import url("css/components/header.css?v=1796900026");
+@import url("css/components/card-perf.css?v=1796900026");
+@import url("css/components/exhibit.css?v=1796900026");
+@import url("css/components/route-event.css?v=1796900026");
+@import url("css/components/enemy.css?v=1796900026");
+@import url("css/components/event-analysis.css?v=1796900026");
+@import url("css/components/act-trend.css?v=1796900026");
+@import url("css/components/card-list.css?v=1796900026");
+@import url("css/components/run-finder.css?v=1796900026");
+@import url("css/components/deck-diagnosis.css?v=1796900026");
+@import url("css/components/card-election.css?v=1796900026");
+@import url("css/components/manual.css?v=1796900026");

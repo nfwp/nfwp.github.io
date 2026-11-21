@@ -21,8 +21,8 @@
 
 .character-switcher select {
     padding: 5px 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    border-radius: var(--lbol-radius);
+    border: 1px solid var(--lbol-line);
     font-size: 14px;
-    background-color: #fff;
+    background-color: var(--lbol-panel);
 }

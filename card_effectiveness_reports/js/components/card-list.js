@@ -105,8 +105,9 @@ function applyCardIcons() {    if (!pickDetailsAllCache) return;
         const pFirst = appRatio * fpkRatio;
 
         const isJa = (LANG === 'ja');
+        const isStarter = (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(cardId) : false;
         let iconHtml = '';
-        const isBroom = !isTool && (pFirst > 0.05 && (finalAdoption / pFirst) < 0.80);
+        const isBroom = !isStarter && !isTool && (pFirst > 0.05 && (finalAdoption / pFirst) < 0.80);
         const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
         const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
 
@@ -336,7 +337,7 @@ function setupCardFilters() {
             </div>
         </div>
         <div style="width: 100%; font-size: 0.85em; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 6px; margin-top: 2px;">
-            ${isJa ? '※採用ギャップは初期カードに対しては正しく機能しません。' : '※Adoption Gap does not function correctly for starting cards.'}<br>
+            ${isJa ? '※初期カードは採用ギャップの対象外です (N/A)。' : '※Starter cards are excluded from Adoption Gap (N/A).'}<br>
             ${isJa ? '※Pレートと合成Pスコアは実験的な機能です。' : '* P-rate and P-score are experimental features.'}
         </div>
     `;
@@ -486,13 +487,17 @@ function applyFilterLogic() {
             const appRatio = (cData.app || 0) / 100;
             const fpkRatio = (cData.fpk || 0) / 100;
             const pFirst = appRatio * fpkRatio;
+            const isStarter = (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(row.getAttribute('data-card-id')) : false;
 
             let gapRatio = 0;
             if (pFirst > 0.001) {
                 gapRatio = finalAdoption / pFirst;
             }
 
-            if (gapSelectVal === 'ge1.2') {
+            if (gapSelectVal !== 'all' && isStarter) {
+                // 初期カードは採用ギャップを算出できないため、具体条件には一致させない
+                matchGap = false;
+            } else if (gapSelectVal === 'ge1.2') {
                 matchGap = (gapRatio >= 1.2);
             } else if (gapSelectVal === 'stb') {
                 matchGap = (gapRatio >= 0.9 && gapRatio < 1.1);
@@ -503,8 +508,8 @@ function applyFilterLogic() {
             }
             const isTool = (typeText === 'Tool' || typeText === '道具' || typeText === '道具(Tool)');
 
-            // フィルター側と完全に同じ条件に統一
-            const isBroom = !isTool && (pFirst > 0.001 && (finalAdoption / pFirst) < 0.80);
+            // フィルター側と完全に同じ条件に統一 (初期カードはギャップ対象外)
+            const isBroom = !isStarter && !isTool && (pFirst > 0.001 && (finalAdoption / pFirst) < 0.80);
             const isCrown = (!isBroom && fpkRatio >= 0.50 && finalAdoption >= 0.10);
             const isStar = (!isBroom && !isCrown && fpkRatio >= 0.30 && finalAdoption >= 0.10);
 
@@ -637,9 +642,15 @@ async function toggleCardDetail(btnElement) {
         const countB = (typeof countA === 'number') ? Math.round((firstPickRatio / 100) * countA) : '?';
 
         const pFirst = (runAppRatio / 100) * (firstPickRatio / 100);
+        const isStarter = (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(cardId) : false;
         let gapFactorText = '-';
         let gapColor = '#333';
-        if (pFirst > 0.001) {
+        if (isStarter) {
+            gapFactorText = isJa
+                ? 'N/A <span style="color:#777; font-weight:normal;">(初期カード)</span>'
+                : 'N/A <span style="color:#777; font-weight:normal;">(Starter)</span>';
+            gapColor = '#777';
+        } else if (pFirst > 0.001) {
             const gapVal = finalAdoption / pFirst;
             gapFactorText = `${gapVal.toFixed(2)}`;
             if (gapVal >= 1.2) gapColor = '#2563eb';
@@ -724,6 +735,48 @@ async function toggleCardDetail(btnElement) {
             stationHtml = isJa ? 'なし' : 'None';
         }
 
+        // 性能サマリ (2026-11-21): カード性能 (ミニ箱ひげ図) + ハイライト — カード総選挙タブの詳細と同構成 (左右分け)
+        // データ: card_election_data.json の perf (総選挙タブと共用・詳細表示時に ensureCardElectionData() 済み)
+        // ※ 旧 C3 チップ形式 → ユーザー指示でミニ箱ひげ図 + ハイライトの左右分けに変更
+        const ceCharData = (typeof ceGetCharData === 'function') ? ceGetCharData() : null;
+        const pf = (ceCharData && ceCharData.perf) ? ceCharData.perf[cardId] : null;
+        const ceT = (key, ja) => {
+            if (!isJa) {
+                const en = (UI_TEXT.card_election && UI_TEXT.card_election[key] != null) ? UI_TEXT.card_election[key] : null;
+                if (en != null) return en;
+            }
+            return ja;
+        };
+        let perfHtml = '';
+        if (pf) {
+            const hasGraph = ((pf.atk != null || (pf.atkB && !pf.atkB.some(v => v == null))) ||
+                              (pf.def != null || (pf.defB && !pf.defB.some(v => v == null))));
+            const miIco = (mi, ctx) => (window.MI && typeof MI.icon === 'function') ? MI.icon(mi, ctx) : '';
+            let perfCol;
+            if (!hasGraph) {
+                perfCol = `<div style="font-size:12px; color:#64748b;">${ceT('perf_insufficient', 'サンプル不足 — 戦闘回数が少なくカード性能のデータがありません')}</div>`;
+            } else {
+                const perfLine = (label, val, box, color, mi, miCtx) =>
+                    `<div class="prow perfline"><span>${label}${mi ? miIco(mi, miCtx) : ""}</span><b>${val != null ? val : "—"}</b>${typeof ceMiniBox === 'function' ? ceMiniBox(val, box, color, 300) : ''}</div>`;
+                perfCol = perfLine(ceT('perf_atk', '攻撃性能'), pf.atk, pf.atkB, "#d9534f", 'atk', pf.atk != null ? { v: pf.atk } : null) +
+                    perfLine(ceT('perf_def', '防御性能'), pf.def, pf.defB, "#4a90d9", 'defperf', pf.def != null ? { v: pf.def } : null);
+            }
+            const hlCol = (pf.medal || pf.hl)
+                ? `<b>${ceT('perf_hl', 'ハイライト')}:</b> ${pf.medal || ""}${pf.hl ? "<br>" + pf.hl : ""}`
+                : `<div style="font-size:12px; color:#64748b;">${ceT('hl_none', 'データなし')}</div>`;
+            perfHtml = `
+                <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; margin-bottom:10px;">
+                    <div style="flex:1.25; min-width:280px; max-width:460px;">
+                        <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${ceT('perf_hdr', 'カード性能 (カード性能タブと同様・戦闘偏差値)')}:</strong>
+                        ${perfCol}
+                    </div>
+                    <div style="flex:1; min-width:220px; border-left:1px solid var(--lbol-line-soft); padding-left:14px; font-size:0.9em;">
+                        ${hlCol}
+                    </div>
+                </div>
+            `;
+        }
+
         detailTr.innerHTML = `
             <td colspan="8" class="detail-container" style="padding: 0;">
                 <div style="padding: 12px 16px; background-color: #fafafa; border-top: 1px solid #eaeaea; border-bottom: 2px solid #e0e0e0; text-align: left;">
@@ -734,6 +787,7 @@ async function toggleCardDetail(btnElement) {
                         <div><strong>${gapLabel}</strong></div>
                         <div><strong>${prateInfoLabel}</strong></div>
                     </div>
+                    ${perfHtml}
                     <div style="margin-bottom: 10px;">
                         <strong style="display: block; margin-bottom: 4px; font-size: 0.9em; color: #555;">${isJa ? '提示マス内訳' : 'Station Breakdown'}:</strong>
                         <div>${stationHtml}</div>

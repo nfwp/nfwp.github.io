@@ -265,3 +265,23 @@ function openRunFinderSearch(params) {
     }
     window.open(url, '_blank');
 }
+
+/**
+ * 初期カード (Basic 24 種) かどうか。
+ * 初期デッキは data/lookup_data.json の initial_decks を正とする
+ * (agg_data_for_graph の IsStarter は集計経路によって欠落するため使わない)。
+ * @param {string} cardId - カード ID
+ * @param {string} [charName] - キャラ名 (省略時は CURRENT_CHAR)
+ * @returns {boolean}
+ */
+function lbolIsStarterCard(cardId, charName) {
+    if (!cardId) return false;
+    let ch = charName;
+    if (!ch && typeof CURRENT_CHAR !== 'undefined') ch = CURRENT_CHAR;
+    if (!ch) return false;
+    const lt = (typeof ALL_DATA !== 'undefined' && ALL_DATA && ALL_DATA.lookup_tables) ? ALL_DATA.lookup_tables : null;
+    const decks = lt && lt.initial_decks ? lt.initial_decks : null;
+    if (!decks) return false;
+    const list = decks[ch] || [];
+    return list.indexOf(cardId) !== -1;
+}

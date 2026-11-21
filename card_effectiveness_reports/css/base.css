@@ -1,7 +1,28 @@
+/* --- デザイントークン (UI 統一 Step 1・2026-11-21) --- */
+/* 第 3 世代 (deck-diagnosis / manual / metric-info) の样式を基準にした共通変数。 */
+/* 各コンポーネントは段階的にこの変数へ寄せる (P-61・ui_audit_20261121.md 参照)。 */
+:root {
+    --lbol-page: #f4f6fa;        /* ページ背景 */
+    --lbol-panel: #ffffff;       /* パネル / コンテンツ背景 */
+    --lbol-line: #e2e8f0;        /* 標準境界 (slate-200) */
+    --lbol-line-soft: #eef2f7;   /* 弱い境界・テーブル区切り */
+    --lbol-text: #1e293b;        /* 本文色 (slate-800) */
+    --lbol-text-muted: #64748b;  /* 補助文字 (slate-500) */
+    --lbol-accent: #2563eb;      /* アクセント (類似ラン検索と同一) */
+    --lbol-accent-2: #2a62c9;    /* アクセント (metric-info 系) */
+    --lbol-accent-soft: #e0e7ff; /* アクセント淡色 (hover 等) */
+    --lbol-accent-border: #c7d2fe; /* アクセント境界 (rf-link-btn 等) */
+    --lbol-notice-bg: #f8fafc;   /* 注意書き・ヘッダー背景 */
+    --lbol-radius: 6px;          /* 標準角丸 */
+    --lbol-radius-lg: 10px;      /* パネル角丸 */
+    --lbol-pill: 999px;          /* ピルバッジ */
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
-    background-color: #f9f9f9;
+    background-color: var(--lbol-page);
+    color: var(--lbol-text);
 }
 
 /* --- 共通: トースト通知 + 🔍/📌 連携ボタン (P-50/P-52) --- */
@@ -31,15 +52,15 @@ body {
     transform: none;
 }
 .rf-link-btn {
-    border: 1px solid #c7d2fe;
-    background: #fff;
-    border-radius: 6px;
+    border: 1px solid var(--lbol-accent-border);
+    background: var(--lbol-panel);
+    border-radius: var(--lbol-radius);
     cursor: pointer;
     padding: 1px 7px;
     font-size: 0.9em;
 }
 .rf-link-btn:hover {
-    background: #e0e7ff;
+    background: var(--lbol-accent-soft);
 }
 
 /* Wikiへのリンクのスタイル */
@@ -50,16 +71,17 @@ a.wiki-link {
 
 /* リンクにマウスを乗せたときのスタイル */
 a.wiki-link:hover {
-  color: #3498db; /* マウスを乗せると青色に変わる（リンクだと分かりやすくするため） */
+  color: var(--lbol-accent); /* マウスを乗せると青色に変わる（リンクだと分かりやすくするため） */
 }
 
 /* --- 分析セクションの共通スタイル --- */
 .analysis-section .analysis-note {
     font-size: 0.9em;
-    color: #555;
+    color: var(--lbol-text-muted);
     margin-top: 5px;
     margin-bottom: 20px;
     padding: 8px 12px;
-    background-color: #f8f9fa;
-    border-left: 4px solid #0d6efd;
+    background-color: var(--lbol-notice-bg);
+    border-left: 4px solid var(--lbol-accent);
+    border-radius: 0 var(--lbol-radius) var(--lbol-radius) 0;
 }

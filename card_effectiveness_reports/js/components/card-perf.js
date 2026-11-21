@@ -68,7 +68,10 @@ function _pickCacheReady() {
 // カードの採用ギャップ係数 = 最終採用率 ÷ (提示率 × 初回ピック率)
 // 取得不可 (データ未ロード / 初期カード / 0 除算) は null
 function _cardGap(d) {
-    if (!d || d.IsStarter === true) return null;
+    if (!d) return null;
+    // 初期カードは算出不可 (lookup_data.json の initial_decks を正とする)
+    const isStarter = (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(d.Card_ID) : (d.IsStarter === true);
+    if (isStarter) return null;
     const info = _getPickInfo(d.Card_ID);
     if (!info || info.fpk == null || info.app == null || d.Adoption_Rate == null) return null;
     const pFirst = (info.app / 100) * (info.fpk / 100);
@@ -156,11 +159,11 @@ function createFirstPickGapHtml(sourceData) {
     const gapLabel = (lang === 'ja') ? '採用ギャップ係数' : 'Adoption Gap';
 
     // 初回ピック率行
-    const fpkHtml = (pickInfo && pickInfo.fpk != null) ? `${Number(pickInfo.fpk).toFixed(1)}%` : '-';
+    const fpkHtml = (pickInfo && pickInfo.fpk != null) ? `${Number(pickInfo.fpk).toFixed(1)}%` : 'N/A';
 
     // 採用ギャップ行
-    let gapHtml = '-';
-    const isStarter = (sourceData.IsStarter === true);
+    let gapHtml = 'N/A';
+    const isStarter = (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(sourceData.Card_ID) : (sourceData.IsStarter === true);
     if (!isStarter && pickInfo && pickInfo.fpk != null && pickInfo.app != null && sourceData.Adoption_Rate != null) {
         const pFirst = (pickInfo.app / 100) * (pickInfo.fpk / 100);
         if (pFirst > 0) {
@@ -171,7 +174,7 @@ function createFirstPickGapHtml(sourceData) {
     } else if (isStarter) {
         return `
             <div class="tooltip-row"><span>${fpkLabel}:</span><span>${fpkHtml}</span></div>
-            <div class="tooltip-row"><span>${gapLabel}:</span><span>- (${(lang === 'ja') ? '初期カード' : 'Starter'})</span></div>
+            <div class="tooltip-row"><span>${gapLabel}:</span><span>N/A (${(lang === 'ja') ? '初期カード' : 'Starter'})</span></div>
         `;
     }
     return `
@@ -1006,9 +1009,10 @@ function updatePrateRankings(lang) {
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${perfLabel}${window.MI ? MI.icon('perf') : ''}</th>` +
                 `</tr>${rows}</table>`;
         };
+        // 左右 2 列 (傾向値ランキングと同じ flex:1 + min-width 構成。窓が狭い場合のみ縦積み)
         return `<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">` +
-            mkTable(cols[0], 1) +
-            (cols[1].length ? mkTable(cols[1], splitPoint + 1) : '') +
+            `<div style="flex:1; min-width:300px;">` + mkTable(cols[0], 1) + `</div>` +
+            (cols[1].length ? `<div style="flex:1; min-width:300px;">` + mkTable(cols[1], splitPoint + 1) + `</div>` : '') +
             `</div>`;
     };
 
@@ -1092,9 +1096,10 @@ function createRankedListHtml(reportId, title, description, cardsData, valueLabe
     const splitPoint = Math.ceil(cardsData.length / 2);
     const col1Data = cardsData.slice(0, splitPoint);
     const col2Data = cardsData.slice(splitPoint);
+    // 左右 2 列 (傾向値ランキングと同じ flex:1 + min-width 構成。窓が狭い場合のみ縦積み)
     const body = `<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">` +
-        mkTable(col1Data, 1) +
-        (col2Data.length ? mkTable(col2Data, splitPoint + 1) : '') +
+        `<div style="flex:1; min-width:300px;">` + mkTable(col1Data, 1) + `</div>` +
+        (col2Data.length ? `<div style="flex:1; min-width:300px;">` + mkTable(col2Data, splitPoint + 1) + `</div>` : '') +
         `</div>`;
     return `<div id="${reportId}" class="analysis-section"><h3>${title}</h3><p>${description}</p>${body}</div>`;
 }

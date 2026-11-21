@@ -446,6 +446,7 @@
             "organized_card_boss_removal": "Organized Item (Boss Removal Change)"
         },
         "boss_organized_card_note": "Note: For boss nodes, 'Organized Card' data may not be strictly accurate as card removal and change actions cannot be differentiated.",
+        "gap_density_note": "* The chart above shows probability density (normalized): the visual area does not reflect the choice counts. This bar shows the actual ratio.",
         "total_tab": "Total",
         "organize_card": "Organized Item (Boss Removal Change)",
         "node_visits": "Node Visits",
@@ -890,7 +891,7 @@
         "gap_name": "Adoption gap",
         "gap_def": "How many times the actual final adoption compares with the share expected from first offers. **Closer to 1.0 = the card stays from the first offer to the end of the run.**",
         "gap_f": "Adoption {adopt} ÷ (offer rate {app} × first-pick rate {fpk}) = **{gap}**",
-        "gap_note": "1.2 or more = skipped at first but valued later / below 0.8 = picked early but often dropped later.",
+        "gap_note": "1.2 or more = skipped at first but valued later / below 0.8 = picked early but often dropped later. Starter cards cannot be measured and are shown as N/A.",
 
         "sample_name": "Sample runs",
         "sample_def": "The number of runs used to compute this card's statistics.",

@@ -8,21 +8,21 @@
 .sub-tab-buttons .filter-btn {
     padding: 8px 16px;
     font-size: 14px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    border: 1px solid var(--lbol-line);
+    background-color: var(--lbol-notice-bg);
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: var(--lbol-radius);
     transition: background-color 0.2s, color 0.2s;
 }
 
 .sub-tab-buttons .filter-btn:hover {
-    background-color: #e0e0e0;
+    background-color: var(--lbol-accent-soft);
 }
 
 .sub-tab-buttons .filter-btn.active {
-    background-color: #333;
+    background-color: var(--lbol-text);
     color: #fff;
-    border-color: #333;
+    border-color: var(--lbol-text);
 }
 
 .act-trend-table {
@@ -32,13 +32,13 @@
 }
 
 .act-trend-table th, .act-trend-table td {
-    border: 1px solid #eee;
+    border: 1px solid var(--lbol-line-soft);
     padding: 8px;
     text-align: left;
 }
 
 .act-trend-table th {
-    background-color: #f8f8f8;
+    background-color: var(--lbol-line-soft);
     font-weight: bold;
     position: sticky;
     top: 0;
@@ -46,7 +46,7 @@
 }
 
 .act-trend-table tr:hover {
-    background-color: #f5f5f5;
+    background-color: #f2f6fd;
 }
 
 .act-trend-table a {
@@ -61,8 +61,8 @@
 .table-scroll-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid #eee;
-    border-radius: 4px;
+    border: 1px solid var(--lbol-line-soft);
+    border-radius: var(--lbol-radius);
     margin-top: 10px;
 }
 
@@ -77,9 +77,15 @@
 .elite-analysis-section {
     background-color: #f0f4f8; /* A light, subtle blue background */
     padding: 15px;
-    border-radius: 8px;
+    border-radius: var(--lbol-radius-lg);
     margin-top: 20px;
     border: 1px solid #d6e3f0;
+}
+
+/* 2.1 影響度表: 縦長対策 (スクロール + ヘッダー固定) */
+.elite-analysis-section .table-scroll-wrapper {
+    max-height: 560px;
+    overflow-y: auto;
 }
 
 /* Request 2: 3-column layout for shop reports */
@@ -136,8 +142,176 @@
     .shop-tendency-container {
         grid-template-columns: 1fr;
     }
+
+    .two-column-container {
+        grid-template-columns: 1fr;
+    }
+
+    .gap-choice-bar .seg small {
+        display: none;
+    }
 }
 
 .specialist-row {
     background-color: #fff9c4; /* 強調表示用の薄い黄色 */
+}
+
+/* ==========================================================================
+   Act1 傾向レポートの整形 (2026-11-21・ユーザー指摘 3 点対応)
+   ========================================================================== */
+
+/* --- 2.1 エリート影響度表 (data-table / specialist-table): 無样式だったため新設 --- */
+#act-trend-content-1 .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+#act-trend-content-1 .data-table th {
+    background-color: var(--lbol-line-soft);
+    color: var(--lbol-text);
+    text-align: right;
+    padding: 7px 10px;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 2px solid var(--lbol-line);
+}
+#act-trend-content-1 .data-table th:first-child {
+    text-align: center;
+}
+#act-trend-content-1 .data-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--lbol-line-soft);
+    font-variant-numeric: tabular-nums;
+}
+#act-trend-content-1 .data-table td:first-child {
+    text-align: left;
+}
+#act-trend-content-1 .data-table tbody tr:nth-child(even) {
+    background-color: rgba(241, 245, 249, 0.55);
+}
+#act-trend-content-1 .data-table tbody tr:hover {
+    background-color: #eef4ff;
+}
+/* 強調行 (specialist-row) はゼブラより優先 (同一詳細度で後宣言) */
+#act-trend-content-1 .data-table tbody tr.specialist-row,
+#act-trend-content-1 .data-table tbody tr.specialist-row td {
+    background-color: #fff9c4;
+}
+#act-trend-content-1 .data-table td.impact {
+    font-weight: 700;
+    color: var(--lbol-accent);
+}
+#act-trend-content-1 .data-table th.rk,
+#act-trend-content-1 .data-table td.rk {
+    text-align: center;
+    color: var(--lbol-text-muted);
+    width: 34px;
+}
+
+/* --- 1. スキマ / 3. ショップ: 図 + テキストの配置 --- */
+.tendency-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+.tendency-text {
+    flex: 1 1 260px;
+}
+.tendency-text ul {
+    margin: 6px 0;
+    padding-left: 18px;
+}
+.tendency-graph img {
+    max-width: 100%;
+    border: 1px solid var(--lbol-line-soft);
+    border-radius: var(--lbol-radius);
+    background: var(--lbol-panel);
+}
+
+/* スキマ行動の選択比率バー (休憩 vs 強化の件数差を可視化) */
+.gap-choice-bar {
+    display: flex;
+    height: 26px;
+    border-radius: var(--lbol-radius);
+    overflow: hidden;
+    border: 1px solid var(--lbol-line);
+    margin: 8px 0 4px;
+}
+.gap-choice-bar .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+.gap-choice-bar .seg small {
+    font-weight: normal;
+    opacity: 0.9;
+    font-size: 10.5px;
+}
+.gap-choice-bar .seg.rest { background-color: #74a9cf; }
+.gap-choice-bar .seg.upg  { background-color: #e2635a; }
+.gap-choice-caption {
+    font-size: 11.5px;
+    color: var(--lbol-text-muted);
+    margin: 2px 0 8px;
+    line-height: 1.5;
+}
+
+/* --- リスト系 (ショップ 3 列 / Gap/Shop 優先強化 Top 20) の整形 --- */
+.shop-item-sub-column h5 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--lbol-text);
+}
+.shop-item-sub-column ul,
+.two-column-container ul,
+.two-column-container .column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.shop-item-sub-column li,
+.two-column-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    padding: 3px 2px;
+    border-bottom: 1px dashed rgba(100, 116, 139, 0.25);
+    font-size: 12.5px;
+}
+.shop-item-sub-column li:last-child,
+.two-column-container li:last-child {
+    border-bottom: none;
+}
+.shop-item-sub-column li .nm,
+.two-column-container li .nm {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.shop-item-sub-column li .cnt,
+.two-column-container li .cnt {
+    color: var(--lbol-text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.two-column-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 28px;
+}
+.two-column-container .column {
+    min-width: 0;
 }
