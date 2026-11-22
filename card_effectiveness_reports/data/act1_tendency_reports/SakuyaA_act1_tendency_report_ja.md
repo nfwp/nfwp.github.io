@@ -63,9 +63,9 @@
 <td style='text-align: right;'>53.6%</td>
 <td style='text-align: right;'>24.1%</td>
 <td style='text-align: right;'>56</td>
-<td style='text-align: right;'>42.4</td>
+<td style='text-align: right;'>42.8</td>
 <td style='text-align: right;'>51.0</td>
-<td style='text-align: right;'>93.4</td>
+<td style='text-align: right;'>93.8</td>
 </tr>
 <tr>
 <td>プライベートヴィジョン</td>
@@ -93,9 +93,9 @@
 <td style='text-align: right;'>47.9%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>238</td>
-<td style='text-align: right;'>38.4</td>
+<td style='text-align: right;'>39.0</td>
 <td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'>92.6</td>
+<td style='text-align: right;'>93.2</td>
 </tr>
 <tr>
 <td>咲夜特製ストップウォッチ</td>
@@ -124,8 +124,8 @@
 <td style='text-align: right;'>24.2%</td>
 <td style='text-align: right;'>56</td>
 <td style='text-align: right;'>45.8</td>
-<td style='text-align: right;'>44.2</td>
-<td style='text-align: right;'>90.0</td>
+<td style='text-align: right;'>43.9</td>
+<td style='text-align: right;'>89.7</td>
 </tr>
 <tr>
 <td>拘束時間</td>
@@ -154,8 +154,8 @@
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>389</td>
 <td style='text-align: right;'><strong><span style='color: red;'>64.1</span></strong></td>
-<td style='text-align: right;'>52.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.9</span></strong></td>
+<td style='text-align: right;'>52.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.6</span></strong></td>
 </tr>
 <tr>
 <td>時間厳守</td>
@@ -164,8 +164,8 @@
 <td style='text-align: right;'>22.3%</td>
 <td style='text-align: right;'>296</td>
 <td style='text-align: right;'>27.2</td>
-<td style='text-align: right;'>57.2</td>
-<td style='text-align: right;'>84.4</td>
+<td style='text-align: right;'>56.8</td>
+<td style='text-align: right;'>84.0</td>
 </tr>
 <tr>
 <td>ルミネスリコシェ</td>
@@ -173,9 +173,9 @@
 <td style='text-align: right;'>46.4%</td>
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>84</td>
-<td style='text-align: right;'>47.6</td>
+<td style='text-align: right;'>47.9</td>
 <td style='text-align: right;'>50.7</td>
-<td style='text-align: right;'>98.3</td>
+<td style='text-align: right;'>98.6</td>
 </tr>
 <tr>
 <td>金剛身</td>
@@ -214,8 +214,8 @@
 <td style='text-align: right;'>24.0%</td>
 <td style='text-align: right;'>95</td>
 <td style='text-align: right;'>52.1</td>
-<td style='text-align: right;'>41.7</td>
-<td style='text-align: right;'>93.8</td>
+<td style='text-align: right;'>41.3</td>
+<td style='text-align: right;'>93.4</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 月相</strong></td>
@@ -233,9 +233,9 @@
 <td style='text-align: right;'>44.3%</td>
 <td style='text-align: right;'>23.5%</td>
 <td style='text-align: right;'>158</td>
-<td style='text-align: right;'>37.9</td>
+<td style='text-align: right;'>38.4</td>
 <td style='text-align: right;'>47.3</td>
-<td style='text-align: right;'>85.2</td>
+<td style='text-align: right;'>85.7</td>
 </tr>
 <tr>
 <td>瞑想</td>
@@ -244,8 +244,8 @@
 <td style='text-align: right;'>24.2%</td>
 <td style='text-align: right;'>60</td>
 <td style='text-align: right;'>40.8</td>
-<td style='text-align: right;'>40.4</td>
-<td style='text-align: right;'>81.2</td>
+<td style='text-align: right;'>39.9</td>
+<td style='text-align: right;'>80.8</td>
 </tr>
 <tr>
 <td>偶然の回避</td>
@@ -253,9 +253,9 @@
 <td style='text-align: right;'>44.9%</td>
 <td style='text-align: right;'>24.2%</td>
 <td style='text-align: right;'>69</td>
-<td style='text-align: right;'>36.6</td>
+<td style='text-align: right;'>37.2</td>
 <td style='text-align: right;'>63.4</td>
-<td style='text-align: right;'>100.0</td>
+<td style='text-align: right;'>100.7</td>
 </tr>
 <tr>
 <td>弾幕手品</td>
@@ -273,9 +273,9 @@
 <td style='text-align: right;'>42.2%</td>
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>436</td>
-<td style='text-align: right;'><strong><span style='color: red;'>62.1</span></strong></td>
-<td style='text-align: right;'>59.2</td>
-<td style='text-align: right;'><strong><span style='color: red;'>121.3</span></strong></td>
+<td style='text-align: right;'><strong><span style='color: red;'>61.6</span></strong></td>
+<td style='text-align: right;'>59.6</td>
+<td style='text-align: right;'><strong><span style='color: red;'>121.2</span></strong></td>
 </tr>
 <tr>
 <td>聖地巡礼</td>
@@ -393,9 +393,9 @@
 <td style='text-align: right;'>43.2%</td>
 <td style='text-align: right;'>24.4%</td>
 <td style='text-align: right;'>44</td>
-<td style='text-align: right;'>48.2</td>
-<td style='text-align: right;'>56.1</td>
-<td style='text-align: right;'>104.3</td>
+<td style='text-align: right;'>47.0</td>
+<td style='text-align: right;'>58.7</td>
+<td style='text-align: right;'>105.7</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Ｃ．リコシェ</strong></td>
@@ -404,8 +404,8 @@
 <td style='text-align: right;'>23.9%</td>
 <td style='text-align: right;'>129</td>
 <td style='text-align: right;'>59.8</td>
-<td style='text-align: right;'>58.7</td>
-<td style='text-align: right;'><strong><span style='color: red;'>118.6</span></strong></td>
+<td style='text-align: right;'>58.3</td>
+<td style='text-align: right;'><strong><span style='color: red;'>118.2</span></strong></td>
 </tr>
 <tr>
 <td>🧰 ライオットシールド</td>
@@ -414,8 +414,8 @@
 <td style='text-align: right;'>24.1%</td>
 <td style='text-align: right;'>90</td>
 <td style='text-align: right;'>46.1</td>
-<td style='text-align: right;'>56.8</td>
-<td style='text-align: right;'>102.9</td>
+<td style='text-align: right;'>56.5</td>
+<td style='text-align: right;'>102.6</td>
 </tr>
 <tr>
 <td>チェンジリングマジック</td>
@@ -424,8 +424,8 @@
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>349</td>
 <td style='text-align: right;'>53.6</td>
-<td style='text-align: right;'>53.3</td>
-<td style='text-align: right;'>106.9</td>
+<td style='text-align: right;'>53.0</td>
+<td style='text-align: right;'>106.6</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 静穏</strong></td>
@@ -434,8 +434,8 @@
 <td style='text-align: right;'>23.8%</td>
 <td style='text-align: right;'>144</td>
 <td style='text-align: right;'>51.6</td>
-<td style='text-align: right;'>59.6</td>
-<td style='text-align: right;'><strong><span style='color: red;'>111.2</span></strong></td>
+<td style='text-align: right;'>59.2</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.7</span></strong></td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 シルバーエレガント</strong></td>
@@ -454,8 +454,8 @@
 <td style='text-align: right;'>23.0%</td>
 <td style='text-align: right;'>306</td>
 <td style='text-align: right;'>41.3</td>
-<td style='text-align: right;'>57.6</td>
-<td style='text-align: right;'>98.8</td>
+<td style='text-align: right;'>57.9</td>
+<td style='text-align: right;'>99.2</td>
 </tr>
 </tbody>
 </table>
@@ -495,9 +495,9 @@
 <li><span class="text-purchase">時間厳守</span>: 3回</li>
 <li><span class="text-purchase">瀟洒なメイド</span>: 3回</li>
 <li><span class="text-purchase">捏造報道</span>: 3回</li>
-<li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 2回</li>
 <li><span class="text-purchase">きゅうりミサイル</span>: 2回</li>
 <li><span class="text-purchase">タオ胎動</span>: 2回</li>
+<li><span class="text-purchase">ジャック・ザ・ルドビレ</span>: 2回</li>
 </ul>
 </div>
 <div class="shop-item-sub-column">

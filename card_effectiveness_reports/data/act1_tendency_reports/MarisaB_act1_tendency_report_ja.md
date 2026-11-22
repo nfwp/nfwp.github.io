@@ -407,16 +407,6 @@
 <td style='text-align: right;'>34.9</td>
 <td style='text-align: right;'>62.6</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 レインボースターインパクト</strong></td>
-<td style='text-align: right;'>+11.79</td>
-<td style='text-align: right;'>38.5%</td>
-<td style='text-align: right;'>22.1%</td>
-<td style='text-align: right;'>26</td>
-<td style='text-align: right;'><strong><span style='color: red;'>63.4</span></strong></td>
-<td style='text-align: right;'>53.1</td>
-<td style='text-align: right;'><strong><span style='color: red;'>116.5</span></strong></td>
-</tr>
 <tr>
 <td>遮光</td>
 <td style='text-align: right;'>+11.79</td>
@@ -426,6 +416,16 @@
 <td style='text-align: right;'>44.3</td>
 <td style='text-align: right;'>53.5</td>
 <td style='text-align: right;'>97.8</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 レインボースターインパクト</strong></td>
+<td style='text-align: right;'>+11.79</td>
+<td style='text-align: right;'>38.5%</td>
+<td style='text-align: right;'>22.1%</td>
+<td style='text-align: right;'>26</td>
+<td style='text-align: right;'><strong><span style='color: red;'>63.4</span></strong></td>
+<td style='text-align: right;'>53.1</td>
+<td style='text-align: right;'><strong><span style='color: red;'>116.5</span></strong></td>
 </tr>
 <tr>
 <td>鳳翼天翔</td>

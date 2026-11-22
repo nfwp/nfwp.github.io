@@ -1584,33 +1584,48 @@ async function loadCharacterTimeline(charKey) {
 
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
-    const filePath = `${basePath}${charKey}_timelines.json`;
+    // timelines v2 (2026-11-22): add_c/rem_c が同マス同カードの複数枚を保持する形式。
+    // fetch に ?v= が無いことへの対策で _v2 付きファイル名に移行 (旧名はフォールバック)。
+    const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : '';
+    const candidates = [
+        `${basePath}${charKey}_timelines_v2.json${vParam}`,
+        `${basePath}${charKey}_timelines.json`
+    ];
 
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) {
-            console.warn(`[WARN] Timeline file not found for ${charKey} at ${filePath}. This may be normal if the file doesn't exist.`);
-            characterTimelineCache.set(charKey, null);
-            return null;
-        }
-        const data = await response.json();
-        // サンプリング除外ランのタイムライン (チェックボックスON時のみ取得・キャッシュに統合)
-        if (isNsEnabled()) {
-            try {
-                const nsResp = await fetch(`${basePath}${charKey}_timelines_ns.json`);
-                if (nsResp.ok) {
-                    const nsData = await nsResp.json();
-                    Object.assign(data, nsData);   // run_id キー重複は無いはず (母集団が別のため)
-                }
-            } catch (e) { /* ns ファイル無しは正常 (そのキャラに統計外ランが無い等) */ }
-        }
-        characterTimelineCache.set(charKey, data);
-        return data;
-    } catch (error) {
-        console.error(`[ERROR] Failed to fetch or parse timeline for ${charKey}:`, error);
+    let data = null;
+    for (const filePath of candidates) {
+        try {
+            const response = await fetch(filePath);
+            if (response.ok) {
+                data = await response.json();
+                break;
+            }
+        } catch (e) { /* 次の候補へ */ }
+    }
+    if (!data) {
+        console.warn(`[WARN] Timeline file not found for ${charKey} (${candidates.join(', ')}). This may be normal if the file doesn't exist.`);
         characterTimelineCache.set(charKey, null);
         return null;
     }
+    // サンプリング除外ランのタイムライン (チェックボックスON時のみ取得・キャッシュに統合)
+    if (isNsEnabled()) {
+        const nsCandidates = [
+            `${basePath}${charKey}_timelines_ns_v2.json${vParam}`,
+            `${basePath}${charKey}_timelines_ns.json`
+        ];
+        for (const nsPath of nsCandidates) {
+            try {
+                const nsResp = await fetch(nsPath);
+                if (nsResp.ok) {
+                    const nsData = await nsResp.json();
+                    Object.assign(data, nsData);   // run_id キー重複は無いはず (母集団が別のため)
+                    break;
+                }
+            } catch (e) { /* ns ファイル無しは正常 (そのキャラに統計外ランが無い等) */ }
+        }
+    }
+    characterTimelineCache.set(charKey, data);
+    return data;
 }
 
 

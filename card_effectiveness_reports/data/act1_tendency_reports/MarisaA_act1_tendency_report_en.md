@@ -4,7 +4,7 @@
 <div class="tendency-text">
 <ul>
 <li><strong>Average HP when Resting</strong>: 24.4 (Median: 24.0, N=162)</li>
-<li><strong>Average HP when Upgrading</strong>: 48.6 (Median: 50.0, N=902)</li>
+<li><strong>Average HP when Upgrading</strong>: 48.6 (Median: 50.0, N=903)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -15,7 +15,7 @@
 <div class="two-column-container">
 <div class="column"><ul>
 <li>Craft Potion: 115</li>
-<li>Luminous Mushroom: 104</li>
+<li>Luminous Mushroom: 103</li>
 <li>Rocket Broom: 97</li>
 <li>Devil's Codex: 78</li>
 <li>Magic Converter: 43</li>
@@ -29,19 +29,19 @@
 <li>Product of Failure: 22</li>
 <li>Radioactive Elements: 21</li>
 <li>Orthodox Rebellion: 19</li>
-<li>Crimson Energy Release: 18</li>
 <li>Full Moon Howl: 18</li>
+<li>Crimson Energy Release: 17</li>
 <li>True Full Moon: 15</li>
 <li>Spirit Assignment: 15</li>
 <li>Dark Satellite: 14</li>
-<li>Hand Warmer: 13</li>
-<li>Unexplained Fever: 12</li>
+<li>Hand Warmer: 14</li>
+<li>Unexplained Fever: 13</li>
 </ul></div>
 </div>
 <h3>2. Tendencies towards Elite Encounters</h3>
 <ul>
-<li><strong>Average HP when challenging Elites</strong>: 45.8 (Median: 47.0, N=605)</li>
-<li><strong>Average HP when choosing normal combats</strong>: 54.8 (Median: 61.0, N=2013)</li>
+<li><strong>Average HP when challenging Elites</strong>: 45.9 (Median: 47.0, N=605)</li>
+<li><strong>Average HP when choosing normal combats</strong>: 54.8 (Median: 61.0, N=2012)</li>
 </ul>
 <h4>2.1 Act 1 Elite Challenge Influence Card Analysis (Top 40)</h4>
 <p>This score measures the influence of owning a card on the decision to challenge an elite. A higher score indicates that owning the card encourages challenging elites. The influence of cards with fewer samples is adjusted.<br>Cards with a performance score in Act 1 elite battles meeting the criteria (<strong>Attack ≥ 60<strong> or <strong>Total ≥ 110<strong>) are highlighted with a <strong>background color and a 🔥 icon<strong>.</p>
@@ -58,17 +58,17 @@
 <tbody>
 <tr>
 <td>Dark Satellite</td>
-<td style='text-align: right;'>+28.54</td>
-<td style='text-align: right;'>49.0%</td>
-<td style='text-align: right;'>20.4%</td>
-<td style='text-align: right;'>245</td>
+<td style='text-align: right;'>+28.92</td>
+<td style='text-align: right;'>49.4%</td>
+<td style='text-align: right;'>20.5%</td>
+<td style='text-align: right;'>241</td>
 <td style='text-align: right;'>44.9</td>
 <td style='text-align: right;'>48.0</td>
 <td style='text-align: right;'>92.9</td>
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 Canned Food</strong></td>
-<td style='text-align: right;'>+24.48</td>
+<td style='text-align: right;'>+24.47</td>
 <td style='text-align: right;'>47.0%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>66</td>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 <td>Ready For Burst</td>
-<td style='text-align: right;'>+23.80</td>
+<td style='text-align: right;'>+23.79</td>
 <td style='text-align: right;'>45.7%</td>
 <td style='text-align: right;'>21.9%</td>
 <td style='text-align: right;'>129</td>
@@ -88,7 +88,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Radioactive Elements</strong></td>
-<td style='text-align: right;'>+23.02</td>
+<td style='text-align: right;'>+23.01</td>
 <td style='text-align: right;'>45.5%</td>
 <td style='text-align: right;'>22.4%</td>
 <td style='text-align: right;'>77</td>
@@ -96,19 +96,9 @@
 <td style='text-align: right;'>46.1</td>
 <td style='text-align: right;'>107.0</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 Luminous Mushroom</strong></td>
-<td style='text-align: right;'>+22.66</td>
-<td style='text-align: right;'>42.7%</td>
-<td style='text-align: right;'>20.1%</td>
-<td style='text-align: right;'>351</td>
-<td style='text-align: right;'>57.0</td>
-<td style='text-align: right;'>53.4</td>
-<td style='text-align: right;'><strong><span style='color: red;'>110.4</span></strong></td>
-</tr>
 <tr>
 <td>Firework Potion</td>
-<td style='text-align: right;'>+22.59</td>
+<td style='text-align: right;'>+22.58</td>
 <td style='text-align: right;'>45.2%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>62</td>
@@ -117,8 +107,18 @@
 <td style='text-align: right;'>105.2</td>
 </tr>
 <tr class="specialist-row">
+<td><strong>🔥 Luminous Mushroom</strong></td>
+<td style='text-align: right;'>+22.46</td>
+<td style='text-align: right;'>42.6%</td>
+<td style='text-align: right;'>20.1%</td>
+<td style='text-align: right;'>350</td>
+<td style='text-align: right;'>57.0</td>
+<td style='text-align: right;'>53.4</td>
+<td style='text-align: right;'><strong><span style='color: red;'>110.4</span></strong></td>
+</tr>
+<tr class="specialist-row">
 <td><strong>🔥 Product of Failure</strong></td>
-<td style='text-align: right;'>+22.09</td>
+<td style='text-align: right;'>+22.08</td>
 <td style='text-align: right;'>42.7%</td>
 <td style='text-align: right;'>20.6%</td>
 <td style='text-align: right;'>295</td>
@@ -127,18 +127,8 @@
 <td style='text-align: right;'>102.5</td>
 </tr>
 <tr>
-<td>Full Moon Howl</td>
-<td style='text-align: right;'>+21.43</td>
-<td style='text-align: right;'>43.6%</td>
-<td style='text-align: right;'>22.2%</td>
-<td style='text-align: right;'>110</td>
-<td style='text-align: right;'>51.5</td>
-<td style='text-align: right;'>54.2</td>
-<td style='text-align: right;'>105.7</td>
-</tr>
-<tr>
 <td>Alioth</td>
-<td style='text-align: right;'>+21.27</td>
+<td style='text-align: right;'>+21.26</td>
 <td style='text-align: right;'>42.9%</td>
 <td style='text-align: right;'>21.7%</td>
 <td style='text-align: right;'>177</td>
@@ -148,9 +138,9 @@
 </tr>
 <tr>
 <td>Magic Converter</td>
-<td style='text-align: right;'>+21.07</td>
+<td style='text-align: right;'>+21.06</td>
 <td style='text-align: right;'>42.5%</td>
-<td style='text-align: right;'>21.4%</td>
+<td style='text-align: right;'>21.5%</td>
 <td style='text-align: right;'>207</td>
 <td style='text-align: right;'>40.0</td>
 <td style='text-align: right;'>51.2</td>
@@ -158,7 +148,7 @@
 </tr>
 <tr>
 <td>Emergency Defense</td>
-<td style='text-align: right;'>+21.00</td>
+<td style='text-align: right;'>+20.99</td>
 <td style='text-align: right;'>42.3%</td>
 <td style='text-align: right;'>21.3%</td>
 <td style='text-align: right;'>227</td>
@@ -168,7 +158,7 @@
 </tr>
 <tr>
 <td>Play Alone</td>
-<td style='text-align: right;'>+20.88</td>
+<td style='text-align: right;'>+20.87</td>
 <td style='text-align: right;'>48.5%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>33</td>
@@ -177,8 +167,18 @@
 <td style='text-align: right;'>74.8</td>
 </tr>
 <tr>
+<td>Full Moon Howl</td>
+<td style='text-align: right;'>+20.72</td>
+<td style='text-align: right;'>43.0%</td>
+<td style='text-align: right;'>22.3%</td>
+<td style='text-align: right;'>107</td>
+<td style='text-align: right;'>51.5</td>
+<td style='text-align: right;'>54.2</td>
+<td style='text-align: right;'>105.7</td>
+</tr>
+<tr>
 <td>Bask in Stardust</td>
-<td style='text-align: right;'>+20.73</td>
+<td style='text-align: right;'>+20.72</td>
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>21.8%</td>
 <td style='text-align: right;'>167</td>
@@ -188,7 +188,7 @@
 </tr>
 <tr>
 <td>Directional Laser</td>
-<td style='text-align: right;'>+20.70</td>
+<td style='text-align: right;'>+20.69</td>
 <td style='text-align: right;'>43.3%</td>
 <td style='text-align: right;'>22.6%</td>
 <td style='text-align: right;'>60</td>
@@ -198,7 +198,7 @@
 </tr>
 <tr>
 <td>🧰 Wolf Fur</td>
-<td style='text-align: right;'>+20.50</td>
+<td style='text-align: right;'>+20.49</td>
 <td style='text-align: right;'>42.5%</td>
 <td style='text-align: right;'>22.0%</td>
 <td style='text-align: right;'>146</td>
@@ -208,7 +208,7 @@
 </tr>
 <tr>
 <td>Mushroom Feast</td>
-<td style='text-align: right;'>+20.37</td>
+<td style='text-align: right;'>+20.36</td>
 <td style='text-align: right;'>41.5%</td>
 <td style='text-align: right;'>21.1%</td>
 <td style='text-align: right;'>258</td>
@@ -218,7 +218,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Astrology Study</strong></td>
-<td style='text-align: right;'>+20.34</td>
+<td style='text-align: right;'>+20.33</td>
 <td style='text-align: right;'>50.0%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>28</td>
@@ -228,7 +228,7 @@
 </tr>
 <tr>
 <td>Ageless Dream</td>
-<td style='text-align: right;'>+20.17</td>
+<td style='text-align: right;'>+20.16</td>
 <td style='text-align: right;'>40.9%</td>
 <td style='text-align: right;'>20.7%</td>
 <td style='text-align: right;'>308</td>
@@ -238,7 +238,7 @@
 </tr>
 <tr>
 <td>Witch's Crucible</td>
-<td style='text-align: right;'>+20.11</td>
+<td style='text-align: right;'>+20.10</td>
 <td style='text-align: right;'>42.0%</td>
 <td style='text-align: right;'>21.9%</td>
 <td style='text-align: right;'>162</td>
@@ -248,7 +248,7 @@
 </tr>
 <tr>
 <td>Meltdown</td>
-<td style='text-align: right;'>+19.93</td>
+<td style='text-align: right;'>+19.92</td>
 <td style='text-align: right;'>45.9%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>37</td>
@@ -258,7 +258,7 @@
 </tr>
 <tr>
 <td>Danmaku Notes</td>
-<td style='text-align: right;'>+19.91</td>
+<td style='text-align: right;'>+19.90</td>
 <td style='text-align: right;'>41.5%</td>
 <td style='text-align: right;'>21.6%</td>
 <td style='text-align: right;'>195</td>
@@ -268,7 +268,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Heart Blossoms</strong></td>
-<td style='text-align: right;'>+19.71</td>
+<td style='text-align: right;'>+19.70</td>
 <td style='text-align: right;'>42.4%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>59</td>
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 <td>Clean Energy</td>
-<td style='text-align: right;'>+19.68</td>
+<td style='text-align: right;'>+19.67</td>
 <td style='text-align: right;'>42.2%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>83</td>
@@ -288,7 +288,7 @@
 </tr>
 <tr>
 <td>Parting Woes</td>
-<td style='text-align: right;'>+19.42</td>
+<td style='text-align: right;'>+19.41</td>
 <td style='text-align: right;'>42.1%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>57</td>
@@ -297,8 +297,18 @@
 <td style='text-align: right;'>101.9</td>
 </tr>
 <tr>
+<td>Hand Warmer</td>
+<td style='text-align: right;'>+18.88</td>
+<td style='text-align: right;'>39.9%</td>
+<td style='text-align: right;'>21.0%</td>
+<td style='text-align: right;'>296</td>
+<td style='text-align: right;'>48.8</td>
+<td style='text-align: right;'>42.7</td>
+<td style='text-align: right;'>91.5</td>
+</tr>
+<tr>
 <td>Fluorescent Forest</td>
-<td style='text-align: right;'>+18.68</td>
+<td style='text-align: right;'>+18.67</td>
 <td style='text-align: right;'>40.4%</td>
 <td style='text-align: right;'>21.7%</td>
 <td style='text-align: right;'>193</td>
@@ -307,18 +317,8 @@
 <td style='text-align: right;'>87.0</td>
 </tr>
 <tr>
-<td>Hand Warmer</td>
-<td style='text-align: right;'>+18.56</td>
-<td style='text-align: right;'>39.6%</td>
-<td style='text-align: right;'>21.0%</td>
-<td style='text-align: right;'>293</td>
-<td style='text-align: right;'>48.8</td>
-<td style='text-align: right;'>42.7</td>
-<td style='text-align: right;'>91.5</td>
-</tr>
-<tr>
 <td>Wheel of Misfortune</td>
-<td style='text-align: right;'>+18.30</td>
+<td style='text-align: right;'>+18.29</td>
 <td style='text-align: right;'>41.0%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>61</td>
@@ -328,7 +328,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Violin Solo</strong></td>
-<td style='text-align: right;'>+18.00</td>
+<td style='text-align: right;'>+17.99</td>
 <td style='text-align: right;'>40.7%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>54</td>
@@ -348,7 +348,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Sin of the Black Pegasus</strong></td>
-<td style='text-align: right;'>+17.26</td>
+<td style='text-align: right;'>+17.25</td>
 <td style='text-align: right;'>39.4%</td>
 <td style='text-align: right;'>22.2%</td>
 <td style='text-align: right;'>142</td>
@@ -358,7 +358,7 @@
 </tr>
 <tr>
 <td>Shoot the Moon</td>
-<td style='text-align: right;'>+17.10</td>
+<td style='text-align: right;'>+17.09</td>
 <td style='text-align: right;'>39.6%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>96</td>
@@ -368,7 +368,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Red Star Explosion</strong></td>
-<td style='text-align: right;'>+16.98</td>
+<td style='text-align: right;'>+16.97</td>
 <td style='text-align: right;'>39.7%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>63</td>
@@ -398,7 +398,7 @@
 </tr>
 <tr>
 <td>Run Away</td>
-<td style='text-align: right;'>+16.44</td>
+<td style='text-align: right;'>+16.43</td>
 <td style='text-align: right;'>39.6%</td>
 <td style='text-align: right;'>22.8%</td>
 <td style='text-align: right;'>48</td>
@@ -408,7 +408,7 @@
 </tr>
 <tr class="specialist-row">
 <td><strong>🔥 Final Spark</strong></td>
-<td style='text-align: right;'>+16.11</td>
+<td style='text-align: right;'>+16.10</td>
 <td style='text-align: right;'>38.8%</td>
 <td style='text-align: right;'>22.7%</td>
 <td style='text-align: right;'>67</td>
@@ -416,19 +416,9 @@
 <td style='text-align: right;'>53.9</td>
 <td style='text-align: right;'><strong><span style='color: red;'>127.0</span></strong></td>
 </tr>
-<tr>
-<td>Devour Desires</td>
-<td style='text-align: right;'>+15.97</td>
-<td style='text-align: right;'>41.7%</td>
-<td style='text-align: right;'>22.9%</td>
-<td style='text-align: right;'>36</td>
-<td style='text-align: right;'>36.9</td>
-<td style='text-align: right;'>57.0</td>
-<td style='text-align: right;'>93.9</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 First Aid Kit</strong></td>
-<td style='text-align: right;'>+15.84</td>
+<td style='text-align: right;'>+15.83</td>
 <td style='text-align: right;'>44.4%</td>
 <td style='text-align: right;'>22.9%</td>
 <td style='text-align: right;'>27</td>
@@ -437,18 +427,8 @@
 <td style='text-align: right;'><strong><span style='color: red;'>118.4</span></strong></td>
 </tr>
 <tr>
-<td>Devil's Codex</td>
-<td style='text-align: right;'>+15.71</td>
-<td style='text-align: right;'>37.1%</td>
-<td style='text-align: right;'>21.4%</td>
-<td style='text-align: right;'>280</td>
-<td style='text-align: right;'>52.5</td>
-<td style='text-align: right;'>46.6</td>
-<td style='text-align: right;'>99.2</td>
-</tr>
-<tr>
 <td>Navigation Star</td>
-<td style='text-align: right;'>+15.61</td>
+<td style='text-align: right;'>+15.60</td>
 <td style='text-align: right;'>38.1%</td>
 <td style='text-align: right;'>22.5%</td>
 <td style='text-align: right;'>105</td>
@@ -456,13 +436,33 @@
 <td style='text-align: right;'>56.7</td>
 <td style='text-align: right;'>102.7</td>
 </tr>
+<tr>
+<td>Devil's Codex</td>
+<td style='text-align: right;'>+15.59</td>
+<td style='text-align: right;'>37.1%</td>
+<td style='text-align: right;'>21.5%</td>
+<td style='text-align: right;'>278</td>
+<td style='text-align: right;'>52.5</td>
+<td style='text-align: right;'>46.6</td>
+<td style='text-align: right;'>99.2</td>
+</tr>
+<tr>
+<td>Bass of Taiko</td>
+<td style='text-align: right;'>+15.47</td>
+<td style='text-align: right;'>38.0%</td>
+<td style='text-align: right;'>22.6%</td>
+<td style='text-align: right;'>92</td>
+<td style='text-align: right;'>57.7</td>
+<td style='text-align: right;'>39.5</td>
+<td style='text-align: right;'>97.2</td>
+</tr>
 </tbody>
 </table>
 <h3>3. Tendencies at Shops</h3>
 <div class="tendency-container">
 <div class="tendency-text">
 <ul>
-<li><strong>Average money when visiting shops</strong>: 194.5 (Median: 207.0, N=481)</li>
+<li><strong>Average money when visiting shops</strong>: 194.3 (Median: 207.0, N=480)</li>
 </ul>
 </div>
 <div class="tendency-graph">
@@ -472,7 +472,7 @@
 
 <div class="shop-tendency-container">
 <div class="shop-tendency-column">
-<h4>With money in range: 0～150 Gold (N=136)</h4>
+<h4>With money in range: 0～150 Gold (N=137)</h4>
 <div class="shop-item-grid">
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
@@ -481,9 +481,9 @@
 <li><span class="text-purchase">Luminous Mushroom</span>: 10</li>
 <li><span class="text-purchase">🧰 Ballistic Shield</span>: 6</li>
 <li><span class="text-purchase">Devil's Codex</span>: 5</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 4</li>
 <li><span class="text-purchase">Clean Energy</span>: 4</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 3</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 3</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 3</li>
 <li><span class="text-purchase">🧰 Canned Food</span>: 3</li>
 <li><span class="text-purchase">Ageless Dream</span>: 3</li>
@@ -516,7 +516,7 @@
 </div>
 </div>
 <div class="shop-tendency-column">
-<h4>With money in range: 151～300 Gold (N=313)</h4>
+<h4>With money in range: 151～300 Gold (N=311)</h4>
 <div class="shop-item-grid">
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Purchased Cards
@@ -525,14 +525,14 @@
 <li><span class="text-purchase">🧰 Canned Food</span>: 25</li>
 <li><span class="text-purchase">🧰 Water Gun</span>: 24</li>
 <li><span class="text-purchase">Clean Energy</span>: 24</li>
-<li><span class="text-purchase">Magic Converter</span>: 21</li>
 <li><span class="text-purchase">Orthodox Rebellion</span>: 20</li>
+<li><span class="text-purchase">Magic Converter</span>: 20</li>
 <li><span class="text-purchase">Devil's Codex</span>: 18</li>
 <li><span class="text-purchase">Product of Failure</span>: 18</li>
-<li><span class="text-purchase">Luminous Mushroom</span>: 17</li>
+<li><span class="text-purchase">Luminous Mushroom</span>: 16</li>
 <li><span class="text-purchase">Cucumber Missile</span>: 15</li>
-<li><span class="text-purchase">Unexplained Fever</span>: 13</li>
 <li><span class="text-purchase">"Borrow" Materials</span>: 12</li>
+<li><span class="text-purchase">Unexplained Fever</span>: 12</li>
 <li><span class="text-purchase">Hand Warmer</span>: 11</li>
 <li><span class="text-purchase">Mushroom Feast</span>: 10</li>
 <li><span class="text-purchase">Bask in Stardust</span>: 10</li>
@@ -570,9 +570,9 @@
 <div class="shop-item-sub-column">
 <h5> Top 20 Most Removed Cards
 <ul>
-<li><span class="text-remove">Illusion Laser</span>: 166</li>
+<li><span class="text-remove">Illusion Laser</span>: 165</li>
 <li><span class="text-remove">🌀 Creeping Hunger</span>: 23</li>
-<li><span class="text-remove">Shoot</span>: 21</li>
+<li><span class="text-remove">Shoot</span>: 20</li>
 <li><span class="text-remove">Boundary</span>: 13</li>
 <li><span class="text-remove">Broom Defense</span>: 6</li>
 <li><span class="text-remove">🌀 Misfortune</span>: 2</li>
