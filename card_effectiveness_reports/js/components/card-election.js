@@ -360,7 +360,9 @@ function ceDrawDetail() {
             `<ol style="margin:2px 0 0 20px;padding:0">` +
             lost.map(([oid, n]) => {
                 const on = CE_CUR.names[oid] || [oid];
-                const lst = (lostnMap && lostnMap[oid]) || [];
+                // 敗北マスのチップは Act·Level 順に並べる (データ順はマス探索順でランダムに見えるため)
+                const lst = ((lostnMap && lostnMap[oid]) || []).slice()
+                    .sort((p, q) => (p[1] - q[1]) || ((p[2] != null ? p[2] : 999) - (q[2] != null ? q[2] : 999)));
                 const chips = lst.map(([ri, a, lv]) => {
                     const rv = (CE_CUR.rids && CE_CUR.rids[ri]) || ["", ""];
                     const url = `https://lbol-logs.github.io/${rv[1]}/${rv[0]}?a=${a}` + (lv != null ? `&l=${lv}` : "");

@@ -63,6 +63,25 @@ function ensureDeckDiagnosisData() {
     return __ddDataPromise;
 }
 
+// v2 split (2026-11-23): 統計外ラン (ns) は別ファイル (deck_diagnosis_data_ns.json) に分割した。
+// 「統計外を含める」ON 時にだけ遅延ロードし、D.runs にマージする (母集団 +35% 分の初回転送を削減)。
+let __ddNsPromise = null;
+function ensureDeckDiagnosisNsData() {
+    if (__ddNsPromise) return __ddNsPromise;
+    __ddNsPromise = fetch(`data/deck_diagnosis_data_ns.json?v=${DATA_VERSION}`)
+        .then((res) => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+        .then((nsData) => {
+            if (!D) throw new Error('main data not loaded');
+            const have = new Set(D.runs.map(r => r.id));
+            for (const r of (nsData.runs || [])) {
+                if (!have.has(r.id)) D.runs.push(r);
+            }
+            return D.runs.length;
+        })
+        .catch((err) => { __ddNsPromise = null; throw err; });
+    return __ddNsPromise;
+}
+
 // ラン検索の 🔍 アイコンから呼ばれる: そのランの最終デッキ+展示品を入力して自動診断
 window.ddPrefillFromRun = async function (character, runId, cards, exhibits) {
     try { switchTab('deck-diagnosis-tab'); } catch (e) { /* タブ切替失敗時はそのまま */ }
@@ -103,8 +122,19 @@ async function __loadRunFromInput() {
     const runId = __ddParseRunId(inp ? inp.value : '');
     if (!runId) { show(DDT('url_empty','プレイID またはログ URL を貼り付けてください。'), false); return; }
     try { await ensureDeckDiagnosisData(); } catch (e) { show(DDT('url_load_err','統計データの読み込みに失敗しました。時間をおいて再試行してください。'), false); return; }
-    const run = D.runs.find(r => r.id === runId) || D.runs.find(r => r.id.toLowerCase() === runId.toLowerCase());
+    let run = D.runs.find(r => r.id === runId) || D.runs.find(r => r.id.toLowerCase() === runId.toLowerCase());
+    if (!run && !D.__nsMerged) {
+        // v2 split: ns ランは別ファイル — 見つからなければロードして再検索する
+        try { await ensureDeckDiagnosisNsData(); D.__nsMerged = true; }
+        catch (e) { /* 読み込み失敗時は見つからない扱い */ }
+        run = D.runs.find(r => r.id === runId) || D.runs.find(r => r.id.toLowerCase() === runId.toLowerCase());
+    }
     if (!run) { show(DDT('url_not_found','このプレイID は統計データに見つかりません (統計対象外のラン・バージョン違い、または ID が違います)。'), false); return; }
+    if (run.ns) {
+        // ns ランを読み込んだ場合は統計外トグルを自動 ON (診断結果に含まれるようにする)
+        const cb = document.getElementById('opt-ns');
+        if (cb && !cb.checked) cb.checked = true;
+    }
     const cards = [];
     for (const [cid, n] of Object.entries(decodeDeck(run.deck))) for (let i = 0; i < n; i++) cards.push(cid);
     const exhibits = decodeExh(run.exh);
@@ -712,9 +742,14 @@ function similarity(a, b) {
 }
 
 // --- メイン計算 ---
-function runDiagnosis() {
+async function runDiagnosis() {
     if (state.deck.size === 0) { alert(DDT('err_need_card','カードを1枚以上追加してください。')); return; }
     const includeNs = $('#opt-ns').checked;
+    if (includeNs && !D.__nsMerged) {
+        // v2 split: 統計外ランは別ファイルのため、ON 時にここでロードしてマージする
+        try { await ensureDeckDiagnosisNsData(); D.__nsMerged = true; }
+        catch (e) { /* 読み込み失敗時は統計登録ランのみで継続 */ }
+    }
     const excludeStarters = $('#opt-no-starter').checked;
     const poolMode = $('#opt-pool').value;
     const metric = $('#opt-metric').value;   // 'j' = Jaccard / 'c' = 包含率
@@ -1205,10 +1240,13 @@ window.__ddInit = () => {
     const dhc = document.getElementById('dd-history-clear');
     if (dhc) dhc.onclick = () => { ddSaveHistory([]); ddRenderHistory(); };
     renderDeck();
+    // v2 split: ns 未ロード時でも母集団表示が崩れないよう、生成側が付与した nsCount を使う
+    const ddStatN = D.runs.filter(r => !r.ns).length;
+    const ddNsN = (typeof D.nsCount === 'number') ? D.nsCount : D.runs.filter(r => r.ns).length;
     $('#meta-line').textContent = DDTF('meta_line', '母集団: {total} ラン (統計 {stat} + 統計外 {ns}) ／ データ生成: {gen} ／ レポート生成: {rep}', {
-        total: D.runs.length,
-        stat: D.runs.filter(r => !r.ns).length,
-        ns: D.runs.filter(r => r.ns).length,
+        total: ddStatN + ddNsN,
+        stat: ddStatN,
+        ns: ddNsN,
         gen: D.dataGeneratedAt, rep: D.generatedAt,
     });
 

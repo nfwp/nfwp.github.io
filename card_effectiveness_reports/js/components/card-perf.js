@@ -26,28 +26,31 @@ function renderCardPerformanceTab(char, lang) {
     // Pレート / 合成Pスコア (カード総選挙データ) を先読みし、揃い次第ランキングとフィルタ再適用
     if (typeof ensureCardElectionData === 'function') {
         ensureCardElectionData().then(() => {
+            cpLoadElectionAdopt();
             updatePrateRankings(lang);
+            updateRankingExtras();      // Act4 / 傾向値ランキングに実質採用率を反映
             updateVisuals(null, []);
+        }).catch(() => {
+            cpLoadElectionAdopt();      // 空マップ → 実質採用率は N/A 表示
+            updateRankingExtras();
         });
     }
 }
 
-// --- 初回ピック率 / 採用ギャップ用データ (card-list.js の pick_details_all.json と共用) ---
+// --- 初回ピック率 / 採用ギャップ用データ (card-list.js の pick_details_{char}.json と共用) ---
 let CP_pickDetailsCache = null;   // 読み込み済み: object / 失敗: false / 未ロード: null
 
 function ensureCardPickDetails() {
     if (CP_pickDetailsCache !== null) return Promise.resolve(CP_pickDetailsCache);
     const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
-    // (P-03) pick_details はキャラ別ファイル (~470KB) のみ取得。失敗時のみ旧 all ファイルにフォールバック。
+    // (P-03) pick_details はキャラ別ファイルのみ取得。
     // キャッシュは card-list.js と同じ { キャラ名: { cardId: {...} } } 形で保持する。
+    // (2026-11-23) 旧 all ファイルは per-char 10 キャラ分が常在するためフォールバックごと廃止・削除。
     const charAtFetch = CURRENT_CHAR;
     return fetch(`card_lists/pick_details_${charAtFetch}.json${vParam}`)
         .then(r => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
         .then(j => { CP_pickDetailsCache = { [charAtFetch]: j }; return CP_pickDetailsCache; })
-        .catch(() => fetch(`card_lists/pick_details_all.json${vParam}`)
-            .then(r => (r.ok ? r.json() : null))
-            .then(j => { CP_pickDetailsCache = j || false; return CP_pickDetailsCache; })
-            .catch(() => { CP_pickDetailsCache = false; return false; }));
+        .catch(() => { CP_pickDetailsCache = false; return false; });
 }
 
 function _getPickInfo(cardId) {
@@ -59,7 +62,7 @@ function _getPickInfo(cardId) {
     return charData[cardId] || null;
 }
 
-// ピック詳細データ (card_lists/pick_details_all.json) が読み込み済みか
+// ピック詳細データ (card_lists/pick_details_{char}.json) が読み込み済みか
 function _pickCacheReady() {
     const shared = (typeof pickDetailsAllCache !== 'undefined') ? pickDetailsAllCache : null;
     return !!(shared || CP_pickDetailsCache);
@@ -935,17 +938,64 @@ function createAnalysisReportsHtml(lang) {
 
     const act4Performers = rankableAggData
         .filter(d => d.Turn_Act_4 != null && d.HP_Act_4 != null)
-        .map(d => [d[cardNameCol], (d.Turn_Act_4 + d.HP_Act_4)])
-        .sort((a, b) => b[1] - a[1]);
-    const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.card_list.act4_top_performers_title, UI_TEXT.card_list.act4_top_performers_desc, act4Performers.slice(0, 40), "Score", ".1f");
+        .map(d => ({ name: d[cardNameCol], value: d.Turn_Act_4 + d.HP_Act_4, cardId: d.Card_ID, finalFrac: d.Adoption_Rate }))
+        .sort((a, b) => b.value - a.value);
+    const act4PerfHtml = createRankedListHtml("act4-performers-report", UI_TEXT.card_list.act4_top_performers_title, UI_TEXT.card_list.act4_top_performers_desc, act4Performers.slice(0, 40), "Score", ".1f", lang);
 
-    const tendencyPerfHtml = createTendencyRankingHtml(rankableAggData, cardNameCol);
+    const tendencyPerfHtml = createTendencyRankingHtml(rankableAggData, cardNameCol, lang);
+
+    // 選挙データ (実質採用率) 読み込み後の再描画用にコンテキストを保持
+    _cpRankCtx = { rankableAggData, cardNameCol, lang };
 
     return `<div id='analysis-reports'>
                 ${prateRankingHtml}
                 ${act4PerfHtml}
                 ${tendencyPerfHtml}
             </div>`;
+}
+
+// --- ランキング表の実質採用率 / 最終採用率 (2026-11-23・ユーザー要望) ---
+// 実質採用率 = カード総選挙データ (Cards_log Add ベース) / 最終採用率 = ラン終了時デッキ残存 (agg Adoption_Rate)。
+// 選挙データは遅延ロードのため、初期描画では '…' を表示し ensureCardElectionData() 完了後に updateRankingExtras() で再描画する。
+let _cpElectionAdopt = null;   // Map cardId -> { adoptE: r[4](%), finalE: r[8](%) } / null = 未ロード
+let _cpRankCtx = null;         // Act4 / 傾向値ランキングの再描画用コンテキスト
+function cpLoadElectionAdopt() {
+    const cd = (typeof ceGetCharData === 'function') ? ceGetCharData() : null;
+    _cpElectionAdopt = new Map((cd ? cd.cards : []).map(r => [r[0], { adoptE: r[4], finalE: r[8] }]));
+}
+function cpAdoptCells(cardId, finalFrac) {
+    const e = _cpElectionAdopt ? _cpElectionAdopt.get(cardId) : undefined;
+    let adoptStr;
+    if (_cpElectionAdopt === null) adoptStr = '…';                    // 選挙データ未ロード
+    else if (e && e.adoptE != null) adoptStr = e.adoptE + '%';
+    else adoptStr = 'N/A';
+    const finalStr = (finalFrac != null) ? Math.round(finalFrac * 100) + '%' : 'N/A';
+    return { adoptStr, finalStr };
+}
+function cpAdoptHeaders(lang) {
+    const ceT = (key, ja) => {
+        if (lang !== 'ja') {
+            const en = (UI_TEXT.card_election && UI_TEXT.card_election[key] != null) ? UI_TEXT.card_election[key] : null;
+            if (en != null) return en;
+        }
+        return ja;
+    };
+    return { adopt: ceT('col_adopt', '実質採用率'), final: ceT('col_finaladopt', '最終採用率') };
+}
+// 選挙データ読み込み後: Act4 / 傾向値ランキングを実質採用率つきで再描画する
+function updateRankingExtras() {
+    if (!_cpRankCtx) return;
+    const { rankableAggData, cardNameCol, lang } = _cpRankCtx;
+    const act4El = document.getElementById('act4-performers-report');
+    if (act4El) {
+        const act4Performers = rankableAggData
+            .filter(d => d.Turn_Act_4 != null && d.HP_Act_4 != null)
+            .map(d => ({ name: d[cardNameCol], value: d.Turn_Act_4 + d.HP_Act_4, cardId: d.Card_ID, finalFrac: d.Adoption_Rate }))
+            .sort((a, b) => b.value - a.value);
+        act4El.innerHTML = createRankedListHtml("act4-performers-report", UI_TEXT.card_list.act4_top_performers_title, UI_TEXT.card_list.act4_top_performers_desc, act4Performers.slice(0, 40), "Score", ".1f", lang);
+    }
+    const tendEl = document.getElementById('tendency-ranking-report');
+    if (tendEl) tendEl.innerHTML = createTendencyRankingHtml(rankableAggData, cardNameCol, lang);
 }
 
 // Pレート / 合成Pスコア Top40 (採用率 5% 以上) — カード総選挙データから描画
@@ -973,18 +1023,20 @@ function updatePrateRankings(lang) {
             const aggMeta = ALL_DATA.agg_data_full.find(d => d.Card_ID === r[0]) || {};
             const medal = aggMeta.Medal || '';
             return { graphName: (lang === 'ja') ? nm[0] : (nm[1] || nm[0]),
-                     medal, prate: r[1], score: r[7],
-                     adopt: adoptionByCard[r[0]], perf: perfByCard[r[0]] };
+                     medal, prate: r[1], score: r[7], cardId: r[0],
+                     adoptE: r[4], adopt: adoptionByCard[r[0]], perf: perfByCard[r[0]] };
         });
     const prateTop = [...entries].sort((a, b) => b.prate - a.prate).slice(0, topN);
     const scoreTop = [...entries].filter(e => e.score != null).sort((a, b) => b.score - a.score).slice(0, topN);
 
     // 表形式 (spotlight-card クラスでクリック時のグラフハイライトに対応)
-    // 列: # | カード名 | Pレート (or 合成Pスコア) | 採用率 | 性能
+    // 列: # | カード名 | Pレート (or 合成Pスコア) | 実質採用率 | 最終採用率 | 性能
+    //   実質採用率 = カード総選挙 (Cards_log Add ベース) / 最終採用率 = ラン終了時デッキ残存 (これまでの「採用率」列)
     const adoptPct = (e) => (e.adopt != null) ? Math.round(e.adopt * 100) + '%' : 'N/A';
+    const adoptEPct = (e) => (e.adoptE != null) ? e.adoptE + '%' : 'N/A';
     const perfStr = (e) => (e.perf != null) ? e.perf.toFixed(1) : 'N/A';
     const perfLabel = (lang === 'ja') ? '性能' : 'Perf';
-    const adoptLabel = (lang === 'ja') ? '採用率' : 'Adopt';
+    const H = cpAdoptHeaders(lang);
     const nameHeader = (lang === 'ja') ? 'カード名' : 'Card';
     const tableHtml = (sorted, valueHeader, valueFmt, valueId) => {
         const splitPoint = Math.ceil(sorted.length / 2);
@@ -996,6 +1048,7 @@ function updatePrateRankings(lang) {
                     `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; color:#64748b;">${startIdx + i}</td>` +
                     `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:left;"><strong class="spotlight-card" data-card-name="${e.graphName}" style="cursor:pointer; background:none; padding:0; display:inline;">${name}</strong></td>` +
                     `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; font-weight:bold;">${valueFmt(e)}</td>` +
+                    `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${adoptEPct(e)}</td>` +
                     `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${adoptPct(e)}</td>` +
                     `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${perfStr(e)}</td>` +
                     `</tr>`;
@@ -1005,7 +1058,8 @@ function updatePrateRankings(lang) {
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">#</th>` +
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9; text-align:left;">${nameHeader}</th>` +
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${valueHeader}${valueId && window.MI ? MI.icon(valueId) : ''}</th>` +
-                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${adoptLabel}${window.MI ? MI.icon('final') : ''}</th>` +
+                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.adopt}${window.MI ? MI.icon('adopt') : ''}</th>` +
+                `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.final}${window.MI ? MI.icon('final') : ''}</th>` +
                 `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${perfLabel}${window.MI ? MI.icon('perf') : ''}</th>` +
                 `</tr>${rows}</table>`;
         };
@@ -1023,31 +1077,37 @@ function updatePrateRankings(lang) {
         tableHtml(scoreTop, UI_TEXT.card_perf.filters.pscore_label, (e) => e.score.toFixed(2), 'score') + `</div>`;
 }
 
-function createTendencyRankingHtml(aggData, cardNameCol) {
+function createTendencyRankingHtml(aggData, cardNameCol, lang) {
     const ADOPTION_RATE_THRESHOLD = 0.05;
     const baseTendencyData = aggData.filter(d => d[cardNameCol] && d.Adoption_Rate >= ADOPTION_RATE_THRESHOLD);
-    
+
     const attackTendencyTop20 = baseTendencyData.filter(d => d.Turn_Tendency != null).sort((a, b) => b.Turn_Tendency - a.Turn_Tendency).slice(0, 20);
     const defenseTendencyTop20 = baseTendencyData.filter(d => d.HP_Tendency != null).sort((a, b) => b.HP_Tendency - a.HP_Tendency).slice(0, 20);
 
     const L = UI_TEXT.card_list;
     const M = UI_TEXT.card_perf.metrics;
+    const H = cpAdoptHeaders(lang);
 
-    // 傾向値ランキングも表形式で (# | カード名 | 傾向値)
+    // 傾向値ランキングも表形式で (# | カード名 | 傾向値 | 実質採用率 | 最終採用率)
     const mkTable = (list, valueHeader) => {
         const rows = list.map((d, i) => {
             const cardName = d[cardNameCol];
+            const cells = cpAdoptCells(d.Card_ID, d.Adoption_Rate);
             return `<tr>` +
                 `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; color:#64748b;">${i + 1}</td>` +
                 `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:left;"><strong class="spotlight-card" data-card-name="${cardName}" style="cursor:pointer; background:none; padding:0; display:inline;">${cardName}</strong></td>` +
                 `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; font-weight:bold;">${d.valueKeyVal.toFixed(2)}</td>` +
+                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${cells.adoptStr}</td>` +
+                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${cells.finalStr}</td>` +
                 `</tr>`;
         }).join('');
         return `<table style="border-collapse:collapse; font-size:0.88em; background:#fff;">` +
             `<tr>` +
             `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">#</th>` +
-            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9; text-align:left;">${(LANG === 'ja') ? 'カード名' : 'Card'}</th>` +
+            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9; text-align:left;">${(lang === 'ja') ? 'カード名' : 'Card'}</th>` +
             `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${valueHeader}</th>` +
+            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.adopt}${window.MI ? MI.icon('adopt') : ''}</th>` +
+            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.final}${window.MI ? MI.icon('final') : ''}</th>` +
             `</tr>${rows}</table>`;
     };
     const attackRows = attackTendencyTop20.map(d => ({ ...d, valueKeyVal: d.Turn_Tendency }));
@@ -1073,17 +1133,23 @@ function createTendencyRankingHtml(aggData, cardNameCol) {
     `;
 }
 
-// ランキングを汎用テーブルで描画 (# | カード名 | 値)。cardsData = [name, value]
-function createRankedListHtml(reportId, title, description, cardsData, valueLabel, valueFormatStr) {
-    if (!cardsData || cardsData.length === 0) return "";
-    const nameHeader = (LANG === 'ja') ? 'カード名' : 'Card';
+// ランキングを汎用テーブルで描画 (# | カード名 | 値 | 実質採用率 | 最終採用率)。
+// rows = [{ name, value, cardId, finalFrac }] (2026-11-23・ユーザー要望で採用率 2 列を追加)
+function createRankedListHtml(reportId, title, description, rows, valueLabel, valueFormatStr, lang) {
+    if (!rows || rows.length === 0) return "";
+    const nameHeader = (lang === 'ja') ? 'カード名' : 'Card';
+    const H = cpAdoptHeaders(lang);
     const mkTable = (list, startIdx) => {
-        const rows = list.map(([name, val], i) => {
+        const rowsHtml = list.map((row, i) => {
+            const val = row.value;
             const valueStr = (valueFormatStr === ".0f") ? Math.round(val) : (valueFormatStr === ".2f" ? val.toFixed(2) : val.toFixed(1));
+            const cells = cpAdoptCells(row.cardId, row.finalFrac);
             return `<tr>` +
                 `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; color:#64748b;">${startIdx + i}</td>` +
-                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:left;"><strong class="spotlight-card" data-card-name="${name}" style="cursor:pointer; background:none; padding:0; display:inline;">${name}</strong></td>` +
+                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:left;"><strong class="spotlight-card" data-card-name="${row.name}" style="cursor:pointer; background:none; padding:0; display:inline;">${row.name}</strong></td>` +
                 `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right; font-weight:bold;">${valueStr}</td>` +
+                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${cells.adoptStr}</td>` +
+                `<td style="padding:2px 8px; border:1px solid #e2e8f0; text-align:right;">${cells.finalStr}</td>` +
                 `</tr>`;
         }).join('');
         return `<table style="border-collapse:collapse; font-size:0.88em; background:#fff;">` +
@@ -1091,11 +1157,13 @@ function createRankedListHtml(reportId, title, description, cardsData, valueLabe
             `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">#</th>` +
             `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9; text-align:left;">${nameHeader}</th>` +
             `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${valueLabel}</th>` +
-            `</tr>${rows}</table>`;
+            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.adopt}${window.MI ? MI.icon('adopt') : ''}</th>` +
+            `<th style="padding:3px 8px; border:1px solid #e2e8f0; background:#f1f5f9;">${H.final}${window.MI ? MI.icon('final') : ''}</th>` +
+            `</tr>${rowsHtml}</table>`;
     };
-    const splitPoint = Math.ceil(cardsData.length / 2);
-    const col1Data = cardsData.slice(0, splitPoint);
-    const col2Data = cardsData.slice(splitPoint);
+    const splitPoint = Math.ceil(rows.length / 2);
+    const col1Data = rows.slice(0, splitPoint);
+    const col2Data = rows.slice(splitPoint);
     // 左右 2 列 (傾向値ランキングと同じ flex:1 + min-width 構成。窓が狭い場合のみ縦積み)
     const body = `<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">` +
         `<div style="flex:1; min-width:300px;">` + mkTable(col1Data, 1) + `</div>` +

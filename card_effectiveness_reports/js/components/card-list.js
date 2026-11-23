@@ -46,19 +46,14 @@ async function loadAndShowCardList(character, language) {
 async function ensurePickDetailsCache() {
     if (pickDetailsAllCache) return;
     const vParam = (typeof DATA_VERSION !== 'undefined' && DATA_VERSION) ? `?v=${DATA_VERSION}` : `?_=${new Date().getTime()}`;
-    // (P-03) pick_details はキャラ別ファイル (~470KB) のみ取得。失敗時のみ旧 all ファイルにフォールバック。
-    // キャッシュは従来どおり { キャラ名: { cardId: {...} } } 形で保持する。
+    // (P-03) pick_details はキャラ別ファイルのみ取得。
+    // (2026-11-23) 旧 all ファイル (pick_details_all.json) は per-char 10 キャラ分が常在するため
+    // フォールバックごと廃止・ファイルも削除した。失敗時は null のまま (詳細展開時にエラー表示)。
     try {
         const response = await fetch(`card_lists/pick_details_${CURRENT_CHAR}.json${vParam}`);
         if (response.ok) {
             pickDetailsAllCache = { [CURRENT_CHAR]: await response.json() };
             return;
-        }
-    } catch (err) { /* フォールバックへ */ }
-    try {
-        const response = await fetch(`card_lists/pick_details_all.json${vParam}`);
-        if (response.ok) {
-            pickDetailsAllCache = await response.json();
         }
     } catch (err) {
         console.error("Failed to pre-fetch pick details:", err);
@@ -688,16 +683,28 @@ async function toggleCardDetail(btnElement) {
             const itemList = Array.isArray(catObj) ? catObj : catObj.items;
             if (!itemList || itemList.length === 0) return;
 
-            const firstCount = Array.isArray(catObj) ? itemList.reduce((acc, item) => acc + item[3], 0) : (catObj.first_count || 0);
+            // v2 (2026-11-23): items = [choiceId, count] (表示名は lookup_data から解決)。
+            // 旧形式 [choiceId, ja, en, count] も暫定で扱える。itemCount で両形式の件数位置を吸収。
+            const itemCount = (item) => (item.length >= 4) ? item[3] : item[1];
+            const firstCount = Array.isArray(catObj) ? itemList.reduce((acc, item) => acc + itemCount(item), 0) : (catObj.first_count || 0);
             const totalOffer = getCatTotalOffer(cat.key);
 
             const itemsHtml = itemList.map(item => {
                 const choiceId = item[0];
-                let cardName = isJa ? item[1] : item[2];
-                const count = item[3];
-
+                const count = itemCount(item);
+                let cardName;
                 if (choiceId === "(スキップ/選択なし)") cardName = isJa ? "(スキップ/選択なし)" : "(Skip/None)";
-                if (choiceId === "(ショップ他行動/見送り)") cardName = isJa ? "(ショップ他行動/見送り)" : "(Shop Action/Skip)";
+                else if (choiceId === "(ショップ他行動/見送り)") cardName = isJa ? "(ショップ他行動/見送り)" : "(Shop Action/Skip)";
+                else if (choiceId.startsWith("EXHIBIT:")) {
+                    // 旧データに存在した展示品プレフィックス (lookup の exhibits から解決)
+                    const exInfo = (ALL_DATA.lookup_tables.exhibits || {})[choiceId.replace("EXHIBIT:", "")] || {};
+                    const nameJa = exInfo.name || choiceId;
+                    const nameEn = exInfo.name_en || nameJa;
+                    cardName = isJa ? `[展示品] ${nameJa}` : `[Exhibit] ${nameEn}`;
+                } else {
+                    const cInfo = ALL_DATA.lookup_tables.cards[choiceId];
+                    cardName = cInfo ? (isJa ? cInfo.JA : (cInfo.EN || cInfo.JA)) : choiceId;
+                }
 
                 const ratioStr = firstCount > 0 ? ` (${((count / firstCount) * 100).toFixed(1)}%)` : '';
                 const isTargetCard = (choiceId === cardId);

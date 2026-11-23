@@ -248,16 +248,6 @@
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
-<td>二色蓮花蝶</td>
-<td style='text-align: right;'>+19.30</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.2%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'>39.4</td>
-<td style='text-align: right;'>94.4</td>
-</tr>
-<tr>
 <td>幻想一重</td>
 <td style='text-align: right;'>+19.30</td>
 <td style='text-align: right;'>50.0%</td>
@@ -266,6 +256,16 @@
 <td style='text-align: right;'>54.4</td>
 <td style='text-align: right;'>44.1</td>
 <td style='text-align: right;'>98.5</td>
+</tr>
+<tr>
+<td>二色蓮花蝶</td>
+<td style='text-align: right;'>+19.30</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.2%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'>39.4</td>
+<td style='text-align: right;'>94.4</td>
 </tr>
 <tr>
 <td>満月の咆哮</td>
@@ -307,16 +307,6 @@
 <td style='text-align: right;'>45.9</td>
 <td style='text-align: right;'>75.5</td>
 </tr>
-<tr class="specialist-row">
-<td><strong>🔥 静穏</strong></td>
-<td style='text-align: right;'>+17.87</td>
-<td style='text-align: right;'>43.9%</td>
-<td style='text-align: right;'>24.2%</td>
-<td style='text-align: right;'>41</td>
-<td style='text-align: right;'>49.6</td>
-<td style='text-align: right;'>63.9</td>
-<td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
-</tr>
 <tr>
 <td>🌀 嫉妬</td>
 <td style='text-align: right;'>+17.87</td>
@@ -326,6 +316,16 @@
 <td style='text-align: right;'>39.4</td>
 <td style='text-align: right;'>41.4</td>
 <td style='text-align: right;'>80.8</td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 静穏</strong></td>
+<td style='text-align: right;'>+17.87</td>
+<td style='text-align: right;'>43.9%</td>
+<td style='text-align: right;'>24.2%</td>
+<td style='text-align: right;'>41</td>
+<td style='text-align: right;'>49.6</td>
+<td style='text-align: right;'>63.9</td>
+<td style='text-align: right;'><strong><span style='color: red;'>113.5</span></strong></td>
 </tr>
 <tr>
 <td>紅内勁</td>

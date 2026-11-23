@@ -374,6 +374,9 @@ function renderRunFinderTab() {
             width: 100%;
             padding: 1px 0;
         }
+        /* 5b: マスの戦闘ステータス (💗/⚡️/💰) — ツールチップ内のマナ数字も薄色に (黒数字は暗背景で見えない) */
+        .deck-tooltip .rf-fight-status { color: #f8fafc; }
+        .deck-tooltip .rf-mg { color: #dfe6ee; }
     `;
 
 
@@ -471,12 +474,15 @@ function renderRunFinderTab() {
 
         const deckHtml = deckList.map(item => `<li>${item.name} &times;${item.count}</li>`).join('');
 
-        // --- REVISED TOOLTIP TITLE LOGIC ---
-        let locationInfo = '';
-        if (stationIndex === 'final') {
-            locationInfo = ` (${texts.tooltip_final_deck})`;
-        } else {
+        const targetIdx = (stationIndex === 'final') ? Infinity : parseInt(stationIndex, 10);
+
+        // --- ヘッダの対象マス表示 ---
+        // 2026-11-24: ランID ホバーでもマス名を出す (戦闘なら敵名 / ショップ・スキマ等はマス種別)。
+        // path アイコン (エリート/ボス等) は従来どおり「A1-Lv9 エリ 名前」形式。
+        const buildLocationInfo = () => {
+            if (stationIndex === 'final') return ` (${texts.tooltip_final_deck})`;
             let stateDetails = '';
+            let stationSuffix = '';   // ランID ホバー: マス名は括弧の外に出す (「(Act 1, Lvl 4) 店」)
             if (act && level && nodeType) {
                 // For path/boss icons with full data
                                 // 短縮表示: 「A2-Lv4 エリ 河城にとり」形式
@@ -489,25 +495,35 @@ function renderRunFinderTab() {
                 // For run-id links pointing to a specific station
                 const actLevelString = stationIndexToActLevel[stationIndex];
                 stateDetails = `Act ${actLevelString}`;
+                const nameTxt = rfStationNameForRun(character, runId, targetIdx, actLevelString);
+                if (nameTxt) stationSuffix = ` ${nameTxt}`;
             }
-            if (stateDetails) {
-                locationInfo = ` (${stateDetails})`;
-            }
-        }
+            return stateDetails ? ` (${stateDetails})${stationSuffix}` : '';
+        };
 
-        // --- 苦戦戦闘 / スペルカード使用セクション (表示中ステーションより前の戦闘のみ) ---
+        const renderTooltip = () => {
+            const locationInfo = buildLocationInfo();
+            const hfEntries = (hardFightsByChar[character] || {})[runId];
+            const ownFightMark = rfOwnFightMark(hfEntries, targetIdx);
+            const hardFightsHtml = buildHardFightsHtml(hfEntries, targetIdx, texts);
+            // 5b (2026-11-23) / 2026-11-24: 対象マスのステータス (💗/⚡️/💰)。
+            // 戦闘マスは bvals、戦闘以外のマスは sts の最新スナップショット、最終デッキは Act4 ボス終了時。
+            const ownSt = (stationIndex === 'final')
+                ? rfLastBattleStatus(character, runId)
+                : rfStationStatus(character, runId, targetIdx);
+            const ownStatusHtml = ownSt ? `<div class="deck-tooltip-mana rf-fight-status">${rfFightStatusText(ownSt)}</div>` : '';
+
+            tooltipElement.innerHTML = `
+                <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}${ownFightMark}</div>
+                <div class="deck-tooltip-mana">${texts.mana_label || '最終マナ基盤:'} ${rfManaIconsHtml(RF_MANA_MAP ? RF_MANA_MAP[runId] : null)}</div>
+                ${ownStatusHtml}
+                <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
+                ${hardFightsHtml}
+            `;
+        };
+
         hoveredTooltipLink = link;
-        const targetIdx = (stationIndex === 'final') ? Infinity : parseInt(stationIndex, 10);
-        const hfEntries = (hardFightsByChar[character] || {})[runId];
-        const ownFightMark = rfOwnFightMark(hfEntries, targetIdx);
-        const hardFightsHtml = buildHardFightsHtml(hfEntries, targetIdx, texts);
-
-        tooltipElement.innerHTML = `
-            <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}${ownFightMark}</div>
-            <div class="deck-tooltip-mana">${texts.mana_label || '最終マナ基盤:'} ${rfManaIconsHtml(RF_MANA_MAP ? RF_MANA_MAP[runId] : null)}</div>
-            <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
-            ${hardFightsHtml}
-        `;
+        renderTooltip();
 
         // 先に表示して寸法を確定させる
         tooltipElement.style.display = 'block';
@@ -518,14 +534,7 @@ function renderRunFinderTab() {
         if (!hardFightsByChar.__loaded) {
             loadHardFights().then(() => {
                 if (hoveredTooltipLink !== link) return;
-                const list2 = (hardFightsByChar[character] || {})[runId];
-                if (!list2 || !list2.length) return;
-                tooltipElement.innerHTML = `
-                    <div class="deck-tooltip-title">Deck (${cards.length} cards)${locationInfo}${rfOwnFightMark(list2, targetIdx)}</div>
-                    <div class="deck-tooltip-mana">${texts.mana_label || '最終マナ基盤:'} ${rfManaIconsHtml(RF_MANA_MAP ? RF_MANA_MAP[runId] : null)}</div>
-                    <ul class="deck-tooltip-list">${deckHtml || '<li>(No cards)</li>'}</ul>
-                    ${buildHardFightsHtml(list2, targetIdx, texts)}
-                `;
+                renderTooltip();
                 updateTooltipPosition(event);
             });
         }
@@ -1420,6 +1429,7 @@ const hardFightsEncs = {};     // { character: { runId: [code, ...] } }      全
 const hardFightsBvals = {};    // { character: { runId: [[ΔHp(純損失・回復は負)|null, Rounds|null], ...] } }  encs と同順に並ぶ (敵ごとの HP/ターン IQR 集計用・2026-10-31)
 const hardFightsPos = {};      // { character: { runId: [[Act, Level], ...] } }      encs と同順の戦闘ノード位置 (Act/Lv×敵 厳密フィルタ用・2026-11-17)
 const hardFightsStats = {};    // { character: { runId: {L:総ライフ喪失, LA:[Act別喪失x4], S:スペル回数, T:{'{act}{kind}':[ターン和,戦闘数]}} } }
+const hardFightsSts = {};      // { character: { runId: [[si, Hp, Power, Money], ...] } }  戦闘以外で状態が動いた地点 (2026-11-24)
 let hardFightsPromise = null;
 let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功したか (失敗時は検索時に再試行)
 // hard_fights_ns.json から統合された runId (統計外ラン)。参考値 (キャラ全ラン) は統計母集団固定のため
@@ -1449,7 +1459,7 @@ function loadHardFights(force) {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
     const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
-    if (window.rfDataLoadBegin) window.rfDataLoadBegin('遭遇データ (hard_fights.json ~5.4MB) を読み込み中… (初回のみ)');
+    if (window.rfDataLoadBegin) window.rfDataLoadBegin('遭遇データ (hard_fights.json ~6.8MB) を読み込み中… (初回のみ)');
     hardFightsPromise = fetch(`${basePath}hard_fights.json?v=${ver}`)
         .then(response => (response.ok ? response.json() : null))
         .then(data => {
@@ -1458,6 +1468,7 @@ function loadHardFights(force) {
             if (data && data.encs) Object.assign(hardFightsEncs, data.encs);
             if (data && data.bvals) Object.assign(hardFightsBvals, data.bvals);
             if (data && data.pos) Object.assign(hardFightsPos, data.pos);
+            if (data && data.sts) Object.assign(hardFightsSts, data.sts);
             if (data && data.stats) { Object.assign(hardFightsStats, data.stats); hardFightsDataOk = true; }
             hardFightsByChar.__loaded = true;
             return hardFightsByChar;
@@ -1496,7 +1507,7 @@ function ensureNsAssetsLoaded() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const basePath = isLocal ? `/card_effectiveness_reports/data/` : './data/';
     const ver = (typeof DATA_VERSION !== 'undefined') ? DATA_VERSION : '';
-    if (window.rfDataLoadBegin) window.rfDataLoadBegin('統計外ランのデータ (ns系 ~4.5MB) を読み込み中… (初回のみ)');
+    if (window.rfDataLoadBegin) window.rfDataLoadBegin('統計外ランのデータ (ns系 ~5.5MB) を読み込み中… (初回のみ)');
     nsAssetsPromise = Promise.all([
         fetch(`${basePath}run_details_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
         fetch(`${basePath}hard_fights_ns.json?v=${ver}`).then(r => (r.ok ? r.json() : null)),
@@ -1512,6 +1523,7 @@ function ensureNsAssetsLoaded() {
             _mergeCharDicts(hardFightsEncs, hfNs.encs);
             _mergeCharDicts(hardFightsBvals, hfNs.bvals);
             if (hfNs.pos) _mergeCharDicts(hardFightsPos, hfNs.pos);
+            if (hfNs.sts) _mergeCharDicts(hardFightsSts, hfNs.sts);
             _mergeCharDicts(hardFightsStats, hfNs.stats);
             hardFightsDataOk = hardFightsDataOk || !!hfNs.stats;
         }
@@ -1554,6 +1566,160 @@ function rfOwnFightMark(entries, targetIdx) {
     return mark;
 }
 
+// 5b (2026-11-23): 戦闘 1 回ごとのステータス (❤/⚡️/💰) を bvals (拡張: [ΔHp, Rounds, Hp, Power, Money]) と
+// pos (拡張: [Act, Level, si]) から解決する。si = ステーション index (マスホバーの対応に使用)。
+// ΔPower / ΔMoney は直前の戦闘終了時との差分 (イベント・ショップでの増減を含む)。
+function rfFightStatusByIndex(bvs, idx) {
+    const bv = bvs[idx];
+    if (!bv) return null;
+    const prev = idx > 0 ? bvs[idx - 1] : null;
+    const pow = bv[3], money = bv[4];
+    return {
+        hp: bv[2],
+        dh: bv[0],
+        pow,
+        dp: (pow != null && prev && prev[3] != null) ? pow - prev[3] : null,
+        money,
+        dm: (money != null && prev && prev[4] != null) ? money - prev[4] : null,
+    };
+}
+function rfFightStatus(character, runId, si) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    if (!pos || !bvs) return null;
+    const idx = pos.findIndex(p => p[2] === si);
+    if (idx < 0) return null;
+    return rfFightStatusByIndex(bvs, idx);
+}
+// 2026-11-24: 指定 si の戦闘コード (encs は全戦闘ぶん pos と同順に並ぶ) — ホバーの敵名解決用
+function rfBattleCodeAt(character, runId, si) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const encs = (hardFightsEncs[character] || {})[runId];
+    if (!pos || !encs) return null;
+    const idx = pos.findIndex(p => p[2] === si);
+    return (idx >= 0 && encs[idx]) ? encs[idx] : null;
+}
+// 最終デッキ (stationIndex === 'final') 用: 最後の戦闘 = Act4 ボスの終了時ステータス
+function rfLastBattleStatus(character, runId) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    if (!pos || !bvs || !pos.length) return null;
+    let last = 0;
+    for (let i = 1; i < pos.length; i++) if ((pos[i][2] || 0) > (pos[last][2] || 0)) last = i;
+    return rfFightStatusByIndex(bvs, last);
+}
+// 指定 si 時点のステータス。戦闘マスは bvals (戦闘終了時)、戦闘以外のマスは sts
+// (非戦闘で状態が動いた地点) のうち si 以下の最新スナップショットを使う。
+// 非戦闘マスの Δ は「直前に状態が動いた地点」との差分 (ショップの支出・スキマの回復など)。
+function rfStationStatus(character, runId, si) {
+    if (si == null || isNaN(si)) return null;
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    const sts = (hardFightsSts[character] || {})[runId] || [];
+    let best = null;   // { si, kind, idx | v }
+    if (pos && bvs) {
+        for (let i = 0; i < pos.length; i++) {
+            const p = pos[i][2];
+            if (p <= si && (!best || p >= best.si)) best = { si: p, kind: 'b', idx: i };
+        }
+    }
+    for (const s of sts) {
+        if (s[0] <= si && (!best || s[0] >= best.si)) best = { si: s[0], kind: 's', v: s };
+    }
+    if (!best) return null;
+    if (best.kind === 'b') return rfFightStatusByIndex(bvs, best.idx);
+    // 非戦闘マス: 直前の変化点 (戦闘 or 非戦闘) を探す
+    let prev = null;
+    if (pos && bvs) {
+        for (let i = 0; i < pos.length; i++) {
+            const p = pos[i][2];
+            if (p < best.si && (!prev || p >= prev.si)) prev = { si: p, hp: bvs[i][2], pow: bvs[i][3], money: bvs[i][4] };
+        }
+    }
+    for (const s of sts) {
+        if (s[0] < best.si && (!prev || s[0] >= prev.si)) prev = { si: s[0], hp: s[1], pow: s[2], money: s[3] };
+    }
+    const v = best.v;
+    return {
+        hp: v[1],
+        dh: (prev && prev.hp != null && v[1] != null) ? prev.hp - v[1] : null,
+        pow: v[2],
+        dp: (prev && prev.pow != null && v[2] != null) ? v[2] - prev.pow : null,
+        money: v[3],
+        dm: (prev && prev.money != null && v[3] != null) ? v[3] - prev.money : null,
+    };
+}
+// --- 2026-11-24: ホバーのヘッダに「対象マス名」(戦闘なら敵名 / それ以外はマス種別) を出すためのヘルパ ---
+const RF_STATION_LABEL = { Enemy: '敵', EliteEnemy: 'エリ', Boss: 'ボス', Adventure: '特殊', Shop: '店', Gap: 'スキマ', Supply: '補給', Trade: '交易', Select: '選択', Entry: '開始' };
+const RF_STATION_LABEL_EN = { Enemy: 'Enemy', EliteEnemy: 'Elite', Boss: 'Boss', Adventure: 'Event', Shop: 'Shop', Gap: 'Gap', Supply: 'Supply', Trade: 'Trade', Select: 'Select', Entry: 'Start' };
+let rfStationActLevelMapCache = null;
+// si -> '1, Lvl 3' (STATION_MAP_GLOBAL の逆引き。renderRunFinderTab 外のヘルパからも使う)
+function rfStationActLevelMap() {
+    if (rfStationActLevelMapCache) return rfStationActLevelMapCache;
+    const m = {};
+    if (typeof STATION_MAP_GLOBAL !== 'undefined' && STATION_MAP_GLOBAL) {
+        for (const key in STATION_MAP_GLOBAL) m[STATION_MAP_GLOBAL[key]] = key.replace('-', ', Lvl ');
+    }
+    rfStationActLevelMapCache = m;
+    return m;
+}
+function rfFindRunById(runId) {
+    for (const arr of [rfAllSortedRuns, lastFoundRuns]) {
+        if (!arr) continue;
+        for (const r of arr) if (r && r.run_id === runId) return r;
+    }
+    return null;
+}
+// run の path_summary / bosses から Act-Level のマス種別を得る
+function rfRunNodeType(run, act, level) {
+    if (!run) return null;
+    if (run.bosses) {
+        for (const k in run.bosses) {
+            const b = run.bosses[k];
+            if (b && Number(k) === act && Number(b.level) === level) return 'Boss';
+        }
+    }
+    if (run.path_summary) {
+        for (const stage of ['Early', 'Mid', 'Late']) {
+            const arr = run.path_summary[`Act${act} ${stage}`];
+            if (!Array.isArray(arr)) continue;
+            const node = arr.find(n => n && Number(n.level) === level);
+            if (node) return node.type;
+        }
+    }
+    return null;
+}
+// 対象マスの表示名: 戦闘マスは敵名 (encs/pos から解決)、それ以外はマス種別ラベル
+function rfStationNameForRun(character, runId, si, actLevelStr) {
+    const code = rfBattleCodeAt(character, runId, si);
+    if (code) {
+        const nm = hardFightsNames[code] || [];
+        const name = (LANG === 'en') ? (nm[1] || nm[0]) : nm[0];
+        return name || ((LANG === 'en') ? 'Battle' : '敵');
+    }
+    const al = actLevelStr || rfStationActLevelMap()[si];
+    if (!al) return '';
+    const m = String(al).match(/^(\d+),\s*Lvl\s*(\d+)$/);
+    if (!m) return '';
+    const type = rfRunNodeType(rfFindRunById(runId), parseInt(m[1], 10), parseInt(m[2], 10));
+    if (!type) return '';
+    return (LANG === 'en') ? (RF_STATION_LABEL_EN[type] || type) : (RF_STATION_LABEL[type] || type);
+}
+
+// 💗61(-15) ⚡️112(+8) 💰146(+25) 形式の文字列 (変化なしの項目は括弧を省略)。❤ は黒 notation のためピンクの 💗 を使用
+function rfFightStatusText(st) {
+    if (!st) return '';
+    const paren = (v) => {
+        if (v == null || v === 0) return '';
+        return (v > 0) ? `(+${v})` : `(${v})`;
+    };
+    const hpLoss = (st.dh != null && st.dh > 0) ? `(-${st.dh})` : ((st.dh != null && st.dh < 0) ? `(+${-st.dh})` : '');
+    let s = `💗${st.hp != null ? st.hp : '?'}${hpLoss}`;
+    s += ` ⚡️${st.pow != null ? st.pow : '?'}${paren(st.dp)}`;
+    s += ` 💰${st.money != null ? st.money : '?'}${paren(st.dm)}`;
+    return s;
+}
+
 // 1 ラン分のエントリ -> ツールチップ末尾に付ける HTML
 // targetIdx: 表示中ステーションの index (このステーション以前 = 自マスの戦闘を含めて出す / Infinity で全件)
 function buildHardFightsHtml(entries, targetIdx, texts) {
@@ -1564,7 +1730,9 @@ function buildHardFightsHtml(entries, targetIdx, texts) {
     const maxLines = 8;
     const shown = list.slice(0, maxLines);
     const lines = shown.map(e => {
-        const name = isJa ? (e.j || e.e) : (e.e || e.j);
+        // 5a (2026-11-23): j/e (名前) は hard_fights.json から削除済み — names テーブル (g → [ja, en]) から解決する
+        const nm = hardFightsNames[e.g] || [];
+        const name = isJa ? (nm[0] || e.g) : (nm[1] || nm[0] || e.g);
         const flags = [];
         if (e.dh >= 15) flags.push(`🩸(-${e.dh})`);
         if (e.sp >= 1) flags.push('⚡️');
