@@ -207,16 +207,6 @@
 <td style='text-align: right;'>100.9</td>
 </tr>
 <tr>
-<td>Last Romantic Night Call</td>
-<td style='text-align: right;'>+20.90</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>26.6%</td>
-<td style='text-align: right;'>40</td>
-<td style='text-align: right;'>50.3</td>
-<td style='text-align: right;'>38.7</td>
-<td style='text-align: right;'>89.0</td>
-</tr>
-<tr>
 <td>Shade</td>
 <td style='text-align: right;'>+20.90</td>
 <td style='text-align: right;'>50.0%</td>
@@ -225,6 +215,16 @@
 <td style='text-align: right;'>39.2</td>
 <td style='text-align: right;'>57.7</td>
 <td style='text-align: right;'>96.9</td>
+</tr>
+<tr>
+<td>Last Romantic Night Call</td>
+<td style='text-align: right;'>+20.90</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>26.6%</td>
+<td style='text-align: right;'>40</td>
+<td style='text-align: right;'>50.3</td>
+<td style='text-align: right;'>38.7</td>
+<td style='text-align: right;'>89.0</td>
 </tr>
 <tr>
 <td>Embryo's Dream</td>

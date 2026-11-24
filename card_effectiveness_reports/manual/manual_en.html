@@ -237,6 +237,15 @@
             <li><b>Text at the bar end</b> = hard-fight rate (hard encounters / encounters).<br>Hover a bar to see the detailed breakdown (encounters, hard fights, etc.).</li>
         </ul>
         <p class="manual-note">* Values related to <b>boss spell cards are estimates</b>. Logs do not directly record spell card usage, so it is inferred from the <b>power drop during the battle</b>.<br>The threshold is relaxed for boss battles compared to regular ones, so actual usage may differ slightly.</p>
+        <h3>📊 Search Result Summary</h3>
+        <p>A summary of the searched run pool is shown below the results table.</p>
+        <ul>
+            <li><b>When shown</b>: The summary appears only when <b>both Act and Level are specified</b> (as of passing that station) or <b>neither is specified</b> (final deck). Specifying only one of them cannot define a single point, so the summary is hidden.</li>
+            <li><b>Aggregation point</b>: When both Act and Level are specified, the deck, upgrades and battles are aggregated <b>as of passing that station</b>. Without them, the <b>final deck</b> and all battles are used.</li>
+            <li><b>Deck presence Top 40</b>: Cards held in the deck at that point (run count and share). Starting cards (24 Basic cards) are excluded. Card names show a type icon (same as the Card Election tab) and <b>(x.x)</b> = <b>avg copies per run</b> (all-run basis). The <b>green part</b> of the bar marks upgraded runs among them.</li>
+            <li><b>Upgrades Top 40</b>: Ranking of cards upgraded up to that point (at gaps, shops, events, etc. — upgrades of starting cards included). <b>(x.x)</b> = <b>avg upgrade count per run</b>. Hover a card name for the upgrade breakdown (gap / shop / event / battle reward) and the total count.</li>
+            <li><b>Stat chips</b>: Avg deck size / <b>avg total HP loss</b> (average of total damage taken in a run) / avg spell-card battles (estimated). <b>Spell counts are estimated from the power drop during battles.</b></li>
+        </ul>
     </div>
 
     <h2 id="sec-data" class="c-slate">ℹ️ Data updates &amp; notes</h2>

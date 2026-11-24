@@ -14,12 +14,22 @@ function renderGlobalHeader() {
         </div>
     `;
 
+    // 2026-11-24: キャラ切り替え時は URL の検索条件 (act / level / itemLogic など) を初期化し、
+    //   char + lang (+ ラン検索タブを開いていた場合の search=true) のみ引き継ぐ。
+    //   旧実装は全パラメータを引き継いでいたため、キャラを変えてもフィルタが残っていた。
+    function switchCharacterKeepCharOnly(newChar) {
+        const prev = new URLSearchParams(window.location.search);
+        const next = new URLSearchParams();
+        next.set('char', newChar);
+        const lang = prev.get('lang');
+        if (lang) next.set('lang', lang);
+        if (prev.get('search') === 'true') next.set('search', 'true');
+        window.location.search = next.toString();
+    }
+
     container.innerHTML = switcherHtml;
     container.querySelector('select').addEventListener('change', (e) => {
-        const newChar = e.target.value;
-        const currentParams = new URLSearchParams(window.location.search);
-        currentParams.set('char', newChar);
-        window.location.search = currentParams.toString();
+        switchCharacterKeepCharOnly(e.target.value);
     });
 
     const mobileContainer = document.getElementById('global-header-mobile');
@@ -30,10 +40,7 @@ function renderGlobalHeader() {
             mobileSelect.id = 'char-select-mobile';
             mobileContainer.querySelector('label').setAttribute('for', 'char-select-mobile');
             mobileSelect.addEventListener('change', (e) => {
-                const newChar = e.target.value;
-                const currentParams = new URLSearchParams(window.location.search);
-                currentParams.set('char', newChar);
-                window.location.search = currentParams.toString();
+                switchCharacterKeepCharOnly(e.target.value);
             });
         }
     }

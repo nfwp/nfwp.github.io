@@ -247,16 +247,6 @@
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
-<td>Fleeting Fantasy</td>
-<td style='text-align: right;'>+19.30</td>
-<td style='text-align: right;'>50.0%</td>
-<td style='text-align: right;'>24.2%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>54.4</td>
-<td style='text-align: right;'>44.1</td>
-<td style='text-align: right;'>98.5</td>
-</tr>
-<tr>
 <td>Dichromatic Lotus Butterfly</td>
 <td style='text-align: right;'>+19.30</td>
 <td style='text-align: right;'>50.0%</td>
@@ -265,6 +255,16 @@
 <td style='text-align: right;'>55.0</td>
 <td style='text-align: right;'>39.4</td>
 <td style='text-align: right;'>94.4</td>
+</tr>
+<tr>
+<td>Fleeting Fantasy</td>
+<td style='text-align: right;'>+19.30</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.2%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>54.4</td>
+<td style='text-align: right;'>44.1</td>
+<td style='text-align: right;'>98.5</td>
 </tr>
 <tr>
 <td>Full Moon Howl</td>

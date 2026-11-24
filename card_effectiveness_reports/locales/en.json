@@ -239,6 +239,7 @@
         "experimental_warning": "<strong>[Experimental Feature]</strong> This search function is under development.",
         "data_scope_warning": "※By default, searches cover the range used for the statistics. Check 'Include non-stat runs' to also search runs excluded by per-player sampling (such rows get a 'Non-stat' badge).",
         "chart_notice": "* An aggregate chart, \"Battles Fought (by enemy)\", is displayed at the end of the search results — encounter counts per enemy and the breakdown of hard fights (🩸HP / ⚡️spell card) across all matched runs.",
+        "summary_notice": "📊 When both Act and Level are specified, a \"Search result summary (as of Act x, Lvl y)\" panel is shown below the results (final-deck basis when neither is specified; hidden if only one is specified).",
         "act_label": "Act:",
         "level_label": "Level:",
         "char_label": "Character:",

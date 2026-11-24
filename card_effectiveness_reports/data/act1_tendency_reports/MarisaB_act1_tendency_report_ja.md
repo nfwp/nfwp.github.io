@@ -237,16 +237,6 @@
 <td style='text-align: right;'>61.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>113.7</span></strong></td>
 </tr>
-<tr>
-<td>蛍光の森</td>
-<td style='text-align: right;'>+16.52</td>
-<td style='text-align: right;'>44.4%</td>
-<td style='text-align: right;'>22.0%</td>
-<td style='text-align: right;'>27</td>
-<td style='text-align: right;'>47.9</td>
-<td style='text-align: right;'>45.1</td>
-<td style='text-align: right;'>93.0</td>
-</tr>
 <tr class="specialist-row">
 <td><strong>🔥 🧰 電子ドラム</strong></td>
 <td style='text-align: right;'>+16.52</td>
@@ -256,6 +246,16 @@
 <td style='text-align: right;'>54.9</td>
 <td style='text-align: right;'>56.4</td>
 <td style='text-align: right;'><strong><span style='color: red;'>111.4</span></strong></td>
+</tr>
+<tr>
+<td>蛍光の森</td>
+<td style='text-align: right;'>+16.52</td>
+<td style='text-align: right;'>44.4%</td>
+<td style='text-align: right;'>22.0%</td>
+<td style='text-align: right;'>27</td>
+<td style='text-align: right;'>47.9</td>
+<td style='text-align: right;'>45.1</td>
+<td style='text-align: right;'>93.0</td>
 </tr>
 <tr>
 <td>逆張り</td>

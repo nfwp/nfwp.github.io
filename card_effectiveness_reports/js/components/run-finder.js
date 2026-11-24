@@ -69,7 +69,7 @@ function renderRunFinderTab() {
     const finderHtml = `
         <div class="run-finder-container">
             <h3>${texts.title}</h3>
-            <p class="analysis-note">${texts.data_scope_warning}${texts.chart_notice ? `<br>${texts.chart_notice}` : ''}</p>
+            <p class="analysis-note">${texts.data_scope_warning}${texts.chart_notice ? `<br>${texts.chart_notice}` : ''}${texts.summary_notice ? `<br>${texts.summary_notice}` : ''}</p>
             <div class="finder-controls">
                 <div class="control-group-row">
                     <div class="control-group">
@@ -1568,19 +1568,38 @@ function rfOwnFightMark(entries, targetIdx) {
 
 // 5b (2026-11-23): 戦闘 1 回ごとのステータス (❤/⚡️/💰) を bvals (拡張: [ΔHp, Rounds, Hp, Power, Money]) と
 // pos (拡張: [Act, Level, si]) から解決する。si = ステーション index (マスホバーの対応に使用)。
-// ΔPower / ΔMoney は直前の戦闘終了時との差分 (イベント・ショップでの増減を含む)。
-function rfFightStatusByIndex(bvs, idx) {
+// ΔPower / ΔMoney は「直前の状態変化点」(戦闘終了時 or ショップ・イベント等の変化点) との差分
+// (2026-11-24: 以前は直前の戦闘との差分にしていたため、間のショップ支出が戦闘の増減として出ていた)。
+// 2026-11-24: 指定 si より前で最後に状態が動いた地点 (戦闘終了時 or 非戦闘の変化点) を返す。
+// 戦闘マスの ΔPower / ΔMoney は「直前の戦闘」ではなく「直前の状態変化点」との差で出す
+// (ショップ・イベントを挟むと、その支出や回復が戦闘の増減として誤表示されていた)。
+function rfPrevStatusBefore(character, runId, si) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    const sts = (hardFightsSts[character] || {})[runId] || [];
+    let prev = null;
+    if (pos && bvs) {
+        for (let i = 0; i < pos.length; i++) {
+            const p = pos[i][2];
+            if (p < si && (!prev || p > prev.si)) prev = { si: p, hp: bvs[i][2], pow: bvs[i][3], money: bvs[i][4] };
+        }
+    }
+    for (const s of sts) {
+        if (s[0] < si && (!prev || s[0] > prev.si)) prev = { si: s[0], hp: s[1], pow: s[2], money: s[3] };
+    }
+    return prev;
+}
+function rfFightStatusByIndex(bvs, idx, prev) {
     const bv = bvs[idx];
     if (!bv) return null;
-    const prev = idx > 0 ? bvs[idx - 1] : null;
     const pow = bv[3], money = bv[4];
     return {
         hp: bv[2],
         dh: bv[0],
         pow,
-        dp: (pow != null && prev && prev[3] != null) ? pow - prev[3] : null,
+        dp: (pow != null && prev && prev.pow != null) ? pow - prev.pow : null,
         money,
-        dm: (money != null && prev && prev[4] != null) ? money - prev[4] : null,
+        dm: (money != null && prev && prev.money != null) ? money - prev.money : null,
     };
 }
 function rfFightStatus(character, runId, si) {
@@ -1589,7 +1608,7 @@ function rfFightStatus(character, runId, si) {
     if (!pos || !bvs) return null;
     const idx = pos.findIndex(p => p[2] === si);
     if (idx < 0) return null;
-    return rfFightStatusByIndex(bvs, idx);
+    return rfFightStatusByIndex(bvs, idx, rfPrevStatusBefore(character, runId, si));
 }
 // 2026-11-24: 指定 si の戦闘コード (encs は全戦闘ぶん pos と同順に並ぶ) — ホバーの敵名解決用
 function rfBattleCodeAt(character, runId, si) {
@@ -1606,7 +1625,7 @@ function rfLastBattleStatus(character, runId) {
     if (!pos || !bvs || !pos.length) return null;
     let last = 0;
     for (let i = 1; i < pos.length; i++) if ((pos[i][2] || 0) > (pos[last][2] || 0)) last = i;
-    return rfFightStatusByIndex(bvs, last);
+    return rfFightStatusByIndex(bvs, last, rfPrevStatusBefore(character, runId, pos[last][2]));
 }
 // 指定 si 時点のステータス。戦闘マスは bvals (戦闘終了時)、戦闘以外のマスは sts
 // (非戦闘で状態が動いた地点) のうち si 以下の最新スナップショットを使う。
@@ -1627,18 +1646,9 @@ function rfStationStatus(character, runId, si) {
         if (s[0] <= si && (!best || s[0] >= best.si)) best = { si: s[0], kind: 's', v: s };
     }
     if (!best) return null;
-    if (best.kind === 'b') return rfFightStatusByIndex(bvs, best.idx);
+    const prev = rfPrevStatusBefore(character, runId, best.si);
+    if (best.kind === 'b') return rfFightStatusByIndex(bvs, best.idx, prev);
     // 非戦闘マス: 直前の変化点 (戦闘 or 非戦闘) を探す
-    let prev = null;
-    if (pos && bvs) {
-        for (let i = 0; i < pos.length; i++) {
-            const p = pos[i][2];
-            if (p < best.si && (!prev || p >= prev.si)) prev = { si: p, hp: bvs[i][2], pow: bvs[i][3], money: bvs[i][4] };
-        }
-    }
-    for (const s of sts) {
-        if (s[0] < best.si && (!prev || s[0] >= prev.si)) prev = { si: s[0], hp: s[1], pow: s[2], money: s[3] };
-    }
     const v = best.v;
     return {
         hp: v[1],
@@ -1670,6 +1680,16 @@ function rfFindRunById(runId) {
     }
     return null;
 }
+// 2026-11-24 (企画2): path_summary の STAGE_DEFINITIONS (Early 1-4 / Mid 6-9 / Late 11-14) は
+// Lv5 / Lv10 / Lv15 を範囲外にするため、これらのマスは run_details から種別が取れない。
+// raw ログ全 3,549 ランで種別が 100% 固定していることを確認済みなので、固定テーブルで補う
+// (Act4 の店/スキマも path_summary 対象外 (Act1-3 のみ) のため同様に固定)。
+const RF_FIXED_NODE_TYPES = {
+    '1-5': 'Select', '2-5': 'Trade', '3-5': 'Trade',
+    '1-10': 'Supply', '2-10': 'Supply', '3-10': 'Supply',
+    '1-15': 'Gap', '2-15': 'Gap', '3-15': 'Gap',
+    '4-1': 'Shop', '4-2': 'Gap',
+};
 // run の path_summary / bosses から Act-Level のマス種別を得る
 function rfRunNodeType(run, act, level) {
     if (!run) return null;
@@ -1687,7 +1707,7 @@ function rfRunNodeType(run, act, level) {
             if (node) return node.type;
         }
     }
-    return null;
+    return RF_FIXED_NODE_TYPES[`${act}-${level}`] || null;
 }
 // 対象マスの表示名: 戦闘マスは敵名 (encs/pos から解決)、それ以外はマス種別ラベル
 function rfStationNameForRun(character, runId, si, actLevelStr) {
@@ -1743,6 +1763,282 @@ function buildHardFightsHtml(entries, targetIdx, texts) {
     }
     return `<div class="deck-tooltip-title deck-tooltip-title-hf">${tTitle} (${list.length})</div>`
          + `<ul class="deck-tooltip-list deck-tooltip-list-hf">${lines.join('')}</ul>`;
+}
+
+// --- 2026-11-24 (企画3): 検索結果サマリー -------------------------------------------
+//   検索結果表の下に、母集団のデッキ在籍 Top20 / ピック(入手) Top20 / 被弾・スペル推定を表示する。
+//   Act+Lv 指定時は「そのマス通過時点」で集計 (デッキは timelines から再構築、ピック/戦闘は si 以下のみ)。
+//   未指定時は最終デッキ + 全戦闘。初期カード (Basic 24 種) は Top から除外。
+const RF_SUM_STAGES = { battle: '戦闘報酬', shop: '店', gap: 'スキマ', event: 'イベント', other: 'その他' };
+const RF_SUM_STAGES_EN = { battle: 'Battle', shop: 'Shop', gap: 'Gap', event: 'Event', other: 'Other' };
+// Top 集計から除外するカード: Zhukeling (式神トークン・timelines の initial に常時付加されるため 100% になる)
+const RF_SUM_EXCLUDE_CARDS = ['Zhukeling'];
+// カード種別アイコン (カード総選挙タブと同じ img/types/*.avif)。lookup_tables.cards[].Type と対応
+const RF_SUM_TYPES = ['Attack', 'Skill', 'Defense', 'Ability', 'Tool', 'Status', 'Friend', 'Misfortune'];
+function rfSumTypeIcon(cardId) {
+    const lt = (typeof ALL_DATA !== 'undefined' && ALL_DATA && ALL_DATA.lookup_tables) ? ALL_DATA.lookup_tables : null;
+    const c = (lt && lt.cards) ? lt.cards[cardId] : null;
+    const t = c && c.Type;
+    return (t && RF_SUM_TYPES.indexOf(t) !== -1) ? `<img class="ticon" src="img/types/${t}@2x.avif" onerror="this.style.display='none'">` : '';
+}
+// 強化 (up_c) が記録されるマス種別は rfSummaryPickPlace と同じ分類を使う
+// Act+Lv 両方指定かつ station_map に存在するときのみ「段階集計」(target si) になる
+function rfSummaryTargetSi(actFilter, levelFilter) {
+    if (!actFilter || !levelFilter || typeof STATION_MAP_GLOBAL === 'undefined' || !STATION_MAP_GLOBAL) return null;
+    const si = STATION_MAP_GLOBAL[`${actFilter}-${levelFilter}`];
+    return (si === undefined) ? null : si;
+}
+function rfSummaryCardName(cardId) {
+    const lt = (typeof ALL_DATA !== 'undefined' && ALL_DATA && ALL_DATA.lookup_tables) ? ALL_DATA.lookup_tables : null;
+    const c = (lt && lt.cards) ? lt.cards[cardId] : null;
+    if (!c) return cardId;
+    return (typeof LANG !== 'undefined' && LANG === 'en') ? (c.EN || c.JA || cardId) : (c.JA || c.EN || cardId);
+}
+// add_c が発生したマスの入手分類 (戦闘報酬 / 店 / スキマ / イベント / その他)
+function rfSummaryPickPlace(run, si) {
+    const al = rfStationActLevelMap()[si];
+    let type = null;
+    if (al) {
+        const m = String(al).match(/^(\d+),\s*Lvl\s*(\d+)$/);
+        if (m) type = rfRunNodeType(run, parseInt(m[1], 10), parseInt(m[2], 10));
+    }
+    if (type === 'Enemy' || type === 'EliteEnemy' || type === 'Boss') return 'battle';
+    if (type === 'Shop') return 'shop';
+    if (type === 'Gap') return 'gap';
+    if (type === 'Adventure') return 'event';
+    return 'other';
+}
+// 1 ラン分の戦闘統計 (被弾 / スペル推定)。maxSi 指定時は si 以下の戦闘のみ。
+// スペル推定はサイトの ⚡️ と同定義: 戦闘中の P 減少量が閾値以上 (通常 50 / ボス 10)。
+// 状態変化点 (戦闘 = bvals, 非戦闘 = sts) を si 昇順にたどり、直前の P との差で判定する。
+function rfSummaryBattleAgg(character, runId, maxSi) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    if (!pos || !bvs) return null;
+    const encs = (hardFightsEncs[character] || {})[runId] || [];
+    const sts = (hardFightsSts[character] || {})[runId] || [];
+    const events = [];
+    for (let i = 0; i < pos.length; i++) events.push({ si: pos[i][2], battle: true, idx: i });
+    for (const s of sts) events.push({ si: s[0], battle: false, v: s });
+    events.sort((a, b) => a.si - b.si);
+    let battles = 0, dmgSum = 0, dmgBattles = 0, spelled = 0, heals = 0;
+    let prevPow = null, prevHp = null;
+    for (const ev of events) {
+        if (maxSi != null && ev.si > maxSi) break;
+        if (ev.battle) {
+            const bv = bvs[ev.idx];
+            if (!bv) continue;
+            battles++;
+            if (typeof bv[0] === 'number' && bv[0] > 0) { dmgSum += bv[0]; dmgBattles++; }
+            const hp = bv[2], pow = bv[3];
+            if (hp != null && prevHp != null && hp > prevHp) heals++;
+            if (pow != null && prevPow != null) {
+                const dp = prevPow - pow;
+                if (dp > 0) {
+                    const code = encs[ev.idx];
+                    const kind = (code && hardFightsNames[code]) ? hardFightsNames[code][2] : null;
+                    if (dp >= (kind === 'b' ? 10 : 50)) spelled++;
+                }
+            }
+            prevPow = (pow != null) ? pow : prevPow;
+            prevHp = (hp != null) ? hp : prevHp;
+        } else {
+            const v = ev.v;
+            if (v[1] != null && prevHp != null && v[1] > prevHp) heals++;
+            prevHp = (v[1] != null) ? v[1] : prevHp;
+            prevPow = (v[2] != null) ? v[2] : prevPow;
+        }
+    }
+    return { battles, dmgSum, dmgBattles, spelled, heals };
+}
+function rfAggregateSearchSummary(runs, actFilter, levelFilter) {
+    const targetSi = rfSummaryTargetSi(actFilter, levelFilter);
+    const stageMode = targetSi != null;
+    const deckCount = new Map();   // cardId -> 在籍ラン数
+    const copySum = new Map();     // cardId -> 合計枚数 (デッキ在籍・平均枚数表示用)
+    const upCount = new Map();     // cardId -> { runs, adds, places }  強化 (2026-11-24: ピック集計から変更)
+    const upInDeck = new Map();    // cardId -> 在籍ランのうち強化もしたラン数 (デッキ在籍バーの重ね表示用)
+    let deckRuns = 0, deckSizeSum = 0, nNs = 0;
+    let battleRuns = 0, battlesSum = 0, dmgSum = 0, spelledSum = 0;
+    const initialCache = new Map();
+    const getInitial = (ch, tl) => {
+        if (initialCache.has(ch)) return initialCache.get(ch);
+        let initial = null;
+        if (tl) for (const rid in tl) { if (tl[rid] && tl[rid].initial) { initial = tl[rid].initial.c || []; break; } }
+        initialCache.set(ch, initial);
+        return initial;
+    };
+    const isStarter = (id, ch) => (typeof lbolIsStarterCard === 'function') ? lbolIsStarterCard(id, ch) : false;
+    for (const run of runs) {
+        if (!run) continue;
+        const ch = run.character, rid = run.run_id;
+        if (run.s === 0) nNs++;
+        const tl = characterTimelineCache.get(ch);
+        const rt = tl ? tl[rid] : null;
+        // --- 強化: up_c (Cards_log Type='Upgrade') を集計 (スキマ・店・イベント等) ---
+        //   2026-11-24: ピック (add_c) はデッキ在籍と中身がほぼ同じになるため廃止し、
+        //   強化ランキングに変更。初期カードの強化 (SakuyaBlockU 等) も実際の行動なので対象に含める
+        //   (除外は Zhukeling のみ)。
+        //   upIdsThisRun = このランで (集計範囲内で) 強化したカード → デッキ在籍バーの「強化済み」重ね表示にも使う
+        let upIdsThisRun = null;
+        if (rt && rt.changes) {
+            for (const siStr in rt.changes) {
+                const si = Number(siStr);
+                if (stageMode && si > targetSi) continue;
+                const chg = rt.changes[siStr];
+                if (!chg || !chg.up_c || !chg.up_c.length) continue;
+                const place = rfSummaryPickPlace(run, si);
+                for (const id of chg.up_c) {
+                    if (RF_SUM_EXCLUDE_CARDS.indexOf(id) !== -1) continue;
+                    (upIdsThisRun || (upIdsThisRun = new Set())).add(id);
+                    const rec = upCount.get(id) || { runs: 0, adds: 0, places: {} };
+                    rec.adds++;
+                    rec.places[place] = (rec.places[place] || 0) + 1;
+                    upCount.set(id, rec);
+                }
+            }
+            if (upIdsThisRun) for (const id of upIdsThisRun) upCount.get(id).runs++;
+        }
+        // --- デッキ在籍 (段階集計時は timelines から再構築 / タイムライン無しランは初期デッキ扱い) ---
+        let deckIds = null;
+        if (!stageMode) {
+            deckIds = run.cards || null;
+        } else if (rt) {
+            deckIds = reconstructDeckAtStation(rt, targetSi).cards;
+        } else {
+            deckIds = getInitial(ch, tl);
+        }
+        if (deckIds) {
+            deckRuns++;
+            deckSizeSum += deckIds.length;
+            // 枚数 tally → 在籍ラン数 / 合計枚数 (平均枚数 = 合計枚数 / 集計ラン数 = act-trend の Avg/Run と同基準)
+            const tally = new Map();
+            for (const id of deckIds) tally.set(id, (tally.get(id) || 0) + 1);
+            for (const [id, n] of tally) {
+                if (isStarter(id, ch) || RF_SUM_EXCLUDE_CARDS.indexOf(id) !== -1) continue;
+                deckCount.set(id, (deckCount.get(id) || 0) + 1);
+                copySum.set(id, (copySum.get(id) || 0) + n);
+                // 在籍ランのうち強化もしたラン (デッキ在籍バーの重ね表示用)
+                if (upIdsThisRun && upIdsThisRun.has(id)) upInDeck.set(id, (upInDeck.get(id) || 0) + 1);
+            }
+        }
+        // --- 戦闘統計 (被弾 / スペル推定) ---
+        const agg = rfSummaryBattleAgg(ch, rid, stageMode ? targetSi : null);
+        if (agg) {
+            battleRuns++;
+            battlesSum += agg.battles;
+            dmgSum += agg.dmgSum;
+            spelledSum += agg.spelled;
+        }
+    }
+    const toTop = (m, limit) => [...m.entries()]
+        .map(([id, v]) => (typeof v === 'number') ? { id, runs: v } : { id, ...v })
+        .sort((a, b) => b.runs - a.runs || (b.adds || 0) - (a.adds || 0) || a.id.localeCompare(b.id))
+        .slice(0, limit);
+    return {
+        stageMode,
+        actFilter: actFilter || null,
+        levelFilter: levelFilter || null,
+        nRuns: runs.length,
+        nNs,
+        nDeckRuns: deckRuns,
+        nBattleRuns: battleRuns,
+        avgDeckSize: deckRuns ? deckSizeSum / deckRuns : null,
+        // 累計被弾平均 (2026-11-24): 1 ランあたりの合計被弾の平均 (旧: 被弾平均/戦闘)
+        avgDmg: battleRuns ? dmgSum / battleRuns : null,
+        avgSpelled: battleRuns ? spelledSum / battleRuns : null,
+        deckTop: toTop(deckCount, 40).map(e => ({ ...e, pct: deckRuns ? (e.runs / deckRuns) * 100 : 0, up: (upInDeck.get(e.id) || 0), avg: deckRuns ? (copySum.get(e.id) || 0) / deckRuns : 0 })),
+        upTop: toTop(upCount, 40).map(e => ({ ...e, pct: deckRuns ? (e.runs / deckRuns) * 100 : 0, avg: deckRuns ? (e.adds || 0) / deckRuns : 0 })),
+    };
+}
+function rfSummaryListHtml(items, base, barClass) {
+    const max = items.length ? items[0].runs : 0;
+    const isJa = (typeof LANG === 'undefined') || LANG !== 'en';
+    return `<ol class="rf-sum-list">` + items.map((e, i) => {
+        const w = max ? Math.max(2, Math.round(e.runs / max * 100)) : 0;
+        const pct = e.pct != null ? e.pct.toFixed(1) : '0.0';
+        let tip = '';
+        if (e.places) {
+            const labels = (typeof LANG !== 'undefined' && LANG === 'en') ? RF_SUM_STAGES_EN : RF_SUM_STAGES;
+            tip = Object.keys(e.places).filter(k => e.places[k]).map(k => `${labels[k]} ${e.places[k]}`).join(' / ');
+        } else if (e.up != null && e.up > 0) {
+            // デッキ在籍バーの緑部分 (強化済みラン) の説明
+            const upPct = base ? (e.up / base * 100).toFixed(1) : '0.0';
+            tip = isJa ? `このうち ${e.up} ラン (${upPct}%) は強化済み` : `${e.up} of these runs (${upPct}%) include an upgraded copy`;
+        }
+        const title = tip ? ` title="${escAttr(tip)}${e.adds ? ` (${e.adds})` : ''}"` : (e.adds ? ` title="×${e.adds}"` : '');
+        // デッキ在籍バー: 青 = 在籍ラン / 緑 = そのうち強化済みのラン (2026-11-24)
+        let bar = `<span class="rf-sum-bar ${barClass || ''}">`;
+        if (e.up != null && e.up > 0 && e.runs) {
+            const upW = Math.max(2, Math.round(w * e.up / e.runs));
+            bar += `<i style="width:${w}%"></i><span class="rf-sumbar-up" style="width:${Math.min(upW, w)}%"></span>`;
+        } else {
+            bar += `<i style="width:${w}%"></i>`;
+        }
+        bar += `</span>`;
+        return `<li><span class="rf-sum-name"${title}>${rfSumTypeIcon(e.id)}${escAttr(rfSummaryCardName(e.id))}${(e.avg != null) ? ` <em class="rf-sum-avg">(${e.avg.toFixed(1)})</em>` : ''}</span>` +
+            bar +
+            `<span class="rf-sum-val">${e.runs} <em>(${pct}%)</em></span></li>`;
+    }).join('') + `</ol>`;
+}
+function rfRenderSearchSummaryHtml(agg) {
+    const isJa = (typeof LANG === 'undefined') || LANG !== 'en';
+    const T = isJa ? {
+        title: '検索結果サマリー', stage: (a, l) => ` (Act ${a}, Lvl ${l} 通過時点)`, final: ' (最終デッキ)',
+        runs: '検索結果', nsRuns: '統計外', deck: '平均デッキ枚数', dmg: '累計被弾平均',
+        spell: 'スペル使用 平均 (推定)', deckTop: 'デッキ在籍 Top 40 (初期カードを除く)',
+        upTop: '強化 Top 40 (スキマ・店・イベントなど)',
+        note: '名前の隣の (x.x) = 1ランあたり平均 (デッキ=平均採用枚数 / 強化=平均強化回数・全ラン基準)。累計被弾・スペル回数は戦闘ログからの推定値 (累計被弾 = 1 ランの被弾合計)。()内は集計ランに対する割合。デッキ在籍バーは 青=在籍ラン・緑=そのうち強化済みのラン (ホバーで詳細)。強化の内訳 (スキマ / 店 / イベント / 戦闘報酬 / その他) はカード名にカーソルで表示。数値は強化したラン数 (合計回数はホバー)',
+    } : {
+        title: 'Search result summary', stage: (a, l) => ` (as of Act ${a}, Lvl ${l})`, final: ' (final deck)',
+        runs: 'Runs', nsRuns: 'Non-stat', deck: 'Avg deck size', dmg: 'Avg total HP loss',
+        spell: 'Avg spell-card battles (est.)', deckTop: 'Deck presence Top 40 (excl. starters)',
+        upTop: 'Upgrades Top 40 (gap / shop / events, etc.)',
+        note: '(x.x) next to a name = per-run average (deck: avg copies / upgrades: avg upgrade count, all-run basis). Total HP loss & spell counts are estimated from battle logs (total HP loss = sum of damage taken in a run). (%) = share of aggregated runs. Deck bars: blue = runs with the card, green = upgraded ones among them (hover for details). Upgrade breakdown (gap / shop / event / battle reward) on card-name hover. Numbers show runs with at least one upgrade; hover for the total count.',
+    };
+    const stageTxt = agg.stageMode ? T.stage(agg.actFilter, agg.levelFilter) : T.final;
+    const fmt = (v, suf) => (v == null) ? '—' : v.toFixed(1) + (suf || '');
+    const chips = [
+        `${T.runs}: ${agg.nRuns.toLocaleString()}${agg.nNs ? ` (${T.nsRuns} ${agg.nNs})` : ''}`,
+        `${T.deck}: ${fmt(agg.avgDeckSize)}`,
+        `${T.dmg}: ${fmt(agg.avgDmg)}`,
+        `${T.spell}: ${fmt(agg.avgSpelled)}`,
+    ].map(c => `<span class="rf-sum-chip">${c}</span>`).join('');
+    return `
+        <div class="rf-summary">
+            <div class="rf-summary-head">${T.title}<span class="rf-sum-stage">${escAttr(stageTxt)}</span></div>
+            <div class="rf-sum-chips">${chips}</div>
+            <div class="rf-summary-cols">
+                <div class="rf-summary-col">
+                    <div class="rf-sum-col-title">${T.deckTop} <span class="rf-sum-base">(${agg.nDeckRuns.toLocaleString()})</span></div>
+                    ${rfSummaryListHtml(agg.deckTop, agg.nDeckRuns, 'rf-sumbar-deck')}
+                </div>
+                <div class="rf-summary-col">
+                    <div class="rf-sum-col-title">${T.upTop} <span class="rf-sum-base">(${agg.nDeckRuns.toLocaleString()})</span></div>
+                    ${rfSummaryListHtml(agg.upTop, agg.nDeckRuns, 'rf-sumbar-pick')}
+                </div>
+            </div>
+            <p class="rf-sum-note">${T.note}</p>
+        </div>`;
+}
+async function rfFillSearchSummary(runs, actFilter, levelFilter) {
+    const holder = document.getElementById('rf-search-summary');
+    if (!holder || !runs || !runs.length) return;
+    // 表示条件 (2026-11-24): Act と Level を両方指定 (そのマス通過時点) か、両方なし (最終デッキ) のときのみ。
+    //   片方だけの指定は「どのマス時点か」を一意に決められないためサマリーは表示しない。
+    const hasAct = !!(actFilter && String(actFilter).trim());
+    const hasLevel = !!(levelFilter && String(levelFilter).trim());
+    if (hasAct !== hasLevel) { holder.innerHTML = ''; return; }
+    try {
+        // ピック / 段階デッキ集計に timelines を使用 (検索時に全キャラ分ロード済みだが保険で再確保)
+        const chars = new Set(runs.map(r => r.character).filter(Boolean));
+        await Promise.all([...chars].map(ch => loadCharacterTimeline(ch)));
+        const agg = rfAggregateSearchSummary(runs, actFilter, levelFilter);
+        if (document.getElementById('rf-search-summary') !== holder) return;   // 再描画済みなら放棄
+        holder.innerHTML = rfRenderSearchSummaryHtml(agg);
+    } catch (e) {
+        console.warn('[run-finder] search summary failed:', e);
+    }
 }
 
 async function loadCharacterTimeline(charKey) {
@@ -3327,6 +3623,7 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
             </table>
         </div>
         <div id="rf-more-holder" style="display:none; text-align:center; margin:14px 0;"></div>
+        <div id="rf-search-summary"></div>
         <div id="run-finder-hardfights-chart" style="max-width: 1600px; margin: 0 auto; width: 100%;"></div>
         <div style="max-width: 1600px; margin: 26px auto 0;">
             <div class="results-header">
@@ -3350,6 +3647,9 @@ function displayRunFinderResults(runs, searchCriteria = {}, actFilter = null, le
     rfUpdateMoreControls();
     rfBindMoreControls();
     rfScheduleEncounterBars(rfAllSortedRuns, searchCriteria);
+    // 2026-11-24 (企画3): 検索結果サマリー (表の下・遅延描画)
+    //   注意: runs は先頭 RF_PAGE_SIZE 件のスライスなので、全件が入った rfAllSortedRuns を集計する
+    rfFillSearchSummary(rfAllSortedRuns, actFilter, levelFilter);
 
 }
 

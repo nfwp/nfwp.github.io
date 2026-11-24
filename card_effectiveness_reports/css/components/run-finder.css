@@ -598,3 +598,65 @@
 /* 敵グループトグルを小さく */
 .boss-filter-toggle-button { font-size: 13px; padding: 6px 10px; margin-bottom: 8px; }
 .enemy-input-row input, .item-input-row input { max-width: 320px; }
+
+/* --- 検索結果サマリー (2026-11-24 企画3) --- */
+#rf-search-summary:empty { display: none; }
+.rf-summary {
+    max-width: 1600px;
+    margin: 18px auto 0;
+    padding: 14px 18px 12px;
+    border: 1px solid var(--lbol-line);
+    border-radius: var(--lbol-radius-lg);
+    background: var(--lbol-panel);
+}
+.rf-summary-head { font-size: 15px; font-weight: 700; color: var(--lbol-text); margin-bottom: 8px; }
+.rf-summary-head .rf-sum-stage { font-weight: 600; font-size: 13px; color: var(--lbol-text-muted); margin-left: 6px; }
+.rf-sum-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.rf-sum-chip {
+    font-size: 12.5px; color: var(--lbol-text);
+    background: var(--lbol-notice-bg);
+    border: 1px solid var(--lbol-line);
+    border-radius: var(--lbol-pill);
+    padding: 3px 10px;
+}
+.rf-summary-cols { display: flex; gap: 28px; flex-wrap: wrap; }
+.rf-summary-col { flex: 1; min-width: 300px; }
+.rf-sum-col-title { font-size: 13.5px; font-weight: 700; color: var(--lbol-text); margin-bottom: 6px; }
+.rf-sum-col-title .rf-sum-base { font-weight: 500; font-size: 12px; color: var(--lbol-text-muted); }
+.rf-sum-list { list-style: none; margin: 0; padding: 0; column-count: 2; column-gap: 22px; }
+.rf-sum-list li {
+    display: grid;
+    grid-template-columns: 22px minmax(90px, 38%) 1fr auto;
+    gap: 8px; align-items: center;
+    padding: 2.5px 0;
+    font-size: 12.5px;
+    border-bottom: 1px solid var(--lbol-line-soft);
+    break-inside: avoid;
+}
+@media (max-width: 700px) {
+    .rf-sum-list { column-count: 1; }
+}
+.rf-sum-list li:last-child { border-bottom: none; }
+.rf-sum-name {
+    color: var(--lbol-text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    cursor: default;
+}
+.rf-sum-name .ticon { width: 15px; height: 15px; vertical-align: -3px; margin-right: 3px; }
+.rf-sum-avg { font-style: normal; color: var(--lbol-text-muted); font-size: 11px; }
+.rf-sum-list li::before {
+    content: counter(rf-sum) ".";
+    counter-increment: rf-sum;
+    color: var(--lbol-text-muted);
+    min-width: 20px; text-align: right;
+}
+.rf-sum-list { counter-reset: rf-sum; }
+.rf-sum-bar { position: relative; height: 7px; background: var(--lbol-line-soft); border-radius: 4px; overflow: hidden; }
+.rf-sum-bar i { display: block; height: 100%; border-radius: 4px; }
+.rf-sumbar-deck i { background: var(--lbol-accent); opacity: 0.75; }
+.rf-sumbar-pick i { background: #16a34a; opacity: 0.7; }
+/* デッキ在籍バーの「強化済みラン」部分 (2026-11-24): 青の上に緑で重ねる */
+.rf-sumbar-up { position: absolute; left: 0; top: 0; height: 100%; border-radius: 4px 0 0 4px; background: #16a34a; opacity: 0.85; }
+.rf-sum-val { color: var(--lbol-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rf-sum-val em { font-style: normal; color: var(--lbol-text-muted); font-size: 11.5px; }
+.rf-sum-note { font-size: 12px; color: var(--lbol-text-muted); margin: 10px 0 0; }
