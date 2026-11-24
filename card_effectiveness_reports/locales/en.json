@@ -290,7 +290,7 @@
         "hist_turn": "Avg Turns",
         "hist_chart_life": "HP department — avg HP lost per segment (per battle, shown negative)",
         "hist_chart_turn": "Turns department — avg rounds per segment (per battle)",
-        "hist_chart_life_cum": "HP department (cumulative) — per-run cumulative HP lost as of finishing each segment (segment per-battle HP avg × avg battles summed)",
+        "hist_chart_life_cum": "HP department (cumulative) — per-run cumulative HP lost as of finishing each segment (segment per-battle HP avg × avg battles summed, net of heals)",
         "hist_chart_turn_cum": "Turns department (cumulative) — per-run cumulative rounds as of finishing each segment (segment per-battle turn avg × avg battles summed)",
         "hist_sec_table": "Segment table (click to collapse)",
         "hist_sec_charts": "Segment charts — HP / Turns (click to collapse)",

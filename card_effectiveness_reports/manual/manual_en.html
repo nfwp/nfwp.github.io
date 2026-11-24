@@ -200,6 +200,13 @@
         <ul>
             <li><strong>If you want to search for the final deck by specifying cards or exhibits, specify <b>ACT4 / Lv4 (Lv5 or higher is also fine)</b></strong>.<br>If no ACT/Level is specified, all runs matching the conditions at any point are returned.</li>
             <li>When ACT, level, cards, exhibits, etc. are specified, the hover on the runID shown in the play ID indicates whether it is a particular state (e.g. state act1 Lv 7), the final deck, or in which situation the item appeared.</li>
+            <li><b>Clicking a play ID</b> expands an <b>accordion detail</b> below that row.</li>
+        </ul>
+        <ul>
+            <li><b>🗺️ Station-by-station</b>: every node from Act 1 to the Act 4 boss in one table. Battle nodes show enemy name + turns + 💗/⚡️/💰 at battle end (<b>🩸/⚡️</b> before numbers = hard fight on HP / spell card; spells are an <b>estimate</b>), event nodes show the <b>event name</b>, and chips show card additions (+) / removals (−) / upgrades (⬆) / exhibits (🧿). The Deck column is the deck size at that point. () = change from the previous state-change point; dimmed values are unchanged nodes.</li>
+            <li><b>🃏 Card &amp; exhibit changes</b>: per-node additions (+), removals (−), upgrades (⬆), exhibits (🧿), and the deck size at that point.</li>
+            <li><b>Summary chips</b>: battles / hard fights (🩸⚡️) / total HP loss / spell uses (est.).</li>
+            <li>The raw log opens via "<b>Open log ↗</b>" inside the panel (the play-ID click toggles the panel).</li>
             <p class="manual-note">* You can search for cards that were adopted mid-route but are not in the final result.</p>
             <li>Pressing 🔗 Copy share link lets you share those search results (shortened link).</li>
             <li>When opened via the 🔍 buttons on the Card List / Exhibits / Route tabs, long conditions are handed over inside the browser (localStorage) to keep the address bar short. * Sending that URL to someone else will not reproduce the condition — use 🔗 Copy share link for sharing.</li>
@@ -244,7 +251,7 @@
             <li><b>Aggregation point</b>: When both Act and Level are specified, the deck, upgrades and battles are aggregated <b>as of passing that station</b>. Without them, the <b>final deck</b> and all battles are used.</li>
             <li><b>Deck presence Top 40</b>: Cards held in the deck at that point (run count and share). Starting cards (24 Basic cards) are excluded. Card names show a type icon (same as the Card Election tab) and <b>(x.x)</b> = <b>avg copies per run</b> (all-run basis). The <b>green part</b> of the bar marks upgraded runs among them.</li>
             <li><b>Upgrades Top 40</b>: Ranking of cards upgraded up to that point (at gaps, shops, events, etc. — upgrades of starting cards included). <b>(x.x)</b> = <b>avg upgrade count per run</b>. Hover a card name for the upgrade breakdown (gap / shop / event / battle reward) and the total count.</li>
-            <li><b>Stat chips</b>: Avg deck size / <b>avg total HP loss</b> (average of total damage taken in a run) / avg spell-card battles (estimated). <b>Spell counts are estimated from the power drop during battles.</b></li>
+            <li><b>Stat chips</b>: Avg deck size / <b>avg total HP loss</b> (average of total damage taken in a run, <b>no heals subtracted</b>) / avg spell-card battles (estimated). <b>Spell counts are estimated from the power drop during battles.</b><br>* Total HP loss does not subtract heals, so it differs from the <b>history cumulative = net of heals</b> (difference ≈ heals during battles).</li>
         </ul>
     </div>
 

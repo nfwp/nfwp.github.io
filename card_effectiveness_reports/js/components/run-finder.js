@@ -564,6 +564,15 @@ function renderRunFinderTab() {
         }
     });
 
+    // 2026-11-24 (企画1): プレイ ID クリック → アコーディオン詳細 (戦闘リスト / カード変化 / まとめ)。
+    //   run-id リンク自体はトグルに使うため外部ログへの遷移は抑止 (ログは展開内の「ログを開く」から)。
+    resultsContainerForTooltip.addEventListener('click', (event) => {
+        const link = event.target.closest('a.run-id-link');
+        if (!link) return;
+        event.preventDefault();
+        rfToggleRunDetail(link);
+    });
+
     resultsContainerForTooltip.addEventListener('mousemove', (event) => {
         // カーソル移動中も、決定された方向に基づいて位置を更新し続ける
         updateTooltipPosition(event);
@@ -1430,6 +1439,7 @@ const hardFightsBvals = {};    // { character: { runId: [[ΔHp(純損失・回�
 const hardFightsPos = {};      // { character: { runId: [[Act, Level], ...] } }      encs と同順の戦闘ノード位置 (Act/Lv×敵 厳密フィルタ用・2026-11-17)
 const hardFightsStats = {};    // { character: { runId: {L:総ライフ喪失, LA:[Act別喪失x4], S:スペル回数, T:{'{act}{kind}':[ターン和,戦闘数]}} } }
 const hardFightsSts = {};      // { character: { runId: [[si, Hp, Power, Money], ...] } }  戦闘以外で状態が動いた地点 (2026-11-24)
+const hardFightsEvs = {};      // { character: { runId: [[si, eventId], ...] } }  戦闘以外で Id (イベント) を持つマス (2026-11-24)
 let hardFightsPromise = null;
 let hardFightsDataOk = false;  // stats (data.stats) の読み込みに成功したか (失敗時は検索時に再試行)
 // hard_fights_ns.json から統合された runId (統計外ラン)。参考値 (キャラ全ラン) は統計母集団固定のため
@@ -1469,6 +1479,7 @@ function loadHardFights(force) {
             if (data && data.bvals) Object.assign(hardFightsBvals, data.bvals);
             if (data && data.pos) Object.assign(hardFightsPos, data.pos);
             if (data && data.sts) Object.assign(hardFightsSts, data.sts);
+            if (data && data.evs) Object.assign(hardFightsEvs, data.evs);
             if (data && data.stats) { Object.assign(hardFightsStats, data.stats); hardFightsDataOk = true; }
             hardFightsByChar.__loaded = true;
             return hardFightsByChar;
@@ -1524,6 +1535,7 @@ function ensureNsAssetsLoaded() {
             _mergeCharDicts(hardFightsBvals, hfNs.bvals);
             if (hfNs.pos) _mergeCharDicts(hardFightsPos, hfNs.pos);
             if (hfNs.sts) _mergeCharDicts(hardFightsSts, hfNs.sts);
+            if (hfNs.evs) _mergeCharDicts(hardFightsEvs, hfNs.evs);
             _mergeCharDicts(hardFightsStats, hfNs.stats);
             hardFightsDataOk = hardFightsDataOk || !!hfNs.stats;
         }
@@ -1988,13 +2000,13 @@ function rfRenderSearchSummaryHtml(agg) {
         runs: '検索結果', nsRuns: '統計外', deck: '平均デッキ枚数', dmg: '累計被弾平均',
         spell: 'スペル使用 平均 (推定)', deckTop: 'デッキ在籍 Top 40 (初期カードを除く)',
         upTop: '強化 Top 40 (スキマ・店・イベントなど)',
-        note: '名前の隣の (x.x) = 1ランあたり平均 (デッキ=平均採用枚数 / 強化=平均強化回数・全ラン基準)。累計被弾・スペル回数は戦闘ログからの推定値 (累計被弾 = 1 ランの被弾合計)。()内は集計ランに対する割合。デッキ在籍バーは 青=在籍ラン・緑=そのうち強化済みのラン (ホバーで詳細)。強化の内訳 (スキマ / 店 / イベント / 戦闘報酬 / その他) はカード名にカーソルで表示。数値は強化したラン数 (合計回数はホバー)',
+        note: '名前の隣の (x.x) = 1ランあたり平均 (デッキ=平均採用枚数 / 強化=平均強化回数・全ラン基準)。累計被弾は回復を引かない被弾のみの合計 (検索履歴のライフ累積は回復込みの純損失)・スペル回数は戦闘ログからの推定値。()内は集計ランに対する割合。デッキ在籍バーは 青=在籍ラン・緑=そのうち強化済みのラン (ホバーで詳細)。強化の内訳 (スキマ / 店 / イベント / 戦闘報酬 / その他) はカード名にカーソルで表示。数値は強化したラン数 (合計回数はホバー)',
     } : {
         title: 'Search result summary', stage: (a, l) => ` (as of Act ${a}, Lvl ${l})`, final: ' (final deck)',
         runs: 'Runs', nsRuns: 'Non-stat', deck: 'Avg deck size', dmg: 'Avg total HP loss',
         spell: 'Avg spell-card battles (est.)', deckTop: 'Deck presence Top 40 (excl. starters)',
         upTop: 'Upgrades Top 40 (gap / shop / events, etc.)',
-        note: '(x.x) next to a name = per-run average (deck: avg copies / upgrades: avg upgrade count, all-run basis). Total HP loss & spell counts are estimated from battle logs (total HP loss = sum of damage taken in a run). (%) = share of aggregated runs. Deck bars: blue = runs with the card, green = upgraded ones among them (hover for details). Upgrade breakdown (gap / shop / event / battle reward) on card-name hover. Numbers show runs with at least one upgrade; hover for the total count.',
+        note: '(x.x) next to a name = per-run average (deck: avg copies / upgrades: avg upgrade count, all-run basis). Total HP loss counts damage only (no heals) — the history cumulative is net of heals. Spell counts are estimated from battle logs. (%) = share of aggregated runs. Deck bars: blue = runs with the card, green = upgraded ones among them (hover for details). Upgrade breakdown (gap / shop / event / battle reward) on card-name hover. Numbers show runs with at least one upgrade; hover for the total count.',
     };
     const stageTxt = agg.stageMode ? T.stage(agg.actFilter, agg.levelFilter) : T.final;
     const fmt = (v, suf) => (v == null) ? '—' : v.toFixed(1) + (suf || '');
@@ -2020,6 +2032,287 @@ function rfRenderSearchSummaryHtml(agg) {
             </div>
             <p class="rf-sum-note">${T.note}</p>
         </div>`;
+}
+// --- 2026-11-24 (企画1): プレイ ID クリック → アコーディオン詳細 -------------------------------------
+//   クリックした行の下に「戦闘リスト / カード・展示品の変化 / まとめ」を展開する。
+//   データはすべてロード済み (hard_fights + timelines + run_details) のため追加 fetch なし。
+//   生ログは展開内の「ログを開く」から開く (run-id リンク自体はトグルに使う)。
+function rfDetailNodeLabel(type) {
+    if (!type) return '';
+    return (typeof LANG !== 'undefined' && LANG === 'en') ? (RF_STATION_LABEL_EN[type] || type) : (RF_STATION_LABEL[type] || type);
+}
+// eventId -> 表示名 (ADVENTURE_EVENTS_DATA はページ初期化時にロード済み)。全キャラ分をマージ。
+let rfEventNameMapCache = null;
+function rfEventNameMap() {
+    if (rfEventNameMapCache) return rfEventNameMapCache;
+    const m = {};
+    const src = (typeof ADVENTURE_EVENTS_DATA !== 'undefined') ? ADVENTURE_EVENTS_DATA : null;
+    if (src) {
+        for (const ch in src) {
+            for (const e of (src[ch] || [])) {
+                if (!m[e.eventId]) m[e.eventId] = { ja: e.eventNameJA || e.eventId, en: e.eventNameEN || e.eventNameJA || e.eventId };
+            }
+        }
+    }
+    rfEventNameMapCache = m;
+    return m;
+}
+// 統一テーブル用: 全マス (si 0..maxSi) を 1 行ずつ返す。
+// 戦闘マス = 敵名 + 終了時 💗/⚡️/💰 (Δは直前の状態変化点との差分) / 非戦闘マス = 変化チップ + sts スナップショット。
+// 変化のないマスは直前の値を薄く表示 (持ち回り)。デッキ枚数は timelines を累積適用したその時点の値。
+function rfDetailBuildUnified(character, runId, run) {
+    const pos = (hardFightsPos[character] || {})[runId];
+    const bvs = (hardFightsBvals[character] || {})[runId];
+    const encs = (hardFightsEncs[character] || {})[runId] || [];
+    const sts = (hardFightsSts[character] || {})[runId] || [];
+    const hfBySi = {};
+    for (const e of ((hardFightsByChar[character] || {})[runId] || [])) hfBySi[e.si] = e;
+    const tl = characterTimelineCache.get(character);
+    const rt = tl ? tl[runId] : null;
+    const chgBySi = {};
+    if (rt && rt.changes) for (const k in rt.changes) chgBySi[Number(k)] = rt.changes[k];
+    const evsBySi = {};
+    for (const e of ((hardFightsEvs[character] || {})[runId] || [])) evsBySi[e[0]] = e[1];
+    const evNames = rfEventNameMap();
+
+    const battleByIdx = {};   // si -> pos index
+    let maxSi = 0;
+    if (pos) for (let i = 0; i < pos.length; i++) { battleByIdx[pos[i][2]] = i; if (pos[i][2] > maxSi) maxSi = pos[i][2]; }
+    const stsBySi = {};
+    for (const s of sts) { stsBySi[s[0]] = s; if (s[0] > maxSi) maxSi = s[0]; }
+    for (const k in chgBySi) if (Number(k) > maxSi) maxSi = Number(k);
+
+    const isJa = (typeof LANG === 'undefined') || LANG !== 'en';
+    const deck = new Map();
+    if (rt) for (const id of (rt.initial.c || [])) deck.set(id, (deck.get(id) || 0) + 1);
+    const exSet = new Set(rt ? (rt.initial.e || []) : []);
+    const exName = (id) => {
+        const lt = (typeof ALL_DATA !== 'undefined' && ALL_DATA && ALL_DATA.lookup_tables) ? ALL_DATA.lookup_tables : null;
+        const e = (lt && lt.exhibits) ? lt.exhibits[id] : null;
+        if (!e) return id;
+        return isJa ? (e.name || id) : (e.name_en || e.name || id);
+    };
+    const group = (ids, nameFn) => {
+        const m = new Map();
+        for (const id of ids) m.set(id, (m.get(id) || 0) + 1);
+        return [...m.entries()].map(([id, n]) => ({ id, n, name: nameFn(id) }));
+    };
+
+    let prevHp = null, prevPow = null, prevMoney = null;   // 直前の状態変化点 (Δの基準)
+    let curHp = null, curPow = null, curMoney = null;      // 現在値 (持ち回り表示用)
+    let battles = 0, dmgSum = 0, spelledCount = 0, hardL = 0, hardS = 0;
+    const rows = [];
+    for (let si = 0; si <= maxSi; si++) {
+        // マス名
+        let label = `#${si}`;
+        let nodeType = null;
+        const al = rfStationActLevelMap()[si];
+        if (al) {
+            const m = String(al).match(/^(\d+),\s*Lvl\s*(\d+)$/);
+            if (m) {
+                label = `A${m[1]}-Lv${m[2]}`;
+                nodeType = rfRunNodeType(run, parseInt(m[1], 10), parseInt(m[2], 10));
+            }
+        }
+        const typeLabel = rfDetailNodeLabel(nodeType);
+        // 変化チップ (timelines)
+        const chg = chgBySi[si] || null;
+        const chips = [];
+        if (chg) {
+            // アクション記号 (+/−/⬆) は先頭・太字で別要素にする (2026-11-24)
+            if (chg.add_c) for (const g of group(chg.add_c, rfSummaryCardName)) chips.push({ cls: 'rf-cv-add', act: '+', name: g.name, n: g.n, icon: rfSumTypeIcon(g.id) });
+            if (chg.rem_c) for (const g of group(chg.rem_c, rfSummaryCardName)) chips.push({ cls: 'rf-cv-rem', act: '−', name: g.name, n: g.n, icon: rfSumTypeIcon(g.id) });
+            if (chg.up_c) for (const g of group(chg.up_c, rfSummaryCardName)) chips.push({ cls: 'rf-cv-up', act: '⬆', name: g.name, n: g.n, icon: rfSumTypeIcon(g.id) });
+            if (chg.add_e) for (const id of chg.add_e) chips.push({ cls: 'rf-cv-ex', act: '+', name: `🧿${exName(id)}` });
+            if (chg.rem_e) for (const id of chg.rem_e) chips.push({ cls: 'rf-cv-ex', act: '−', name: `🧿${exName(id)}` });
+            // デッキを進める (強化は枚数不変)
+            for (const id of (chg.add_c || [])) deck.set(id, (deck.get(id) || 0) + 1);
+            for (const id of (chg.rem_c || [])) { const c = deck.get(id) || 0; if (c > 1) deck.set(id, c - 1); else deck.delete(id); }
+            for (const id of (chg.add_e || [])) exSet.add(id);
+            for (const id of (chg.rem_e || [])) exSet.delete(id);
+        }
+        let deckSize = null;
+        if (rt) { deckSize = 0; for (const n of deck.values()) deckSize += n; }
+        // 状態
+        const row = { si, label: typeLabel ? `${label} ${typeLabel}` : label, chips, isBattle: false, battle: null, carried: false, state: null, deckSize, evName: null };
+        // イベント名 (戦闘以外のマスで Id を持つもの / 2026-11-24)
+        if (!bvs || battleByIdx[si] === undefined) {
+            const evId = evsBySi[si];
+            if (evId) {
+                const nm = evNames[evId];
+                row.evName = nm ? (isJa ? nm.ja : nm.en) : evId;
+            }
+        }
+        const bIdx = (bvs != null) ? battleByIdx[si] : undefined;
+        if (bIdx != null) {
+            const bv = bvs[bIdx];
+            battles++;
+            const code = encs[bIdx] || null;
+            const nm = code ? hardFightsNames[code] : null;
+            const kind = nm ? nm[2] : null;
+            const dp = (bv[3] != null && prevPow != null) ? bv[3] - prevPow : null;
+            const dm = (bv[4] != null && prevMoney != null) ? bv[4] - prevMoney : null;
+            const spelled = (bv[3] != null && prevPow != null) ? ((prevPow - bv[3]) >= (kind === 'b' ? 10 : 50)) : false;
+            if (spelled) spelledCount++;
+            const hfE = hfBySi[si];
+            const isHardL = !!(hfE && hfE.dh >= 15);
+            const isHardS = !!(hfE && hfE.sp);
+            if (isHardL) hardL++;
+            if (isHardS) hardS++;
+            if (typeof bv[0] === 'number' && bv[0] > 0) dmgSum += bv[0];
+            row.isBattle = true;
+            row.battle = {
+                name: nm ? (isJa ? (nm[0] || nm[1]) : (nm[1] || nm[0])) : '?',
+                rounds: bv[1], hardL: isHardL, hardS: isHardS, spelled,
+                hp: bv[2], dh: bv[0], pow: bv[3], dp, money: bv[4], dm,
+            };
+            if (bv[2] != null) { prevHp = bv[2]; curHp = bv[2]; }
+            if (bv[3] != null) { prevPow = bv[3]; curPow = bv[3]; }
+            if (bv[4] != null) { prevMoney = bv[4]; curMoney = bv[4]; }
+        } else if (stsBySi[si]) {
+            const s = stsBySi[si];
+            row.state = {
+                hp: s[1], dh: (prevHp != null && s[1] != null) ? prevHp - s[1] : null,
+                pow: s[2], dp: (prevPow != null && s[2] != null) ? s[2] - prevPow : null,
+                money: s[3], dm: (prevMoney != null && s[3] != null) ? s[3] - prevMoney : null,
+            };
+            if (s[1] != null) { prevHp = s[1]; curHp = s[1]; }
+            if (s[2] != null) { prevPow = s[2]; curPow = s[2]; }
+            if (s[3] != null) { prevMoney = s[3]; curMoney = s[3]; }
+        } else {
+            // 戦闘も変化もないマス: 直前の値を持ち回りで薄く表示
+            row.carried = true;
+            row.state = { hp: curHp, dh: null, pow: curPow, dp: null, money: curMoney, dm: null };
+        }
+        rows.push(row);
+    }
+    return { rows, stats: { battles, dmgSum, spelledCount, hardL, hardS }, hasTimeline: !!rt };
+}
+function rfDetailHtml(character, runId, run, finalUrl) {
+    const isJa = (typeof LANG === 'undefined') || LANG !== 'en';
+    const T = isJa ? {
+        table: '🗺️ 全マスの履歴', col: 'マス', content: '内容', enemy: '敵名', turns: 'ターン', deckCol: 'デッキ',
+        openLog: 'ログを開く ↗', close: '閉じる', noData: 'データがありません。',
+        battlesN: '戦闘', dmg: '累計被弾', spell: 'スペル使用 (推定)', deckSize: '最終デッキ', mana: 'マナ基盤',
+        note: 'スペル使用は戦闘中のパワー減少量からの推定値。() は直前の状態変化点との差分・薄字は変化のないマス (直前の値)。数字の頭の 🩸/⚡️ は苦戦 (ライフ / スペルカード)。',
+        sep: ' ・ ',
+    } : {
+        table: '🗺️ Station-by-station', col: 'Node', content: 'Content', enemy: 'Enemy', turns: 'Turns', deckCol: 'Deck',
+        openLog: 'Open log ↗', close: 'Close', noData: 'No data.',
+        battlesN: 'Battles', dmg: 'Total HP loss', spell: 'Spell uses (est.)', deckSize: 'Final deck', mana: 'Mana base',
+        note: 'Spell uses are estimated from the power drop during battles. () = change from the previous state-change point; dimmed values are unchanged nodes. 🩸/⚡️ before numbers mark hard fights (HP / spell card).',
+        sep: ' / ',
+    };
+    const u = rfDetailBuildUnified(character, runId, run);
+    const run0 = run || {};
+    // ヘッダー
+    const nsBadge = (run0.s === 0) ? ' <span class="rf-ns-badge">Non-stat</span>' : '';
+    const manaIcons = rfManaIconsHtml(RF_MANA_MAP ? RF_MANA_MAP[runId] : null);
+    // まとめチップ (戦闘数 / 苦戦数 / 累計被弾 / スペル推定)
+    const chips = [];
+    if (u) {
+        const st = u.stats;
+        chips.push(`${T.battlesN}: ${st.battles}`);
+        chips.push(`🩸: ${st.hardL} / ⚡️: ${st.hardS}`);
+        chips.push(`${T.dmg}: ${st.dmgSum}`);
+        chips.push(`${T.spell}: ${st.spelledCount}`);
+    }
+    chips.push(`${T.deckSize}: ${(run0.cards || []).length}`);
+    const tableHtml = (() => {
+        if (!u) return `<p class="rf-detail-note">${T.noData}</p>`;
+        const paren = (v) => (v == null || v === 0) ? '' : ((v > 0) ? `(+${v})` : `<span class="rf-dmg">(${v})</span>`);
+        const hpLoss = (dh) => (dh != null && dh > 0) ? `<span class="rf-dmg">(-${dh})</span>` : ((dh != null && dh < 0) ? `<span class="rf-heal">(+${-dh})</span>` : '');
+        const trs = u.rows.map(r => {
+            // 内容セル: 戦闘なら敵名 / 非戦闘はイベント名 / 変化チップは全行の下に併記
+            let content;
+            if (r.isBattle) {
+                content = `<span class="rf-btname">${escAttr(r.battle.name)}</span>`;
+            } else if (r.evName) {
+                content = `<span class="rf-evname">${escAttr(r.evName)}</span>`;
+            } else if (r.chips.length) {
+                content = '';   // 変化チップのみ (下に付けるので「—」は不要)
+            } else {
+                content = `<span class="rf-dim">—</span>`;
+            }
+            if (r.chips.length) {
+                content += `<span class="rf-cv-chips rf-cv-sub">${r.chips.map(c => `<span class="rf-cv-chip ${c.cls}"><b class="rf-cv-act">${c.act}</b>${c.icon || ''}${escAttr(c.name)}${c.n > 1 ? '×' + c.n : ''}</span>`).join('')}</span>`;
+            }
+            // 状態セル (ヘッダにアイコンがあるため数字は素で出し、苦戦マーク 🩸/⚡️ だけ頭に付ける)
+            const dim = (s) => `<span class="rf-dim">${s}</span>`;
+            let hpC = '', powC = '', moneyC = '';
+            if (r.isBattle) {
+                hpC = `${r.battle.hardL ? '🩸' : ''}${r.battle.hp != null ? r.battle.hp : '?'}${hpLoss(r.battle.dh)}`;
+                powC = `${r.battle.hardS ? '⚡️' : ''}${r.battle.pow != null ? r.battle.pow : '?'}${paren(r.battle.dp)}`;
+                moneyC = `${r.battle.money != null ? r.battle.money : '?'}${paren(r.battle.dm)}`;
+            } else if (r.state && !r.carried) {
+                hpC = `${r.state.hp != null ? r.state.hp : '?'}${hpLoss(r.state.dh)}`;
+                powC = `${r.state.pow != null ? r.state.pow : '?'}${paren(r.state.dp)}`;
+                moneyC = `${r.state.money != null ? r.state.money : '?'}${paren(r.state.dm)}`;
+            } else if (r.state) {
+                if (r.state.hp != null) hpC = dim(`${r.state.hp}`);
+                if (r.state.pow != null) powC = dim(`${r.state.pow}`);
+                if (r.state.money != null) moneyC = dim(`${r.state.money}`);
+            }
+            const turns = r.isBattle ? (r.battle.rounds != null ? r.battle.rounds : '') : '';
+            // 苦戦マスは 💗/⚡️ のセルに薄い背景色 (2026-11-24)
+            const hardHpCls = (r.isBattle && r.battle.hardL) ? ' rf-hard-hp' : '';
+            const hardSpCls = (r.isBattle && r.battle.hardS) ? ' rf-hard-sp' : '';
+            return `<tr${r.carried ? ' class="rf-dim-row"' : ''}>` +
+                `<td class="num">${r.si}</td>` +
+                `<td class="rf-node">${escAttr(r.label)}</td>` +
+                `<td class="rf-content">${content}</td>` +
+                `<td class="num">${turns}</td>` +
+                `<td class="num${hardHpCls}">${hpC}</td>` +
+                `<td class="num${hardSpCls}">${powC}</td>` +
+                `<td class="num">${moneyC}</td>` +
+                `<td class="num">${r.deckSize != null ? r.deckSize : ''}</td>` +
+                `</tr>`;
+        }).join('');
+        return `<div class="rf-detail-table-wrap"><table class="rf-detail-table">` +
+            // 列幅は colgroup で指定 (fixed レイアウトで確実に効く)。内容列が残り幅。
+            `<colgroup><col style="width:4%"><col style="width:11%"><col><col style="width:6%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:6%"></colgroup>` +
+            `<thead><tr><th>#</th><th>${T.col}</th><th>${T.content}</th><th>${T.turns}</th><th>💗</th><th>⚡️</th><th>💰</th><th>${T.deckCol}</th></tr></thead>` +
+            `<tbody>${trs}</tbody></table></div>`;
+    })();
+    return `<div class="rf-detail">` +
+        `<div class="rf-detail-head">` +
+        `<span class="rf-detail-title">${escAttr(run0.player_name || '')}${T.sep}${escAttr(run0.version || '')}${nsBadge}${T.sep}${T.deckSize} ${(run0.cards || []).length}${T.sep}${T.mana}: ${manaIcons || '—'}</span>` +
+        `<a href="${escAttr(finalUrl)}" target="_blank" class="rf-detail-loglink">${T.openLog}</a>` +
+        `<button type="button" class="rf-detail-close">${T.close}</button>` +
+        `</div>` +
+        `<div class="rf-detail-chips">${chips.map(c => `<span class="rf-detail-chip">${c}</span>`).join('')}</div>` +
+        `<div class="rf-detail-sec-title">${T.table}${u ? ` (${u.rows.length})` : ''}</div>` +
+        tableHtml +
+        `<p class="rf-detail-note">${T.note}</p>` +
+        `</div>`;
+}
+async function rfToggleRunDetail(link) {
+    const tr = link.closest('tr');
+    if (!tr) return;
+    const existing = tr.nextElementSibling;
+    if (existing && existing.classList.contains('rf-detail-row')) { existing.remove(); link.classList.remove('rf-id-open'); return; }
+    const prevLink = document.querySelector('#run-finder-results a.run-id-link.rf-id-open');
+    if (prevLink) prevLink.classList.remove('rf-id-open');
+    const open = document.querySelector('#run-finder-results tr.rf-detail-row');
+    if (open) open.remove();
+    link.classList.add('rf-id-open');
+    const character = link.dataset.character;
+    const runId = link.dataset.runId;
+    const detailTr = document.createElement('tr');
+    detailTr.className = 'rf-detail-row';
+    const td = document.createElement('td');
+    td.colSpan = tr.children.length || 18;
+    detailTr.appendChild(td);
+    td.innerHTML = '<div class="rf-detail-loading">…</div>';
+    tr.insertAdjacentElement('afterend', detailTr);
+    // timelines は検索時にロード済みだが保険で確保
+    try { await loadCharacterTimeline(character); } catch (e) { /* 無くても戦闘リストは出す */ }
+    if (!detailTr.isConnected) return;   // 再描画されていたら放棄
+    const run = rfFindRunById(runId);
+    const baseUrl = `https://lbol-logs.github.io/${(run && run.version) || ''}/${runId}`;
+    td.innerHTML = rfDetailHtml(character, runId, run, baseUrl);
+    const closeBtn = td.querySelector('.rf-detail-close');
+    if (closeBtn) closeBtn.addEventListener('click', () => { detailTr.remove(); link.classList.remove('rf-id-open'); });
 }
 async function rfFillSearchSummary(runs, actFilter, levelFilter) {
     const holder = document.getElementById('rf-search-summary');
@@ -3445,7 +3738,7 @@ function rfRowHtml(run, actFilter, levelFilter) {
             const diagExhibits = escAttr((run.exhibits || []).join(','));
 
             return `<tr>
-                <td class="col-run_id" title="${run.run_id}"><a href="javascript:void(0)" class="rf-diag-link" title="${diagTooltip}" data-character="${run.character}" data-run-id="${run.run_id}" data-cards="${diagCards}" data-exhibits="${diagExhibits}">🔍</a><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}</a>${run.s === 0 ? ` <span class="rf-ns-badge" title="${texts.ns_badge_tooltip || texts.ns_badge || 'Non-statistics run'}">${texts.ns_badge || 'Non-stat'}</span>` : ''}</td>
+                <td class="col-run_id" title="${run.run_id}"><a href="javascript:void(0)" class="rf-diag-link" title="${diagTooltip}" data-character="${run.character}" data-run-id="${run.run_id}" data-cards="${diagCards}" data-exhibits="${diagExhibits}">🔍</a><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}<span class="rf-id-hint" title="${(typeof LANG !== 'undefined' && LANG === 'en') ? 'Click to expand the run detail' : 'クリックで詳細を展開'}"></span></a>${run.s === 0 ? ` <span class="rf-ns-badge" title="${texts.ns_badge_tooltip || texts.ns_badge || 'Non-statistics run'}">${texts.ns_badge || 'Non-stat'}</span>` : ''}</td>
                 <td class="col-version">${run.version}</td>
                 <td class="col-character">${run.character}</td>
                 <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>

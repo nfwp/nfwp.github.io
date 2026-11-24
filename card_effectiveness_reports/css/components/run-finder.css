@@ -602,36 +602,38 @@
 /* --- 検索結果サマリー (2026-11-24 企画3) --- */
 #rf-search-summary:empty { display: none; }
 .rf-summary {
-    max-width: 1600px;
-    margin: 18px auto 0;
-    padding: 14px 18px 12px;
+    max-width: 1560px;
+    margin: 16px auto 0;
+    padding: 12px 14px 10px;
     border: 1px solid var(--lbol-line);
     border-radius: var(--lbol-radius-lg);
     background: var(--lbol-panel);
+    overflow-x: hidden;
 }
-.rf-summary-head { font-size: 15px; font-weight: 700; color: var(--lbol-text); margin-bottom: 8px; }
-.rf-summary-head .rf-sum-stage { font-weight: 600; font-size: 13px; color: var(--lbol-text-muted); margin-left: 6px; }
-.rf-sum-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.rf-summary-head { font-size: 14px; font-weight: 700; color: var(--lbol-text); margin-bottom: 6px; }
+.rf-summary-head .rf-sum-stage { font-weight: 600; font-size: 12px; color: var(--lbol-text-muted); margin-left: 6px; }
+.rf-sum-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
 .rf-sum-chip {
-    font-size: 12.5px; color: var(--lbol-text);
+    font-size: 12px; color: var(--lbol-text);
     background: var(--lbol-notice-bg);
     border: 1px solid var(--lbol-line);
     border-radius: var(--lbol-pill);
-    padding: 3px 10px;
+    padding: 2px 8px;
 }
-.rf-summary-cols { display: flex; gap: 28px; flex-wrap: wrap; }
-.rf-summary-col { flex: 1; min-width: 300px; }
-.rf-sum-col-title { font-size: 13.5px; font-weight: 700; color: var(--lbol-text); margin-bottom: 6px; }
-.rf-sum-col-title .rf-sum-base { font-weight: 500; font-size: 12px; color: var(--lbol-text-muted); }
-.rf-sum-list { list-style: none; margin: 0; padding: 0; column-count: 2; column-gap: 22px; }
+.rf-summary-cols { display: flex; gap: 16px; flex-wrap: wrap; }
+.rf-summary-col { flex: 1 1 260px; min-width: 0; }
+.rf-sum-col-title { font-size: 12.5px; font-weight: 700; color: var(--lbol-text); margin-bottom: 5px; }
+.rf-sum-col-title .rf-sum-base { font-weight: 500; font-size: 11.5px; color: var(--lbol-text-muted); }
+.rf-sum-list { list-style: none; margin: 0; padding: 0; column-count: 2; column-gap: 14px; }
 .rf-sum-list li {
     display: grid;
-    grid-template-columns: 22px minmax(90px, 38%) 1fr auto;
-    gap: 8px; align-items: center;
-    padding: 2.5px 0;
-    font-size: 12.5px;
+    grid-template-columns: 16px minmax(58px, 30%) minmax(24px, 1fr) auto;
+    gap: 5px; align-items: center;
+    padding: 2px 0;
+    font-size: 12px;
     border-bottom: 1px solid var(--lbol-line-soft);
     break-inside: avoid;
+    min-width: 0;
 }
 @media (max-width: 700px) {
     .rf-sum-list { column-count: 1; }
@@ -642,21 +644,106 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     cursor: default;
 }
-.rf-sum-name .ticon { width: 15px; height: 15px; vertical-align: -3px; margin-right: 3px; }
-.rf-sum-avg { font-style: normal; color: var(--lbol-text-muted); font-size: 11px; }
+.rf-sum-name .ticon { width: 11px; height: 11px; vertical-align: -2px; margin-right: 2px; }
+.rf-sum-avg { font-style: normal; color: var(--lbol-text-muted); font-size: 10.5px; }
 .rf-sum-list li::before {
     content: counter(rf-sum) ".";
     counter-increment: rf-sum;
     color: var(--lbol-text-muted);
-    min-width: 20px; text-align: right;
+    min-width: 14px; text-align: right;
 }
 .rf-sum-list { counter-reset: rf-sum; }
-.rf-sum-bar { position: relative; height: 7px; background: var(--lbol-line-soft); border-radius: 4px; overflow: hidden; }
-.rf-sum-bar i { display: block; height: 100%; border-radius: 4px; }
+.rf-sum-bar { position: relative; height: 6px; background: var(--lbol-line-soft); border-radius: 3px; overflow: hidden; }
+.rf-sum-bar i { display: block; height: 100%; border-radius: 3px; }
 .rf-sumbar-deck i { background: var(--lbol-accent); opacity: 0.75; }
 .rf-sumbar-pick i { background: #16a34a; opacity: 0.7; }
 /* デッキ在籍バーの「強化済みラン」部分 (2026-11-24): 青の上に緑で重ねる */
 .rf-sumbar-up { position: absolute; left: 0; top: 0; height: 100%; border-radius: 4px 0 0 4px; background: #16a34a; opacity: 0.85; }
-.rf-sum-val { color: var(--lbol-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.rf-sum-val em { font-style: normal; color: var(--lbol-text-muted); font-size: 11.5px; }
-.rf-sum-note { font-size: 12px; color: var(--lbol-text-muted); margin: 10px 0 0; }
+.rf-sum-val { color: var(--lbol-text); white-space: nowrap; font-variant-numeric: tabular-nums; font-size: 11.5px; }
+.rf-sum-val em { font-style: normal; color: var(--lbol-text-muted); font-size: 10.5px; }
+.rf-sum-note { font-size: 11.5px; color: var(--lbol-text-muted); margin: 8px 0 0; }
+
+/* --- プレイ ID クリックのアコーディオン詳細 (2026-11-24 企画1) --- */
+tr.rf-detail-row > td {
+    background: var(--lbol-notice-bg);
+    padding: 12px 14px;
+    border-top: 1px solid var(--lbol-line);
+}
+.rf-detail { max-width: 1560px; }
+.rf-detail-loading { font-size: 12px; color: var(--lbol-text-muted); padding: 6px 0; }
+.rf-detail-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 8px; }
+.rf-detail-title { font-weight: 700; font-size: 13.5px; color: var(--lbol-text); }
+.rf-detail-loglink {
+    font-size: 12px; color: var(--lbol-accent);
+    border: 1px solid var(--lbol-accent-border); border-radius: var(--lbol-pill);
+    padding: 3px 10px; background: #fff; text-decoration: none;
+}
+.rf-detail-loglink:hover { background: var(--lbol-accent-soft); }
+.rf-detail-close {
+    font-size: 12px; color: var(--lbol-text);
+    border: 1px solid var(--lbol-line); border-radius: var(--lbol-pill);
+    padding: 3px 10px; background: #fff; cursor: pointer;
+}
+.rf-detail-close:hover { background: var(--lbol-line-soft); }
+.rf-detail-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.rf-detail-chip {
+    font-size: 12px; color: var(--lbol-text);
+    background: #fff; border: 1px solid var(--lbol-line);
+    border-radius: var(--lbol-pill); padding: 3px 10px;
+    font-variant-numeric: tabular-nums;
+}
+.rf-detail-cols { display: flex; gap: 24px; flex-wrap: wrap; }
+.rf-detail-col { flex: 1; min-width: 420px; }
+.rf-detail-sec-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--lbol-text); }
+.rf-detail-table-wrap { max-height: 560px; overflow: auto; border: 1px solid var(--lbol-line); border-radius: var(--lbol-radius); background: #fff; }
+.rf-detail-table { width: 100%; max-width: 1080px; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+/* 列幅は JS 側の colgroup で指定 (# 4% / マス 11% / 内容 auto / ターン 6% / 💗⚡️💰 10% / デッキ 6%) */
+.rf-detail-table .rf-node { white-space: nowrap; color: var(--lbol-text-muted); overflow: hidden; text-overflow: ellipsis; }
+.rf-detail-table .rf-btname { font-weight: 600; }
+.rf-detail-table .rf-content { min-width: 220px; }
+.rf-dim { color: var(--lbol-text-muted); opacity: 0.8; }
+tr.rf-dim-row td { background: #fafbfc; }
+.rf-cv-sub { margin-top: 3px; }
+.rf-detail-table th {
+    position: sticky; top: 0; z-index: 1;
+    background: var(--lbol-line-soft); text-align: left;
+    padding: 5px 8px; font-weight: 600; white-space: nowrap;
+}
+.rf-detail-table td { padding: 4px 8px; border-top: 1px solid var(--lbol-line-soft); }
+.rf-detail-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* 苦戦マスの 💗/⚡️ セルに薄い背景 (2026-11-24) */
+.rf-detail-table td.rf-hard-hp { background: #fef2f2; }
+.rf-detail-table td.rf-hard-sp { background: #fffbeb; }
+.rf-dmg { color: #dc2626; }
+.rf-heal { color: #16a34a; }
+.rf-cv-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.rf-cv-chip {
+    background: #fff; border: 1px solid var(--lbol-line);
+    border-radius: 4px; padding: 1px 6px; font-size: 12px;
+    display: inline-flex; align-items: center; gap: 2px;
+    line-height: 1.4;
+}
+/* 変化チップ内の種別アイコンは文字と同じ高さ (2026-11-24: 大きすぎるので縮小) */
+.rf-cv-chip .ticon { width: 12px; height: 12px; vertical-align: -2px; margin-right: 1px; }
+/* アクション記号 (+/−/⬆) は先頭・太字 (2026-11-24) */
+.rf-cv-act { font-weight: 700; margin-right: 1px; }
+.rf-evname { font-weight: 600; color: var(--lbol-text); }
+.rf-cv-add { color: #1d4ed8; border-color: #bfdbfe; background: #eff6ff; }
+.rf-cv-rem { color: #b91c1c; border-color: #fecaca; background: #fef2f2; }
+.rf-cv-up { color: #b45309; border-color: #fde68a; background: #fffbeb; }
+.rf-cv-ex { color: #6d28d9; border-color: #ddd6fe; background: #f5f3ff; }
+.rf-detail-note { font-size: 11.5px; color: var(--lbol-text-muted); margin: 8px 0 0; }
+
+/* プレイ ID: クリックで詳細が開くことを示すさりげないマーク (2026-11-24) */
+.run-finder-results-table a.run-id-link {
+    text-decoration: underline dotted var(--lbol-accent-border);
+    text-underline-offset: 3px;
+}
+.run-finder-results-table a.run-id-link:hover { color: var(--lbol-accent); }
+.run-finder-results-table a.run-id-link .rf-id-hint {
+    display: inline-block; margin-left: 4px;
+    font-size: 10px; color: var(--lbol-text-muted);
+}
+.run-finder-results-table a.run-id-link .rf-id-hint::before { content: '▸'; }
+.run-finder-results-table a.run-id-link.rf-id-open .rf-id-hint::before { content: '▾'; color: var(--lbol-accent); }
+.run-finder-results-table a.run-id-link.rf-id-open { text-decoration-style: solid; }
