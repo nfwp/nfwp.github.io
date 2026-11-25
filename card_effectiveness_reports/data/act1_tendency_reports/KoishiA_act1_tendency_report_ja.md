@@ -398,16 +398,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>121.5</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 愚者のタロット</strong></td>
-<td style='text-align: right;'>+16.56</td>
-<td style='text-align: right;'>43.6%</td>
-<td style='text-align: right;'>24.8%</td>
-<td style='text-align: right;'>39</td>
-<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
-<td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>127.1</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 投げキッス</strong></td>
 <td style='text-align: right;'>+16.56</td>
 <td style='text-align: right;'>43.6%</td>
@@ -416,6 +406,16 @@
 <td style='text-align: right;'>52.4</td>
 <td style='text-align: right;'>65.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>117.7</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 愚者のタロット</strong></td>
+<td style='text-align: right;'>+16.56</td>
+<td style='text-align: right;'>43.6%</td>
+<td style='text-align: right;'>24.8%</td>
+<td style='text-align: right;'>39</td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>127.1</span></strong></td>
 </tr>
 <tr>
 <td>DNAの瑕</td>

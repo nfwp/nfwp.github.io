@@ -397,16 +397,6 @@
 <td style='text-align: right;'><strong><span style='color: red;'>121.5</span></strong></td>
 </tr>
 <tr class="specialist-row">
-<td><strong>🔥 Tarot: The Fool</strong></td>
-<td style='text-align: right;'>+16.56</td>
-<td style='text-align: right;'>43.6%</td>
-<td style='text-align: right;'>24.8%</td>
-<td style='text-align: right;'>39</td>
-<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
-<td style='text-align: right;'>58.5</td>
-<td style='text-align: right;'><strong><span style='color: red;'>127.1</span></strong></td>
-</tr>
-<tr class="specialist-row">
 <td><strong>🔥 Air Kiss</strong></td>
 <td style='text-align: right;'>+16.56</td>
 <td style='text-align: right;'>43.6%</td>
@@ -415,6 +405,16 @@
 <td style='text-align: right;'>52.4</td>
 <td style='text-align: right;'>65.3</td>
 <td style='text-align: right;'><strong><span style='color: red;'>117.7</span></strong></td>
+</tr>
+<tr class="specialist-row">
+<td><strong>🔥 Tarot: The Fool</strong></td>
+<td style='text-align: right;'>+16.56</td>
+<td style='text-align: right;'>43.6%</td>
+<td style='text-align: right;'>24.8%</td>
+<td style='text-align: right;'>39</td>
+<td style='text-align: right;'><strong><span style='color: red;'>68.6</span></strong></td>
+<td style='text-align: right;'>58.5</td>
+<td style='text-align: right;'><strong><span style='color: red;'>127.1</span></strong></td>
 </tr>
 <tr>
 <td>DNA's Flaw</td>

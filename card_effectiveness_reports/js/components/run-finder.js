@@ -16,6 +16,24 @@ const bossIconMap = {
 };
 
 
+// (2026-11-25 監査 #1) 履歴チャート SVG のメモ。履歴の内容 (件数/先頭と末尾の t/非表示線/区間キー) が
+//   変わった時だけ無効化する。表示切替・再検索・タブ再描画では再構築をスキップ。
+let __rfHistSvgCache = { ver: null, map: {} };
+function rfHistSvgVer(list, tKeys, hiddenLines) {
+    const a = list[0], b = list[list.length - 1];
+    return [list.length, a ? a.t : '-', b ? b.t : '-', hiddenLines.size, tKeys.join(',')].join('|');
+}
+// (2026-11-25 監査対応) 列表示の永続化 (localStorage rf_colvis_v1)
+function rfColVisLoad() {
+    try { return JSON.parse(localStorage.getItem('rf_colvis_v1') || '{}') || {}; } catch (e) { return {}; }
+}
+function rfColVisSave() {
+    try {
+        const st = {};
+        document.querySelectorAll('.column-toggle-checkbox').forEach(cb => { st[cb.dataset.col] = !!cb.checked; });
+        localStorage.setItem('rf_colvis_v1', JSON.stringify(st));
+    } catch (e) { /* 無視 */ }
+}
 /**
  * "Run Finder"タブのコンテンツを生成・描画する
  * この関数は script.dev.js の switchTab から呼び出される
@@ -578,6 +596,13 @@ function renderRunFinderTab() {
         updateTooltipPosition(event);
     });
 
+    // (2026-11-25) 保存済みの列表示をチェックボックスへ復元 (テーブルへの反映は描画後のパスが行う)
+    try {
+        const savedCols = rfColVisLoad();
+        document.querySelectorAll('.column-toggle-checkbox').forEach(cb => {
+            if (savedCols[cb.dataset.col] !== undefined) cb.checked = !!savedCols[cb.dataset.col];
+        });
+    } catch (e) { /* 無視 */ }
     const toggleContainer = document.getElementById('column-toggle-container');
     if (toggleContainer) {
         toggleContainer.addEventListener('change', (event) => {
@@ -586,6 +611,7 @@ function renderRunFinderTab() {
                 const colName = checkbox.dataset.col;
                 const table = document.querySelector('.run-finder-results-table');
                 if (table) {
+                    rfColVisSave();   // (2026-11-25) 列表示の永続化
                     // チェックが外れたら hide-col-*** クラスを付与
                     table.classList.toggle(`hide-col-${colName}`, !checkbox.checked);
                 }
@@ -764,6 +790,7 @@ function hfQuartiles(raw) {
 
 // --- ボス行キャラ絵オーバーレイ (Plotly の tick に画像は入れられないため、ラベル欄の余白に <img> を重ねる) ---
 let hfBarsPlotDiv = null;                  // 現在の Plotly ルート div (リサイズ再配置用)
+let __rfCharAggCache = null;   // (2026-11-25 監査 #2) キャラ「全ラン」の敵別集計キャッシュ
 let hfBarsBossRows = [];                   // { code, idx }  ボス行 (idx = 降順ソート後の行番号, y 配列では n-1-idx)
 
 function positionBossAvatarOverlay() {
@@ -1107,13 +1134,16 @@ async function renderEncounterBars(runs, searchCriteria = null) {
     //   遭遇回数・苦戦内訳も数えて (参考) に苦戦率/内訳を併記する
     const searchChar = (searchCriteria && searchCriteria.character && searchCriteria.character !== 'All')
         ? searchCriteria.character : null;
-    const charHp = searchChar ? new Map() : null;
-    const charTn = searchChar ? new Map() : null;
-    const charEnc = searchChar ? new Map() : null;      // code -> 全ランでの遭遇回数
-    const charSegHp = searchChar ? new Map() : null;    // code -> 苦戦 (ライフ のみ)
-    const charSegSp = searchChar ? new Map() : null;    // code -> 苦戦 (スペル のみ)
-    const charSegBoth = searchChar ? new Map() : null;  // code -> 苦戦 (両方)
+    // (2026-11-25 監査 #2) キャラ「全ラン」の集計はキャッシュ (ns 件数が変わった時だけ再計算)
+    let charHp = null, charTn = null, charEnc = null, charSegHp = null, charSegSp = null, charSegBoth = null;
     if (searchChar) {
+        const ccKey = searchChar + '|' + hardFightsNsRunIds.size;
+        if (__rfCharAggCache && __rfCharAggCache.key === ccKey) {
+            charHp = __rfCharAggCache.hp; charTn = __rfCharAggCache.tn; charEnc = __rfCharAggCache.enc;
+            charSegHp = __rfCharAggCache.segHp; charSegSp = __rfCharAggCache.segSp; charSegBoth = __rfCharAggCache.both;
+        } else {
+            charHp = new Map(); charTn = new Map(); charEnc = new Map();
+            charSegHp = new Map(); charSegSp = new Map(); charSegBoth = new Map();
         const chEncs = hardFightsEncs[searchChar] || {};
         const chBv = hardFightsBvals[searchChar] || {};
         for (const rid of Object.keys(chBv)) {
@@ -1136,6 +1166,8 @@ async function renderEncounterBars(runs, searchCriteria = null) {
                 else if (isHp) charSegHp.set(code, (charSegHp.get(code) || 0) + 1);
                 else if (isSp) charSegSp.set(code, (charSegSp.get(code) || 0) + 1);
             }
+        }
+            __rfCharAggCache = { key: ccKey, hp: charHp, tn: charTn, enc: charEnc, segHp: charSegHp, segSp: charSegSp, both: charSegBoth };
         }
     }
 
@@ -1276,7 +1308,12 @@ async function renderEncounterBars(runs, searchCriteria = null) {
             : (isPct ? 'Show counts' : 'Show 100% stacked'))
         + `</button></div>`
         + `<div id="run-finder-hardfights-plot" style="max-width:1600px;margin:0 auto;"></div>`;
-    const plotDiv = document.getElementById('run-finder-hardfights-plot');
+    // (2026-11-25 監査 #2) プロット div を壊さず使い回す (react の差分描画が効くように)
+    let plotDiv = document.getElementById('run-finder-hardfights-plot');
+    if (hfBarsPlotDiv && !hfBarsPlotDiv.isConnected) {
+        plotDiv.replaceWith(hfBarsPlotDiv);
+        plotDiv = hfBarsPlotDiv;
+    }
     // 全表示: チャート自体をスクロールさせずページスクロールで全体を見る
     const modeBtn = document.getElementById('hf-bar-mode-btn');
     if (modeBtn) modeBtn.onclick = () => { hfBarMode = isPct ? 'count' : 'pct'; renderEncounterBars(runs, hfBarsCriteria); };
@@ -1294,7 +1331,7 @@ async function renderEncounterBars(runs, searchCriteria = null) {
 
     // タイトルへ検索条件ラベルを追加 (例: "@Sophie CirnoA Act1 …") — 条件が空 ('(all)') のときは出さない
     const criteriaLabel = hfBarsCriteria ? makeQueryLabel(hfBarsCriteria) : '';
-    Plotly.newPlot(plotDiv, segments.map(s => ({
+    Plotly.react(plotDiv, segments.map(s => ({   // (2026-11-25 監査 #2) newPlot -> react (差分描画)
         type: 'bar',
         orientation: 'h',
         y: labelsRev,
@@ -1994,19 +2031,19 @@ function rfSummaryListHtml(items, base, barClass) {
     }).join('') + `</ol>`;
 }
 function rfRenderSearchSummaryHtml(agg) {
-    const isJa = (typeof LANG === 'undefined') || LANG !== 'en';
-    const T = isJa ? {
-        title: '検索結果サマリー', stage: (a, l) => ` (Act ${a}, Lvl ${l} 通過時点)`, final: ' (最終デッキ)',
-        runs: '検索結果', nsRuns: '統計外', deck: '平均デッキ枚数', dmg: '累計被弾平均',
-        spell: 'スペル使用 平均 (推定)', deckTop: 'デッキ在籍 Top 40 (初期カードを除く)',
-        upTop: '強化 Top 40 (スキマ・店・イベントなど)',
-        note: '名前の隣の (x.x) = 1ランあたり平均 (デッキ=平均採用枚数 / 強化=平均強化回数・全ラン基準)。累計被弾は回復を引かない被弾のみの合計 (検索履歴のライフ累積は回復込みの純損失)・スペル回数は戦闘ログからの推定値。()内は集計ランに対する割合。デッキ在籍バーは 青=在籍ラン・緑=そのうち強化済みのラン (ホバーで詳細)。強化の内訳 (スキマ / 店 / イベント / 戦闘報酬 / その他) はカード名にカーソルで表示。数値は強化したラン数 (合計回数はホバー)',
-    } : {
-        title: 'Search result summary', stage: (a, l) => ` (as of Act ${a}, Lvl ${l})`, final: ' (final deck)',
-        runs: 'Runs', nsRuns: 'Non-stat', deck: 'Avg deck size', dmg: 'Avg total HP loss',
-        spell: 'Avg spell-card battles (est.)', deckTop: 'Deck presence Top 40 (excl. starters)',
-        upTop: 'Upgrades Top 40 (gap / shop / events, etc.)',
-        note: '(x.x) next to a name = per-run average (deck: avg copies / upgrades: avg upgrade count, all-run basis). Total HP loss counts damage only (no heals) — the history cumulative is net of heals. Spell counts are estimated from battle logs. (%) = share of aggregated runs. Deck bars: blue = runs with the card, green = upgraded ones among them (hover for details). Upgrade breakdown (gap / shop / event / battle reward) on card-name hover. Numbers show runs with at least one upgrade; hover for the total count.',
+    const RF_SUM_T = (typeof UI_TEXT !== 'undefined' && UI_TEXT.run_finder) ? UI_TEXT.run_finder : {};
+    const T = {
+        title: RF_SUM_T.sum_title || '検索結果サマリー',
+        stage: (a, l) => ((RF_SUM_T.sum_stage || ' (Act {a}, Lvl {l} 通過時点)').replace('{a}', a).replace('{l}', l)),
+        final: RF_SUM_T.sum_final || ' (最終デッキ)',
+        runs: RF_SUM_T.sum_runs || '検索結果',
+        nsRuns: RF_SUM_T.sum_ns_runs || '統計外',
+        deck: RF_SUM_T.sum_deck || '平均デッキ枚数',
+        dmg: RF_SUM_T.sum_dmg || '累計被弾平均 (回復除く)',
+        spell: RF_SUM_T.sum_spell || 'スペル使用 平均 (推定)',
+        deckTop: RF_SUM_T.sum_deck_top || 'デッキ在籍 Top 40 (初期カードを除く)',
+        upTop: RF_SUM_T.sum_up_top || '強化 Top 40 (スキマ・店・イベントなど)',
+        note: RF_SUM_T.sum_note || '',
     };
     const stageTxt = agg.stageMode ? T.stage(agg.actFilter, agg.levelFilter) : T.final;
     const fmt = (v, suf) => (v == null) ? '—' : v.toFixed(1) + (suf || '');
@@ -2290,12 +2327,13 @@ async function rfToggleRunDetail(link) {
     const tr = link.closest('tr');
     if (!tr) return;
     const existing = tr.nextElementSibling;
-    if (existing && existing.classList.contains('rf-detail-row')) { existing.remove(); link.classList.remove('rf-id-open'); return; }
+    if (existing && existing.classList.contains('rf-detail-row')) { existing.remove(); link.classList.remove('rf-id-open'); link.setAttribute('aria-expanded', 'false'); return; }
     const prevLink = document.querySelector('#run-finder-results a.run-id-link.rf-id-open');
-    if (prevLink) prevLink.classList.remove('rf-id-open');
+    if (prevLink) prevLink.classList.remove('rf-id-open'), prevLink.setAttribute('aria-expanded', 'false');
     const open = document.querySelector('#run-finder-results tr.rf-detail-row');
     if (open) open.remove();
     link.classList.add('rf-id-open');
+    link.setAttribute('aria-expanded', 'true');
     const character = link.dataset.character;
     const runId = link.dataset.runId;
     const detailTr = document.createElement('tr');
@@ -2312,7 +2350,7 @@ async function rfToggleRunDetail(link) {
     const baseUrl = `https://lbol-logs.github.io/${(run && run.version) || ''}/${runId}`;
     td.innerHTML = rfDetailHtml(character, runId, run, baseUrl);
     const closeBtn = td.querySelector('.rf-detail-close');
-    if (closeBtn) closeBtn.addEventListener('click', () => { detailTr.remove(); link.classList.remove('rf-id-open'); });
+    if (closeBtn) closeBtn.addEventListener('click', () => { detailTr.remove(); link.classList.remove('rf-id-open'); link.setAttribute('aria-expanded', 'false'); });
 }
 async function rfFillSearchSummary(runs, actFilter, levelFilter) {
     const holder = document.getElementById('rf-search-summary');
@@ -3273,7 +3311,17 @@ window.rfHistLbClose = function () {
 };
 // ESC キーで閉じる (多重登録防止)
 if (!window.rfHistLbEscInit) {
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') rfHistLbClose(); });
+    window.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        rfHistLbClose();
+        // (2026-11-25) 展開中のラン詳細行も閉じる
+        const openRow = document.querySelector('#run-finder-results tr.rf-detail-row');
+        if (openRow) {
+            const link = document.querySelector('#run-finder-results a.run-id-link.rf-id-open');
+            openRow.remove();
+            if (link) { link.classList.remove('rf-id-open'); link.setAttribute('aria-expanded', 'false'); }
+        }
+    });
     window.rfHistLbEscInit = true;
 }
 // 履歴エントリの IQR [Q1,Q3] (+中央値 med) から描画用の3点組を作る。旧履歴 (med 無し) は med = null
@@ -3738,12 +3786,12 @@ function rfRowHtml(run, actFilter, levelFilter) {
             const diagExhibits = escAttr((run.exhibits || []).join(','));
 
             return `<tr>
-                <td class="col-run_id" title="${run.run_id}"><a href="javascript:void(0)" class="rf-diag-link" title="${diagTooltip}" data-character="${run.character}" data-run-id="${run.run_id}" data-cards="${diagCards}" data-exhibits="${diagExhibits}">🔍</a><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${run.run_id}" data-station-index="${run.matchingStationIndex}">${run.run_id}<span class="rf-id-hint" title="${(typeof LANG !== 'undefined' && LANG === 'en') ? 'Click to expand the run detail' : 'クリックで詳細を展開'}"></span></a>${run.s === 0 ? ` <span class="rf-ns-badge" title="${texts.ns_badge_tooltip || texts.ns_badge || 'Non-statistics run'}">${texts.ns_badge || 'Non-stat'}</span>` : ''}</td>
+                <td class="col-run_id" title="${escapeHtml(run.run_id)}"><a href="javascript:void(0)" class="rf-diag-link" title="${diagTooltip}" data-character="${run.character}" data-run-id="${run.run_id}" data-cards="${diagCards}" data-exhibits="${diagExhibits}">🔍</a><a href="${finalUrl}" target="_blank" class="run-id-link" data-character="${run.character}" data-run-id="${escapeHtml(run.run_id)}" data-station-index="${run.matchingStationIndex}">${escapeHtml(run.run_id)}<span class="rf-id-hint" title="${(typeof LANG !== 'undefined' && LANG === 'en') ? 'Click to expand the run detail' : 'クリックで詳細を展開'}"></span></a>${run.s === 0 ? ` <span class="rf-ns-badge" title="${texts.ns_badge_tooltip || texts.ns_badge || 'Non-statistics run'}">${texts.ns_badge || 'Non-stat'}</span>` : ''}</td>
                 <td class="col-version">${run.version}</td>
                 <td class="col-character">${run.character}</td>
                 <td class="col-deck_size">${run.displayDeckSize ?? 'N/A'}</td>
                 <td class="col-mana" title="${(RF_MANA_MAP && RF_MANA_MAP[run.run_id]) || ''}">${rfManaIconsHtml(RF_MANA_MAP ? RF_MANA_MAP[run.run_id] : null)}</td>
-                <td class="col-player_name" title="${run.player_name}">${run.player_name}</td>
+                <td class="col-player_name" title="${escapeHtml(run.player_name)}">${escapeHtml(run.player_name)}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.early}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.mid}</td>
                 <td class="path-summary-cell col-act1">${pathCells.act1.late}</td>

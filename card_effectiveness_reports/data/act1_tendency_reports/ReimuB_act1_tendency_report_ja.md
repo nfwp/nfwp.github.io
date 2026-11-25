@@ -228,16 +228,6 @@
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
-<td>🧰 水鉄砲</td>
-<td style='text-align: right;'>+19.64</td>
-<td style='text-align: right;'>52.0%</td>
-<td style='text-align: right;'>24.2%</td>
-<td style='text-align: right;'>25</td>
-<td style='text-align: right;'>38.4</td>
-<td style='text-align: right;'>64.6</td>
-<td style='text-align: right;'>103.0</td>
-</tr>
-<tr>
 <td>博麗幻影</td>
 <td style='text-align: right;'>+19.64</td>
 <td style='text-align: right;'>52.0%</td>
@@ -248,14 +238,14 @@
 <td style='text-align: right;'>99.7</td>
 </tr>
 <tr>
-<td>二色蓮花蝶</td>
-<td style='text-align: right;'>+19.30</td>
-<td style='text-align: right;'>50.0%</td>
+<td>🧰 水鉄砲</td>
+<td style='text-align: right;'>+19.64</td>
+<td style='text-align: right;'>52.0%</td>
 <td style='text-align: right;'>24.2%</td>
-<td style='text-align: right;'>28</td>
-<td style='text-align: right;'>55.0</td>
-<td style='text-align: right;'>39.4</td>
-<td style='text-align: right;'>94.4</td>
+<td style='text-align: right;'>25</td>
+<td style='text-align: right;'>38.4</td>
+<td style='text-align: right;'>64.6</td>
+<td style='text-align: right;'>103.0</td>
 </tr>
 <tr>
 <td>幻想一重</td>
@@ -266,6 +256,16 @@
 <td style='text-align: right;'>54.4</td>
 <td style='text-align: right;'>44.1</td>
 <td style='text-align: right;'>98.5</td>
+</tr>
+<tr>
+<td>二色蓮花蝶</td>
+<td style='text-align: right;'>+19.30</td>
+<td style='text-align: right;'>50.0%</td>
+<td style='text-align: right;'>24.2%</td>
+<td style='text-align: right;'>28</td>
+<td style='text-align: right;'>55.0</td>
+<td style='text-align: right;'>39.4</td>
+<td style='text-align: right;'>94.4</td>
 </tr>
 <tr>
 <td>満月の咆哮</td>

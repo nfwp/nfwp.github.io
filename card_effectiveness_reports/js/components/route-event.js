@@ -4,6 +4,16 @@
 function renderRouteEventTab(lang) {
     const container = document.getElementById('route-event-tab');
     if (!container) return;
+    // (2026-11-25 監査 #7) 「このマスにランを探しに行く」ボタンの委譲 (inline onclick 廃止)
+    if (!container.dataset.reDelegated) {
+        container.dataset.reDelegated = '1';
+        container.addEventListener('click', (e) => {
+            const btn = e.target.closest('button.rf-link-btn[data-rf-sp]');
+            if (!btn) return;
+            try { openRunFinderSearch(JSON.parse(decodeURIComponent(btn.dataset.rfSp))); }
+            catch (err) { console.warn('rf-link-btn failed:', err); }
+        });
+    }
 
     const T = UI_TEXT.route;
     const E = UI_TEXT.enemy.table;
@@ -170,7 +180,7 @@ function renderRouteEventTab(lang) {
                             sp.includeEnemies = enName;
                             sp.encAt = '1';   // ラン検索側で「この Act/Lv での遭遇」に限定 (enc_at チェックボックス)
                         }
-                        const searchBtn = ` <button class="rf-link-btn" title="${C.tip_find_runs || ''}" onclick="openRunFinderSearch(${JSON.stringify(sp).replace(/"/g, '&quot;')})">${C.btn_find_runs || '🔍 さらにランを検索'}</button>`;
+                        const searchBtn = ` <button class="rf-link-btn" title="${C.tip_find_runs || ''}" data-rf-sp="${encodeURIComponent(JSON.stringify(sp))}">${C.btn_find_runs || '🔍 さらにランを検索'}</button>`;
                         const links = (e.sample_runs || []).slice(0, 10).map((sr, i) => {
                             const sv = (sr.version || '').split('.').slice(0, 3).join('.');
                             const url = `https://lbol-logs.github.io/${sv}/${sr.run_id}/?a=${act}&l=${parseInt(level)}`;
@@ -222,7 +232,7 @@ function renderRouteEventTab(lang) {
                 if (node_specific_details.sample_runs && node_specific_details.sample_runs.length > 0) {
                     has_content = true;
                     const sp = { char: CURRENT_CHAR, act: act, level: level };
-                    const searchBtn = ` <button class="rf-link-btn" title="${C.tip_find_runs || ''}" onclick="openRunFinderSearch(${JSON.stringify(sp).replace(/"/g, '&quot;')})">${C.btn_find_runs || '🔍 検索'}</button>`;
+                    const searchBtn = ` <button class="rf-link-btn" title="${C.tip_find_runs || ''}" data-rf-sp="${encodeURIComponent(JSON.stringify(sp))}">${C.btn_find_runs || '🔍 検索'}</button>`;
                     const links = node_specific_details.sample_runs.slice(0, 10).map((sr, i) => {
                         const sv = (sr.version || '').split('.').slice(0, 3).join('.');
                         const url = `https://lbol-logs.github.io/${sv}/${sr.run_id}/?a=${act}&l=${level}`;

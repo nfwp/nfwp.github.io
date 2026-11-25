@@ -162,6 +162,16 @@ function toggleExhDetailRow(tr) {
 function renderExhibitAnalysisTab(lang) {
     const container = document.getElementById('exhibit-analysis-tab');
     if (!container) return;
+    // (2026-11-25 監査 #7) フィルタボタンの委譲 (inline onclick 廃止)
+    if (!container.dataset.exDelegated) {
+        container.dataset.exDelegated = '1';
+        container.addEventListener('click', (e) => {
+            const btn = e.target.closest('button.filter-btn[data-value]');
+            if (!btn) return;
+            const grp = btn.closest('.exhibit-filter-group[data-filter-type]');
+            if (grp && typeof updateExhibitFilters === 'function') updateExhibitFilters(btn.dataset.value, grp.dataset.filterType);
+        });
+    }
 
     const T = UI_TEXT.exhibit;
     const C = UI_TEXT.common;
@@ -176,20 +186,20 @@ function renderExhibitAnalysisTab(lang) {
     const categoriesInData = [...new Set(ALL_DATA.exhibit_data.map(d => d.Display_Category))];
     const categoriesJa = desiredOrderJa.filter(cat => categoriesInData.includes(cat) || (cat === '一般' && categoriesInData.some(c => c.startsWith('一般'))));
 
-    let catButtons = `<div class="exhibit-filter-group" data-filter-type="category"><b>${C.category}:</b> <button class="filter-btn active" data-value="All" onclick="updateExhibitFilters('All', 'category')">${C.filter_all}</button>`;
+    let catButtons = `<div class="exhibit-filter-group" data-filter-type="category"><b>${C.category}:</b> <button class="filter-btn active" data-value="All">${C.filter_all}</button>`;
     categoriesJa.forEach(catJa => {
         const displayName = (lang === 'en') ? categoryMapJaToEn[catJa] || catJa : catJa;
-        catButtons += `<button class="filter-btn" data-value="${catJa}" onclick="updateExhibitFilters('${catJa}', 'category')">${displayName}</button>`;
+        catButtons += `<button class="filter-btn" data-value="${catJa}">${displayName}</button>`;
     });
     catButtons += '</div>';
 
     // マナ色フィルタ (光耀展示品の付与マナ / 無色 C を含む)
     const manaIconMap = ALL_DATA.lookup_tables.mana_icon_map || {};
-    let manaButtons = `<button class="filter-btn active" data-value="All" onclick="updateExhibitFilters('All', 'mana')">${C.filter_all}</button>`;
+    let manaButtons = `<button class="filter-btn active" data-value="All">${C.filter_all}</button>`;
     ['W', 'U', 'B', 'R', 'G', 'P', 'C'].forEach(mc => {
         const icon = manaIconMap[mc] || mc;
         const nm = { W: 'White', U: 'Blue', B: 'Black', R: 'Red', G: 'Green', P: 'Prismatic', C: 'Colorless' }[mc] || mc;
-        manaButtons += `<button class="filter-btn" data-value="${mc}" onclick="updateExhibitFilters('${mc}', 'mana')" title="${nm}">${icon}</button>`;
+        manaButtons += `<button class="filter-btn" data-value="${mc}" title="${nm}">${icon}</button>`;
     });
     const manaGroup = `<div class="exhibit-filter-group" data-filter-type="mana"><b>${T.ex_filter_mana}:</b> ${manaButtons}</div>`;
 

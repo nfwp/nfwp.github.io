@@ -1,3 +1,47 @@
+// --- 共通: HTML エスケープ / キーボード操作補助 (2026-11-25 監査対応 G-1/G-2) ---
+function escapeHtml(s) {
+    const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ESC[c]);
+}
+
+// [onclick] 属性付きの非ボタン要素 (th ソート等) を Tab で focus 可能にし、
+// Enter / Space で click() を発火させる (switchTab のたびに描画済み範囲へ適用)
+function lbolA11ySweep(root) {
+    try {
+        (root || document).querySelectorAll('[onclick], th[data-sort-col]').forEach((el) => {
+            if (/^(BUTTON|A|INPUT|SELECT|TEXTAREA)$/.test(el.tagName) || el.hasAttribute('tabindex')) return;
+            el.setAttribute('tabindex', '0');
+            if (el.tagName !== 'TH') el.setAttribute('role', 'button');
+        });
+    } catch (e) { /* 無視 */ }
+}
+
+(function () {
+    if (window.__lbolA11yKeydown) return;
+    window.__lbolA11yKeydown = true;
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            // (2026-11-25) 計算方法ポップアップ (MI) も Esc で閉じる
+            try { if (window.MI && typeof MI.close === 'function') MI.close(true); } catch (err) { /* 無視 */ }
+            return;
+        }
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const t = e.target;
+        if (!(t instanceof HTMLElement) || !t.hasAttribute('onclick')) return;
+        if (/^(BUTTON|A|INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
+        e.preventDefault();
+        t.click();
+    });
+    // 動的に描画された要素 (検索結果の th ソート等) にも追従する (childList のみ・属性変更は対象外)
+    try {
+        const mo = new MutationObserver(() => {
+            clearTimeout(window.__lbolA11yT);
+            window.__lbolA11yT = setTimeout(() => lbolA11ySweep(document.body), 200);
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+    } catch (e) { /* 無視 */ }
+})();
+
 /**
  * アイテム名からWikiへのリンクHTMLを生成する
  * @param {string} itemName - カード名または展示品名
@@ -23,7 +67,7 @@ function createWikiLink(itemName, itemType, lang) {
     }
 
     // セキュリティ対策のrel属性と、スタイリング用のclassを追加
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="wiki-link">${nameStr}</a>`;
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="wiki-link">${escapeHtml(nameStr)}</a>`;
 }
 
 function getColorForValue(value, v_min, v_max, reverse_color = false) {

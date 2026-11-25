@@ -230,6 +230,9 @@ function switchTab(tabId, autoSearch = false) {
                 // console.warn("Plotly resize failed, maybe graph not ready.", e);
             }
         }
+
+        // キーボード操作補助: onclick 属性付き要素 (th ソート等) を Tab focus 可能に (G-2)
+        if (typeof lbolA11ySweep === 'function') lbolA11ySweep(contentToShow);
     }
 
     if (tabButtonsContainer) {

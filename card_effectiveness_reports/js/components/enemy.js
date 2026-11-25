@@ -8,6 +8,23 @@ function switchEnemyAnalysisCharacter(charOption) {
 function renderEnemyAnalysisTab(char, lang) {
     const container = document.getElementById('enemy-analysis-tab');
     if (!container) return;
+    // (2026-11-25 監査 #7) ソートヘッダーの委譲 (inline onclick 廃止・キャラ切替後も有効)
+    if (!container.dataset.enemyDelegated) {
+        container.dataset.enemyDelegated = '1';
+        const onSort = (th) => {
+            const table = th.closest('table');
+            if (table && typeof sortTable === 'function') sortTable(table.id, Number(th.dataset.sortCol), th.dataset.sortType);
+        };
+        container.addEventListener('click', (e) => {
+            const th = e.target.closest('th[data-sort-col]');
+            if (th) onSort(th);
+        });
+        container.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const th = e.target.closest('th[data-sort-col]');
+            if (th) { e.preventDefault(); onSort(th); }
+        });
+    }
 
     const isMobile = window.innerWidth <= 768;
 
@@ -57,12 +74,12 @@ function renderEnemyAnalysisTab(char, lang) {
             `;
         } else {
             headers = `
-                <th class="col-act" onclick="sortTable('${tableId}', 0, 'numeric')">${T.table.act}</th>
-                <th class="col-name" onclick="sortTable('${tableId}', 1, 'string')">${T.table.name}</th>
-                <th class="col-encounters" onclick="sortTable('${tableId}', 2, 'numeric')">${T.table.encounters}</th>
-                <th class="col-stats col-avg-turns" onclick="sortTable('${tableId}', 3, 'numeric')">${T.table.avg_t}</th>
-                <th class="col-stats col-hp-loss" onclick="sortTable('${tableId}', 4, 'numeric')">${T.table.hp}</th>
-                <th class="col-stats col-p-change" onclick="sortTable('${tableId}', 5, 'numeric')">${T.table.p}</th>`;
+                <th class="col-act" data-sort-col="0" data-sort-type="numeric">${T.table.act}</th>
+                <th class="col-name" data-sort-col="1" data-sort-type="string">${T.table.name}</th>
+                <th class="col-encounters" data-sort-col="2" data-sort-type="numeric">${T.table.encounters}</th>
+                <th class="col-stats col-avg-turns" data-sort-col="3" data-sort-type="numeric">${T.table.avg_t}</th>
+                <th class="col-stats col-hp-loss" data-sort-col="4" data-sort-type="numeric">${T.table.hp}</th>
+                <th class="col-stats col-p-change" data-sort-col="5" data-sort-type="numeric">${T.table.p}</th>`;
         }
 
         const typeOrderMap = { 'Enemy': 0, 'SpecialBattle': 1, 'EliteEnemy': 2, 'Boss': 3 };

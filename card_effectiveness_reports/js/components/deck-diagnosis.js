@@ -743,7 +743,7 @@ function similarity(a, b) {
 
 // --- メイン計算 ---
 async function runDiagnosis() {
-    if (state.deck.size === 0) { alert(DDT('err_need_card','カードを1枚以上追加してください。')); return; }
+    if (state.deck.size === 0) { lbolToast(DDT('err_need_card','カードを1枚以上追加してください。')); return; }
     const includeNs = $('#opt-ns').checked;
     if (includeNs && !D.__nsMerged) {
         // v2 split: 統計外ランは別ファイルのため、ON 時にここでロードしてマージする
@@ -765,7 +765,7 @@ async function runDiagnosis() {
     }
     // 展示品チェックON時はカードと展示品を1つの集合にプールして類似度を計算
     const userCmp = new Set([...userCmpBase, ...(includeExh ? userExh : []), ...state.exhPins]);
-    if (userCmp.size === 0) { alert(DDT('err_empty_cmp','初期カード以外のカードを追加してください (類似度の計算対象が空です)。')); return; }
+    if (userCmp.size === 0) { lbolToast(DDT('err_empty_cmp','初期カード以外のカードを追加してください (類似度の計算対象が空です)。')); return; }
     ddPersistCondition();   // 条件を localStorage + URLハッシュ (#dd=) に保存 (共有可能にする)
     ddRecordHistory(ddSerializeCondition());   // ③-H: 診断履歴に追加
     // 📌 ピン留め項目をすべて所持しているランだけを母集団候補にする
@@ -1188,7 +1188,7 @@ window.__ddInit = () => {
             for (const [name, id] of CARD_ID_BY_NAME) { if (name.includes(v)) { cid = id; break; } }
         }
         if (cid) { addCard(cid); $('#deck-input').value = ''; }
-        else alert(DDTF('err_card_not_found','「{v}」というカードが見つかりません (日本語名/英語名で入力してください)。', v));
+        else lbolToast(DDTF('err_card_not_found','「{v}」というカードが見つかりません (日本語名/英語名で入力してください)。', v));
     };
     $('#btn-add-card').onclick = resolveCard;
     $('#deck-input').addEventListener('keydown', (e) => {
@@ -1209,7 +1209,7 @@ window.__ddInit = () => {
                 for (const [name, id] of EXH_ID_BY_NAME) { if (name.includes(v)) { eid = id; break; } }
             }
             if (eid) { state.exh.add(eid); $('#exh-input').value = ''; renderDeck(); }
-            else alert(DDTF('err_exh_not_found','「{v}」という展示品が見つかりません (日本語名/英語名で入力してください)。', v));
+            else lbolToast(DDTF('err_exh_not_found','「{v}」という展示品が見つかりません (日本語名/英語名で入力してください)。', v));
         };
         $('#btn-add-exh').onclick = resolveExh;
         $('#exh-input').addEventListener('keydown', (e) => {
@@ -1255,10 +1255,10 @@ window.__ddInit = () => {
         const cond = ddPersistCondition();
         const compact = ddEncodeCompact(cond);
         const longUrl = location.origin + location.pathname + '?dd=' + compact;
-        const fail = () => alert(DDT('dd_share_manual','クリップボードにコピーできませんでした。もう一度お試しください。'));
+        const fail = () => lbolToast(DDT('dd_share_manual','クリップボードにコピーできませんでした。もう一度お試しください。'));
         const copyLong = () => {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(longUrl).then(() => alert(DDT('dd_copied','共有リンクをコピーしました。')), fail);
+                navigator.clipboard.writeText(longUrl).then(() => lbolToast(DDT('dd_copied','共有リンクをコピーしました。')), fail);
             } else fail();
         };
         // ③-G2: 短縮は lbolShortenUrl (結果キャッシュ + is.gd → v.gd → spoo.me) に統一。
@@ -1268,7 +1268,7 @@ window.__ddInit = () => {
         shortenP.then(short => {
             if (!short || !(navigator.clipboard && navigator.clipboard.writeText)) return copyLong();
             return navigator.clipboard.writeText(short)
-                .then(() => alert(DDT('dd_copied_short','短縮リンクをコピーしました。')))
+                .then(() => lbolToast(DDT('dd_copied_short','短縮リンクをコピーしました。')))
                 .catch(copyLong);
         }).catch(copyLong);
     };

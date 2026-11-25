@@ -855,6 +855,13 @@ function updateVisuals(hoveredCardName, synergyPartners) {
     const pickStatsActive = (parseFloat(fpkSelVal) > 0) || (finalSelVal !== '0') || (gapSelVal !== 'all') || (parseFloat(upgradeSelVal) > 0) || (parseFloat(copiesSelVal) > 0) || (parseFloat(prateSelVal) > 0) || (pscoreSelVal !== '0');
     const cardNameCol = (LANG === 'ja') ? 'Card_Name' : 'Card_Name_EN';
 
+    // (2026-11-25) O(n²) find を 1 回の Map 構築に置換 (トレース×ポイントの二重ループ内参照のため)
+    const aggIndex = (function () {
+        const m = new Map();
+        (ALL_DATA.agg_data_full || []).forEach((row) => { if (row[cardNameCol] != null && !m.has(row[cardNameCol])) m.set(row[cardNameCol], row); });
+        return m;
+    })();
+
     const restyleUpdate = { 'marker.opacity': [], 'marker.line.width': [], 'marker.line.color': [], 'textfont.color': [] };
     const tracesToUpdate = [];
 
@@ -876,7 +883,7 @@ function updateVisuals(hoveredCardName, synergyPartners) {
                 const pickStatsMatch = !pickStatsActive || _matchesPickStatsFilters(d, fpkSelVal, finalSelVal, gapSelVal, upgradeSelVal, copiesSelVal, prateSelVal, pscoreSelVal);
                 allFiltersMatch = rarityMatch && medalMatch && pickStatsMatch;
             } else {
-                const aggCardData = ALL_DATA.agg_data_full.find(agg_d => agg_d[cardNameCol] === d[cardNameCol]);
+                const aggCardData = aggIndex.get(d[cardNameCol]);
                 if (aggCardData) {
                     const rarityMatch = (rarityValue === 'All' || d.Rarity === rarityValue);
                     const medalMatch = (medalValue === 'All') || (medalValue === 'Gold' && aggCardData.Medal === '🥇') || (medalValue === 'SilverOrBetter' && ['🥇', '🥈'].includes(aggCardData.Medal)) || (medalValue === 'BronzeOrBetter' && ['🥇', '🥈', '🥉'].includes(aggCardData.Medal)) || (medalValue === 'None' && (aggCardData.Medal === '' || aggCardData.Medal == null));
@@ -1004,9 +1011,11 @@ function updatePrateRankings(lang) {
     if (!box) return;
     const adoptionByCard = {};
     const perfByCard = {};
+    const metaByCard = {};
     ALL_DATA.agg_data_full.forEach(d => {
         if (d.Card_ID) {
             adoptionByCard[d.Card_ID] = d.Adoption_Rate;
+            metaByCard[d.Card_ID] = d;
             if (d.Weighted_Avg_Turn_Deviation != null && d.Weighted_Avg_HP_Deviation != null) {
                 perfByCard[d.Card_ID] = d.Weighted_Avg_Turn_Deviation + d.Weighted_Avg_HP_Deviation;   // 攻撃性能 + 防御性能
             }
@@ -1020,7 +1029,7 @@ function updatePrateRankings(lang) {
         .filter(r => r[1] != null && isFinite(r[1]) && (adoptionByCard[r[0]] != null && adoptionByCard[r[0]] >= 0.05))
         .map(r => {
             const nm = cd.names[r[0]] || [r[0]];
-            const aggMeta = ALL_DATA.agg_data_full.find(d => d.Card_ID === r[0]) || {};
+            const aggMeta = metaByCard[r[0]] || {};
             const medal = aggMeta.Medal || '';
             return { graphName: (lang === 'ja') ? nm[0] : (nm[1] || nm[0]),
                      medal, prate: r[1], score: r[7], cardId: r[0],

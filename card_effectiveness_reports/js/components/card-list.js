@@ -75,6 +75,21 @@ function decorateCardListMetricInfo(root) {
         'Adoption Gap': 'gap',
         'Sample runs': 'sample'
     });
+    // (2026-11-25) 静的 HTML は「採用率」だが、総選挙タブと同じ「最終採用率」に寄せる (表記ゆれ解消)
+    try {
+        const T = (typeof UI_TEXT !== 'undefined' && UI_TEXT.card_list) ? UI_TEXT.card_list : {};
+        const newLabel = T.adoption_rate_header;
+        if (newLabel) {
+            const oldLabels = (typeof LANG !== 'undefined' && LANG === 'en') ? ['Adoption %', 'Adoption Rate'] : ['採用率'];
+            root.querySelectorAll('th').forEach((th) => {
+                th.childNodes.forEach((node) => {
+                    if (node.nodeType === 3 && oldLabels.includes(node.textContent.trim())) {
+                        node.textContent = newLabel;
+                    }
+                });
+            });
+        }
+    } catch (e) { /* 無視 */ }
 }
 
 // アイコン動的付与ロジック
@@ -150,12 +165,18 @@ function setupTableSorting() {
         th.addEventListener('mouseleave', () => { th.style.backgroundColor = ''; });
 
         th.addEventListener('click', () => {
-            sortTable(table, index);
+            clSortTable(table, index);
+        });
+        th.tabIndex = 0;
+        th.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clSortTable(table, index); }
         });
     });
 }
 
-function sortTable(table, colIndex) {
+// (2026-11-25) 旧 sortTable は utils.js の同名関数 (tableId 指定版) と衝突して上書きしており、
+//   敵別戦績タブのソートを壊していたため clSortTable に改名。
+function clSortTable(table, colIndex) {
     const rows = Array.from(table.querySelectorAll('tr[data-card-id]'));
 
     const lastCol = table.getAttribute('data-sort-col');
@@ -419,6 +440,17 @@ function applyFilterLogic() {
     const rows = document.querySelectorAll('tr[data-card-id]');
     const charData = (pickDetailsAllCache && pickDetailsAllCache[CURRENT_CHAR]) || {};
 
+    // (2026-11-25 監査 #6) 初回だけ DOM テキストを data 属性に焼き込み、以降は属性参照にする
+    // (列順変更に強くなり、フィルタ変更のたびの textContent 再パースも消える)
+    if (rows.length && rows[0].getAttribute('data-upgrade') === null) {
+        rows.forEach(row => {
+            row.setAttribute('data-upgrade', String(parseFloat((row.children[3]?.textContent || '').trim().replace('%', '')) || 0));
+            row.setAttribute('data-copies', String(parseFloat((row.children[2]?.textContent || '').trim()) || 0));
+            row.setAttribute('data-rarity', (row.children[5]?.textContent || '').trim());
+            row.setAttribute('data-type', (row.children[6]?.textContent || '').trim());
+        });
+    }
+
     rows.forEach(row => {
         const cardId = row.getAttribute('data-card-id');
         const cData = charData[cardId];
@@ -455,14 +487,11 @@ function applyFilterLogic() {
         }
 
         const finalAdoption = parseFloat(row.querySelector('.card-pick-icon')?.getAttribute('data-adoption') || '0');
-        const upgradeRateText = row.children[3]?.textContent.trim().replace('%', '') || '0';
-        const upgradeRateVal = parseFloat(upgradeRateText) || 0;
-        const copiesText = row.children[2]?.textContent.trim() || '0';
-        const copiesVal = parseFloat(copiesText) || 0;
+        const upgradeRateVal = parseFloat(row.getAttribute('data-upgrade') || '0');
+        const copiesVal = parseFloat(row.getAttribute('data-copies') || '0');
 
-
-        const rarityText = row.children[5]?.textContent.trim() || '';
-        const typeText = row.children[6]?.textContent.trim() || '';
+        const rarityText = row.getAttribute('data-rarity') || '';
+        const typeText = row.getAttribute('data-type') || '';
 
 
         if (selectedRarity !== 'all' && !rarityText.includes(selectedRarity)) matchRarity = false;

@@ -38,5 +38,8 @@ window.METRIC_DEFS = {
     coverage: { anchor: 'sec-dd' },             // 類似度 (包含率)
     tpf:      { anchor: 'sec-dd' },             // 平均ターン/戦闘
     lpf:      { anchor: 'sec-dd' },             // 平均ライフ損失/戦闘
-    encrate:  { anchor: 'sec-dd' }              // 遭遇ラン率
+    encrate:  { anchor: 'sec-dd' },             // 遭遇ラン率
+
+    // ===== Act別トレンド =====
+    sustain:  { anchor: 'sec-acttrend' }        // 継戦能力
 };

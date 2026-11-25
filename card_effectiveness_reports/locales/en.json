@@ -148,7 +148,7 @@
         "act4_top_performers_desc": "Cards that demonstrated high performance in Act 4 combat, contributing significantly to clearing the game.",
         "attention_ranking_title": "Attention Ranking",
         "attention_ranking_desc": "A comprehensive ranking based on adoption rate, highlights, and performance.",
-        "adoption_rate_header": "Adoption Rate",
+        "adoption_rate_header": "Final Adoption Rate",
         "performance_header": "Performance",
         "tendency_top_performers_title": "Tendency Top 40",
         "tendency_ranking_desc": "Cards with a strong upward trend. Often powerful buffs or combo pieces.",
@@ -235,6 +235,17 @@
         "toggle_title": "Show columns"
     },
     "run_finder": {
+        "sum_title": "Search result summary",
+        "sum_stage": " (as of Act {a}, Lvl {l})",
+        "sum_final": " (final deck)",
+        "sum_runs": "Runs",
+        "sum_ns_runs": "Non-stat",
+        "sum_deck": "Avg deck size",
+        "sum_dmg": "Avg HP loss (no heals)",
+        "sum_spell": "Avg spell-card battles (est.)",
+        "sum_deck_top": "Deck presence Top 40 (excl. starters)",
+        "sum_up_top": "Upgrades Top 40 (gap / shop / events, etc.)",
+        "sum_note": "(x.x) next to a name = per-run average (deck: avg copies / upgrades: avg upgrade count, all-run basis). Total HP loss counts damage only (no heals) — the history cumulative is net of heals. Spell counts are estimated from battle logs. (%) = share of aggregated runs. Deck bars: blue = runs with the card, green = upgraded ones among them (hover for details). Upgrade breakdown (gap / shop / event / battle reward) on card-name hover. Numbers show runs with at least one upgrade; hover for the total count.",
         "title": "Run Finder",
         "experimental_warning": "<strong>[Experimental Feature]</strong> This search function is under development.",
         "data_scope_warning": "※By default, searches cover the range used for the statistics. Check 'Include non-stat runs' to also search runs excluded by per-player sampling (such rows get a 'Non-stat' badge).",
@@ -831,7 +842,7 @@
         "adopt_note": "Cards consumed on use still count as acquired. The gap to Final adoption is what disappeared or was removed later.",
 
         "final_name": "Final adoption",
-        "final_def": "The share of runs where the card is still in the deck at the end (same definition as Adoption on the Card List tab).",
+        "final_def": "The share of runs where the card is still in the deck at the end (same definition as Final Adoption on the Card List tab).",
         "final_f": "Runs still holding it ÷ runs = **{pct}**",
         "final_note": "A large gap from Real adoption means the card is \"taken but not kept\".",
 
@@ -922,6 +933,10 @@
         "encrate_name": "Encounter rate",
         "encrate_def": "The share of runs in the pool that fought this enemy.",
         "encrate_f": "Runs that met it {a} ÷ pool {n} = **{pct}**",
-        "encrate_note": "Rare enemies have fewer samples, so their numbers are noisier."
+        "encrate_note": "Rare enemies have fewer samples, so their numbers are noisier.",
+        "sustain_name": "Combat Endurance",
+        "sustain_def": "Per-act endurance index: **100 − damage taken in battles − recovery at gaps + post-battle recovery** (per-run averages). Gap recovery counts as a penalty — healing at a gap means you were worn down enough to need it.",
+        "sustain_f": "100 − battle damage {dmg} − gap recovery {gap} + post-battle recovery {cmb} = **{v}**",
+        "sustain_note": "The value in parentheses is the all-character average. Colored vs that average (green = above)."
     }
 }
